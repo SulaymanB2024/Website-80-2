@@ -11,7 +11,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -20,6 +20,8 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         display: ['Space Grotesk', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                        playfair: ['Playfair Display', 'serif'],
                     },
                     colors: {
                         'off-white': '#EAEAEA',
@@ -82,6 +84,86 @@
         ::selection {
             background: #EAEAEA;
             color: #030303;
+        }
+
+        /* --- PAPER MODE (WRITING) --- */
+        .modal-content.paper-mode {
+            background-color: #EAEAEA;
+            color: #0F0F0F;
+            border: none;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .modal-content.paper-mode ::selection {
+            background: #0F0F0F;
+            color: #EAEAEA;
+        }
+        .modal-content.paper-mode #reading-progress {
+            background-color: #0F0F0F;
+        }
+        .modal-content.paper-mode #close-modal i {
+            color: #0F0F0F;
+        }
+
+        /* --- INTERACTIVE TERMS (FOOTNOTES) --- */
+        .interactive-term {
+            border-bottom: 1px dotted #666;
+            cursor: help;
+            position: relative;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .interactive-term:hover {
+            background-color: rgba(0,0,0,0.05);
+            border-bottom-style: solid;
+            border-bottom-color: #000;
+        }
+        .term-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #0F0F0F;
+            color: #EAEAEA;
+            padding: 0.75rem 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            width: max-content;
+            max-width: 250px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            font-weight: 400;
+            text-align: center;
+        }
+        .term-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #0F0F0F transparent transparent transparent;
+        }
+        .interactive-term:hover .term-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        /* --- SPARKLINES --- */
+        .sparkline {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 4px;
+        }
+        .sparkline path {
+            fill: none;
+            stroke: #0F0F0F;
+            stroke-width: 1.5;
         }
 
         /* --- CUSTOM CURSOR --- */
@@ -549,7 +631,7 @@
 
             <div class="space-y-8">
                 <!-- Essay 1 -->
-                <a href="#" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target">
+                <div data-writing="rhythm" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -558,10 +640,10 @@
                         <span class="font-mono text-xs text-neutral-500">AUG 2025</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Exploring the parallels between orchestral double-bass performance and market term-structure signals.</p>
-                </a>
+                </div>
 
                 <!-- Essay 2 -->
-                <a href="#" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target">
+                <div data-writing="hunter" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer">
                      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -570,10 +652,10 @@
                         <span class="font-mono text-xs text-neutral-500">JUN 2025</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">What falconry taught me about managing risk, letting go of control, and the art of waiting.</p>
-                </a>
+                </div>
 
                 <!-- Essay 3 -->
-                <a href="#" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target">
+                <div data-writing="nuclear" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer">
                      <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -582,7 +664,7 @@
                         <span class="font-mono text-xs text-neutral-500">JAN 2025</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">An unbiased look at nuclear energy as the misunderstood giant of the sustainable future.</p>
-                </a>
+                </div>
             </div>
         </div>
     </section>
@@ -759,6 +841,89 @@
             }
         };
 
+        const writingData = {
+            rhythm: {
+                meta: { date: "AUG 2025", category: "MARKETS", readTime: "3 MIN" },
+                title: "Rhythm in Volatility",
+                lede: "Why the best traders listen to the noise before they look at the price.",
+                content: `
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        There is a cadence to the VIX that most algorithms miss. It’s not in the price action, but in the silence between the ticks. As a bassist, I learned that the rest is as important as the note. In markets, <span class="interactive-term" data-term="Term Structure">term structure<span class="term-tooltip">The relationship between interest rates or bond yields and different terms or maturities.</span></span> tells you the tempo.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"The market doesn't crash in a scream. It crashes in a whisper."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        When we look at the volatility surface, we see a landscape. But if you close your eyes, you can hear it. The <span class="interactive-term" data-term="Skew">skew<span class="term-tooltip">The difference in implied volatility between out-of-the-money puts and calls.</span></span> is the pitch. When the skew steepens, the orchestra is tuning up for a dissonance.
+                        <span class="sparkline" data-values="10,12,15,14,18,20,25,22,30,28,35"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        We built a model that listens for these dissonances. It doesn't trade often. It waits. It waits for the conductor to raise the baton. And when the silence breaks, we strike.
+                    </p>
+                `,
+                nextSlug: "hunter"
+            },
+            hunter: {
+                meta: { date: "JUN 2025", category: "PHILOSOPHY", readTime: "4 MIN" },
+                title: "The Patient Hunter",
+                lede: "What falconry taught me about managing risk, letting go of control, and the art of waiting.",
+                content: `
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        You do not command a falcon. You suggest. You create an environment where the bird chooses to return to you. This is the essence of <span class="interactive-term" data-term="Risk Management">risk management<span class="term-tooltip">The identification, evaluation, and prioritization of risks followed by coordinated application of resources.</span></span>. You cannot control the market. You can only control your exposure to it.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"To hold the bird, you must open your hand."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        In trading, we often try to force a P&L. We over-trade. We chase. A falconer knows that if you chase the bird, it flies further away. You must stand still. You must wait for the setup.
+                        <span class="sparkline" data-values="50,50,50,50,50,80,90,100,40,50,50"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The kill is quick. The wait is long. The patience required to sit on your hands while the market gyrates is the hardest skill to master. But it is the only one that matters.
+                    </p>
+                `,
+                nextSlug: "nuclear"
+            },
+            nuclear: {
+                meta: { date: "JAN 2025", category: "ENERGY", readTime: "5 MIN" },
+                title: "The Nuclear Option",
+                lede: "An unbiased look at nuclear energy as the misunderstood giant of the sustainable future.",
+                content: `
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        Energy density is the only metric that matters. A pellet of uranium the size of a gummy bear contains as much energy as a ton of coal. Yet, we fear it. We fear the <span class="interactive-term" data-term="Tail Risk">tail risk<span class="term-tooltip">The risk of an asset or portfolio of assets moving more than 3 standard deviations from its current price.</span></span>.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"We chose the shadow of the cooling tower over the smoke of the stack."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The data is clear. Nuclear is the safest form of baseload power we have.
+                        <span class="sparkline" data-values="5,5,4,4,3,3,2,2,1,1,0"></span>
+                        The fear is emotional, not statistical. As we move toward an electrified future, the grid demands stability. Wind and solar are intermittent. Nuclear is the bedrock.
+                    </p>
+                `,
+                nextSlug: "rhythm"
+            }
+        };
+
+        function generateSparkline(valuesStr) {
+            const values = valuesStr.split(',').map(Number);
+            const width = 60;
+            const height = 20;
+            const max = Math.max(...values);
+            const min = Math.min(...values);
+            const range = max - min || 1;
+            
+            const points = values.map((v, i) => {
+                const x = (i / (values.length - 1)) * width;
+                const y = height - ((v - min) / range) * height;
+                return `${x},${y}`;
+            }).join(' ');
+
+            return `<svg class="sparkline" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+                <path d="M${points}" />
+            </svg>`;
+        }
+
         // --- 2. INIT TOOLS & CLOCK ---
         lucide.createIcons();
         document.getElementById('year').textContent = new Date().getFullYear();
@@ -838,61 +1003,138 @@
         const closeModal = document.getElementById('close-modal');
         const progressBar = document.getElementById('reading-progress');
         
-        function openModal(projectId) {
-            const data = projectData[projectId];
-            if (!data) return;
+        function openModal(id, type = 'project') {
+            let data;
+            const content = modal.querySelector('.modal-content');
+            
+            // Reset classes
+            content.classList.remove('paper-mode');
+            
+            if (type === 'writing') {
+                data = writingData[id];
+                if (!data) return;
+                
+                content.classList.add('paper-mode');
+                
+                // Editorial Layout
+                modalBody.innerHTML = `
+                    <div class="max-w-3xl mx-auto">
+                        <!-- Header Block -->
+                        <div class="modal-stagger text-center mb-16" style="transition-delay: 0.1s">
+                            <div class="font-mono text-xs tracking-[0.2em] text-neutral-500 mb-6 uppercase">
+                                ${data.meta.category} /// ${data.meta.date} /// ${data.meta.readTime} READ
+                            </div>
+                            <h1 class="font-playfair italic text-5xl md:text-7xl font-bold mb-8 leading-tight text-off-black">
+                                ${data.title}
+                            </h1>
+                            <p class="font-sans font-bold text-lg md:text-xl text-neutral-600 max-w-xl mx-auto leading-relaxed">
+                                ${data.lede}
+                            </p>
+                        </div>
 
-            // Calculate Read Time
-            const wordCount = data.description.split(' ').length + data.details.split(' ').length;
-            const readTime = Math.ceil(wordCount / 200);
+                        <!-- Body Content -->
+                        <div class="modal-stagger" style="transition-delay: 0.2s">
+                            ${data.content}
+                        </div>
 
-            modalBody.innerHTML = `
-                <div class="modal-stagger" style="transition-delay: 0.1s">
-                    <div class="flex justify-between items-start mb-2">
-                        <h2 class="font-display text-4xl md:text-6xl font-bold text-white">${data.title}</h2>
-                        <span class="font-mono text-xs text-neutral-500 border border-neutral-800 px-2 py-1 rounded">${readTime} MIN READ</span>
+                        <!-- Next Article Hook -->
+                        <div class="modal-stagger mt-20 pt-12 border-t border-neutral-300" style="transition-delay: 0.3s">
+                            <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4">Up Next</p>
+                            <div class="group cursor-pointer" onclick="openModal('${data.nextSlug}', 'writing')">
+                                <h3 class="font-display text-3xl font-medium group-hover:translate-x-2 transition-transform duration-300">
+                                    ${writingData[data.nextSlug].title} <i data-lucide="arrow-right" class="inline-block w-6 h-6 ml-2 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </h3>
+                            </div>
+                        </div>
                     </div>
-                    <p class="font-sans text-lg text-neutral-400 mb-6">${data.subtitle}</p>
-                    <div class="flex flex-wrap gap-2 mb-8">
-                        ${data.tags.map(tag => `<span class="px-3 py-1 bg-white/5 text-xs font-mono uppercase text-neutral-300 tracking-widest">${tag}</span>`).join('')}
+                `;
+
+                // Render Sparklines
+                modalBody.querySelectorAll('.sparkline').forEach(el => {
+                    if (el.dataset.values) {
+                        el.outerHTML = generateSparkline(el.dataset.values);
+                    }
+                });
+
+            } else {
+                // Standard Project Layout
+                data = projectData[id];
+                if (!data) return;
+
+                // Calculate Read Time
+                const wordCount = data.description.split(' ').length + data.details.split(' ').length;
+                const readTime = Math.ceil(wordCount / 200);
+
+                modalBody.innerHTML = `
+                    <div class="modal-stagger" style="transition-delay: 0.1s">
+                        <div class="flex justify-between items-start mb-2">
+                            <h2 class="font-display text-4xl md:text-6xl font-bold text-white">${data.title}</h2>
+                            <span class="font-mono text-xs text-neutral-500 border border-neutral-800 px-2 py-1 rounded">${readTime} MIN READ</span>
+                        </div>
+                        <p class="font-sans text-lg text-neutral-400 mb-6">${data.subtitle}</p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            ${data.tags.map(tag => `<span class="px-3 py-1 bg-white/5 text-xs font-mono uppercase text-neutral-300 tracking-widest">${tag}</span>`).join('')}
+                        </div>
                     </div>
-                </div>
-                <div class="modal-stagger" style="transition-delay: 0.2s">
-                    <p class="font-display text-xl md:text-2xl leading-relaxed text-white font-light border-l-2 border-white/30 pl-6 mb-8 drop-cap">
-                        ${data.description}
-                    </p>
-                </div>
-                <div class="modal-stagger" style="transition-delay: 0.3s">
-                    ${data.details}
-                </div>
-            `;
+                    <div class="modal-stagger" style="transition-delay: 0.2s">
+                        <p class="font-display text-xl md:text-2xl leading-relaxed text-white font-light border-l-2 border-white/30 pl-6 mb-8 drop-cap">
+                            ${data.description}
+                        </p>
+                    </div>
+                    <div class="modal-stagger" style="transition-delay: 0.3s">
+                        ${data.details}
+                    </div>
+                `;
+            }
 
             modal.classList.add('active');
-            document.body.classList.add('modal-open'); // Trigger Depth Effect
-            // document.body.style.overflow = 'hidden'; // Handled by CSS on body.modal-open now
+            document.body.classList.add('modal-open');
+            lucide.createIcons();
         }
 
         function closeModalFunc() {
             modal.classList.remove('active');
             document.body.classList.remove('modal-open');
-            // document.body.style.overflow = 'auto'; 
             progressBar.style.width = '0%';
+            
+            setTimeout(() => {
+                modal.querySelector('.modal-content').classList.remove('paper-mode');
+            }, 500);
         }
 
-        // Reading Progress
+        // Reading Progress & Scroll-to-Blur
         modal.querySelector('.modal-content').addEventListener('scroll', (e) => {
             const el = e.target;
             const scrollTop = el.scrollTop;
             const scrollHeight = el.scrollHeight - el.clientHeight;
             const progress = (scrollTop / scrollHeight) * 100;
             progressBar.style.width = `${progress}%`;
+
+            // Scroll-to-Blur Effect for Header
+            if (modal.querySelector('.modal-content').classList.contains('paper-mode')) {
+                const header = modalBody.querySelector('.text-center');
+                if (header) {
+                    const opacity = Math.max(0, 1 - scrollTop / 300);
+                    const blur = Math.min(10, scrollTop / 30);
+                    header.style.opacity = opacity;
+                    header.style.filter = `blur(${blur}px)`;
+                }
+            }
         });
 
         // Attach listeners to cards
         document.querySelectorAll('.project-card').forEach(card => {
             card.addEventListener('click', () => {
                 const projectId = card.dataset.project;
-                openModal(projectId);
+                openModal(projectId, 'project');
+            });
+        });
+
+        // Attach listeners to writing items
+        document.querySelectorAll('.writing-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const writingId = item.dataset.writing;
+                openModal(writingId, 'writing');
             });
         });
 
@@ -947,18 +1189,30 @@
                 const ctx = canvas1.getContext('2d');
                 let width, height;
                 let nodes = [];
+                let isHovered = false;
                 
+                const parent = canvas1.parentElement;
+                parent.addEventListener('mouseenter', () => isHovered = true);
+                parent.addEventListener('mouseleave', () => isHovered = false);
+
+                const createNode = () => ({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    life: Math.random() * 100 + 100, // Longer life
+                    age: 0,
+                    opacity: 0
+                });
+
                 const resize = () => {
                     width = canvas1.width = canvas1.parentElement.offsetWidth;
                     height = canvas1.height = canvas1.parentElement.offsetHeight;
                     nodes = [];
-                    for(let i=0; i<40; i++) {
-                        nodes.push({
-                            x: Math.random() * width,
-                            y: Math.random() * height,
-                            vx: (Math.random() - 0.5) * 0.5,
-                            vy: (Math.random() - 0.5) * 0.5
-                        });
+                    for(let i=0; i<50; i++) { // More nodes
+                        nodes.push(createNode());
+                        nodes[i].opacity = 1; // Start visible
+                        nodes[i].age = 50;
                     }
                 };
                 resize();
@@ -966,33 +1220,80 @@
 
                 const animate = () => {
                     ctx.clearRect(0, 0, width, height);
-                    ctx.fillStyle = '#333';
-                    ctx.strokeStyle = '#333';
                     
-                    nodes.forEach(node => {
+                    // Churn: Spawn new nodes
+                    if (nodes.length < 50 && Math.random() < 0.1) {
+                        nodes.push(createNode());
+                    }
+
+                    nodes.forEach((node, index) => {
+                        // Lifecycle
+                        node.age++;
+                        if (node.age < 20) node.opacity = node.age / 20;
+                        else if (node.age > node.life - 20) node.opacity = (node.life - node.age) / 20;
+                        else node.opacity = 1;
+                        
+                        if (node.age >= node.life) {
+                            nodes.splice(index, 1);
+                            return;
+                        }
+
+                        // Movement
+                        let shakeX = 0, shakeY = 0;
+                        if (isHovered) {
+                            shakeX = (Math.random() - 0.5) * 2;
+                            shakeY = (Math.random() - 0.5) * 2;
+                        }
+                        
                         node.x += node.vx;
                         node.y += node.vy;
+                        
+                        // Bounce off walls
                         if(node.x < 0 || node.x > width) node.vx *= -1;
                         if(node.y < 0 || node.y > height) node.vy *= -1;
                         
+                        const drawX = node.x + shakeX;
+                        const drawY = node.y + shakeY;
+
+                        // Draw Node
+                        ctx.fillStyle = isHovered ? '#ff3333' : '#666'; // Lighter grey
+                        ctx.globalAlpha = node.opacity;
                         ctx.beginPath();
-                        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+                        ctx.arc(drawX, drawY, isHovered ? 2.5 : 2, 0, Math.PI * 2);
                         ctx.fill();
 
-                        nodes.forEach(other => {
+                        // Connections
+                        nodes.forEach((other, otherIndex) => {
+                            if (index >= otherIndex) return; // Avoid double drawing
+
                             const dx = node.x - other.x;
                             const dy = node.y - other.y;
                             const dist = Math.sqrt(dx*dx + dy*dy);
-                            if(dist < 100) {
+                            
+                            const maxDist = isHovered ? 80 : 120; // Shorter connections on hover (breaking)
+                            
+                            if(dist < maxDist) {
                                 ctx.beginPath();
-                                ctx.moveTo(node.x, node.y);
-                                ctx.lineTo(other.x, other.y);
-                                ctx.globalAlpha = 1 - dist/100;
-                                ctx.stroke();
-                                ctx.globalAlpha = 1;
+                                ctx.moveTo(drawX, drawY);
+                                
+                                let otherShakeX = 0, otherShakeY = 0;
+                                if (isHovered) {
+                                    otherShakeX = (Math.random() - 0.5) * 2;
+                                    otherShakeY = (Math.random() - 0.5) * 2;
+                                }
+                                ctx.lineTo(other.x + otherShakeX, other.y + otherShakeY);
+                                
+                                ctx.strokeStyle = isHovered ? '#ff3333' : '#444';
+                                ctx.globalAlpha = (1 - dist/maxDist) * Math.min(node.opacity, other.opacity) * 0.8;
+                                
+                                // Glitch effect: randomly don't draw some frames on hover
+                                if (!isHovered || Math.random() > 0.1) {
+                                    ctx.stroke();
+                                }
                             }
                         });
                     });
+                    ctx.globalAlpha = 1;
                     requestAnimationFrame(animate);
                 };
                 animate();
@@ -1043,6 +1344,11 @@
                 const ctx = canvas3.getContext('2d');
                 let width, height;
                 let candles = [];
+                let isHovered = false;
+
+                const parent = canvas3.parentElement;
+                parent.addEventListener('mouseenter', () => isHovered = true);
+                parent.addEventListener('mouseleave', () => isHovered = false);
                 
                 const resize = () => {
                     width = canvas3.width = canvas3.parentElement.offsetWidth;
@@ -1069,14 +1375,17 @@
                 window.addEventListener('resize', resize);
 
                 const animate = () => {
+                    // Volatility Multiplier
+                    const volMult = isHovered ? 4 : 1;
+
                     // Shift candles left
                     candles.shift();
                     const last = candles[candles.length-1];
-                    const change = (Math.random() - 0.5) * 10;
+                    const change = (Math.random() - 0.5) * 10 * volMult;
                     const open = last.close;
                     const close = open + change;
-                    const high = Math.max(open, close) + Math.random() * 5;
-                    const low = Math.min(open, close) - Math.random() * 5;
+                    const high = Math.max(open, close) + Math.random() * 5 * volMult;
+                    const low = Math.min(open, close) - Math.random() * 5 * volMult;
                     candles.push({ 
                         x: last.x + 12, // 10 width + 2 gap
                         open, close, high, low 
@@ -1085,6 +1394,13 @@
                     // Redraw
                     ctx.clearRect(0, 0, width, height);
                     
+                    ctx.save();
+                    if (isHovered) {
+                        // Shake Effect
+                        const shake = 2;
+                        ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
+                    }
+
                     // Center vertically based on last price
                     const offsetY = height/2 - last.close;
 
@@ -1105,6 +1421,7 @@
                         ctx.fillRect(drawX, Math.min(c.open, c.close) + offsetY, 10, Math.abs(c.close - c.open));
                     });
                     
+                    ctx.restore();
                     setTimeout(() => requestAnimationFrame(animate), 100); // Slow down
                 };
                 animate();
@@ -1278,13 +1595,31 @@
             });
 
             // Mobile Gyroscope
-            window.addEventListener('deviceorientation', (event) => {
-                if (event.beta && event.gamma) {
+            function handleOrientation(event) {
+                if (event.beta !== null && event.gamma !== null) {
                     // beta is front-back tilt [-180, 180], gamma is left-right tilt [-90, 90]
-                    mouseX = event.gamma * 0.001; 
-                    mouseY = event.beta * 0.001;
+                    // Convert degrees to radians and amplify for "physical" feel
+                    // 0.04 is approx 2.3 degrees per 1 degree of tilt
+                    mouseX = event.gamma * 0.04; 
+                    mouseY = event.beta * 0.04;
                 }
-            });
+            }
+
+            window.addEventListener('deviceorientation', handleOrientation);
+
+            // Request permission for iOS 13+ devices
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                document.body.addEventListener('click', async () => {
+                    try {
+                        const response = await DeviceOrientationEvent.requestPermission();
+                        if (response === 'granted') {
+                            window.addEventListener('deviceorientation', handleOrientation);
+                        }
+                    } catch (e) {
+                        console.error("Gyroscope permission denied", e);
+                    }
+                }, { once: true });
+            }
 
             function animate() {
                 requestAnimationFrame(animate);
