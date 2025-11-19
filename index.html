@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SULAYMAN BOWLES | Digital Portfolio</title>
+    <meta name="description" content="Portfolio of Sulayman Bowles. Co-Founder, Analyst, and Digital Alchemist based in Austin, TX.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        'off-white': '#EAEAEA',
+                        'off-black': '#030303', /* Deepened black */
+                        'charcoal': '#0F0F0F',
+                        'mid-gray': '#2A2A2A',
+                    },
+                    animation: {
+                        'marquee': 'marquee 40s linear infinite', /* Slowed down */
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* --- CORE SETTINGS --- */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        body {
+            background-color: #030303;
+            color: #EAEAEA;
+            overflow-x: hidden;
+            cursor: none;
+            font-feature-settings: "ss01", "ss02", "salt"; 
+            transition: background-color 0.5s ease;
+        }
+
+        /* --- DEPTH EFFECT CONTAINER --- */
+        #app-container {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: center top;
+            width: 100%;
+            background-color: #030303;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+            background-color: #000; /* Darker background behind the scaled content */
+        }
+
+        body.modal-open #app-container {
+            transform: scale(0.95) translateY(20px);
+            filter: brightness(0.4) blur(1px);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        ::selection {
+            background: #EAEAEA;
+            color: #030303;
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 6px; height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: exclusion;
+        }
+        
+        .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            width: 32px; height: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            z-index: 9998;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                        height 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                        background-color 0.4s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+        
+        body.hovering .cursor-outline {
+            width: 60px; height: 60px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        body.hovering .cursor-dot { opacity: 0; }
+
+        body.viewing-project .cursor-outline {
+            width: 90px; height: 90px;
+            background-color: #EAEAEA;
+            border-color: transparent;
+            mix-blend-mode: normal;
+        }
+        body.viewing-project .cursor-outline::after {
+            content: 'OPEN';
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #030303;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body.viewing-project .cursor-dot { opacity: 0; }
+
+        /* --- NOISE OVERLAY --- */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 40;
+            opacity: 0.05;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- MODAL SYSTEM --- */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 3, 3, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 90;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .modal-content {
+            background: #0F0F0F;
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(40px) scale(0.95);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            position: relative;
+        }
+        .modal-backdrop.active .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* Modal Content Animation Stagger */
+        .modal-stagger {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        .modal-backdrop.active .modal-stagger {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- UTILITY ANIMATIONS --- */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+            filter: blur(4px);
+        }
+        .reveal-text.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .magnetic-wrap {
+            display: inline-block;
+            position: relative;
+            z-index: 50;
+        }
+        .magnetic-area {
+            position: absolute;
+            top: -30px; left: -30px; right: -30px; bottom: -30px;
+            z-index: 1;
+            border-radius: 50%;
+        }
+
+        .project-img-container { overflow: hidden; }
+        .project-img {
+            will-change: transform;
+            transform: scale(1.01);
+            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .group:hover .project-img {
+            transform: scale(1.08);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #030303;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        .loader-hidden { transform: translateY(-100%); }
+        
+        /* Canvas */
+        #canvas-container {
+            position: absolute;
+            top: 0; right: 0;
+            width: 55%; height: 100vh;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 2s ease 0.5s;
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            #canvas-container { width: 100%; opacity: 0.2; }
+        }
+
+        .writing-item { transition: all 0.4s ease; }
+        .writing-arrow { 
+            opacity: 0; 
+            transform: translateX(-10px); 
+            transition: all 0.4s ease;
+        }
+        .writing-item:hover .writing-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- TYPOGRAPHY & READING --- */
+        .drop-cap::first-letter {
+            float: left;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            font-weight: 700;
+            margin-right: 1rem;
+            margin-top: 0.5rem;
+            color: #EAEAEA;
+        }
+        
+        .pull-quote {
+            border-left: 2px solid #EAEAEA;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #A0A0A0;
+        }
+
+        /* --- GENERATIVE COVERS --- */
+        .gen-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+        }
+        .group:hover .gen-canvas { opacity: 1; }
+
+        /* --- LIVE TICKER --- */
+        .live-ticker {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: #666;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .live-val { color: #EAEAEA; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Noise -->
+    <div class="noise-overlay"></div>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="flex flex-col items-center gap-6">
+            <div class="font-mono text-[10px] text-neutral-500 tracking-[0.5em] uppercase">Sulayman Bowles</div>
+            <div class="font-display text-5xl font-bold tracking-tight scramble-text" data-final="OBLIVION">INIT</div>
+            <div class="w-24 h-[1px] bg-neutral-800 mt-4 relative overflow-hidden">
+                <div class="absolute inset-0 bg-white w-full -translate-x-full animate-[marquee_1.5s_ease-in-out_forwards]"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONTAINER -->
+    <div id="project-modal" class="modal-backdrop">
+        <div class="modal-content p-8 md:p-12 relative">
+            <!-- Reading Progress Bar -->
+            <div id="reading-progress" class="absolute top-0 left-0 h-1 bg-white w-0 transition-all duration-100 z-50"></div>
+            
+            <button id="close-modal" class="absolute top-6 right-6 hover:rotate-90 transition-transform duration-300 group z-50">
+                <i data-lucide="x" class="w-8 h-8 text-neutral-500 group-hover:text-white"></i>
+            </button>
+            
+            <!-- Content Injection Area -->
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER (For Depth Effect) -->
+    <main id="app-container">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-40 px-8 py-8 mix-blend-difference text-white transition-transform duration-500" id="navbar">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center">
+            <a href="#" class="hover-target magnetic-wrap font-display font-bold text-xl tracking-tighter">
+                <span class="magnetic-content block">S. BOWLES</span>
+                <span class="magnetic-area"></span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex gap-12 text-[11px] font-medium tracking-[0.2em] uppercase">
+                <a href="#work" class="hover-target magnetic-wrap group">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Work</span>
+                    <span class="magnetic-area"></span>
+                </a>
+                <a href="#writing" class="hover-target magnetic-wrap group">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Writing</span>
+                    <span class="magnetic-area"></span>
+                </a>
+                <a href="#philosophy" class="hover-target magnetic-wrap group">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Philosophy</span>
+                    <span class="magnetic-area"></span>
+                </a>
+                <a href="#contact" class="hover-target magnetic-wrap group">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Contact</span>
+                    <span class="magnetic-area"></span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="hover-target md:hidden group">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-off-black z-30 transform translate-x-full transition-transform duration-700 cubic-bezier(0.7, 0, 0.3, 1) flex flex-col justify-center items-center space-y-10">
+        <a href="#work" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WORK</a>
+        <a href="#writing" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WRITING</a>
+        <a href="#philosophy" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">PHILOSOPHY</a>
+        <a href="#contact" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONTACT</a>
+        <button id="close-menu-btn" class="absolute top-8 right-8 p-4 hover:rotate-90 transition-transform duration-300">
+            <i data-lucide="x" class="w-8 h-8 text-white"></i>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 overflow-hidden border-b border-white/5">
+        <div id="canvas-container"></div>
+
+        <div class="max-w-[1600px] w-full mx-auto z-10 pointer-events-none">
+            <!-- Main Title -->
+            <div class="pointer-events-auto relative select-none">
+                <h1 class="font-display text-[12vw] leading-[0.8] font-bold tracking-tighter text-white mix-blend-exclusion reveal-text scramble-hover" data-final="DIGITAL" style="transition-delay: 100ms;">
+                    DIGITAL
+                </h1>
+            </div>
+            <div class="pointer-events-auto relative select-none">
+                <h1 class="font-display text-[12vw] leading-[0.8] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-400 to-neutral-900 reveal-text scramble-hover" data-final="ALCHEMY" style="transition-delay: 250ms;">
+                    ALCHEMY
+                </h1>
+            </div>
+            
+            <!-- Bio / Details -->
+            <div class="mt-20 flex flex-col md:flex-row justify-between items-start md:items-end max-w-6xl pointer-events-auto">
+                <div class="max-w-xl">
+                    <p class="font-sans text-lg md:text-xl text-neutral-400 reveal-text leading-relaxed" style="transition-delay: 500ms;">
+                        I operate at the intersection of <span class="text-white border-b border-white/20 pb-1">finance, code, and entropy</span>. 
+                        Co-Founder, Analyst, and Musician. I build systems that turn friction into feedback and silence into structure.
+                    </p>
+                    <div class="flex gap-8 mt-8 font-mono text-[10px] text-neutral-500 uppercase tracking-widest reveal-text" style="transition-delay: 600ms;">
+                        <span>// Austin, TX</span>
+                        <span>// UT Austin '28</span>
+                        <span>// Available for Commissions</span>
+                    </div>
+                </div>
+                
+                <div class="mt-12 md:mt-0 reveal-text" style="transition-delay: 700ms;">
+                    <a href="#work" class="magnetic-wrap hover-target inline-flex items-center gap-3 border-b border-white pb-2 hover:border-neutral-500 transition-all duration-300 group text-white mix-blend-difference text-lg">
+                        <span class="magnetic-content inline-flex items-center gap-2">
+                            Explore Index <i data-lucide="arrow-down-right" class="w-5 h-5 group-hover:rotate-[-45deg] transition-transform duration-500"></i>
+                        </span>
+                        <span class="magnetic-area"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infinite Marquee -->
+    <div class="py-8 border-b border-white/5 bg-charcoal overflow-hidden flex relative z-20 pointer-events-none select-none">
+        <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#4A4A4A]">
+            <span>FINANCIAL MODELING</span> <span class="text-[#2A2A2A]">///</span>
+            <span>FULL STACK</span> <span class="text-[#2A2A2A]">///</span>
+            <span>WEB3 SYSTEMS</span> <span class="text-[#2A2A2A]">///</span>
+            <span>DATA SCIENCE</span> <span class="text-[#2A2A2A]">///</span>
+            <span>FINANCIAL MODELING</span> <span class="text-[#2A2A2A]">///</span>
+            <span>FULL STACK</span> <span class="text-[#2A2A2A]">///</span>
+            <span>WEB3 SYSTEMS</span> <span class="text-[#2A2A2A]">///</span>
+            <span>DATA SCIENCE</span> <span class="text-[#2A2A2A]">///</span>
+        </div>
+        <div class="absolute top-8 animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#4A4A4A]" aria-hidden="true" style="animation-delay: -20s;">
+            <span>FINANCIAL MODELING</span> <span class="text-[#2A2A2A]">///</span>
+            <span>FULL STACK</span> <span class="text-[#2A2A2A]">///</span>
+            <span>WEB3 SYSTEMS</span> <span class="text-[#2A2A2A]">///</span>
+            <span>DATA SCIENCE</span> <span class="text-[#2A2A2A]">///</span>
+            <span>FINANCIAL MODELING</span> <span class="text-[#2A2A2A]">///</span>
+            <span>FULL STACK</span> <span class="text-[#2A2A2A]">///</span>
+            <span>WEB3 SYSTEMS</span> <span class="text-[#2A2A2A]">///</span>
+            <span>DATA SCIENCE</span> <span class="text-[#2A2A2A]">///</span>
+        </div>
+    </div>
+
+    <!-- Selected Work Section -->
+    <section id="work" class="py-40 px-6 md:px-12 relative">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-32 border-b border-white/10 pb-8 reveal-text">
+                <h2 class="font-display text-6xl md:text-8xl font-bold tracking-tight mix-blend-difference">SELECTED<br>WORKS</h2>
+                <div class="flex flex-col items-end mt-6 md:mt-0">
+                    <span class="font-mono text-xs text-neutral-500 mb-2 tracking-widest uppercase">Archive</span>
+                    <span class="font-mono text-xs text-white tracking-widest">(2023 — 2025)</span>
+                </div>
+            </div>
+
+            <!-- Project 1: VC-Backed Startup -->
+            <div class="group project-card mb-40 w-full cursor-pointer reveal-text view-project-target" data-project="bittensor">
+                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/5">
+                    <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
+                        <canvas id="canvas-bittensor" class="gen-canvas"></canvas>
+                    </div>
+                    <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-700 pointer-events-none"></div>
+                </div>
+                <div class="flex justify-between items-start border-t border-white/20 pt-6">
+                    <div>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">BITTENSOR STARTUP</h3>
+                        <p class="font-sans text-neutral-500 group-hover:translate-x-4 transition-transform duration-500 delay-75">Co-Founder / $80K Revenue / AI Architecture</p>
+                    </div>
+                    <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">01</span>
+                </div>
+            </div>
+
+            <!-- Project 2: Web3 Payroll -->
+            <div class="group project-card mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="payroll">
+                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/5">
+                     <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
+                        <canvas id="canvas-payroll" class="gen-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="flex justify-between items-start border-t border-white/20 pt-6">
+                    <div>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">CHAIN PAYROLL</h3>
+                        <p class="font-sans text-neutral-500 group-hover:translate-x-4 transition-transform duration-500 delay-75">Hackathon Winner / Team Lead / Solidity</p>
+                    </div>
+                    <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">02</span>
+                </div>
+            </div>
+
+             <!-- Project 3: Point72 -->
+             <div class="group project-card w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72">
+                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/5">
+                     <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
+                        <canvas id="canvas-point72" class="gen-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="flex justify-between items-start border-t border-white/20 pt-6">
+                    <div>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">POINT72 THESIS</h3>
+                        <p class="font-sans text-neutral-500 group-hover:translate-x-4 transition-transform duration-500 delay-75">Investment Analysis / Modeling / Strategy</p>
+                    </div>
+                    <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">03</span>
+                </div>
+            </div>
+            
+            <div class="mt-32 text-center reveal-text">
+                <a href="#" class="magnetic-wrap hover-target inline-block font-display text-lg border border-white/20 px-10 py-5 hover:bg-white hover:text-black transition-colors duration-500">
+                    <span class="magnetic-content block tracking-widest uppercase">View Full Resume</span>
+                    <span class="magnetic-area"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Writing / Thoughts Section -->
+    <section id="writing" class="py-40 px-6 md:px-12 bg-off-white text-off-black relative">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="flex items-center gap-4 mb-20 reveal-text">
+                <div class="w-2 h-2 bg-off-black rounded-full animate-pulse-slow"></div>
+                <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-500">Writing & Thoughts</h2>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Essay 1 -->
+                <a href="#" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Rhythm in Volatility</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-500">AUG 2025</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Exploring the parallels between orchestral double-bass performance and market term-structure signals.</p>
+                </a>
+
+                <!-- Essay 2 -->
+                <a href="#" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target">
+                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Patient Hunter</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-500">JUN 2025</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">What falconry taught me about managing risk, letting go of control, and the art of waiting.</p>
+                </a>
+
+                <!-- Essay 3 -->
+                <a href="#" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target">
+                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Nuclear Option</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-500">JAN 2025</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">An unbiased look at nuclear energy as the misunderstood giant of the sustainable future.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="py-40 px-6 md:px-12 bg-[#080808] relative overflow-hidden border-t border-white/5">
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="flex items-center gap-4 mb-16 reveal-text">
+                <div class="w-2 h-2 bg-white rounded-full"></div>
+                <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-500">The Philosophy</h2>
+            </div>
+            
+            <div class="font-display text-3xl md:text-5xl leading-[1.2] font-light space-y-12 text-neutral-300">
+                <p class="reveal-text">
+                    <span class="font-semibold text-white border-b border-white/30 pb-1">Comfort is the enemy of alpha.</span> 
+                    Whether in code, markets, or music, I search for the dissonance. I believe in the "unpleasant details"—the friction points that others ignore. 
+                </p>
+                <p class="reveal-text">
+                   My work is a study in dualities: the precision of a spreadsheet meeting the chaos of a startup. The structure of classical music meeting the volatility of energy trading.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 pt-16 mt-16 border-t border-white/10 font-sans text-lg">
+                    <div class="reveal-text">
+                        <h4 class="font-bold mb-6 text-xs uppercase tracking-wider flex items-center gap-2 text-white"><i data-lucide="cpu" class="w-4 h-4"></i> Tech Stack</h4>
+                        <ul class="space-y-3 text-neutral-500 font-light text-sm">
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Python & SQL</span> <span>Data</span></li>
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>React & Tailwind</span> <span>Frontend</span></li>
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Solidity & Web3</span> <span>Blockchain</span></li>
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Bloomberg BMC</span> <span>Terminal</span></li>
+                        </ul>
+                    </div>
+                    <div class="reveal-text">
+                        <h4 class="font-bold mb-6 text-xs uppercase tracking-wider flex items-center gap-2 text-white"><i data-lucide="activity" class="w-4 h-4"></i> Domain Expertise</h4>
+                        <ul class="space-y-3 text-neutral-500 font-light text-sm">
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Financial Modeling</span> <span>Excel</span></li>
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Market Analysis</span> <span>Strategy</span></li>
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Falconry</span> <span>Discipline</span></li>
+                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Orchestral Bass</span> <span>Arts</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Background Typography -->
+        <div class="absolute -bottom-[2vw] -right-[2vw] font-display font-bold text-[15vw] text-white pointer-events-none select-none opacity-[0.03] leading-none">
+            TRUTH
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 md:px-12 min-h-[80vh] flex flex-col justify-between bg-[#080808] text-white border-t border-white/10">
+        <div class="max-w-[1600px] mx-auto w-full h-full flex flex-col justify-center flex-grow pt-20">
+            <div class="reveal-text">
+                <p class="font-mono text-neutral-400 mb-8 flex items-center gap-3 text-sm tracking-widest uppercase"><span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> Open for Opportunities</p>
+                <h2 class="font-display text-[9vw] leading-[0.9] font-bold tracking-tighter hover:text-neutral-300 transition-all duration-300 cursor-pointer hover-target magnetic-wrap group">
+                    <a href="mailto:sulayman.bowles@gmail.com" class="magnetic-content block underline decoration-white/20 decoration-1 underline-offset-8 hover:decoration-white/60 transition-all duration-300">
+                        SULAYMAN.<br>BOWLES@GMAIL
+                    </a>
+                    <span class="magnetic-area"></span>
+                </h2>
+            </div>
+        </div>
+
+        <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-end md:items-center border-t border-white/10 pt-10 mt-20 reveal-text">
+            <div class="flex gap-8 mb-8 md:mb-0">
+                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" class="hover-target text-neutral-500 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1">LinkedIn</a>
+                <a href="https://github.com/sulaymanb2024" target="_blank" class="hover-target text-neutral-500 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1">GitHub</a>
+                <a href="#" class="hover-target text-neutral-500 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1">Resume</a>
+            </div>
+            <div class="text-neutral-600 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-8 text-right md:text-left uppercase items-center">
+                <div id="live-ticker" class="live-ticker"></div>
+                <span id="clock">00:00:00 CST</span>
+                <span>&copy; <span id="year"></span> SULAYMAN BOWLES</span>
+            </div>
+        </footer>
+    </section>
+    </main> <!-- End of #app-container -->
+
+    <script>
+        // --- 1. DATA: PROJECT CONTENT ---
+        const projectData = {
+            bittensor: {
+                title: "BITTENSOR STARTUP",
+                subtitle: "Co-Founder & Tech Lead",
+                tags: ["Bittensor", "Python", "AI Architecture", "Revenue: $80k"],
+                description: "A VC-backed experiment in decentralized AI. We built a Bittensor-based project that generated substantial revenue before pivoting. This wasn't just code; it was an exercise in market timing and rapid scaling.",
+                details: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Objective</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                Leverage the Bittensor network to create a decentralized compute marketplace. We aimed to lower the barrier to entry for AI model training by aggregating idle GPU power.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Reality</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                While revenue was high ($80k), network volatility and liquidity constraints created massive friction. We secured a $10K seed grant from DormDAO, but the unit economics required a pivot.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-white/10">
+                        <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">Tech Stack</h4>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Python</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Rust</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">TensorFlow</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">PostgreSQL</span>
+                        </div>
+                    </div>
+                `
+            },
+            payroll: {
+                title: "CHAIN PAYROLL",
+                subtitle: "1st Place Hackathon Winner",
+                tags: ["Solidity", "React", "Web3", "DeFi"],
+                description: "A decentralized payroll prototype built to solve the 'streaming money' problem. Led a 3-person team to ship a working live demo against 12 competitive teams.",
+                details: `
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Objective</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                Traditional payroll is slow and batched. We wanted to create a 'money stream' where employees are paid by the second, leveraging smart contracts to handle tax withholding and treasury management automatically.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Reality</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                The biggest challenge wasn't the Solidity code, but the off-chain to on-chain bridge for compliance. We built a risk framework that impressed judges, winning the $2.5K grand prize.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-white/10">
+                         <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">Tech Stack</h4>
+                         <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Solidity</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Hardhat</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">React.js</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Ethers.js</span>
+                        </div>
+                    </div>
+                `
+            },
+            point72: {
+                title: "POINT72 THESIS",
+                subtitle: "Investment Analyst Case Study",
+                tags: ["Financial Modeling", "Strategy", "Equity Research"],
+                description: "A comprehensive investment thesis on $SG. This wasn't just about numbers; it was about narrative, competitive moats, and market sizing.",
+                details: `
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Objective</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                To produce a professional-grade buy/sell recommendation backed by rigorous valuation models (DCF, Comps) and qualitative market analysis.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Reality</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                The model is only as good as the assumptions. I focused heavily on sensitivity analysis, showing exactly where the thesis could break. This honesty about risk is what drives alpha.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-white/10">
+                         <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">Tools Used</h4>
+                         <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Excel (Advanced)</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Bloomberg Terminal</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">PowerPoint</span>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // --- 2. INIT TOOLS & CLOCK ---
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                timeZone: 'America/Chicago', 
+                hour12: false,
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            document.getElementById('clock').textContent = timeString + " CST";
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- 3. TEXT SCRAMBLE EFFECT ---
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += `<span class="text-neutral-600">${char}</span>`;
+                    } else {
+                        output += from;
+                    }
+                }
+                this.el.innerHTML = output;
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // --- 4. MODAL LOGIC ---
+        const modal = document.getElementById('project-modal');
+        const modalBody = document.getElementById('modal-body');
+        const closeModal = document.getElementById('close-modal');
+        const progressBar = document.getElementById('reading-progress');
+        
+        function openModal(projectId) {
+            const data = projectData[projectId];
+            if (!data) return;
+
+            // Calculate Read Time
+            const wordCount = data.description.split(' ').length + data.details.split(' ').length;
+            const readTime = Math.ceil(wordCount / 200);
+
+            modalBody.innerHTML = `
+                <div class="modal-stagger" style="transition-delay: 0.1s">
+                    <div class="flex justify-between items-start mb-2">
+                        <h2 class="font-display text-4xl md:text-6xl font-bold text-white">${data.title}</h2>
+                        <span class="font-mono text-xs text-neutral-500 border border-neutral-800 px-2 py-1 rounded">${readTime} MIN READ</span>
+                    </div>
+                    <p class="font-sans text-lg text-neutral-400 mb-6">${data.subtitle}</p>
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        ${data.tags.map(tag => `<span class="px-3 py-1 bg-white/5 text-xs font-mono uppercase text-neutral-300 tracking-widest">${tag}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="modal-stagger" style="transition-delay: 0.2s">
+                    <p class="font-display text-xl md:text-2xl leading-relaxed text-white font-light border-l-2 border-white/30 pl-6 mb-8 drop-cap">
+                        ${data.description}
+                    </p>
+                </div>
+                <div class="modal-stagger" style="transition-delay: 0.3s">
+                    ${data.details}
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.classList.add('modal-open'); // Trigger Depth Effect
+            // document.body.style.overflow = 'hidden'; // Handled by CSS on body.modal-open now
+        }
+
+        function closeModalFunc() {
+            modal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+            // document.body.style.overflow = 'auto'; 
+            progressBar.style.width = '0%';
+        }
+
+        // Reading Progress
+        modal.querySelector('.modal-content').addEventListener('scroll', (e) => {
+            const el = e.target;
+            const scrollTop = el.scrollTop;
+            const scrollHeight = el.scrollHeight - el.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+
+        // Attach listeners to cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.dataset.project;
+                openModal(projectId);
+            });
+        });
+
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        // Close on backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModalFunc();
+        });
+
+        // Esc key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModalFunc();
+            }
+        });
+
+
+        // --- 5. LOAD SEQUENCE ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const scrambleEls = document.querySelectorAll('.scramble-text');
+            
+            scrambleEls.forEach(el => {
+                const fx = new TextScramble(el);
+                fx.setText(el.dataset.final);
+            });
+
+            setTimeout(() => {
+                loader.classList.add('loader-hidden');
+                document.getElementById('canvas-container').style.opacity = 1;
+                initScrollReveal();
+                initGenerativeCovers(); // Start Generative Art
+                initLiveTicker();       // Start Live Data
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.scramble-hover').forEach(el => {
+                        const fx = new TextScramble(el);
+                        fx.setText(el.dataset.final);
+                        el.addEventListener('mouseenter', () => fx.setText(el.dataset.final));
+                    });
+                }, 400);
+
+            }, 1200);
+        });
+
+        // --- 10. GENERATIVE COVERS ---
+        function initGenerativeCovers() {
+            // 1. Bittensor (Network Graph)
+            const canvas1 = document.getElementById('canvas-bittensor');
+            if (canvas1) {
+                const ctx = canvas1.getContext('2d');
+                let width, height;
+                let nodes = [];
+                
+                const resize = () => {
+                    width = canvas1.width = canvas1.parentElement.offsetWidth;
+                    height = canvas1.height = canvas1.parentElement.offsetHeight;
+                    nodes = [];
+                    for(let i=0; i<40; i++) {
+                        nodes.push({
+                            x: Math.random() * width,
+                            y: Math.random() * height,
+                            vx: (Math.random() - 0.5) * 0.5,
+                            vy: (Math.random() - 0.5) * 0.5
+                        });
+                    }
+                };
+                resize();
+                window.addEventListener('resize', resize);
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.fillStyle = '#333';
+                    ctx.strokeStyle = '#333';
+                    
+                    nodes.forEach(node => {
+                        node.x += node.vx;
+                        node.y += node.vy;
+                        if(node.x < 0 || node.x > width) node.vx *= -1;
+                        if(node.y < 0 || node.y > height) node.vy *= -1;
+                        
+                        ctx.beginPath();
+                        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        nodes.forEach(other => {
+                            const dx = node.x - other.x;
+                            const dy = node.y - other.y;
+                            const dist = Math.sqrt(dx*dx + dy*dy);
+                            if(dist < 100) {
+                                ctx.beginPath();
+                                ctx.moveTo(node.x, node.y);
+                                ctx.lineTo(other.x, other.y);
+                                ctx.globalAlpha = 1 - dist/100;
+                                ctx.stroke();
+                                ctx.globalAlpha = 1;
+                            }
+                        });
+                    });
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+
+            // 2. Payroll (Data Stream)
+            const canvas2 = document.getElementById('canvas-payroll');
+            if (canvas2) {
+                const ctx = canvas2.getContext('2d');
+                let width, height;
+                let drops = [];
+                
+                const resize = () => {
+                    width = canvas2.width = canvas2.parentElement.offsetWidth;
+                    height = canvas2.height = canvas2.parentElement.offsetHeight;
+                    drops = [];
+                    for(let i=0; i<width/20; i++) {
+                        drops.push({
+                            x: i * 20,
+                            y: Math.random() * height,
+                            speed: 1 + Math.random() * 2,
+                            chars: "010101"
+                        });
+                    }
+                };
+                resize();
+                window.addEventListener('resize', resize);
+
+                const animate = () => {
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.1)'; // Trail effect
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.fillStyle = '#333';
+                    ctx.font = '10px monospace';
+
+                    drops.forEach(drop => {
+                        ctx.fillText(drop.chars[Math.floor(Math.random()*drop.chars.length)], drop.x, drop.y);
+                        drop.y += drop.speed;
+                        if(drop.y > height) drop.y = 0;
+                    });
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+
+            // 3. Point72 (Candlesticks)
+            const canvas3 = document.getElementById('canvas-point72');
+            if (canvas3) {
+                const ctx = canvas3.getContext('2d');
+                let width, height;
+                let candles = [];
+                
+                const resize = () => {
+                    width = canvas3.width = canvas3.parentElement.offsetWidth;
+                    height = canvas3.height = canvas3.parentElement.offsetHeight;
+                    initCandles();
+                };
+                
+                function initCandles() {
+                    candles = [];
+                    let price = 100;
+                    const candleWidth = 10;
+                    for(let x = 0; x < width; x += candleWidth + 2) {
+                        const change = (Math.random() - 0.5) * 10;
+                        const open = price;
+                        const close = price + change;
+                        const high = Math.max(open, close) + Math.random() * 5;
+                        const low = Math.min(open, close) - Math.random() * 5;
+                        candles.push({ x, open, close, high, low });
+                        price = close;
+                    }
+                }
+                
+                resize();
+                window.addEventListener('resize', resize);
+
+                const animate = () => {
+                    // Shift candles left
+                    candles.shift();
+                    const last = candles[candles.length-1];
+                    const change = (Math.random() - 0.5) * 10;
+                    const open = last.close;
+                    const close = open + change;
+                    const high = Math.max(open, close) + Math.random() * 5;
+                    const low = Math.min(open, close) - Math.random() * 5;
+                    candles.push({ 
+                        x: last.x + 12, // 10 width + 2 gap
+                        open, close, high, low 
+                    });
+
+                    // Redraw
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    // Center vertically based on last price
+                    const offsetY = height/2 - last.close;
+
+                    candles.forEach((c, i) => {
+                        // Recalculate X to keep them moving
+                        const drawX = width - ((candles.length - i) * 12);
+                        
+                        ctx.strokeStyle = c.close > c.open ? '#444' : '#222';
+                        ctx.fillStyle = c.close > c.open ? '#444' : '#222';
+                        
+                        // Wick
+                        ctx.beginPath();
+                        ctx.moveTo(drawX + 5, c.high + offsetY);
+                        ctx.lineTo(drawX + 5, c.low + offsetY);
+                        ctx.stroke();
+                        
+                        // Body
+                        ctx.fillRect(drawX, Math.min(c.open, c.close) + offsetY, 10, Math.abs(c.close - c.open));
+                    });
+                    
+                    setTimeout(() => requestAnimationFrame(animate), 100); // Slow down
+                };
+                animate();
+            }
+        }
+
+        // --- 11. LIVE TICKER ---
+        async function initLiveTicker() {
+            const ticker = document.getElementById('live-ticker');
+            
+            // Mock data initially to prevent empty space
+            ticker.innerHTML = `
+                <span>AUSTIN: <span class="live-val">72°F</span></span>
+                <span>ETH GAS: <span class="live-val">12 GWEI</span></span>
+            `;
+
+            try {
+                // 1. Weather (Open-Meteo)
+                const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m&temperature_unit=fahrenheit');
+                const weatherData = await weatherRes.json();
+                const temp = Math.round(weatherData.current.temperature_2m);
+
+                // 2. ETH Gas (Etherscan proxy or similar - using CoinGecko for Price as Gas needs API key usually)
+                // Let's use CoinGecko for ETH Price instead as it's more stable free
+                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                const cryptoData = await cryptoRes.json();
+                const ethPrice = Math.round(cryptoData.ethereum.usd);
+
+                ticker.innerHTML = `
+                    <span>AUSTIN: <span class="live-val">${temp}°F</span></span>
+                    <span>ETH: <span class="live-val">$${ethPrice}</span></span>
+                `;
+            } catch (e) {
+                console.log('Live data fetch failed, using fallback');
+            }
+        }
+
+        // --- 6. CURSOR & MAGNETIC ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const magneticWraps = document.querySelectorAll('.magnetic-wrap');
+        const viewProjectTargets = document.querySelectorAll('.view-project-target');
+        const hoverTargets = document.querySelectorAll('.hover-target');
+
+        let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+        let cursor = { x: window.innerWidth/2, y: window.innerHeight/2 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            cursorDot.style.left = `${mouse.x}px`;
+            cursorDot.style.top = `${mouse.y}px`;
+        });
+
+        function animateCursor() {
+            const speed = 0.15; 
+            cursor.x += (mouse.x - cursor.x) * speed;
+            cursor.y += (mouse.y - cursor.y) * speed;
+            cursorOutline.style.left = `${cursor.x}px`;
+            cursorOutline.style.top = `${cursor.y}px`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        magneticWraps.forEach(wrap => {
+            const content = wrap.querySelector('.magnetic-content');
+            wrap.addEventListener('mousemove', (e) => {
+                const rect = wrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                content.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px)`;
+                cursorOutline.style.transform = `translate(-50%, -50%) scale(1.8)`;
+                cursorOutline.style.borderColor = "rgba(255, 255, 255, 0.8)";
+            });
+            wrap.addEventListener('mouseleave', () => {
+                content.style.transform = `translate(0px, 0px)`;
+                cursorOutline.style.transform = `translate(-50%, -50%) scale(1)`;
+                cursorOutline.style.borderColor = "rgba(255, 255, 255, 0.3)";
+            });
+        });
+
+        hoverTargets.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        viewProjectTargets.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('viewing-project'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('viewing-project'));
+        });
+
+        // --- 7. SCROLL REVEAL ---
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+            document.querySelectorAll('.reveal-text').forEach(el => observer.observe(el));
+        }
+
+        // --- 8. MOBILE MENU ---
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtnMenu = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        function toggleMenu() {
+            mobileMenu.classList.toggle('translate-x-full');
+            document.body.style.overflow = mobileMenu.classList.contains('translate-x-full') ? 'auto' : 'hidden';
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtnMenu.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', toggleMenu));
+
+        // --- 9. THREE.JS GLOBE ---
+        function initGlobe() {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 6;
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
+            container.appendChild(renderer.domElement);
+
+            const group = new THREE.Group();
+            scene.add(group);
+
+            const geometry = new THREE.IcosahedronGeometry(2.6, 1);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x666666, 
+                wireframe: true, 
+                transparent: true, 
+                opacity: 0.15 
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            group.add(sphere);
+
+            const innerGeometry = new THREE.IcosahedronGeometry(2.55, 1);
+            const innerMaterial = new THREE.MeshBasicMaterial({ color: 0x030303 }); 
+            const innerSphere = new THREE.Mesh(innerGeometry, innerMaterial);
+            group.add(innerSphere);
+
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 600;
+            const posArray = new Float32Array(particlesCount * 3);
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 12; 
+            }
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.4
+            });
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            group.add(particlesMesh);
+
+            let mouseX = 0;
+            let mouseY = 0;
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - windowHalfX) * 0.0003;
+                mouseY = (event.clientY - windowHalfY) * 0.0003;
+            });
+
+            // Mobile Gyroscope
+            window.addEventListener('deviceorientation', (event) => {
+                if (event.beta && event.gamma) {
+                    // beta is front-back tilt [-180, 180], gamma is left-right tilt [-90, 90]
+                    mouseX = event.gamma * 0.001; 
+                    mouseY = event.beta * 0.001;
+                }
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                sphere.rotation.y += 0.001;
+                particlesMesh.rotation.y += 0.0003;
+                group.rotation.x += 0.05 * (mouseY - group.rotation.x);
+                group.rotation.y += 0.05 * (mouseX - group.rotation.y);
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+        initGlobe();
+    </script>
+</body>
+</html>
