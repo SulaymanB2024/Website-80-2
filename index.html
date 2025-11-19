@@ -597,7 +597,7 @@
             </div>
 
              <!-- Project 3: Point72 -->
-             <div class="group project-card w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72">
+             <div class="group project-card mb-40 w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/5">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
                         <canvas id="canvas-point72" class="gen-canvas"></canvas>
@@ -609,6 +609,22 @@
                         <p class="font-sans text-neutral-500 group-hover:translate-x-4 transition-transform duration-500 delay-75">Investment Analysis / Modeling / Strategy</p>
                     </div>
                     <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">03</span>
+                </div>
+            </div>
+
+            <!-- Project 4: Consulting (TaskFormer) -->
+            <div class="group project-card w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="taskformer">
+                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/5">
+                     <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
+                        <canvas id="canvas-taskformer" class="gen-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="flex justify-between items-start border-t border-white/20 pt-6">
+                    <div>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">TASKFORMER</h3>
+                        <p class="font-sans text-neutral-500 group-hover:translate-x-4 transition-transform duration-500 delay-75">Strategic Logic Gate / Consulting / Process</p>
+                    </div>
+                    <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">04</span>
                 </div>
             </div>
             
@@ -767,6 +783,34 @@
                             </p>
                         </div>
                     </div>
+                    
+                    <!-- Unit Economics Graph -->
+                    <div class="mt-12 p-6 border border-white/10 bg-black/20">
+                        <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-6">The Liquidity Trap (Unit Economics)</h4>
+                        <div class="relative w-full h-64">
+                            <!-- Graph Container -->
+                            <svg viewBox="0 0 800 300" class="w-full h-full overflow-visible">
+                                <!-- Grid Lines -->
+                                <line x1="0" y1="250" x2="800" y2="250" stroke="#333" stroke-width="1" />
+                                <line x1="0" y1="150" x2="800" y2="150" stroke="#333" stroke-width="1" stroke-dasharray="4" />
+                                <line x1="0" y1="50" x2="800" y2="50" stroke="#333" stroke-width="1" stroke-dasharray="4" />
+                                
+                                <!-- Revenue Line (Solid White) -->
+                                <path d="M0,250 C200,240 400,100 800,20" fill="none" stroke="#EAEAEA" stroke-width="2" />
+                                <text x="750" y="15" fill="#EAEAEA" font-family="monospace" font-size="10">REVENUE</text>
+                                
+                                <!-- Cost Line (Dashed Grey - Exponential) -->
+                                <path d="M0,255 C300,250 500,200 800,0" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5" />
+                                <text x="750" y="290" fill="#666" font-family="monospace" font-size="10">COST</text>
+                                
+                                <!-- Intersection Point -->
+                                <circle cx="620" cy="80" r="4" fill="#ff3333" />
+                                <text x="630" y="80" fill="#ff3333" font-family="monospace" font-size="10">CROSSOVER (FAILURE)</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs font-mono text-neutral-500 mt-4 text-center">FIG 1.1: REVENUE VS. LIQUIDITY COST</p>
+                    </div>
+
                     <div class="mt-8 pt-8 border-t border-white/10">
                         <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">Tech Stack</h4>
                         <div class="flex flex-wrap gap-3">
@@ -798,6 +842,36 @@
                             </p>
                         </div>
                     </div>
+
+                    <!-- Code Terminal -->
+                    <div class="mt-12 border border-white/10 bg-[#050505] font-mono text-xs rounded overflow-hidden">
+                        <div class="flex items-center gap-2 px-4 py-2 border-b border-white/10 bg-[#0A0A0A]">
+                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                            <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            <span class="ml-2 text-neutral-500">PayrollStream.sol</span>
+                        </div>
+                        <div class="p-6 overflow-x-auto">
+<pre><code class="language-solidity text-neutral-400">
+<span class="text-purple-400">function</span> <span class="text-blue-400">streamSalary</span>(<span class="text-orange-400">address</span> employee) <span class="text-purple-400">external nonReentrant</span> {
+    Stream <span class="text-purple-400">storage</span> s = streams[employee];
+    <span class="text-purple-400">require</span>(s.isActive, <span class="text-green-400">"Stream inactive"</span>);
+
+    <span class="text-gray-500">// Calculate flow based on block timestamp</span>
+    <span class="text-orange-400">uint256</span> timeElapsed = <span class="text-yellow-400">block.timestamp</span> - s.lastWithdrawal;
+    <span class="text-orange-400">uint256</span> amount = timeElapsed * s.ratePerSecond;
+
+    <span class="text-purple-400">require</span>(address(<span class="text-blue-400">this</span>).balance >= amount, <span class="text-green-400">"Insufficient liquidity"</span>);
+
+    s.lastWithdrawal = <span class="text-yellow-400">block.timestamp</span>;
+    <span class="text-purple-400">payable</span>(employee).<span class="text-blue-400">transfer</span>(amount);
+
+    <span class="text-purple-400">emit</span> SalaryStreamed(employee, amount, <span class="text-yellow-400">block.timestamp</span>);
+}
+</code></pre>
+                        </div>
+                    </div>
+
                     <div class="mt-8 pt-8 border-t border-white/10">
                          <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">Tech Stack</h4>
                          <div class="flex flex-wrap gap-3">
@@ -829,12 +903,140 @@
                             </p>
                         </div>
                     </div>
+
+                    <!-- Valuation Football Field -->
+                    <div class="mt-12 p-6 border border-white/10 bg-black/20">
+                        <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-6">Valuation Range (Football Field)</h4>
+                        
+                        <div class="space-y-6 font-mono text-xs relative">
+                            <!-- Vertical Line: Current Price -->
+                            <div class="absolute top-0 bottom-0 left-[60%] w-[1px] bg-red-500 z-10 flex flex-col justify-between items-center">
+                                <span class="bg-red-500 text-black px-1 -mt-2 font-bold">$42.50</span>
+                                <span class="text-red-500 bg-black px-1 -mb-2">CURRENT</span>
+                            </div>
+
+                            <!-- Bar 1: 52-Week Range -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-32 text-right text-neutral-500">52-WEEK RANGE</div>
+                                <div class="flex-1 h-8 bg-[#1a1a1a] relative">
+                                    <div class="absolute top-2 bottom-2 left-[20%] right-[30%] bg-neutral-600 flex items-center justify-between px-2 text-[10px] text-black">
+                                        <span>$28</span>
+                                        <span>$55</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bar 2: Comps -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-32 text-right text-neutral-500">COMPS (EV/EBITDA)</div>
+                                <div class="flex-1 h-8 bg-[#1a1a1a] relative">
+                                    <div class="absolute top-2 bottom-2 left-[40%] right-[10%] bg-neutral-400 flex items-center justify-between px-2 text-[10px] text-black">
+                                        <span>$38</span>
+                                        <span>$65</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bar 3: DCF -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-32 text-right text-neutral-500">DCF (PERPETUITY)</div>
+                                <div class="flex-1 h-8 bg-[#1a1a1a] relative">
+                                    <div class="absolute top-2 bottom-2 left-[50%] right-[5%] bg-white flex items-center justify-between px-2 text-[10px] text-black font-bold">
+                                        <span>$45</span>
+                                        <span>$72</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-mono text-neutral-500 mt-6 text-center">FIG 3.1: IMPLIED SHARE PRICE VS. MARKET</p>
+                    </div>
+
                     <div class="mt-8 pt-8 border-t border-white/10">
                          <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">Tools Used</h4>
                          <div class="flex flex-wrap gap-3">
                             <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Excel (Advanced)</span>
                             <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Bloomberg Terminal</span>
                             <span class="px-3 py-1 border border-white/20 rounded-full text-xs">PowerPoint</span>
+                        </div>
+                    </div>
+                `
+            },
+            taskformer: {
+                title: "TASKFORMER",
+                subtitle: "Strategic Logic Gate & Consulting",
+                tags: ["Consulting", "Strategy", "Process Design"],
+                description: "Consulting is intangible, but its impact is structural. I treat business models like code: debugging logic, identifying infinite loops, and optimizing for scale. This isn't just advice; it's a stress test.",
+                details: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Challenge</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                Founders often fall in love with "polite data"—customers who say yes but don't buy. My role is to filter this signal from the noise.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-4">The Unpleasant Detail</h4>
+                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                <span class="text-white border-b border-white/20">Kill Rate:</span> Advised 3 founders. Killed 2 features. Saved 400+ dev hours. Success isn't just building; it's knowing what NOT to build.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Logic Gate Visualization -->
+                    <div class="mt-12 p-8 border border-white/10 bg-black/20 flex flex-col items-center">
+                        <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-8 w-full text-left">The Strategic Logic Gate [STATUS: ACTIVE_PROCESS]</h4>
+                        
+                        <div class="relative w-full max-w-lg">
+                            <svg viewBox="0 0 400 200" class="w-full">
+                                <defs>
+                                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#666" />
+                                    </marker>
+                                </defs>
+                                
+                                <!-- Input -->
+                                <rect x="10" y="80" width="80" height="40" rx="4" stroke="#666" fill="none" />
+                                <text x="50" y="105" text-anchor="middle" fill="#EAEAEA" font-size="8" font-family="monospace">HYPOTHESIS</text>
+                                
+                                <!-- Path 1 -->
+                                <line x1="90" y1="100" x2="130" y2="100" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
+                                
+                                <!-- Node A: Discovery -->
+                                <polygon points="150,80 190,100 150,120 110,100" stroke="#EAEAEA" fill="none" stroke-width="2" />
+                                <text x="150" y="103" text-anchor="middle" fill="#EAEAEA" font-size="6" font-family="monospace">DISCOVERY</text>
+                                
+                                <!-- Path 2 (Success) -->
+                                <line x1="190" y1="100" x2="230" y2="100" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
+                                
+                                <!-- Node B: Validation -->
+                                <rect x="230" y="80" width="80" height="40" rx="4" stroke="#EAEAEA" fill="none" stroke-width="2" />
+                                <text x="270" y="105" text-anchor="middle" fill="#EAEAEA" font-size="8" font-family="monospace">VALIDATION</text>
+                                
+                                <!-- Path 3 (Scale) -->
+                                <line x1="310" y1="100" x2="350" y2="100" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
+                                <text x="370" y="105" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" font-family="monospace">SCALE</text>
+                                
+                                <!-- Path 4 (Fail/Pivot) -->
+                                <line x1="150" y1="120" x2="150" y2="160" stroke="#666" stroke-width="1" stroke-dasharray="4" />
+                                <line x1="150" y1="160" x2="350" y2="160" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
+                                <text x="370" y="165" text-anchor="middle" fill="#666" font-size="10" font-family="monospace">PIVOT</text>
+                                
+                                <!-- Pulse Animation -->
+                                <circle r="3" fill="#fff">
+                                    <animateMotion dur="3s" repeatCount="indefinite" path="M50,100 L150,100 L270,100 L370,100" />
+                                </circle>
+                            </svg>
+                        </div>
+                        
+                        <div class="w-full flex justify-between mt-6 pt-6 border-t border-white/10">
+                            <div class="text-xs font-mono text-neutral-500">
+                                <span class="block text-[10px] mb-1">RISK METRIC</span>
+                                <span class="text-red-400">FALSE POSITIVE RISK</span>
+                            </div>
+                            <div class="text-xs font-mono text-neutral-500 text-right">
+                                <span class="block text-[10px] mb-1">OUTPUT</span>
+                                <span class="text-white">SIGNAL CLARITY</span>
+                            </div>
                         </div>
                     </div>
                 `
@@ -1423,6 +1625,60 @@
                     
                     ctx.restore();
                     setTimeout(() => requestAnimationFrame(animate), 100); // Slow down
+                };
+                animate();
+            }
+            // 4. TaskFormer (Logic Gate)
+            const canvas4 = document.getElementById('canvas-taskformer');
+            if (canvas4) {
+                const ctx = canvas4.getContext('2d');
+                let width, height;
+                let pulse = 0;
+                
+                const resize = () => {
+                    width = canvas4.width = canvas4.parentElement.offsetWidth;
+                    height = canvas4.height = canvas4.parentElement.offsetHeight;
+                };
+                resize();
+                window.addEventListener('resize', resize);
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    // Draw Circuit Lines
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 2;
+                    
+                    const midY = height / 2;
+                    const step = width / 4;
+                    
+                    // Main Path
+                    ctx.beginPath();
+                    ctx.moveTo(0, midY);
+                    ctx.lineTo(width, midY);
+                    ctx.stroke();
+                    
+                    // Nodes (Gates)
+                    for(let i=1; i<4; i++) {
+                        const x = i * step;
+                        ctx.fillStyle = '#111';
+                        ctx.fillRect(x - 10, midY - 10, 20, 20);
+                        ctx.strokeRect(x - 10, midY - 10, 20, 20);
+                    }
+                    
+                    // Pulse
+                    pulse += 2;
+                    if (pulse > width) pulse = 0;
+                    
+                    ctx.fillStyle = '#fff';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#fff';
+                    ctx.beginPath();
+                    ctx.arc(pulse, midY, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    requestAnimationFrame(animate);
                 };
                 animate();
             }
