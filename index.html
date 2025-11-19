@@ -300,6 +300,75 @@
             transform: translateY(0);
         }
         
+        /* --- ALCHEMICAL GRID --- */
+        .element-tile {
+            aspect-ratio: 1;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: crosshair;
+            background: transparent;
+            position: relative;
+            z-index: 10;
+        }
+        .element-tile:hover {
+            background: #EAEAEA;
+            border-color: #EAEAEA;
+            transform: scale(1.05);
+            z-index: 20;
+        }
+        .element-tile .atom-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: #666;
+            transition: color 0.3s;
+        }
+        .element-tile:hover .atom-num { color: #000; }
+        
+        .element-tile .symbol {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #EAEAEA;
+            align-self: center;
+            transition: color 0.3s;
+        }
+        .element-tile:hover .symbol { color: #000; }
+        
+        .element-tile .name {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+        .element-tile:hover .name { color: #000; }
+
+        /* --- FOCUS PULL EFFECT --- */
+        .focus-pull {
+            filter: blur(3px);
+            opacity: 0.6;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .focus-pull:hover {
+            filter: blur(0);
+            opacity: 1;
+        }
+
+        /* --- OSCILLOSCOPE --- */
+        #oscilloscope-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
         /* --- UTILITY ANIMATIONS --- */
         .reveal-text {
             opacity: 0;
@@ -704,48 +773,103 @@
     </section>
 
     <!-- Philosophy Section -->
-    <section id="philosophy" class="py-40 px-6 md:px-12 bg-[#080808] relative overflow-hidden border-t border-white/5">
-        <div class="max-w-5xl mx-auto relative z-10">
-            <div class="flex items-center gap-4 mb-16 reveal-text">
+    <section id="philosophy" class="py-40 px-6 md:px-12 bg-[#080808] relative overflow-hidden border-t border-white/5 min-h-screen flex flex-col justify-center">
+        <!-- Oscilloscope Background -->
+        <canvas id="oscilloscope-canvas"></canvas>
+
+        <div class="max-w-[1400px] mx-auto relative z-10 w-full">
+            <div class="flex items-center gap-4 mb-20 reveal-text">
                 <div class="w-2 h-2 bg-white rounded-full"></div>
-                <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-500">The Philosophy</h2>
+                <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-500">The Alchemical Grid</h2>
             </div>
             
-            <div class="font-display text-3xl md:text-5xl leading-[1.2] font-light space-y-12 text-neutral-300">
-                <p class="reveal-text">
-                    <span class="font-semibold text-white border-b border-white/30 pb-1">Comfort is the enemy of alpha.</span> 
-                    Whether in code, markets, or music, I search for the dissonance. I believe in the "unpleasant details"—the friction points that others ignore. 
-                </p>
-                <p class="reveal-text">
-                   My work is a study in dualities: the precision of a spreadsheet meeting the chaos of a startup. The structure of classical music meeting the volatility of energy trading.
-                </p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 pt-16 mt-16 border-t border-white/10 font-sans text-lg">
-                    <div class="reveal-text">
-                        <h4 class="font-bold mb-6 text-xs uppercase tracking-wider flex items-center gap-2 text-white"><i data-lucide="cpu" class="w-4 h-4"></i> Tech Stack</h4>
-                        <ul class="space-y-3 text-neutral-500 font-light text-sm">
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Python & SQL</span> <span>Data</span></li>
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>React & Tailwind</span> <span>Frontend</span></li>
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Solidity & Web3</span> <span>Blockchain</span></li>
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Bloomberg BMC</span> <span>Terminal</span></li>
-                        </ul>
+            <!-- The Periodic Table of Skills -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-0 border-t border-l border-white/10 reveal-text">
+                <!-- 01 Python -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">01</span>
+                    <span class="symbol">Py</span>
+                    <div class="name">
+                        <span>Python</span><br>
+                        <span class="opacity-50">Language</span>
                     </div>
-                    <div class="reveal-text">
-                        <h4 class="font-bold mb-6 text-xs uppercase tracking-wider flex items-center gap-2 text-white"><i data-lucide="activity" class="w-4 h-4"></i> Domain Expertise</h4>
-                        <ul class="space-y-3 text-neutral-500 font-light text-sm">
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Financial Modeling</span> <span>Excel</span></li>
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Market Analysis</span> <span>Strategy</span></li>
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Falconry</span> <span>Discipline</span></li>
-                            <li class="flex items-center justify-between border-b border-white/5 pb-2 hover:text-white transition-colors"><span>Orchestral Bass</span> <span>Arts</span></li>
-                        </ul>
+                </div>
+                <!-- 02 Solidity -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">02</span>
+                    <span class="symbol">So</span>
+                    <div class="name">
+                        <span>Solidity</span><br>
+                        <span class="opacity-50">Protocol</span>
+                    </div>
+                </div>
+                <!-- 03 Excel -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">03</span>
+                    <span class="symbol">Ex</span>
+                    <div class="name">
+                        <span>Excel</span><br>
+                        <span class="opacity-50">Modeling</span>
+                    </div>
+                </div>
+                <!-- 04 Bloomberg -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">04</span>
+                    <span class="symbol">Bb</span>
+                    <div class="name">
+                        <span>Bloomberg</span><br>
+                        <span class="opacity-50">Terminal</span>
+                    </div>
+                </div>
+                <!-- 05 Falconry -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">05</span>
+                    <span class="symbol">Fa</span>
+                    <div class="name">
+                        <span>Falconry</span><br>
+                        <span class="opacity-50">Discipline</span>
+                    </div>
+                </div>
+                <!-- 06 Bass -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">06</span>
+                    <span class="symbol">Bs</span>
+                    <div class="name">
+                        <span>Bass</span><br>
+                        <span class="opacity-50">Resonance</span>
+                    </div>
+                </div>
+                <!-- 07 Strategy -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">07</span>
+                    <span class="symbol">St</span>
+                    <div class="name">
+                        <span>Strategy</span><br>
+                        <span class="opacity-50">Analysis</span>
+                    </div>
+                </div>
+                <!-- 08 Entropy -->
+                <div class="element-tile border-r border-b border-white/10">
+                    <span class="atom-num">08</span>
+                    <span class="symbol">En</span>
+                    <div class="name">
+                        <span>Entropy</span><br>
+                        <span class="opacity-50">Constant</span>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Background Typography -->
-        <div class="absolute -bottom-[2vw] -right-[2vw] font-display font-bold text-[15vw] text-white pointer-events-none select-none opacity-[0.03] leading-none">
-            TRUTH
+
+            <!-- The Manifesto (Focus Pull) -->
+            <div class="mt-32 text-center relative z-20">
+                <div class="focus-pull cursor-help inline-block">
+                    <p class="font-display text-4xl md:text-7xl font-light text-white leading-tight">
+                        "Comfort is the<br>enemy of alpha."
+                    </p>
+                    <p class="font-mono text-xs text-neutral-500 mt-6 tracking-widest uppercase">
+                        // Kinetic Truth
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1385,9 +1509,12 @@
             setTimeout(() => {
                 loader.classList.add('loader-hidden');
                 document.getElementById('canvas-container').style.opacity = 1;
+                
+                // Init Systems
+                initGlobe();
                 initScrollReveal();
-                initGenerativeCovers(); // Start Generative Art
-                initLiveTicker();       // Start Live Data
+                initLiveTicker();
+                new Oscilloscope('oscilloscope-canvas');
                 
                 setTimeout(() => {
                     document.querySelectorAll('.scramble-hover').forEach(el => {
@@ -1910,7 +2037,80 @@
                 renderer.setSize(container.clientWidth, container.clientHeight);
             });
         }
-        initGlobe();
+        
+        // --- 12. OSCILLOSCOPE ---
+        class Oscilloscope {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.time = 0;
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.parentElement.offsetWidth;
+                this.canvas.height = this.canvas.parentElement.offsetHeight;
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.beginPath();
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                this.ctx.lineWidth = 2;
+
+                const centerY = this.canvas.height / 2;
+                const amplitude = this.canvas.height * 0.3;
+                const frequency = 0.002;
+
+                for (let x = 0; x < this.canvas.width; x++) {
+                    // Combine two sine waves for a more "organic" feel
+                    const y = centerY + 
+                              Math.sin(x * frequency + this.time) * amplitude * 0.8 +
+                              Math.sin(x * frequency * 2 + this.time * 1.5) * amplitude * 0.2;
+                    
+                    if (x === 0) this.ctx.moveTo(x, y);
+                    else this.ctx.lineTo(x, y);
+                }
+
+                this.ctx.stroke();
+                this.time += 0.02;
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize all systems on window load
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const scrambleEls = document.querySelectorAll('.scramble-text');
+            
+            scrambleEls.forEach(el => {
+                const fx = new TextScramble(el);
+                fx.setText(el.dataset.final);
+            });
+
+            setTimeout(() => {
+                loader.classList.add('loader-hidden');
+                document.getElementById('canvas-container').style.opacity = 1;
+                
+                // Init Systems
+                initGlobe();
+                initScrollReveal();
+                initLiveTicker();
+                new Oscilloscope('oscilloscope-canvas');
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.scramble-hover').forEach(el => {
+                        const fx = new TextScramble(el);
+                        fx.setText(el.dataset.final);
+                        el.addEventListener('mouseenter', () => fx.setText(el.dataset.final));
+                    });
+                }, 400);
+
+            }, 1200);
+        });
     </script>
 </body>
 </html>
