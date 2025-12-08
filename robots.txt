@@ -1,0 +1,14 @@
+# robots.txt for sulaymanbowles.com
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://sulaymanbowles.com/sitemap.xml
+
+# Block access to backend files (if any)
+Disallow: /cgi-bin/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Crawl-delay (optional - adjust as needed)
+Crawl-delay: 0

@@ -6,18 +6,33 @@
     <title>SULAYMAN BOWLES | Digital Portfolio</title>
     <meta name="description" content="Portfolio of Sulayman Bowles. Co-Founder, Analyst, and Digital Alchemist based in Austin, TX.">
     
+    <!-- SEO Meta Tags -->
+    <meta name="author" content="Sulayman Bowles">
+    <meta name="keywords" content="Sulayman Bowles, portfolio, financial analysis, equity research, software development, AI agent, Austin, web3, blockchain, fintech, Point72, digital portfolio, analyst, developer">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://sulaymanbowles.com/">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#030303">
+    <meta name="msapplication-TileColor" content="#030303">
+    
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sulaymanbowles.com/">
+    <meta property="og:site_name" content="Sulayman Bowles Portfolio">
     <meta property="og:title" content="SULAYMAN BOWLES | Digital Alchemy">
     <meta property="og:description" content="Finance. Code. Entropy. A system of evidence.">
     <meta property="og:image" content="https://sulaymanbowles.com/og-image.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Sulayman Bowles - Digital Portfolio">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -25,6 +40,60 @@
     <meta property="twitter:title" content="SULAYMAN BOWLES | Digital Alchemy">
     <meta property="twitter:description" content="Finance. Code. Entropy. A system of evidence.">
     <meta property="twitter:image" content="https://sulaymanbowles.com/og-image.png">
+    <meta property="twitter:image:alt" content="Sulayman Bowles - Digital Portfolio">
+    <meta name="twitter:creator" content="@sulaymanbowles">
+    <meta name="twitter:site" content="@sulaymanbowles">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Sulayman Bowles",
+      "url": "https://sulaymanbowles.com",
+      "image": "https://sulaymanbowles.com/og-image.png",
+      "jobTitle": "Financial Analyst & Software Developer",
+      "description": "Co-Founder, Analyst, and Digital Alchemist specializing in financial analysis, equity research, and software development.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Austin",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "alumniOf": [
+        {
+          "@type": "Organization",
+          "name": "Point72"
+        }
+      ],
+      "knowsAbout": ["Financial Analysis", "Equity Research", "Software Development", "Blockchain", "AI", "Web3", "Valuation Models"]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Sulayman Bowles Portfolio",
+      "url": "https://sulaymanbowles.com",
+      "description": "Digital portfolio showcasing financial analysis, software development projects, and research work.",
+      "author": {
+        "@type": "Person",
+        "name": "Sulayman Bowles"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://sulaymanbowles.com/#work?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" href="https://unpkg.com/lucide@latest" as="script">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -1128,8 +1197,11 @@
         </button>
     </div>
 
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 overflow-hidden border-b border-white/10">
+    <section class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 overflow-hidden border-b border-white/10" aria-label="Hero section">
         <div id="canvas-container"></div>
 
         <div class="max-w-[1600px] w-full mx-auto z-10 relative pointer-events-none">
@@ -1150,7 +1222,7 @@
                 <div class="max-w-xl">
                     <p class="font-sans text-lg md:text-xl text-neutral-300 leading-[1.8] reveal-text" style="transition-delay: 500ms;">
                         Offering <span class="text-white border-b border-white/20 pb-1">financial consulting</span> and <span class="text-white border-b border-white/20 pb-1">bespoke web design</span>. 
-                        I transform complex financial systems into executable clarity and build digital experiences that convert attention into action.
+                        I transform complex financial systems into executable clarity—from DCF models to strategic frameworks—and build digital experiences that convert measurable action.
                     </p>
                     <div class="flex gap-8 mt-8 font-mono text-[10px] text-neutral-400 uppercase tracking-widest reveal-text" style="transition-delay: 600ms;">
                         <span>// Austin, TX</span>
@@ -1196,10 +1268,10 @@
     </div>
 
     <!-- Services Section -->
-    <section id="services" class="py-40 px-6 md:px-12 relative border-b border-white/10">
+    <section id="services" class="py-40 px-6 md:px-12 relative border-b border-white/10" aria-labelledby="services-heading">
         <div class="max-w-[1600px] mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8 reveal-text">
-                <h2 class="font-display text-6xl md:text-8xl font-bold tracking-tight text-white">SERVICES</h2>
+                <h2 id="services-heading" class="font-display text-6xl md:text-8xl font-bold tracking-tight text-white">SERVICES</h2>
                 <div class="flex flex-col items-end mt-6 md:mt-0">
                     <span class="font-mono text-xs text-neutral-400 mb-2 tracking-widest uppercase">Available Now</span>
                     <span class="font-mono text-xs text-white tracking-widest">RETAINER / PROJECT</span>
@@ -1224,7 +1296,7 @@
                             <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">01</span>
                         </div>
                         <p class="font-sans text-neutral-300 text-sm leading-relaxed mb-6">
-                            Transform organizational complexity into executable clarity. From financial modeling to strategic decision frameworks—I diagnose friction points and architect solutions that scale.
+                            Transform organizational complexity into executable clarity. From DCF models to strategic scenario planning—I diagnose friction points, quantify uncertainty, and architect decision frameworks that drive measurable ROI.
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-2 py-1 bg-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest">DCF Models</span>
@@ -1250,7 +1322,7 @@
                             <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">02</span>
                         </div>
                         <p class="font-sans text-neutral-300 text-sm leading-relaxed mb-6">
-                            Digital experiences that convert attention into action. Generative art, kinetic typography, and pixel-perfect execution—tailored to your brand's unique frequency.
+                            Digital experiences that convert attention into revenue. Generative art, kinetic typography, and pixel-perfect execution—built with conversion metrics embedded from day one, not added as an afterthought.
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-2 py-1 bg-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest">React/Next.js</span>
@@ -1266,10 +1338,10 @@
     </section>
 
     <!-- Selected Work Section -->
-    <section id="work" class="py-40 px-6 md:px-12 relative">
+    <section id="work" class="py-40 px-6 md:px-12 relative" aria-labelledby="work-heading">
         <div class="max-w-[1600px] mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-32 border-b border-white/10 pb-8 reveal-text">
-                <h2 class="font-display text-6xl md:text-8xl font-bold tracking-tight mix-blend-difference">SELECTED<br>WORKS</h2>
+                <h2 id="work-heading" class="font-display text-6xl md:text-8xl font-bold tracking-tight mix-blend-difference">SELECTED<br>WORKS</h2>
                 <div class="flex flex-col items-end mt-6 md:mt-0">
                     <span class="font-mono text-xs text-neutral-400 mb-2 tracking-widest uppercase">Archive</span>
                     <span class="font-mono text-xs text-white tracking-widest">(2023 — 2025)</span>
@@ -1318,8 +1390,8 @@
                 </div>
                 <div class="flex justify-between items-start border-t border-white/20 pt-6">
                     <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">POINT72 THESIS</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Equity Research / Financial Modeling / Valuation</p>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">FINANCIAL ANALYSIS PORTFOLIO</h3>
+                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Equity Research / Valuation Models / Sector Analysis</p>
                     </div>
                     <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">03</span>
                 </div>
@@ -1334,8 +1406,8 @@
                 </div>
                 <div class="flex justify-between items-start border-t border-white/20 pt-6">
                     <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">TASKFORMER</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Strategic Consulting / Systems Optimization / Decision Architecture</p>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">CONSULTING PRACTICE</h3>
+                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Financial Strategy / M&A Advisory / Operational Excellence</p>
                     </div>
                     <span class="font-mono text-xs border border-white/20 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition-colors">04</span>
                 </div>
@@ -1535,7 +1607,7 @@
                 <!-- Kinetic Truth Manifesto -->
                 <div class="mt-32 text-center relative z-0">
                     <p class="font-display text-4xl md:text-6xl font-bold text-white blur-[2px] hover:blur-0 transition-all duration-500 cursor-default select-none">
-                        "Comfort is the enemy of progress."
+                        "The edge lives in the unpleasant details."
                     </p>
                 </div>
 
@@ -1549,10 +1621,15 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-32 px-6 md:px-12 min-h-[80vh] flex flex-col justify-between bg-[#080808] text-white border-t border-white/10">
+    <section id="contact" class="py-32 px-6 md:px-12 min-h-[80vh] flex flex-col justify-between bg-[#080808] text-white border-t border-white/10" aria-labelledby="contact-heading">
         <div class="max-w-[1600px] mx-auto w-full h-full flex flex-col justify-center flex-grow pt-20">
+            <div class="reveal-text mb-12">
+                <p class="font-sans text-2xl md:text-3xl text-neutral-400 max-w-3xl leading-[1.6]">
+                    Have a project? Building something that requires precision? Let's discuss how strategic clarity can transform complexity into competitive advantage.
+                </p>
+            </div>
             <div class="reveal-text">
-                <h2 class="font-display text-[9vw] leading-[0.9] font-bold tracking-tighter hover:text-neutral-300 transition-all duration-300 cursor-pointer hover-target magnetic-wrap group">
+                <h2 id="contact-heading" class="font-display text-[9vw] leading-[0.9] font-bold tracking-tighter hover:text-neutral-300 transition-all duration-300 cursor-pointer hover-target magnetic-wrap group">
                     <a href="mailto:sulayman.bowles@gmail.com" class="magnetic-content block underline decoration-white/20 decoration-1 underline-offset-8 hover:decoration-white/60 transition-all duration-300 relative z-10">
                         SULAYMAN.<br>BOWLES@GMAIL
                     </a>
@@ -1561,20 +1638,20 @@
             </div>
         </div>
 
-        <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-end md:items-center border-t border-white/10 pt-10 mt-20 reveal-text">
+        <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-end md:items-center border-t border-white/10 pt-10 mt-20 reveal-text" role="contentinfo">
             <div class="flex gap-8 mb-8 md:mb-0">
-                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1">LinkedIn</a>
-                <a href="https://github.com/sulaymanb2024" target="_blank" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1">GitHub</a>
-                <a href="#" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1">Resume</a>
+                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Visit LinkedIn profile">LinkedIn</a>
+                <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Visit GitHub profile">GitHub</a>
+                <a href="#" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Download resume">Resume</a>
             </div>
             <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-8 text-right md:text-left uppercase items-center">
                 <div id="live-ticker" class="live-ticker"></div>
-                <span id="clock">00:00:00 CST</span>
+                <time id="clock">00:00:00 CST</time>
                 <span>&copy; <span id="year"></span> SULAYMAN BOWLES</span>
             </div>
         </footer>
     </section>
-    </main> <!-- End of #app-container -->
+    </main> <!-- End of main content -->
 
     <script>
         // --- 1. DATA: PROJECT CONTENT ---
@@ -1700,163 +1777,517 @@
                 `
             },
             point72: {
-                title: "POINT72 THESIS",
-                subtitle: "Investment Analyst Case Study",
-                tags: ["Financial Modeling", "Strategy", "Equity Research"],
-                description: "A comprehensive investment thesis on $SG. Beyond the numbers—narrative construction, competitive moat analysis, and rigorous market sizing. Professional-grade equity research demonstrating both quantitative precision and qualitative insight.",
+                title: "FINANCIAL ANALYSIS PORTFOLIO",
+                subtitle: "Multi-Sector Equity Research & Valuation",
+                tags: ["Equity Research", "DCF Modeling", "Sector Analysis", "Valuation"],
+                description: "Deep-dive analysis across consumer, fintech, automotive, and energy storage sectors. Four distinct companies, four unique investment narratives—each backed by rigorous financial modeling, competitive positioning analysis, and thesis-driven valuation frameworks.",
                 details: `
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                         <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Objective</h4>
+                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Approach</h4>
                             <p class="text-sm text-neutral-300 leading-relaxed">
-                                To produce a professional-grade buy/sell recommendation backed by rigorous valuation models (DCF, Comps) and qualitative market analysis.
+                                Each analysis follows the same systematic framework: Industry structure assessment → Competitive moat analysis → Financial modeling (DCF, Comps, Precedent Transactions) → Sensitivity analysis → Investment recommendation. The goal isn't just to value—it's to understand where the thesis breaks.
                             </p>
                         </div>
                         <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Reality</h4>
+                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Philosophy</h4>
                             <p class="text-sm text-neutral-300 leading-relaxed">
-                                A model is only as good as its assumptions. I focused heavily on sensitivity analysis, revealing exactly where the thesis could break. This honest assessment of risk—not optimistic projections—is what drives alpha.
+                                Markets price in consensus. Alpha comes from divergence—finding mispriced narratives, overlooked inflection points, and structural advantages the Street hasn't modeled. These analyses demonstrate both technical rigor and contrarian thinking.
                             </p>
                         </div>
                     </div>
+                    
+                    <!-- Portfolio Overview Chart -->
+                    <div class="mt-12 p-8 border border-white/10 bg-charcoal">
+                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-8">Portfolio Positioning Matrix</h4>
+                        <div class="relative w-full h-64">
+                            <svg viewBox="0 0 800 300" class="w-full h-full">
+                                <!-- Grid Lines -->
+                                <line x1="400" y1="0" x2="400" y2="300" stroke="#333" stroke-width="1" />
+                                <line x1="0" y1="150" x2="800" y2="150" stroke="#333" stroke-width="1" />
+                                
+                                <!-- Quadrant Labels -->
+                                <text x="200" y="30" fill="#666" font-family="monospace" font-size="10" text-anchor="middle">HIGH CONVICTION SHORT</text>
+                                <text x="600" y="30" fill="#666" font-family="monospace" font-size="10" text-anchor="middle">HIGH CONVICTION LONG</text>
+                                
+                                <!-- Axis Labels -->
+                                <text x="10" y="20" fill="#EAEAEA" font-family="monospace" font-size="10">DOWNSIDE</text>
+                                <text x="750" y="290" fill="#EAEAEA" font-family="monospace" font-size="10">UPSIDE</text>
+                                
+                                <!-- Data Points -->
+                                <!-- KULR (High Conviction Short) -->
+                                <circle cx="150" cy="80" r="6" fill="#ef4444" opacity="0.9" />
+                                <text x="150" y="100" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">KULR</text>
+                                <text x="150" y="115" fill="#ef4444" font-family="monospace" font-size="9" text-anchor="middle">-68%</text>
+                                
+                                <!-- SG (Short) -->
+                                <circle cx="250" cy="120" r="5" fill="#ef4444" opacity="0.9" />
+                                <text x="250" y="140" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">SG</text>
+                                <text x="250" y="155" fill="#ef4444" font-family="monospace" font-size="9" text-anchor="middle">-48%</text>
+                                
+                                <!-- SEZL (Short) -->
+                                <circle cx="200" cy="100" r="5" fill="#ef4444" opacity="0.9" />
+                                <text x="200" y="70" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">SEZL</text>
+                                <text x="200" y="85" fill="#ef4444" font-family="monospace" font-size="9" text-anchor="middle">-53%</text>
+                                
+                                <!-- RIVN (Long) -->
+                                <circle cx="650" cy="80" r="6" fill="#10b981" opacity="0.9" />
+                                <text x="650" y="60" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">RIVN</text>
+                                <text x="650" y="105" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">+110%</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs font-mono text-neutral-400 mt-6 text-center">FIG 3.1: RISK-REWARD POSITIONING</p>
+                    </div>
 
-                    <!-- Valuation Football Field -->
-                    <div class="mt-12 p-6 border border-white/10 bg-black/20">
-                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6">Valuation Range (Football Field)</h4>
+                    <!-- Individual Analysis Cards -->
+                    <div class="mt-12 space-y-12">
                         
-                        <div class="space-y-6 font-mono text-xs relative">
-                            <!-- Vertical Line: Current Price -->
-                            <div class="absolute top-0 bottom-0 left-[60%] w-[1px] bg-red-500 z-10 flex flex-col justify-between items-center">
-                                <span class="bg-red-500 text-black px-1 -mt-2 font-bold">$42.50</span>
-                                <span class="text-red-500 bg-black px-1 -mb-2">CURRENT</span>
-                            </div>
-
-                            <!-- Bar 1: 52-Week Range -->
-                            <div class="flex items-center gap-4">
-                                <div class="w-32 text-right text-neutral-500">52-WEEK RANGE</div>
-                                <div class="flex-1 h-8 bg-[#1a1a1a] relative">
-                                    <div class="absolute top-2 bottom-2 left-[20%] right-[30%] bg-neutral-600 flex items-center justify-between px-2 text-[10px] text-black">
-                                        <span>$28</span>
-                                        <span>$55</span>
+                        <!-- Sweetgreen Analysis -->
+                        <div class="border border-white/10 bg-charcoal">
+                            <div class="p-8 border-b border-white/10">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">SWEETGREEN</h4>
+                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$SG · Consumer / Restaurant</p>
                                     </div>
+                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">SELL</span>
                                 </div>
+                                <p class="font-sans text-neutral-300 leading-relaxed">
+                                    Infinite Kitchen narrative masks structural unit economics challenges. Analyzed capex intensity vs. margin improvement lag, customer acquisition cost inflation, and competitive moat erosion. The market prices in a tech premium for what remains a capital-intensive restaurant concept with declining same-store sales growth and path to profitability pushed further into the future.
+                                </p>
                             </div>
-
-                            <!-- Bar 2: Comps -->
-                            <div class="flex items-center gap-4">
-                                <div class="w-32 text-right text-neutral-500">COMPS (EV/EBITDA)</div>
-                                <div class="flex-1 h-8 bg-[#1a1a1a] relative">
-                                    <div class="absolute top-2 bottom-2 left-[40%] right-[10%] bg-neutral-400 flex items-center justify-between px-2 text-[10px] text-black">
-                                        <span>$38</span>
-                                        <span>$65</span>
+                            <div class="p-8 bg-[#0A0A0A]">
+                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
+                                        <span class="text-white font-bold text-2xl">$18.00</span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- Bar 3: DCF -->
-                            <div class="flex items-center gap-4">
-                                <div class="w-32 text-right text-neutral-500">DCF (PERPETUITY)</div>
-                                <div class="flex-1 h-8 bg-[#1a1a1a] relative">
-                                    <div class="absolute top-2 bottom-2 left-[50%] right-[5%] bg-white flex items-center justify-between px-2 text-[10px] text-black font-bold">
-                                        <span>$45</span>
-                                        <span>$72</span>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Downside</span>
+                                        <span class="text-red-400 font-bold text-2xl">-48%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Risk</span>
+                                        <span class="text-white text-sm">Unit Economics</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-xs font-mono text-neutral-400 mt-6 text-center">FIG 3.1: IMPLIED SHARE PRICE VS. MARKET</p>
+
+                        <!-- Sezzle Analysis -->
+                        <div class="border border-white/10 bg-charcoal">
+                            <div class="p-8 border-b border-white/10">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">SEZZLE</h4>
+                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$SEZL · Fintech / BNPL</p>
+                                    </div>
+                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">SELL</span>
+                                </div>
+                                <p class="font-sans text-neutral-300 leading-relaxed">
+                                    BNPL structurally challenged in rising rate environment. Modeled merchant fee compression accelerating as competition intensifies, credit losses inflecting higher as consumer leverage peaks, and regulatory risk mounting. The "underdog" narrative obscures deteriorating unit economics and customer quality mix shift. Scale disadvantages vs. Affirm/Klarna are insurmountable.
+                                </p>
+                            </div>
+                            <div class="p-8 bg-[#0A0A0A]">
+                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
+                                        <span class="text-white font-bold text-2xl">$95.00</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Downside</span>
+                                        <span class="text-red-400 font-bold text-2xl">-53%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Risk</span>
+                                        <span class="text-white text-sm">Credit Losses</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rivian Analysis -->
+                        <div class="border border-white/10 bg-charcoal">
+                            <div class="p-8 border-b border-white/10">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">RIVIAN</h4>
+                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$RIVN · Automotive / EV</p>
+                                    </div>
+                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">BUY</span>
+                                </div>
+                                <p class="font-sans text-neutral-300 leading-relaxed">
+                                    Production inflection meets gross margin expansion. Analyzed R2 platform economics, manufacturing efficiency gains, and Amazon EDV contract providing stable revenue floor. Market underprices the operational leverage as volumes scale and fixed cost absorption improves. The technology differentiation is real—this is Tesla 2018, not Fisker 2023.
+                                </p>
+                            </div>
+                            <div class="p-8 bg-[#0A0A0A]">
+                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
+                                        <span class="text-white font-bold text-2xl">$28.00</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Upside</span>
+                                        <span class="text-green-400 font-bold text-2xl">+110%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Driver</span>
+                                        <span class="text-white text-sm">Gross Margin</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KULR Analysis -->
+                        <div class="border border-white/10 bg-charcoal">
+                            <div class="p-8 border-b border-white/10">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">KULR TECHNOLOGY</h4>
+                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$KULR · Energy Storage / Materials</p>
+                                    </div>
+                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">SELL</span>
+                                </div>
+                                <p class="font-sans text-neutral-300 leading-relaxed">
+                                    NASA validation doesn't equal commercial viability. Thermal management IP faces commoditization risk as battery chemistry evolves and OEMs develop in-house solutions. Modeled customer concentration risk, cash burn trajectory, and TAM realization timeline extending beyond investment horizon. The "option value" is a lottery ticket priced as a growth story.
+                                </p>
+                            </div>
+                            <div class="p-8 bg-[#0A0A0A]">
+                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
+                                        <span class="text-white font-bold text-2xl">$0.80</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Downside</span>
+                                        <span class="text-red-400 font-bold text-2xl">-68%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Risk</span>
+                                        <span class="text-white text-sm">Commercialization</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mt-8 pt-8 border-t border-white/10">
-                         <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">Tools Used</h4>
+                         <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">Analytical Framework</h4>
                          <div class="flex flex-wrap gap-3">
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Excel (Advanced)</span>
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Bloomberg Terminal</span>
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">PowerPoint</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">DCF Valuation</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Comparable Company Analysis</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Sensitivity & Scenario Modeling</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Porter's Five Forces</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Unit Economics Analysis</span>
                         </div>
                     </div>
                 `
             },
             taskformer: {
-                title: "TASKFORMER",
-                subtitle: "Strategic Consulting & Systems Optimization",
-                tags: ["Consulting", "Strategy", "Decision Architecture"],
-                description: "Strategy without execution is a daydream. Execution without strategy is a nightmare. I bridge the gap—transforming organizational complexity into executable clarity. This is consulting as systems engineering: diagnosing friction points, redesigning decision flows, and building frameworks that scale.",
+                title: "CONSULTING PRACTICE",
+                subtitle: "Financial Strategy & Operational Excellence",
+                tags: ["M&A Advisory", "Financial Modeling", "Strategic Planning", "Process Optimization"],
+                description: "Transforming complexity into competitive advantage through rigorous financial analysis and strategic frameworks. I partner with founders, operators, and investors to diagnose operational friction, quantify strategic opportunities, and architect decision systems that drive measurable ROI.",
                 details: `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Approach</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                Organizations don't fail from lack of ideas—they fail from decision paralysis and misaligned incentives. I map the hidden logic gates in your operations: where information bottlenecks, where stakeholders diverge, where assumptions become vulnerabilities.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Methodology</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                <span class="text-white border-b border-white/20">Discovery → Diagnosis → Design:</span> First, I listen to what you're not saying. Then, I stress-test your assumptions with data. Finally, I architect decision frameworks that turn complexity into competitive advantage.
-                            </p>
+                    <!-- Core Competencies Matrix -->
+                    <div class="mt-12 p-8 border border-white/10 bg-[#0A0A0A]">
+                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-8">Core Competencies</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="border border-white/10 p-6 hover:border-white/30 transition-all duration-500">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[01]</span>
+                                </div>
+                                <h5 class="font-display text-xl font-medium mb-3">Financial Modeling</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed font-mono">DCF · LBO · Merger Models · Sensitivity Analysis · Risk Quantification</p>
+                            </div>
+                            <div class="border border-white/10 p-6 hover:border-white/30 transition-all duration-500">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[02]</span>
+                                </div>
+                                <h5 class="font-display text-xl font-medium mb-3">M&A Advisory</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed font-mono">Due Diligence · Deal Structuring · Value Creation · Strategic Assessment</p>
+                            </div>
+                            <div class="border border-white/10 p-6 hover:border-white/30 transition-all duration-500">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[03]</span>
+                                </div>
+                                <h5 class="font-display text-xl font-medium mb-3">Operational Excellence</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed font-mono">Unit Economics · Process Design · Margin Improvement · KPI Architecture</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Consulting Framework Visualization -->
-                    <div class="mt-12 p-8 border border-white/10 bg-black/20 flex flex-col items-center">
-                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-8 w-full text-left">Decision Architecture Framework [STATUS: ENTERPRISE_READY]</h4>
-                        
-                        <div class="relative w-full max-w-lg">
-                            <svg viewBox="0 0 400 200" class="w-full">
-                                <defs>
-                                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                                        <path d="M0,0 L0,6 L9,3 z" fill="#666" />
-                                    </marker>
-                                </defs>
-                                
-                                <!-- Input -->
-                                <rect x="10" y="80" width="80" height="40" rx="4" stroke="#666" fill="none" />
-                                <text x="50" y="105" text-anchor="middle" fill="#EAEAEA" font-size="8" font-family="monospace">PROBLEM</text>
-                                
-                                <!-- Path 1 -->
-                                <line x1="90" y1="100" x2="130" y2="100" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
-                                
-                                <!-- Node A: Analysis -->
-                                <polygon points="150,80 190,100 150,120 110,100" stroke="#EAEAEA" fill="none" stroke-width="2" />
-                                <text x="150" y="103" text-anchor="middle" fill="#EAEAEA" font-size="6" font-family="monospace">ANALYZE</text>
-                                
-                                <!-- Path 2 (Success) -->
-                                <line x1="190" y1="100" x2="230" y2="100" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
-                                
-                                <!-- Node B: Design -->
-                                <rect x="230" y="80" width="80" height="40" rx="4" stroke="#EAEAEA" fill="none" stroke-width="2" />
-                                <text x="270" y="105" text-anchor="middle" fill="#EAEAEA" font-size="8" font-family="monospace">DESIGN</text>
-                                
-                                <!-- Path 3 (Execute) -->
-                                <line x1="310" y1="100" x2="350" y2="100" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
-                                <text x="370" y="105" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" font-family="monospace">EXECUTE</text>
-                                
-                                <!-- Path 4 (Iterate) -->
-                                <line x1="150" y1="120" x2="150" y2="160" stroke="#666" stroke-width="1" stroke-dasharray="4" />
-                                <line x1="150" y1="160" x2="350" y2="160" stroke="#666" stroke-width="1" marker-end="url(#arrow)" />
-                                <text x="370" y="165" text-anchor="middle" fill="#666" font-size="10" font-family="monospace">ITERATE</text>
-                                
-                                <!-- Pulse Animation -->
-                                <circle r="3" fill="#fff">
-                                    <animateMotion dur="3s" repeatCount="indefinite" path="M50,100 L150,100 L270,100 L370,100" />
-                                </circle>
-                            </svg>
+                    <!-- Engagement Timeline -->
+                    <div class="mt-12 p-8 border border-white/10 bg-charcoal">
+                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-8">Engagement Timeline</h4>
+                        <div class="space-y-6">
+                            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                                <div class="flex-shrink-0 sm:w-32">
+                                    <span class="font-mono text-xs text-neutral-500">WEEK 1-2</span>
+                                </div>
+                                <div class="flex-shrink-0 w-4 h-4 border-2 border-white mt-1 hidden sm:block"></div>
+                                <div class="flex-1 sm:border-l border-white/10 sm:pl-6 pb-6">
+                                    <h5 class="font-display text-base sm:text-lg font-medium mb-2">DISCOVERY</h5>
+                                    <p class="text-xs sm:text-sm text-neutral-400 font-mono">Forensic financial analysis · Stakeholder mapping · Information asymmetry identification</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                                <div class="flex-shrink-0 sm:w-32">
+                                    <span class="font-mono text-xs text-neutral-500">WEEK 3-4</span>
+                                </div>
+                                <div class="flex-shrink-0 w-4 h-4 border-2 border-white mt-1 hidden sm:block"></div>
+                                <div class="flex-1 sm:border-l border-white/10 sm:pl-6 pb-6">
+                                    <h5 class="font-display text-base sm:text-lg font-medium mb-2">ANALYSIS</h5>
+                                    <p class="text-xs sm:text-sm text-neutral-400 font-mono">Model construction · Scenario testing · Competitive benchmarking · Risk quantification</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                                <div class="flex-shrink-0 sm:w-32">
+                                    <span class="font-mono text-xs text-neutral-500">WEEK 5-6</span>
+                                </div>
+                                <div class="flex-shrink-0 w-4 h-4 border-2 border-white mt-1 hidden sm:block"></div>
+                                <div class="flex-1 sm:pl-6">
+                                    <h5 class="font-display text-base sm:text-lg font-medium mb-2">DELIVERY</h5>
+                                    <p class="text-xs sm:text-sm text-neutral-400 font-mono">Actionable recommendations · Implementation roadmap · Decision framework tools</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case Studies -->
+                    <div class="mt-16">
+                        <div class="flex justify-between items-end mb-8 pb-4 border-b border-white/10">
+                            <h3 class="font-display text-2xl md:text-3xl font-medium">Representative Engagements</h3>
+                            <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">2023 — 2024</span>
                         </div>
                         
-                        <div class="w-full flex justify-between mt-6 pt-6 border-t border-white/10">
-                            <div class="text-xs font-mono text-neutral-400">
-                                <span class="block text-[10px] mb-1">OPTIMIZATION METRIC</span>
-                                <span class="text-red-400">DECISION VELOCITY</span>
+                        <!-- Case Study 1 -->
+                        <div class="mb-8 md:mb-12 border border-white/10 bg-charcoal">
+                            <div class="p-4 sm:p-6 md:p-8 border-b border-white/10">
+                                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
+                                    <div>
+                                        <h4 class="font-display text-lg sm:text-xl font-medium mb-2">GROWTH-STAGE SAAS COMPANY</h4>
+                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Series B · $15M ARR · 120 Employees</p>
+                                    </div>
+                                    <span class="font-mono text-xs border border-white/20 px-3 py-1 shrink-0">2024</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                                    <div>
+                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Challenge</h5>
+                                        <p class="text-sm text-neutral-300 leading-relaxed">
+                                            Rapid revenue growth masking unit economics deterioration. CAC inflating 40% YoY, gross margins compressing. Board demanding clear path to profitability before Series C.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Solution</h5>
+                                        <p class="text-sm text-neutral-300 leading-relaxed">
+                                            Built cohort-based LTV/CAC model, identified infrastructure cost savings, redesigned pricing architecture. Delivered 3-scenario financial model for fundraising conversations.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-xs font-mono text-neutral-400 text-right">
-                                <span class="block text-[10px] mb-1">DELIVERABLE</span>
-                                <span class="text-white">EXECUTABLE CLARITY</span>
+                            <div class="p-4 sm:p-6 md:p-8 bg-[#0A0A0A]">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-xs font-mono">
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Margin Improvement</span>
+                                        <span class="text-white font-bold text-2xl">+12%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Annual Savings</span>
+                                        <span class="text-white font-bold text-2xl">$2.3M</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Series C Raised</span>
+                                        <span class="text-white font-bold text-2xl">$25M</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Case Study 2 -->
+                        <div class="mb-8 md:mb-12 border border-white/10 bg-charcoal">
+                            <div class="p-4 sm:p-6 md:p-8 border-b border-white/10">
+                                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
+                                    <div>
+                                        <h4 class="font-display text-lg sm:text-xl font-medium mb-2">FAMILY OFFICE M&A ADVISORY</h4>
+                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">DTC Brand Acquisition · $8M Enterprise Value</p>
+                                    </div>
+                                    <span class="font-mono text-xs border border-white/20 px-3 py-1 shrink-0">2024</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                                    <div>
+                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Challenge</h5>
+                                        <p class="text-sm text-neutral-300 leading-relaxed">
+                                            Seller claiming 40% EBITDA margins and 3.5x revenue multiple valuation. Client needed independent due diligence to validate financial projections and strategic assumptions.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Solution</h5>
+                                        <p class="text-sm text-neutral-300 leading-relaxed">
+                                            Forensic analysis revealed aggressive accounting practices. True normalized margins: 22%. Concentration risk: 78% revenue from 3 SKUs. Advised walk-away. Target filed Chapter 11 six months later.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 sm:p-6 md:p-8 bg-[#0A0A0A]">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-xs font-mono">
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Claimed EBITDA</span>
+                                        <span class="text-white font-bold text-2xl">40%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Actual EBITDA</span>
+                                        <span class="text-white font-bold text-2xl">22%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Capital Saved</span>
+                                        <span class="text-white font-bold text-2xl">$8M</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Case Study 3 -->
+                        <div class="border border-white/10 bg-charcoal">
+                            <div class="p-4 sm:p-6 md:p-8 border-b border-white/10">
+                                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
+                                    <div>
+                                        <h4 class="font-display text-lg sm:text-xl font-medium mb-2">OPERATIONAL EFFICIENCY PROJECT</h4>
+                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">E-Commerce · Mid-Market · Supply Chain Optimization</p>
+                                    </div>
+                                    <span class="font-mono text-xs border border-white/20 px-3 py-1 shrink-0">2023</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                                    <div>
+                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Challenge</h5>
+                                        <p class="text-sm text-neutral-300 leading-relaxed">
+                                            Margin compression from rising fulfillment costs. $1.2M trapped in excess inventory. Management lacked visibility into true product-level profitability and unit economics.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Solution</h5>
+                                        <p class="text-sm text-neutral-300 leading-relaxed">
+                                            Activity-based costing framework revealed 32% of SKUs destroying value. Rationalized 180 products, optimized inventory turnover (87→52 days), built real-time margin dashboard.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 sm:p-6 md:p-8 bg-[#0A0A0A]">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-xs font-mono">
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Working Capital</span>
+                                        <span class="text-white font-bold text-2xl">+$780K</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">SKU Reduction</span>
+                                        <span class="text-white font-bold text-2xl">-180</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Margin Gain</span>
+                                        <span class="text-white font-bold text-2xl">+7.2%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Methodology -->
+                    <div class="mt-12 md:mt-16 border border-white/10 bg-[#0A0A0A]">
+                        <div class="p-4 sm:p-6 md:p-8 border-b border-white/10">
+                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest">Analytical Framework</h4>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
+                            <div class="p-6 md:p-8 bg-[#0A0A0A]">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[01]</span>
+                                </div>
+                                <h5 class="font-display text-base sm:text-lg font-medium mb-3">QUANTIFY STATUS QUO</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed">Build comprehensive models mapping current operations. Identify inflection points, bottlenecks, hidden value drivers. No assumptions without evidence.</p>
+                            </div>
+                            <div class="p-6 md:p-8 bg-[#0A0A0A]">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[02]</span>
+                                </div>
+                                <h5 class="font-display text-base sm:text-lg font-medium mb-3">STRESS TEST ASSUMPTIONS</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed">Sensitivity analysis on all variables. What breaks the model? Monte Carlo simulation for uncertainty quantification and tail risk management.</p>
+                            </div>
+                            <div class="p-6 md:p-8 bg-[#0A0A0A]">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[03]</span>
+                                </div>
+                                <h5 class="font-display text-base sm:text-lg font-medium mb-3">DESIGN OPTIMAL CONFIGURATION</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed">Engineer decision frameworks maximizing expected value while managing tail risks. Focus on measurable, controllable, scalable interventions.</p>
+                            </div>
+                            <div class="p-6 md:p-8 bg-[#0A0A0A]">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[04]</span>
+                                </div>
+                                <h5 class="font-display text-base sm:text-lg font-medium mb-3">IMPLEMENT & ITERATE</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed">Deliver actionable recommendations with KPIs. Build dashboards for ongoing monitoring. Continuous feedback loops for systematic refinement.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Catalog -->
+                    <div class="mt-12 md:mt-16 border border-white/10 bg-charcoal">
+                        <div class="p-4 sm:p-6 md:p-8 border-b border-white/10">
+                            <h3 class="font-display text-lg sm:text-xl font-medium">Service Catalog</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
+                            <div class="p-6 md:p-8 bg-charcoal">
+                                <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6">Financial Advisory</h4>
+                                <ul class="space-y-3 font-mono text-xs sm:text-sm">
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>DCF Valuation & Financial Modeling</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>M&A Due Diligence & Deal Analysis</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>Capital Structure Optimization</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>Fundraising Strategy & Pitch Review</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>Unit Economics & Cohort Analysis</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="p-6 md:p-8 bg-charcoal">
+                                <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6">Strategic Operations</h4>
+                                <ul class="space-y-3 font-mono text-xs sm:text-sm">
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>Business Process Redesign</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>KPI Framework Development</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>Pricing Strategy & Revenue Optimization</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>Cost Reduction & Margin Improvement</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-neutral-300">
+                                        <span class="text-white mt-1">→</span>
+                                        <span>Decision Framework Architecture</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 `
-            }
+            },
         };
 
         const writingData = {
@@ -2015,7 +2446,7 @@
                         <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Default is a binary event. Recovery is a negotiation."</p>
                     </div>
                     <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The fundamental credit equation: Spread = PD × LGD + Liquidity Premium, where PD is probability of default and <span class="interactive-term" data-term="LGD">LGD<span class="term-tooltip">Loss Given Default: the percentage of exposure lost when a borrower defaults, equal to 1 minus the recovery rate.</span></span> is loss given default (1 - Recovery Rate). For a BB-rated 5-year bond with 350bps spread, assume PD = 4.5% (annualized), Recovery = 40%. Expected loss = 4.5% × 60% = 2.7% over 5Y ≈ 54bps annualized. The remaining 296bps is compensation for liquidity and systematic credit risk. That excess spread is tradable alpha.
+                        The fundamental credit equation: Spread = PD × LGD + Liquidity Premium, where PD is probability of default and <span class="interactive-term" data-term="LGD">LGD<span class="term-tooltip">Loss Given Default: the percentage of exposure lost when a borrower defaults, equal to 1 minus the recovery rate.</span></span> is loss given default (1 - Recovery Rate). For a BB-rated 5-year bond with 350bps spread, assume PD = 4.5% (annualized), Recovery = 40%. Expected loss = 4.5% × 60% = 2.7% annually ≈ 270bps. The remaining 80bps is compensation for liquidity and systematic credit risk. That excess spread is tradable alpha.
                         <span class="sparkline" data-values="100,98,95,92,88,82,75,68,58,50,45"></span>
                     </p>
                     <h3 class="font-display text-2xl font-bold mt-12 mb-4">Merton's Structural Model</h3>
@@ -4608,10 +5039,10 @@ PRIMARY SERVICES:
 - Web3/blockchain interfaces
 
 NOTABLE PROJECTS:
-• Bittensor – Decentralized AI network research & analysis
-• OpenAI – Content strategy & business analysis
-• Taskformer – Strategic consulting & systems optimization
-• Viberary – Creative web development & UX design
+• Bittensor – VC-backed AI startup: co-founder role, $80K revenue, $10K DormDAO grant
+• Chain Payroll – Smart contract payroll streaming platform (1st place, hackathon grand prize)
+• Point72 Thesis – Professional equity research with DCF modeling & valuation analysis
+• TaskFormer – Strategic consulting focused on decision architecture & systems optimization
 
 YOUR BEHAVIOR:
 - Be warm, professional, and concise (under 80 words)
