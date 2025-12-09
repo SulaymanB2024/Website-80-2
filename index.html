@@ -567,6 +567,190 @@
             transform: translateY(0);
         }
         
+        /* Financial Analysis Portfolio Styles */
+        .portfolio-view {
+            transition: opacity 0.3s ease;
+        }
+        .portfolio-view.hidden {
+            display: none;
+            opacity: 0;
+        }
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            gap: 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .tab-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+            border: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+            background: none;
+            cursor: pointer;
+            position: relative;
+        }
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.02);
+        }
+        .tab-btn.active {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tv-widget-container {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Stock Card Styles - Monochrome */
+        .stock-card {
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #0F0F0F;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .stock-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: transparent;
+            transition: background 0.3s;
+        }
+        .stock-card.sell::before {
+            background: rgba(255,255,255,0.3);
+        }
+        .stock-card.buy::before {
+            background: rgba(255,255,255,0.3);
+        }
+        .stock-card:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: #121212;
+        }
+        .stock-card:hover .stock-arrow {
+            transform: translateX(4px);
+            opacity: 1;
+        }
+        .stock-arrow {
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+        
+        /* Simplified animations - performance optimized */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(8px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        /* Slide In Animation */
+        @keyframes slideIn {
+            from { transform: scaleX(0); transform-origin: left; }
+            to { transform: scaleX(1); transform-origin: left; }
+        }
+        
+        /* Rating Badge - Monochrome */
+        .rating-badge {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            padding: 6px 12px;
+            border-radius: 0px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #EAEAEA;
+        }
+        .rating-badge.sell {
+            border-color: rgba(255,255,255,0.3);
+        }
+        .rating-badge.buy {
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        /* Metric Display - Monochrome */
+        .metric-block {
+            padding: 1.25rem;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .metric-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        
+        /* TradingView Widget Wrappers */
+        .widget-wrapper {
+            position: relative;
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .widget-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .widget-header {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+            background: rgba(0,0,0,0.3);
+        }
+        .widget-body {
+            position: relative;
+            z-index: 0;
+        }
+
         /* --- UTILITY ANIMATIONS --- */
         .reveal-text {
             opacity: 0;
@@ -1414,7 +1598,7 @@
             </div>
             
             <div class="mt-32 text-center reveal-text">
-                <a href="#" class="magnetic-wrap hover-target inline-block font-display text-lg border border-white/20 px-10 py-5 hover:bg-white hover:text-black transition-colors duration-500">
+                <a href="Bowles Sulayman oih.pdf" target="_blank" class="magnetic-wrap hover-target inline-block font-display text-lg border border-white/20 px-10 py-5 hover:bg-white hover:text-black transition-colors duration-500">
                     <span class="magnetic-content block tracking-widest uppercase">View Full Resume</span>
                     <span class="magnetic-area"></span>
                 </a>
@@ -1642,7 +1826,7 @@
             <div class="flex gap-8 mb-8 md:mb-0">
                 <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Visit LinkedIn profile">LinkedIn</a>
                 <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Visit GitHub profile">GitHub</a>
-                <a href="#" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Download resume">Resume</a>
+                <a href="Bowles Sulayman oih.pdf" target="_blank" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Download resume">Resume</a>
             </div>
             <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-8 text-right md:text-left uppercase items-center">
                 <div id="live-ticker" class="live-ticker"></div>
@@ -1655,6 +1839,376 @@
 
     <script>
         // --- 1. DATA: PROJECT CONTENT ---
+        // --- FINANCIAL PORTFOLIO LOGIC ---
+        window.currentSymbol = 'NYSE:SG';
+        window.widgetsPreloaded = false;
+        
+        // Preload TradingView widgets on modal open
+        window.preloadPortfolioWidgets = function() {
+            if (window.widgetsPreloaded) return;
+            window.widgetsPreloaded = true;
+            
+            // Preload for default symbol
+            setTimeout(function() {
+                window.initTradingViewWidgets('NYSE:SG');
+            }, 500);
+        };
+        
+        // Company-specific data for the detail view
+        window.companyData = {
+            'NYSE:SG': {
+                name: 'SWEETGREEN',
+                ticker: 'SG',
+                sector: 'RESTAURANTS',
+                cap: 'SMID CAP',
+                region: 'US',
+                rating: 'SELL',
+                target: '$18.00',
+                returnPct: '-48%',
+                thesis: [
+                    'Infinite Kitchen capex intensity exceeds margin improvement timeline',
+                    'Customer acquisition costs inflating faster than LTV growth',
+                    'Same-store sales momentum decelerating beneath headline growth',
+                    'Tech premium valuation for capital-intensive restaurant model',
+                    'Path to profitability pushed further into future each quarter'
+                ],
+                catalysts: [
+                    'Q4 earnings: watch for SSS deceleration confirmation',
+                    'Infinite Kitchen rollout pace vs. capex burn',
+                    'Labor cost trends in key urban markets',
+                    'Insider selling patterns post-lockup'
+                ],
+                scenarios: { bear: '-65%', base: '-48%', bull: '-15%' }
+            },
+            'NASDAQ:SEZL': {
+                name: 'SEZZLE',
+                ticker: 'SEZL',
+                sector: 'FINTECH / BNPL',
+                cap: 'SMALL CAP',
+                region: 'US',
+                rating: 'SELL',
+                target: '$95.00',
+                returnPct: '-53%',
+                thesis: [
+                    'BNPL structurally challenged in rising rate environment',
+                    'Merchant fee compression accelerating as competition intensifies',
+                    'Credit losses inflecting higher as consumer leverage peaks',
+                    'Scale disadvantages vs. Affirm/Klarna insurmountable',
+                    'Regulatory overhang creates multiple compression risk'
+                ],
+                catalysts: [
+                    'CFPB regulatory action timeline',
+                    'Credit loss ratio trends in subprime cohorts',
+                    'Merchant retention rates amid fee pressure',
+                    'Funding cost trajectory as rates stay higher'
+                ],
+                scenarios: { bear: '-70%', base: '-53%', bull: '-20%' }
+            },
+            'NASDAQ:RIVN': {
+                name: 'RIVIAN',
+                ticker: 'RIVN',
+                sector: 'AUTOMOTIVE / EV',
+                cap: 'MID CAP',
+                region: 'US',
+                rating: 'BUY',
+                target: '$28.00',
+                returnPct: '+110%',
+                thesis: [
+                    'Production inflection meets gross margin expansion',
+                    'R2 platform economics superior to R1 at scale',
+                    'Amazon EDV contract provides stable revenue floor',
+                    'Technology differentiation is real and defensible',
+                    'This is Tesla 2018, not Fisker 2023'
+                ],
+                catalysts: [
+                    'Q1 production ramp and gross margin trajectory',
+                    'R2 reservation conversion rates',
+                    'VW partnership operational milestones',
+                    'Cash runway extension through cost discipline'
+                ],
+                scenarios: { bear: '+25%', base: '+110%', bull: '+180%' }
+            },
+            'AMEX:KULR': {
+                name: 'KULR TECHNOLOGY',
+                ticker: 'KULR',
+                sector: 'ENERGY STORAGE',
+                cap: 'MICRO CAP',
+                region: 'US',
+                rating: 'SELL',
+                target: '$0.80',
+                returnPct: '-68%',
+                thesis: [
+                    'NASA validation does not equal commercial viability',
+                    'Thermal management IP faces commoditization risk',
+                    'OEMs developing in-house solutions erodes TAM',
+                    'Customer concentration risk with limited pipeline',
+                    'Cash burn trajectory unsustainable at current revenue'
+                ],
+                catalysts: [
+                    'Contract renewal rates with key customers',
+                    'Cash runway and dilution risk from raises',
+                    'Competitive announcements from battery OEMs',
+                    'NASA contract follow-on pipeline clarity'
+                ],
+                scenarios: { bear: '-85%', base: '-68%', bull: '-30%' }
+            }
+        };
+        
+        window.showCompanyDetail = function(symbol) {
+            window.currentSymbol = symbol;
+            const dashboard = document.getElementById('portfolio-dashboard');
+            const detailView = document.getElementById('company-detail-view');
+            const data = window.companyData[symbol];
+            
+            if(dashboard && detailView && data) {
+                dashboard.classList.add('hidden');
+                detailView.classList.remove('hidden');
+                
+                // Update Header
+                document.getElementById('detail-company-name').innerText = data.name;
+                document.getElementById('detail-ticker').innerText = '$' + data.ticker;
+                document.getElementById('detail-sector').innerText = data.sector;
+                document.getElementById('detail-cap').innerText = data.cap;
+                
+                // Update Rating Badge
+                const ratingBadge = document.getElementById('detail-rating');
+                ratingBadge.innerText = data.rating;
+                ratingBadge.className = 'rating-badge ' + data.rating.toLowerCase();
+                
+                // Update Thesis with simple styling
+                const thesisList = document.getElementById('detail-thesis-list');
+                thesisList.innerHTML = data.thesis.map(t => `<li>${t}</li>`).join('');
+                
+                // Update Catalysts with simple styling
+                const catalystList = document.getElementById('detail-catalyst-list');
+                catalystList.innerHTML = data.catalysts.map(c => `<li>${c}</li>`).join('');
+                
+                // Update Scenarios
+                document.getElementById('scenario-bear').innerText = data.scenarios.bear;
+                document.getElementById('scenario-base').innerText = data.scenarios.base;
+                document.getElementById('scenario-bull').innerText = data.scenarios.bull;
+                
+                // Color scenarios with enhanced classes
+                const bearEl = document.getElementById('scenario-bear');
+                const baseEl = document.getElementById('scenario-base');
+                const bullEl = document.getElementById('scenario-bull');
+                
+                bearEl.className = 'text-white font-display font-bold text-2xl';
+                baseEl.className = 'text-white font-display font-bold text-2xl';
+                bullEl.className = 'text-white font-display font-bold text-2xl';
+                
+                // Initialize Widgets
+                window.initTradingViewWidgets(symbol);
+                
+                // Default Tab
+                window.switchTab('overview');
+                
+                // Re-init Lucide icons
+                if(typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }
+        };
+
+        window.hideCompanyDetail = function() {
+            const dashboard = document.getElementById('portfolio-dashboard');
+            const detailView = document.getElementById('company-detail-view');
+            
+            if(dashboard && detailView) {
+                detailView.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+            }
+        };
+
+        window.switchTab = function(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.dataset.tab === tabId) btn.classList.add('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+                if(content.id === 'tab-' + tabId) content.classList.add('active');
+            });
+        };
+
+        window.createWidget = function(containerId, config, scriptSrc) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            
+            // Clear existing content
+            container.innerHTML = ''; 
+            
+            // Create widget container
+            const widgetDiv = document.createElement('div');
+            widgetDiv.className = 'tradingview-widget-container';
+            widgetDiv.style.height = '100%';
+            widgetDiv.style.width = '100%';
+            
+            const innerDiv = document.createElement('div');
+            innerDiv.className = 'tradingview-widget-container__widget';
+            innerDiv.style.height = '100%';
+            innerDiv.style.width = '100%';
+            widgetDiv.appendChild(innerDiv);
+            
+            container.appendChild(widgetDiv);
+            
+            // Create and append script
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = scriptSrc;
+            script.async = true;
+            script.innerHTML = JSON.stringify(config);
+            widgetDiv.appendChild(script);
+        };
+
+        window.initTradingViewWidgets = function(symbol) {
+            // Small delay to ensure DOM is ready
+            setTimeout(function() {
+                // Overview Tab - Symbol Overview (Main Chart)
+                window.createWidget('tv-overview-chart', {
+                    "symbols": [[symbol]],
+                    "chartOnly": false,
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "en",
+                    "colorTheme": "dark",
+                    "autosize": true,
+                    "showVolume": true,
+                    "showMA": false,
+                    "hideDateRanges": false,
+                    "hideMarketStatus": false,
+                    "hideSymbolLogo": false,
+                    "scalePosition": "right",
+                    "scaleMode": "Normal",
+                    "fontFamily": "Inter, sans-serif",
+                    "fontSize": "10",
+                    "noTimeScale": false,
+                    "valuesTracking": "1",
+                    "changeMode": "price-and-percent",
+                    "chartType": "area",
+                    "lineWidth": 2,
+                    "lineType": 0,
+                    "dateRanges": ["1d|1", "1m|30", "3m|60", "12m|1D", "60m|1W", "all|1M"]
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js');
+
+                // Symbol Info (Quote Ticker)
+                window.createWidget('tv-symbol-info', {
+                    "symbol": symbol,
+                    "width": "100%",
+                    "locale": "en",
+                    "colorTheme": "dark",
+                    "isTransparent": true
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js');
+
+                // Company Profile
+                window.createWidget('tv-company-profile', {
+                    "symbol": symbol,
+                    "width": "100%",
+                    "height": "100%",
+                    "colorTheme": "dark",
+                    "isTransparent": true,
+                    "locale": "en"
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js');
+
+                // Financials Tab
+                window.createWidget('tv-financials', {
+                    "symbol": symbol,
+                    "colorTheme": "dark",
+                    "isTransparent": true,
+                    "largeChartUrl": "",
+                    "displayMode": "regular",
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "en"
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-financials.js');
+
+                // Technicals Tab - Technical Analysis
+                window.createWidget('tv-technicals', {
+                    "interval": "1D",
+                    "width": "100%",
+                    "isTransparent": true,
+                    "height": "100%",
+                    "symbol": symbol,
+                    "showIntervalTabs": true,
+                    "displayMode": "single",
+                    "locale": "en",
+                    "colorTheme": "dark"
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js');
+
+                // Mini Chart / Advanced Chart
+                window.createWidget('tv-mini-chart', {
+                    "symbol": symbol,
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "en",
+                    "dateRange": "12M",
+                    "colorTheme": "dark",
+                    "isTransparent": true,
+                    "autosize": true,
+                    "largeChartUrl": ""
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js');
+
+                // News Tab - Timeline
+                window.createWidget('tv-news', {
+                    "feedMode": "symbol",
+                    "symbol": symbol,
+                    "colorTheme": "dark",
+                    "isTransparent": true,
+                    "displayMode": "regular",
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "en"
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js');
+
+                // Economic Calendar
+                window.createWidget('tv-calendar', {
+                    "colorTheme": "dark",
+                    "isTransparent": true,
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "en",
+                    "importanceFilter": "-1,0,1"
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-events.js');
+
+                // Peers Tab - Screener
+                window.createWidget('tv-screener', {
+                    "width": "100%",
+                    "height": "100%",
+                    "defaultColumn": "overview",
+                    "defaultScreen": "general",
+                    "market": "america",
+                    "showToolbar": true,
+                    "colorTheme": "dark",
+                    "locale": "en",
+                    "isTransparent": true
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-screener.js');
+                
+                // Market Overview
+                window.createWidget('tv-market', {
+                    "colorTheme": "dark",
+                    "dateRange": "12M",
+                    "showChart": true,
+                    "locale": "en",
+                    "width": "100%",
+                    "height": "100%",
+                    "largeChartUrl": "",
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "showFloatingTooltip": false,
+                    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                    "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+                    "gridLineColor": "rgba(42, 46, 57, 0)",
+                    "scaleFontColor": "rgba(134, 137, 147, 1)",
+                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                    "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                    "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                    "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+                    "symbolActiveColor": "rgba(41, 98, 255, 0.12)"
+                }, 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js');
+            }, 100);
+        };
+
         const projectData = {
             bittensor: {
                 title: "BITTENSOR STARTUP",
@@ -1782,203 +2336,482 @@
                 tags: ["Equity Research", "DCF Modeling", "Sector Analysis", "Valuation"],
                 description: "Deep-dive analysis across consumer, fintech, automotive, and energy storage sectors. Four distinct companies, four unique investment narratives-each backed by rigorous financial modeling, competitive positioning analysis, and thesis-driven valuation frameworks.",
                 details: `
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Approach</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                Each analysis follows the same systematic framework: Industry structure assessment → Competitive moat analysis → Financial modeling (DCF, Comps, Precedent Transactions) → Sensitivity analysis → Investment recommendation. The goal isn't just to value-it's to understand where the thesis breaks.
+                    <div id="portfolio-dashboard">
+                        <!-- Hero Statement -->
+                        <div class="mb-12 pb-6 border-b border-white/10">
+                            <p class="font-display text-xl md:text-2xl leading-relaxed text-neutral-300">
+                                Four companies. Four narratives. Each backed by rigorous DCF modeling, competitive positioning analysis, and thesis-driven valuation frameworks that reveal where consensus gets it wrong.
                             </p>
                         </div>
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Philosophy</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                Markets price in consensus. Alpha comes from divergence-finding mispriced narratives, overlooked inflection points, and structural advantages the Street hasn't modeled. These analyses demonstrate both technical rigor and contrarian thinking.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Portfolio Overview Chart -->
-                    <div class="mt-12 p-8 border border-white/10 bg-charcoal">
-                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-8">Portfolio Positioning Matrix</h4>
-                        <div class="relative w-full h-64">
-                            <svg viewBox="0 0 800 300" class="w-full h-full">
-                                <!-- Grid Lines -->
-                                <line x1="400" y1="0" x2="400" y2="300" stroke="#333" stroke-width="1" />
-                                <line x1="0" y1="150" x2="800" y2="150" stroke="#333" stroke-width="1" />
-                                
-                                <!-- Quadrant Labels -->
-                                <text x="200" y="30" fill="#666" font-family="monospace" font-size="10" text-anchor="middle">HIGH CONVICTION SHORT</text>
-                                <text x="600" y="30" fill="#666" font-family="monospace" font-size="10" text-anchor="middle">HIGH CONVICTION LONG</text>
-                                
-                                <!-- Axis Labels -->
-                                <text x="10" y="20" fill="#EAEAEA" font-family="monospace" font-size="10">DOWNSIDE</text>
-                                <text x="750" y="290" fill="#EAEAEA" font-family="monospace" font-size="10">UPSIDE</text>
-                                
-                                <!-- Data Points -->
-                                <!-- KULR (High Conviction Short) -->
-                                <circle cx="150" cy="80" r="6" fill="#ef4444" opacity="0.9" />
-                                <text x="150" y="100" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">KULR</text>
-                                <text x="150" y="115" fill="#ef4444" font-family="monospace" font-size="9" text-anchor="middle">-68%</text>
-                                
-                                <!-- SG (Short) -->
-                                <circle cx="250" cy="120" r="5" fill="#ef4444" opacity="0.9" />
-                                <text x="250" y="140" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">SG</text>
-                                <text x="250" y="155" fill="#ef4444" font-family="monospace" font-size="9" text-anchor="middle">-48%</text>
-                                
-                                <!-- SEZL (Short) -->
-                                <circle cx="200" cy="100" r="5" fill="#ef4444" opacity="0.9" />
-                                <text x="200" y="70" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">SEZL</text>
-                                <text x="200" y="85" fill="#ef4444" font-family="monospace" font-size="9" text-anchor="middle">-53%</text>
-                                
-                                <!-- RIVN (Long) -->
-                                <circle cx="650" cy="80" r="6" fill="#10b981" opacity="0.9" />
-                                <text x="650" y="60" fill="#EAEAEA" font-family="monospace" font-size="10" text-anchor="middle">RIVN</text>
-                                <text x="650" y="105" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">+110%</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs font-mono text-neutral-400 mt-6 text-center">FIG 3.1: RISK-REWARD POSITIONING</p>
-                    </div>
-
-                    <!-- Individual Analysis Cards -->
-                    <div class="mt-12 space-y-12">
                         
-                        <!-- Sweetgreen Analysis -->
-                        <div class="border border-white/10 bg-charcoal">
-                            <div class="p-8 border-b border-white/10">
-                                <div class="flex justify-between items-start mb-6">
-                                    <div>
-                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">SWEETGREEN</h4>
-                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$SG · Consumer / Restaurant</p>
-                                    </div>
-                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">SELL</span>
+                        <!-- Methodology Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-8 border border-white/10 bg-charcoal">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[01]</span>
                                 </div>
-                                <p class="font-sans text-neutral-300 leading-relaxed">
-                                    Infinite Kitchen narrative masks structural unit economics challenges. Analyzed capex intensity vs. margin improvement lag, customer acquisition cost inflation, and competitive moat erosion. The market prices in a tech premium for what remains a capital-intensive restaurant concept with declining same-store sales growth and path to profitability pushed further into the future.
+                                <h4 class="text-lg md:text-xl font-display font-medium mb-4">The Approach</h4>
+                                <p class="text-sm text-neutral-300 leading-relaxed">
+                                    Each analysis follows the same systematic framework: Industry structure assessment → Competitive moat analysis → Financial modeling (DCF, Comps, Precedent Transactions) → Sensitivity analysis → Investment recommendation.
                                 </p>
                             </div>
-                            <div class="p-8 bg-[#0A0A0A]">
-                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
-                                        <span class="text-white font-bold text-2xl">$18.00</span>
+                            <div class="p-8 border border-white/10 bg-charcoal">
+                                <div class="mb-4">
+                                    <span class="font-mono text-xs text-neutral-500">[02]</span>
+                                </div>
+                                <h4 class="text-lg md:text-xl font-display font-medium mb-4">The Philosophy</h4>
+                                <p class="text-sm text-neutral-300 leading-relaxed">
+                                    Markets price in consensus. Alpha comes from divergence—finding mispriced narratives, overlooked inflection points, and structural advantages the Street hasn't modeled.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Portfolio Summary Stats -->
+                        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10">
+                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Coverage</div>
+                                <div class="text-4xl font-display font-bold mb-1">4</div>
+                                <div class="text-xs text-neutral-500">Names</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Long</div>
+                                <div class="text-4xl font-display font-bold mb-1">1</div>
+                                <div class="text-xs text-neutral-500">RIVN</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Short</div>
+                                <div class="text-4xl font-display font-bold mb-1">3</div>
+                                <div class="text-xs text-neutral-500">SG, SEZL, KULR</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Sectors</div>
+                                <div class="text-4xl font-display font-bold mb-1">4</div>
+                                <div class="text-xs text-neutral-500">Diversified</div>
+                            </div>
+                        </div>
+                    
+                        <!-- Portfolio Overview Chart -->
+                        <div class="mt-12 p-8 border border-white/10 bg-[#0A0A0A]">
+                            <div class="flex justify-between items-center mb-8">
+                                <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest">Risk-Reward Matrix</h4>
+                                <span class="text-xs font-mono text-neutral-600">CONVICTION VS. RETURN POTENTIAL</span>
+                            </div>
+                            <div class="relative w-full h-64 md:h-80">
+                                <svg viewBox="0 0 800 320" class="w-full h-full" preserveAspectRatio="xMidYMid meet">
+                                    <!-- Axis Lines -->
+                                    <line x1="400" y1="20" x2="400" y2="300" stroke="#333" stroke-width="1" />
+                                    <line x1="50" y1="160" x2="750" y2="160" stroke="#333" stroke-width="1" />
+                                    
+                                    <!-- Quadrant Labels -->
+                                    <text x="200" y="45" fill="#666" font-family="Inter, sans-serif" font-size="10" text-anchor="middle" letter-spacing="0.1em">SHORT</text>
+                                    <text x="600" y="45" fill="#666" font-family="Inter, sans-serif" font-size="10" text-anchor="middle" letter-spacing="0.1em">LONG</text>
+                                    
+                                    <!-- Axis Labels -->
+                                    <text x="60" y="165" fill="#666" font-family="Inter, sans-serif" font-size="9" text-anchor="start">DOWNSIDE</text>
+                                    <text x="740" y="165" fill="#666" font-family="Inter, sans-serif" font-size="9" text-anchor="end">UPSIDE</text>
+                                    
+                                    <!-- Data Points - Monochrome -->
+                                    <!-- KULR -->
+                                    <circle cx="120" cy="90" r="20" fill="none" stroke="#888" stroke-width="2" />
+                                    <circle cx="120" cy="90" r="6" fill="#888" />
+                                    <text x="120" y="125" fill="#EAEAEA" font-family="Space Grotesk, sans-serif" font-size="12" font-weight="500" text-anchor="middle">KULR</text>
+                                    <text x="120" y="142" fill="#888" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">-68%</text>
+                                    
+                                    <!-- SEZL -->
+                                    <circle cx="200" cy="110" r="16" fill="none" stroke="#999" stroke-width="2" />
+                                    <circle cx="200" cy="110" r="5" fill="#999" />
+                                    <text x="200" y="145" fill="#EAEAEA" font-family="Space Grotesk, sans-serif" font-size="12" font-weight="500" text-anchor="middle">SEZL</text>
+                                    <text x="200" y="162" fill="#999" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">-53%</text>
+                                    
+                                    <!-- SG -->
+                                    <circle cx="280" cy="130" r="14" fill="none" stroke="#AAA" stroke-width="2" />
+                                    <circle cx="280" cy="130" r="4" fill="#AAA" />
+                                    <text x="280" y="165" fill="#EAEAEA" font-family="Space Grotesk, sans-serif" font-size="12" font-weight="500" text-anchor="middle">SG</text>
+                                    <text x="280" y="182" fill="#AAA" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">-48%</text>
+                                    
+                                    <!-- RIVN -->
+                                    <circle cx="680" cy="70" r="24" fill="none" stroke="#BBB" stroke-width="2" />
+                                    <circle cx="680" cy="70" r="8" fill="#BBB" />
+                                    <text x="680" y="110" fill="#EAEAEA" font-family="Space Grotesk, sans-serif" font-size="12" font-weight="500" text-anchor="middle">RIVN</text>
+                                    <text x="680" y="127" fill="#BBB" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">+110%</text>
+                                </svg>
+                            </div>
+                            <p class="text-[10px] font-mono text-neutral-600 mt-6 text-center uppercase tracking-widest">BUBBLE SIZE = CONVICTION LEVEL</p>
+                        </div>
+
+                        <!-- Stock Cards Grid -->
+                        <div class="mt-12">
+                            <div class="flex justify-between items-end mb-6 pb-4 border-b border-white/10">
+                                <h3 class="font-display text-2xl md:text-3xl font-medium">Coverage Universe</h3>
+                                <span class="text-xs font-mono text-neutral-500 uppercase tracking-widest">4 NAMES</span>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Sweetgreen Card -->
+                                <div class="stock-card sell cursor-pointer group" onclick="showCompanyDetail('NYSE:SG')">
+                                    <div class="p-8">
+                                        <div class="flex justify-between items-start mb-6">
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span class="font-mono text-xs text-neutral-600">$SG</span>
+                                                    <span class="text-neutral-700">·</span>
+                                                    <span class="text-xs text-neutral-600 uppercase tracking-wider">NYSE</span>
+                                                </div>
+                                                <h4 class="font-display text-2xl md:text-3xl font-medium mb-1">Sweetgreen</h4>
+                                                <div class="text-xs text-neutral-500 uppercase tracking-wider">Restaurants</div>
+                                            </div>
+                                            <span class="rating-badge sell">SELL</span>
+                                        </div>
+                                        <p class="text-sm text-neutral-400 leading-relaxed mb-8">
+                                            Infinite Kitchen narrative masks structural unit economics challenges. Tech premium on capital-intensive restaurant model.
+                                        </p>
+                                        <div class="grid grid-cols-3 gap-px bg-white/10">
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Target</div>
+                                                <div class="text-2xl font-display font-bold">$18</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Return</div>
+                                                <div class="text-2xl font-display font-bold">-48%</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Risk</div>
+                                                <div class="text-xs text-neutral-300 mt-2">Unit Econ</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Downside</span>
-                                        <span class="text-red-400 font-bold text-2xl">-48%</span>
+                                </div>
+
+                                <!-- Sezzle Card -->
+                                <div class="stock-card sell cursor-pointer group" onclick="showCompanyDetail('NASDAQ:SEZL')">
+                                    <div class="p-8">
+                                        <div class="flex justify-between items-start mb-6">
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span class="font-mono text-xs text-neutral-600">$SEZL</span>
+                                                    <span class="text-neutral-700">·</span>
+                                                    <span class="text-xs text-neutral-600 uppercase tracking-wider">NASDAQ</span>
+                                                </div>
+                                                <h4 class="font-display text-2xl md:text-3xl font-medium mb-1">Sezzle</h4>
+                                                <div class="text-xs text-neutral-500 uppercase tracking-wider">Fintech / BNPL</div>
+                                            </div>
+                                            <span class="rating-badge sell">SELL</span>
+                                        </div>
+                                        <p class="text-sm text-neutral-400 leading-relaxed mb-8">
+                                            BNPL structurally challenged in rising rate environment. Scale disadvantages vs. Affirm/Klarna insurmountable.
+                                        </p>
+                                        <div class="grid grid-cols-3 gap-px bg-white/10">
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Target</div>
+                                                <div class="text-2xl font-display font-bold">$95</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Return</div>
+                                                <div class="text-2xl font-display font-bold">-53%</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Risk</div>
+                                                <div class="text-xs text-neutral-300 mt-2">Competition</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Risk</span>
-                                        <span class="text-white text-sm">Unit Economics</span>
+                                </div>
+                                                <div class="metric-label">Key Risk</div>
+                                                <div class="text-xs text-neutral-300 mt-1">Credit Loss</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Rivian Card -->
+                                <div class="stock-card buy cursor-pointer group" onclick="showCompanyDetail('NASDAQ:RIVN')">
+                                    <div class="p-8">
+                                        <div class="flex justify-between items-start mb-6">
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span class="font-mono text-xs text-neutral-600">$RIVN</span>
+                                                    <span class="text-neutral-700">·</span>
+                                                    <span class="text-xs text-neutral-600 uppercase tracking-wider">NASDAQ</span>
+                                                </div>
+                                                <h4 class="font-display text-2xl md:text-3xl font-medium mb-1">Rivian</h4>
+                                                <div class="text-xs text-neutral-500 uppercase tracking-wider">Automotive / EV</div>
+                                            </div>
+                                            <span class="rating-badge buy">BUY</span>
+                                        </div>
+                                        <p class="text-sm text-neutral-400 leading-relaxed mb-8">
+                                            Production inflection meets gross margin expansion. Technology differentiation is real—this is Tesla 2018.
+                                        </p>
+                                        <div class="grid grid-cols-3 gap-px bg-white/10">
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Target</div>
+                                                <div class="text-2xl font-display font-bold">$28</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Return</div>
+                                                <div class="text-2xl font-display font-bold">+110%</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Driver</div>
+                                                <div class="text-xs text-neutral-300 mt-2">GM Expansion</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- KULR Card -->
+                                <div class="stock-card sell cursor-pointer group" onclick="showCompanyDetail('AMEX:KULR')">
+                                    <div class="p-8">
+                                        <div class="flex justify-between items-start mb-6">
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span class="font-mono text-xs text-neutral-600">$KULR</span>
+                                                    <span class="text-neutral-700">·</span>
+                                                    <span class="text-xs text-neutral-600 uppercase tracking-wider">AMEX</span>
+                                                </div>
+                                                <h4 class="font-display text-2xl md:text-3xl font-medium mb-1">KULR Technology</h4>
+                                                <div class="text-xs text-neutral-500 uppercase tracking-wider">Energy Storage</div>
+                                            </div>
+                                            <span class="rating-badge sell">SELL</span>
+                                        </div>
+                                        <p class="text-sm text-neutral-400 leading-relaxed mb-8">
+                                            NASA validation doesn't equal commercial viability. Thermal management IP faces commoditization risk.
+                                        </p>
+                                        <div class="grid grid-cols-3 gap-px bg-white/10">
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Target</div>
+                                                <div class="text-2xl font-display font-bold">$0.80</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Return</div>
+                                                <div class="text-2xl font-display font-bold">-68%</div>
+                                            </div>
+                                            <div class="bg-[#0A0A0A] p-4">
+                                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-2">Risk</div>
+                                                <div class="text-xs text-neutral-300 mt-2">TAM Reality</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                            </div>
+                                            <div class="metric-block">
+                                                <div class="metric-label">Key Risk</div>
+                                                <div class="text-xs text-neutral-300 mt-1">TAM Reality</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Sezzle Analysis -->
-                        <div class="border border-white/10 bg-charcoal">
-                            <div class="p-8 border-b border-white/10">
-                                <div class="flex justify-between items-start mb-6">
-                                    <div>
-                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">SEZZLE</h4>
-                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$SEZL · Fintech / BNPL</p>
-                                    </div>
-                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">SELL</span>
+                        <!-- Framework Section -->
+                        <div class="mt-16 pt-12 border-t border-white/10">
+                            <h4 class="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-8">Analytical Framework</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/10">
+                                <div class="p-4 bg-charcoal hover:bg-[#0F0F0F] transition-all text-center">
+                                    <span class="text-xs font-mono">DCF Valuation</span>
                                 </div>
-                                <p class="font-sans text-neutral-300 leading-relaxed">
-                                    BNPL structurally challenged in rising rate environment. Modeled merchant fee compression accelerating as competition intensifies, credit losses inflecting higher as consumer leverage peaks, and regulatory risk mounting. The "underdog" narrative obscures deteriorating unit economics and customer quality mix shift. Scale disadvantages vs. Affirm/Klarna are insurmountable.
-                                </p>
-                            </div>
-                            <div class="p-8 bg-[#0A0A0A]">
-                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
-                                        <span class="text-white font-bold text-2xl">$95.00</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Downside</span>
-                                        <span class="text-red-400 font-bold text-2xl">-53%</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Risk</span>
-                                        <span class="text-white text-sm">Credit Losses</span>
-                                    </div>
+                                <div class="p-4 bg-charcoal hover:bg-[#0F0F0F] transition-all text-center">
+                                    <span class="text-xs font-mono">Comp Analysis</span>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Rivian Analysis -->
-                        <div class="border border-white/10 bg-charcoal">
-                            <div class="p-8 border-b border-white/10">
-                                <div class="flex justify-between items-start mb-6">
-                                    <div>
-                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">RIVIAN</h4>
-                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$RIVN · Automotive / EV</p>
-                                    </div>
-                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">BUY</span>
+                                <div class="p-4 bg-charcoal hover:bg-[#0F0F0F] transition-all text-center">
+                                    <span class="text-xs font-mono">Scenario Modeling</span>
                                 </div>
-                                <p class="font-sans text-neutral-300 leading-relaxed">
-                                    Production inflection meets gross margin expansion. Analyzed R2 platform economics, manufacturing efficiency gains, and Amazon EDV contract providing stable revenue floor. Market underprices the operational leverage as volumes scale and fixed cost absorption improves. The technology differentiation is real-this is Tesla 2018, not Fisker 2023.
-                                </p>
-                            </div>
-                            <div class="p-8 bg-[#0A0A0A]">
-                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
-                                        <span class="text-white font-bold text-2xl">$28.00</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Upside</span>
-                                        <span class="text-green-400 font-bold text-2xl">+110%</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Driver</span>
-                                        <span class="text-white text-sm">Gross Margin</span>
-                                    </div>
+                                <div class="p-4 bg-charcoal hover:bg-[#0F0F0F] transition-all text-center">
+                                    <span class="text-xs font-mono">Unit Economics</span>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- KULR Analysis -->
-                        <div class="border border-white/10 bg-charcoal">
-                            <div class="p-8 border-b border-white/10">
-                                <div class="flex justify-between items-start mb-6">
-                                    <div>
-                                        <h4 class="font-display text-3xl md:text-4xl font-medium mb-2">KULR TECHNOLOGY</h4>
-                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">$KULR · Energy Storage / Materials</p>
-                                    </div>
-                                    <span class="font-mono text-xs border border-white/20 px-3 py-1">SELL</span>
-                                </div>
-                                <p class="font-sans text-neutral-300 leading-relaxed">
-                                    NASA validation doesn't equal commercial viability. Thermal management IP faces commoditization risk as battery chemistry evolves and OEMs develop in-house solutions. Modeled customer concentration risk, cash burn trajectory, and TAM realization timeline extending beyond investment horizon. The "option value" is a lottery ticket priced as a growth story.
-                                </p>
-                            </div>
-                            <div class="p-8 bg-[#0A0A0A]">
-                                <div class="grid grid-cols-3 gap-8 text-xs font-mono">
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">DCF Price Target</span>
-                                        <span class="text-white font-bold text-2xl">$0.80</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Downside</span>
-                                        <span class="text-red-400 font-bold text-2xl">-68%</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Key Risk</span>
-                                        <span class="text-white text-sm">Commercialization</span>
-                                    </div>
+                                <div class="p-4 bg-charcoal hover:bg-[#0F0F0F] transition-all text-center">
+                                    <span class="text-xs font-mono">Five Forces</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-8 pt-8 border-t border-white/10">
-                         <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">Analytical Framework</h4>
-                         <div class="flex flex-wrap gap-3">
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">DCF Valuation</span>
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Comparable Company Analysis</span>
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Sensitivity & Scenario Modeling</span>
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Porter's Five Forces</span>
-                            <span class="px-3 py-1 border border-white/20 rounded-full text-xs">Unit Economics Analysis</span>
+                    <!-- COMPANY DETAIL VIEW -->
+                    <div id="company-detail-view" class="portfolio-view hidden">
+                        <button onclick="hideCompanyDetail()" class="mb-8 flex items-center gap-2 text-neutral-500 hover:text-white transition-colors group">
+                            <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                            <span class="text-xs font-mono uppercase tracking-wider">Back to Portfolio</span>
+                        </button>
+                        
+                        <!-- Header Strip -->
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8 pb-6 border-b border-white/10">
+                            <div>
+                                <div class="flex items-center gap-4 mb-3">
+                                    <h2 class="font-display text-3xl md:text-4xl font-bold" id="detail-company-name">COMPANY</h2>
+                                    <span class="rating-badge sell" id="detail-rating">SELL</span>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3 text-xs">
+                                    <span class="font-mono text-neutral-300" id="detail-ticker">$SG</span>
+                                    <span class="text-neutral-600">·</span>
+                                    <span class="px-2 py-1 bg-white/5 text-neutral-400" id="detail-sector">RESTAURANTS</span>
+                                    <span class="px-2 py-1 bg-white/5 text-neutral-400" id="detail-cap">SMID CAP</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-mono text-xs text-neutral-500 uppercase tracking-wider">LIVE DATA VIA TRADINGVIEW</span>
+                            </div>
+                        </div>
+
+                        <!-- Tabs -->
+                        <div class="tab-nav">
+                            <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+                            <button class="tab-btn" data-tab="financials" onclick="switchTab('financials')">Financials</button>
+                            <button class="tab-btn" data-tab="technicals" onclick="switchTab('technicals')">Technicals</button>
+                            <button class="tab-btn" data-tab="news" onclick="switchTab('news')">News & Events</button>
+                            <button class="tab-btn" data-tab="peers" onclick="switchTab('peers')">Peers</button>
+                        </div>
+
+                        <!-- Tab Content: Overview -->
+                        <div id="tab-overview" class="tab-content active">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                                <!-- Main Chart -->
+                                <div class="lg:col-span-2">
+                                    <div class="widget-wrapper h-[420px]">
+                                        <div class="widget-header">Symbol Overview</div>
+                                        <div class="widget-body h-[380px]" id="tv-overview-chart"></div>
+                                    </div>
+                                </div>
+                                <!-- Side Stack -->
+                                <div class="space-y-4">
+                                    <div class="widget-wrapper h-[120px]">
+                                        <div class="widget-header">Quote</div>
+                                        <div class="widget-body h-[80px]" id="tv-symbol-info"></div>
+                                    </div>
+                                    <div class="widget-wrapper h-[280px]">
+                                        <div class="widget-header">Company Profile</div>
+                                        <div class="widget-body h-[240px] overflow-auto" id="tv-company-profile"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Research Panel -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="p-6 border border-white/10 bg-charcoal">
+                                    <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-wider mb-4">Variant View & Thesis</h4>
+                                    <ul class="space-y-3 text-sm text-neutral-300" id="detail-thesis-list">
+                                        <li>Loading...</li>
+                                    </ul>
+                                </div>
+                                <div class="p-6 border border-white/10 bg-charcoal">
+                                    <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-wider mb-4">Key Catalysts</h4>
+                                    <ul class="space-y-3 text-sm text-neutral-300" id="detail-catalyst-list">
+                                        <li>Loading...</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Valuation Scenarios -->
+                            <div class="mt-6 p-8 border border-white/10 bg-charcoal">
+                                <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-wider mb-6">DCF Scenario Analysis</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="p-6 border border-white/10 bg-[#0A0A0A] hover:border-white/20 transition-all">
+                                        <div class="text-xs text-neutral-500 mb-2 uppercase tracking-wider font-mono">Bear Case</div>
+                                        <div id="scenario-bear" class="text-white font-display font-bold text-2xl mb-1">-30%</div>
+                                        <div class="text-[10px] text-neutral-600 font-mono">30% Probability</div>
+                                    </div>
+                                    <div class="p-6 border-2 border-white/20 bg-[#0A0A0A] hover:border-white/30 transition-all">
+                                        <div class="text-xs text-neutral-400 mb-2 uppercase tracking-wider font-mono">Base Case</div>
+                                        <div id="scenario-base" class="text-white font-display font-bold text-2xl mb-1">+15%</div>
+                                        <div class="text-[10px] text-neutral-600 font-mono">50% Probability</div>
+                                    </div>
+                                    <div class="p-6 border border-white/10 bg-[#0A0A0A] hover:border-white/20 transition-all">
+                                        <div class="text-xs text-neutral-500 mb-2 uppercase tracking-wider font-mono">Bull Case</div>
+                                        <div id="scenario-bull" class="text-white font-display font-bold text-2xl mb-1">+45%</div>
+                                        <div class="text-[10px] text-neutral-600 font-mono">20% Probability</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: Financials -->
+                        <div id="tab-financials" class="tab-content">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="widget-wrapper h-[550px]">
+                                    <div class="widget-header">Financial Data</div>
+                                    <div class="widget-body h-[510px]" id="tv-financials"></div>
+                                </div>
+                                <div class="space-y-6">
+                                    <div class="p-6 border border-white/10 bg-charcoal">
+                                        <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-wider mb-6">Model vs Consensus</h4>
+                                        <div class="space-y-4">
+                                            <div class="p-4 border border-white/10 bg-[#0A0A0A]">
+                                                <div class="flex justify-between mb-2">
+                                                    <span class="text-sm text-neutral-300">Revenue CAGR (5y)</span>
+                                                    <span class="text-xs text-neutral-500 font-mono">vs Consensus</span>
+                                                </div>
+                                                <div class="flex justify-between items-end">
+                                                    <div class="text-2xl font-display font-bold">12.5%</div>
+                                                    <div class="text-xs text-neutral-600">Cons: 9.8%</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 border border-white/10 bg-[#0A0A0A]">
+                                                <div class="flex justify-between mb-2">
+                                                    <span class="text-sm text-neutral-300">EBITDA Margin</span>
+                                                    <span class="text-xs text-neutral-500 font-mono">vs Consensus</span>
+                                                </div>
+                                                <div class="flex justify-between items-end">
+                                                    <div class="text-2xl font-display font-bold">18.2%</div>
+                                                    <div class="text-xs text-neutral-600">Cons: 21.0%</div>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 border border-white/10 bg-[#0A0A0A]">
+                                                <div class="flex justify-between mb-2">
+                                                    <span class="text-sm text-neutral-300">Discount Rate (WACC)</span>
+                                                    <span class="text-xs text-neutral-500 font-mono">Market Range</span>
+                                                </div>
+                                                <div class="flex justify-between items-end">
+                                                    <div class="text-2xl font-display font-bold">11.5%</div>
+                                                    <div class="text-xs text-neutral-600">Range: 10-13%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: Technicals -->
+                        <div id="tab-technicals" class="tab-content">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div class="widget-wrapper h-[450px]">
+                                    <div class="widget-header">Technical Analysis</div>
+                                    <div class="widget-body h-[410px]" id="tv-technicals"></div>
+                                </div>
+                                <div class="lg:col-span-2 widget-wrapper h-[450px]">
+                                    <div class="widget-header">Advanced Chart</div>
+                                    <div class="widget-body h-[410px]" id="tv-mini-chart"></div>
+                                </div>
+                            </div>
+                            <div class="mt-6 p-6 border border-white/10 bg-charcoal">
+                                <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-wider mb-4">Tape vs Thesis</h4>
+                                <p class="text-sm text-neutral-400 leading-relaxed">Technical signals should be weighted against fundamental thesis. Short-term momentum may diverge from long-term value realization. Use technicals for entry timing, not thesis validation.</p>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: News -->
+                        <div id="tab-news" class="tab-content">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="widget-wrapper h-[550px]">
+                                    <div class="widget-header">Latest News</div>
+                                    <div class="widget-body h-[510px]" id="tv-news"></div>
+                                </div>
+                                <div class="widget-wrapper h-[550px]">
+                                    <div class="widget-header">Economic Calendar</div>
+                                    <div class="widget-body h-[510px]" id="tv-calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: Peers -->
+                        <div id="tab-peers" class="tab-content">
+                            <div class="widget-wrapper h-[450px] mb-6">
+                                <div class="widget-header">Peer Screener</div>
+                                <div class="widget-body h-[410px]" id="tv-screener"></div>
+                            </div>
+                            <div class="widget-wrapper h-[350px]">
+                                <div class="widget-header">Market Overview</div>
+                                <div class="widget-body h-[310px]" id="tv-market"></div>
+                            </div>
                         </div>
                     </div>
                 `
@@ -2618,6 +3451,11 @@
         function openModal(id, type = 'project') {
             let data;
             const content = modal.querySelector('.modal-content');
+            
+            // Preload portfolio widgets if opening point72
+            if (id === 'point72') {
+                window.preloadPortfolioWidgets();
+            }
             
             // Reset classes
             content.classList.remove('paper-mode');
