@@ -299,11 +299,12 @@
 
         /* --- TYPING ANIMATION --- */
         @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+            from { width: 0; }
+            to { width: 100%; }
         }
         @keyframes blink {
-            50% { border-color: transparent }
+            0%, 49% { border-color: white; }
+            50%, 100% { border-color: transparent; }
         }
         @keyframes gridPulse {
             0%, 100% { opacity: 0.1; }
@@ -317,12 +318,14 @@
             overflow: hidden;
             border-right: 2px solid white;
             white-space: nowrap;
-            animation: typing 2s steps(30, end), blink 0.75s step-end infinite;
+            animation: typing 1.8s steps(40, end) cubic-bezier(0.16, 1, 0.3, 1), blink 0.7s step-end infinite;
             display: inline-block;
+            will-change: width;
         }
         .typing-text.complete {
             border-right: none;
             animation: none;
+            will-change: auto;
         }
 
         /* --- DESIGN SYSTEM ANIMATIONS --- */
@@ -549,9 +552,9 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            transform: translate3d(0, 30px, 0) scale(0.96);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translate3d(0, 25px, 0) scale(0.97);
+            transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             opacity: 0;
             position: relative;
             will-change: transform, opacity;
@@ -572,9 +575,9 @@
         /* Modal Content Animation Stagger */
         .modal-stagger {
             opacity: 0;
-            transform: translate3d(0, 20px, 0);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translate3d(0, 15px, 0);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
             backface-visibility: hidden;
         }
@@ -770,16 +773,17 @@
         /* --- UTILITY ANIMATIONS --- */
         .reveal-text {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1), 
-                        transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1),
-                        filter 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
-            filter: blur(4px);
+            transform: translate3d(0, 15px, 0);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(3px);
             will-change: opacity, transform, filter;
+            backface-visibility: hidden;
         }
         .reveal-text.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
             filter: blur(0);
             will-change: auto;
         }
@@ -825,7 +829,11 @@
         /* Service Card Special Effects */
         .service-card {
             position: relative;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+            backface-visibility: hidden;
         }
         .service-card::before {
             content: '';
@@ -833,19 +841,21 @@
             inset: 0;
             background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
             z-index: 1;
+            will-change: opacity;
         }
         .service-card:hover::before {
             opacity: 1;
         }
         .service-card:hover {
-            transform: translateY(-8px);
+            transform: translate3d(0, -8px, 0);
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
         .service-card:hover .gen-canvas {
             filter: brightness(1.3) saturate(1.2);
+            transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         /* Service image container parallax effect */
@@ -854,10 +864,12 @@
             position: relative;
         }
         .service-card:hover .service-img-container canvas {
-            transform: scale(1.15);
+            transform: scale3d(1.15, 1.15, 1);
         }
         .service-img-container canvas {
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+            backface-visibility: hidden;
         }
 
         /* Loader */
@@ -870,8 +882,8 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: transform 0.7s cubic-bezier(0.7, 0, 0.3, 1),
-                        opacity 0.4s ease-out;
+            transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1),
+                        opacity 0.3s ease-out;
         }
         .loader-hidden { 
             transform: translateY(-100%); 
@@ -884,9 +896,26 @@
             top: 0; right: 0;
             width: 55%; height: 100vh;
             z-index: 1;
-            opacity: 0;
-            transition: opacity 2s ease 0.5s;
+            opacity: 1;
             pointer-events: none;
+        }
+        #canvas-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(150, 150, 150, 0.015) 25%,
+                rgba(100, 100, 100, 0.008) 40%,
+                transparent 65%
+            );
+            pointer-events: none;
+            z-index: 2;
         }
         @media (max-width: 768px) {
             #canvas-container { width: 100%; opacity: 0.5; z-index: 0; }
@@ -940,8 +969,10 @@
             width: 100%;
             height: 100%;
             opacity: 0.6;
-            transition: opacity 0.5s ease;
-            will-change: opacity;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, filter;
+            backface-visibility: hidden;
         }
         .group:hover .gen-canvas { opacity: 1; }
 
@@ -1427,27 +1458,28 @@
             </div>
             
             <!-- Bio / Details -->
-            <div class="mt-20 flex flex-col md:flex-row justify-between items-start md:items-end max-w-6xl pointer-events-auto">
-                <div class="max-w-xl">
-                    <p class="font-sans text-lg md:text-xl text-neutral-300 leading-[1.8] reveal-text" style="transition-delay: 500ms;">
-                        Offering <span class="text-white border-b border-white/20 pb-1">financial consulting</span> and <span class="text-white border-b border-white/20 pb-1">bespoke web design</span>. 
-                        I transform complex financial systems into executable clarity-from DCF models to strategic frameworks-and build digital experiences that convert measurable action.
+            <div class="mt-20 max-w-6xl pointer-events-auto relative">
+                <div class="max-w-[580px] relative z-10">
+                    <p class="font-sans text-xl md:text-2xl text-neutral-200 leading-[1.7] reveal-text mb-12" style="transition-delay: 500ms;">
+                        I build the <span class="text-white font-medium border-b border-white/30 pb-1" style="transition: border-color 0.3s ease;">financial models investors trust</span>, and the <span class="text-white font-medium border-b border-white/30 pb-1" style="transition: border-color 0.3s ease;">digital experiences that capture their attention</span>. Data-driven design meets visually intuitive analysis.
                     </p>
-                    <div class="flex gap-8 mt-8 font-mono text-[10px] text-neutral-400 uppercase tracking-widest reveal-text" style="transition-delay: 600ms;">
-                        <span>// Austin, TX</span>
-                        <span>// UT Austin '28</span>
-                        <span>// Currently Available</span>
+                    
+                    <div class="reveal-text mb-8" style="transition-delay: 600ms;">
+                        <a href="#services" class="magnetic-wrap hover-target inline-flex items-center gap-3 px-8 py-4 border-2 border-white/40 hover:border-white hover:bg-white/5 group text-white text-base font-medium rounded-sm backdrop-blur-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
+                            <span class="magnetic-content inline-flex items-center gap-2">
+                                View Services <i data-lucide="arrow-down-right" class="w-5 h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
+                            </span>
+                            <span class="magnetic-area"></span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-6 font-mono text-[11px] text-neutral-300 uppercase tracking-wider reveal-text" style="transition-delay: 700ms;">
+                        <span class="opacity-80">Austin, TX</span>
+                        <span class="opacity-80">UT Austin '28</span>
                     </div>
                 </div>
-                
-                <div class="mt-12 md:mt-0 reveal-text" style="transition-delay: 700ms;">
-                    <a href="#services" class="magnetic-wrap hover-target inline-flex items-center gap-3 border-b border-white pb-2 hover:border-neutral-500 transition-all duration-300 group text-white mix-blend-difference text-lg">
-                        <span class="magnetic-content inline-flex items-center gap-2">
-                            View Services <i data-lucide="arrow-down-right" class="w-5 h-5 group-hover:rotate-[-45deg] transition-transform duration-500"></i>
-                        </span>
-                        <span class="magnetic-area"></span>
-                    </a>
-                </div>
+                <!-- Gradient overlay behind copy block -->
+                <div class="absolute top-0 left-0 w-[120%] h-full pointer-events-none z-0" style="background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.15) 50%, transparent 100%);"></div>
             </div>
         </div>
     </section>
@@ -3427,8 +3459,8 @@
                 for (let i = 0; i < length; i++) {
                     const from = oldText[i] || '';
                     const to = newText[i] || '';
-                    const start = Math.floor(Math.random() * 40);
-                    const end = start + Math.floor(Math.random() * 40);
+                    const start = Math.floor(Math.random() * 25);
+                    const end = start + Math.floor(Math.random() * 30);
                     this.queue.push({ from, to, start, end });
                 }
                 cancelAnimationFrame(this.frameRequest);
@@ -3445,7 +3477,7 @@
                         complete++;
                         output += to;
                     } else if (this.frame >= start) {
-                        if (!char || Math.random() < 0.28) {
+                        if (!char || Math.random() < 0.35) {
                             char = this.randomChar();
                             this.queue[i].char = char;
                         }
@@ -6199,7 +6231,6 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
 
             setTimeout(() => {
                 loader.classList.add('loader-hidden');
-                document.getElementById('canvas-container').style.opacity = 1;
                 initScrollReveal();
                 initGenerativeCovers(); // Start Generative Art
                 initLiveTicker();       // Start Live Data
@@ -6212,7 +6243,7 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                     });
                 }, 400);
 
-            }, 1200);
+            }, 800);
         });
 
         // --- 10. GENERATIVE COVERS ---
@@ -6515,15 +6546,15 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                     });
                     
                     ctx.restore();
-                    if (isVisible) {
-                        animationId = setTimeout(() => {
-                            if (isVisible) {
-                                animationId = requestAnimationFrame(animate);
-                            }
-                        }, 100);
-                    } else {
-                        animationId = null;
-                    }
+                    
+                    // Continue animation loop
+                    setTimeout(() => {
+                        if (isVisible) {
+                            animationId = requestAnimationFrame(animate);
+                        } else {
+                            animationId = null;
+                        }
+                    }, 100);
                 };
             }
             // 4. TaskFormer (Strategic Flow Visualization)
@@ -6842,28 +6873,33 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 observer.observe(canvas6);
 
                 const animate = () => {
+                    if (!isVisible) {
+                        animationId = null;
+                        return;
+                    }
+                    
                     ctx.clearRect(0, 0, width, height);
                     
                     ctx.save();
                     ctx.translate(width/2, height/2);
                     
-                    // Rotating wireframe cube/grid
-                    rotation += 0.005;
+                    // Rotating wireframe cube/grid - optimized rotation speed
+                    rotation += 0.008;
                     
                     const size = Math.min(width, height) * 0.3;
                     
-                    // Draw multiple rotating rectangles
+                    // Draw multiple rotating rectangles - optimized drawing
+                    ctx.lineWidth = 1;
                     for(let i = 0; i < 3; i++) {
                         ctx.save();
                         ctx.rotate(rotation + (i * Math.PI / 3));
                         
                         ctx.strokeStyle = i === 0 ? '#666' : (i === 1 ? '#444' : '#333');
-                        ctx.lineWidth = 1;
                         
                         // Rectangle
                         ctx.strokeRect(-size/2, -size/2, size, size);
                         
-                        // Inner diagonals
+                        // Inner diagonals - batched path
                         ctx.beginPath();
                         ctx.moveTo(-size/2, -size/2);
                         ctx.lineTo(size/2, size/2);
@@ -6882,11 +6918,7 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                     
                     ctx.restore();
                     
-                    if (isVisible) {
-                        animationId = requestAnimationFrame(animate);
-                    } else {
-                        animationId = null;
-                    }
+                    animationId = requestAnimationFrame(animate);
                 };
             }
         }
