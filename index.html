@@ -90,14 +90,11 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    <link rel="preload" href="https://unpkg.com/lucide@latest" as="script">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1396,8 +1393,12 @@
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex gap-12 text-[11px] font-medium tracking-[0.2em] uppercase">
-                <a href="#services" class="hover-target magnetic-wrap group">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Services</span>
+                <a href="financial-analysis.html" class="hover-target magnetic-wrap group">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Finance</span>
+                    <span class="magnetic-area"></span>
+                </a>
+                <a href="consulting.html" class="hover-target magnetic-wrap group">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Consulting</span>
                     <span class="magnetic-area"></span>
                 </a>
                 <a href="#work" class="hover-target magnetic-wrap group">
@@ -1406,10 +1407,6 @@
                 </a>
                 <a href="#writing" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Writing</span>
-                    <span class="magnetic-area"></span>
-                </a>
-                <a href="#philosophy" class="hover-target magnetic-wrap group">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Philosophy</span>
                     <span class="magnetic-area"></span>
                 </a>
                 <a href="#contact" class="hover-target magnetic-wrap group">
@@ -1427,10 +1424,10 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-off-black z-30 transform translate-x-full flex flex-col justify-center items-center space-y-10" style="transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; backface-visibility: hidden;" role="dialog" aria-modal="true" aria-label="Navigation menu">
-        <a href="#services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">SERVICES</a>
+        <a href="financial-analysis.html" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">FINANCE</a>
+        <a href="consulting.html" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONSULTING</a>
         <a href="#work" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WORK</a>
         <a href="#writing" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WRITING</a>
-        <a href="#philosophy" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">PHILOSOPHY</a>
         <a href="#contact" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONTACT</a>
         <button id="close-menu-btn" class="absolute top-8 right-8 p-4 hover:rotate-90 transition-transform duration-300" aria-label="Close navigation menu">
             <i data-lucide="x" class="w-8 h-8 text-white"></i>
@@ -1893,6 +1890,9 @@
         </footer>
     </section>
     </main> <!-- End of main content -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
         // --- 1. DATA: PROJECT CONTENT ---
@@ -6809,32 +6809,102 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 };
             }
 
-            // 5. Financial Service (Stock Chart/Line Graph)
+            // 5. Financial Service (Optimization Streams)
+            // Concept: "Signal from Noise". Scattered, volatile paths (Risk/Inefficiency) 
+            // converge into a focused, optimized stream (Strategy/Growth).
             const canvas5 = document.getElementById('canvas-financial');
             if (canvas5) {
                 const ctx = canvas5.getContext('2d');
                 let width, height;
-                let dataPoints = [];
-                let time = 0;
                 let isVisible = false;
                 let animationId = null;
                 
+                let particles = [];
+                const particleCount = 80;
+                let targetY = 0;
+                let mouse = { x: null, y: null };
+
+                // Interaction
+                canvas5.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = canvas5.getBoundingClientRect();
+                    mouse.x = e.clientX - rect.left;
+                    mouse.y = e.clientY - rect.top;
+                });
+                canvas5.parentElement.addEventListener('mouseleave', () => {
+                    mouse.x = null;
+                    mouse.y = null;
+                });
+
+                class StreamParticle {
+                    constructor() {
+                        this.reset(true);
+                        // Randomize initial x to fill screen immediately
+                        this.x = Math.random() * width;
+                    }
+
+                    reset(startAtLeft = true) {
+                        this.x = startAtLeft ? 0 : Math.random() * width;
+                        // Start at random Y with high variance
+                        this.y = Math.random() * height;
+                        
+                        this.speed = Math.random() * 1.5 + 0.5;
+                        this.size = Math.random() * 1.2 + 0.5;
+                        
+                        // Noise properties
+                        this.wobbleSpeed = Math.random() * 0.05;
+                        this.wobbleAmp = Math.random() * 2;
+                        this.wobbleOffset = Math.random() * 100;
+                    }
+
+                    update() {
+                        this.x += this.speed;
+                        
+                        // Determine target Y (Mouse or Center)
+                        const destY = (mouse.y !== null) ? mouse.y : height / 2;
+                        
+                        // Convergence Logic
+                        // Progress 0 (Left) -> 1 (Right)
+                        const progress = this.x / width;
+                        
+                        // Attraction strength increases as we move right
+                        // Non-linear: starts weak, gets strong
+                        const attraction = Math.pow(progress, 1.5) * 0.08;
+                        
+                        const dy = destY - this.y;
+                        this.y += dy * attraction;
+                        
+                        // Add noise (decreases as we align)
+                        const noise = Math.sin(this.x * this.wobbleSpeed + this.wobbleOffset) * this.wobbleAmp;
+                        this.y += noise * (1 - progress); // Less noise at the end
+
+                        // Reset if off screen
+                        if (this.x > width) {
+                            this.reset(true);
+                        }
+                    }
+
+                    draw() {
+                        // Draw head
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
                 const resize = () => {
                     width = canvas5.width = canvas5.parentElement.offsetWidth;
                     height = canvas5.height = canvas5.parentElement.offsetHeight;
-                    // Initialize with some data points
-                    dataPoints = [];
-                    for(let i = 0; i < 100; i++) {
-                        dataPoints.push({
-                            value: height/2 + Math.sin(i/10) * 50 + (Math.random() - 0.5) * 20,
-                            volatility: Math.random() * 2
-                        });
+                    targetY = height / 2;
+                    
+                    particles = [];
+                    for(let i=0; i<particleCount; i++) {
+                        particles.push(new StreamParticle());
                     }
                 };
                 resize();
                 window.addEventListener('resize', debounce(resize, 150));
                 
-                // Visibility detection
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         isVisible = entry.isIntersecting;
@@ -6846,83 +6916,60 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 observer.observe(canvas5);
 
                 const animate = () => {
-                    ctx.clearRect(0, 0, width, height);
-                    
-                    // Add new data point
-                    time += 0.1;
-                    const lastVal = dataPoints[dataPoints.length - 1].value;
-                    const newVal = lastVal + (Math.random() - 0.5) * 5;
-                    dataPoints.push({
-                        value: Math.max(height * 0.2, Math.min(height * 0.8, newVal)),
-                        volatility: Math.random() * 2
+                    if (!isVisible) {
+                        animationId = null;
+                        return;
+                    }
+
+                    // Trail effect: Low opacity fillRect
+                    // This creates the "long exposure" look of financial charts
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.08)'; 
+                    ctx.fillRect(0, 0, width, height);
+
+                    particles.forEach(p => {
+                        p.update();
+                        p.draw();
                     });
-                    
-                    // Keep only last 100 points
-                    if (dataPoints.length > 100) dataPoints.shift();
-                    
-                    // Draw grid lines
-                    ctx.strokeStyle = '#1a1a1a';
-                    ctx.lineWidth = 1;
-                    for(let i = 0; i < 5; i++) {
-                        const y = (height / 5) * i;
+
+                    // Optional: Draw a subtle "Target Line" if mouse is active
+                    if (mouse.y !== null) {
                         ctx.beginPath();
-                        ctx.moveTo(0, y);
-                        ctx.lineTo(width, y);
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(0, mouse.y);
+                        ctx.lineTo(width, mouse.y);
                         ctx.stroke();
                     }
-                    
-                    // Draw main line
-                    ctx.strokeStyle = '#666';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    dataPoints.forEach((point, i) => {
-                        const x = (i / 99) * width;
-                        if (i === 0) ctx.moveTo(x, point.value);
-                        else ctx.lineTo(x, point.value);
-                    });
-                    ctx.stroke();
-                    
-                    // Draw fill gradient
-                    const gradient = ctx.createLinearGradient(0, 0, 0, height);
-                    gradient.addColorStop(0, 'rgba(102, 102, 102, 0.2)');
-                    gradient.addColorStop(1, 'rgba(102, 102, 102, 0)');
-                    ctx.fillStyle = gradient;
-                    ctx.beginPath();
-                    dataPoints.forEach((point, i) => {
-                        const x = (i / 99) * width;
-                        if (i === 0) ctx.moveTo(x, point.value);
-                        else ctx.lineTo(x, point.value);
-                    });
-                    ctx.lineTo(width, height);
-                    ctx.lineTo(0, height);
-                    ctx.closePath();
-                    ctx.fill();
-                    
-                    if (isVisible) {
-                        animationId = requestAnimationFrame(animate);
-                    } else {
-                        animationId = null;
-                    }
+
+                    animationId = requestAnimationFrame(animate);
                 };
             }
 
-            // 6. Website Service (Geometric Grid/Wireframe)
+            // 6. Website Service (Lorenz Attractor - Chaos Theory)
             const canvas6 = document.getElementById('canvas-website');
             if (canvas6) {
                 const ctx = canvas6.getContext('2d');
                 let width, height;
-                let rotation = 0;
                 let isVisible = false;
                 let animationId = null;
                 
+                // Lorenz System Parameters
+                let x = 0.1, y = 0, z = 0;
+                const sigma = 10;
+                const rho = 28;
+                const beta = 8/3;
+                const dt = 0.01;
+                let points = [];
+                const maxPoints = 800; // Trail length
+
                 const resize = () => {
                     width = canvas6.width = canvas6.parentElement.offsetWidth;
                     height = canvas6.height = canvas6.parentElement.offsetHeight;
+                    points = []; // Reset on resize
                 };
                 resize();
                 window.addEventListener('resize', debounce(resize, 150));
                 
-                // Visibility detection
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         isVisible = entry.isIntersecting;
@@ -6938,47 +6985,49 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                         animationId = null;
                         return;
                     }
-                    
-                    ctx.clearRect(0, 0, width, height);
-                    
-                    ctx.save();
-                    ctx.translate(width/2, height/2);
-                    
-                    // Rotating wireframe cube/grid - optimized rotation speed
-                    rotation += 0.008;
-                    
-                    const size = Math.min(width, height) * 0.3;
-                    
-                    // Draw multiple rotating rectangles - optimized drawing
-                    ctx.lineWidth = 1;
-                    for(let i = 0; i < 3; i++) {
-                        ctx.save();
-                        ctx.rotate(rotation + (i * Math.PI / 3));
-                        
-                        ctx.strokeStyle = i === 0 ? '#666' : (i === 1 ? '#444' : '#333');
-                        
-                        // Rectangle
-                        ctx.strokeRect(-size/2, -size/2, size, size);
-                        
-                        // Inner diagonals - batched path
-                        ctx.beginPath();
-                        ctx.moveTo(-size/2, -size/2);
-                        ctx.lineTo(size/2, size/2);
-                        ctx.moveTo(size/2, -size/2);
-                        ctx.lineTo(-size/2, size/2);
-                        ctx.stroke();
-                        
-                        ctx.restore();
-                    }
-                    
-                    // Center dot
-                    ctx.fillStyle = '#fff';
+
+                    // Fade effect for trail
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.1)'; // Very subtle fade
+                    ctx.fillRect(0, 0, width, height);
+
+                    // Calculate next point
+                    const dx = (sigma * (y - x)) * dt;
+                    const dy = (x * (rho - z) - y) * dt;
+                    const dz = (x * y - beta * z) * dt;
+                    x += dx;
+                    y += dy;
+                    z += dz;
+
+                    points.push({x, y, z});
+                    if (points.length > maxPoints) points.shift();
+
+                    // Draw
                     ctx.beginPath();
-                    ctx.arc(0, 0, 2, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    ctx.restore();
-                    
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.lineWidth = 0.8;
+
+                    // Projection scale
+                    const scale = Math.min(width, height) / 60;
+                    const centerX = width / 2;
+                    const centerY = height / 2 + 10; // Offset slightly down
+
+                    for (let i = 0; i < points.length - 1; i++) {
+                        const p1 = points[i];
+                        const p2 = points[i+1];
+                        
+                        // Simple 3D projection (isometric-ish)
+                        // Rotate slightly to see structure better
+                        const rotX1 = p1.x * Math.cos(0.5) - p1.y * Math.sin(0.5);
+                        const rotY1 = p1.x * Math.sin(0.5) + p1.y * Math.cos(0.5);
+                        
+                        const rotX2 = p2.x * Math.cos(0.5) - p2.y * Math.sin(0.5);
+                        const rotY2 = p2.x * Math.sin(0.5) + p2.y * Math.cos(0.5);
+
+                        ctx.moveTo(centerX + rotX1 * scale, centerY - (p1.z - 25) * scale);
+                        ctx.lineTo(centerX + rotX2 * scale, centerY - (p2.z - 25) * scale);
+                    }
+                    ctx.stroke();
+
                     animationId = requestAnimationFrame(animate);
                 };
             }
@@ -7135,7 +7184,8 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
             camera.position.z = 6;
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            // Optimization: Disable antialias for performance
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
             container.appendChild(renderer.domElement);
@@ -7237,6 +7287,8 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
             const ctx = oscCanvas.getContext('2d');
             let width, height;
             let time = 0;
+            let isOscVisible = false;
+            let oscAnimationId = null;
             
             // Mouse interaction
             let mouseX = 0;
@@ -7249,10 +7301,23 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 width = oscCanvas.width = oscCanvas.offsetWidth;
                 height = oscCanvas.height = oscCanvas.offsetHeight;
             }
-            window.addEventListener('resize', resizeOsc);
+            // Optimization: Debounce resize
+            window.addEventListener('resize', debounce(resizeOsc, 150));
             resizeOsc();
 
+            // Optimization: Intersection Observer
+            const oscObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isOscVisible = entry.isIntersecting;
+                    if (isOscVisible && !oscAnimationId) {
+                        animateOsc();
+                    }
+                });
+            }, { threshold: 0.1 });
+            oscObserver.observe(oscCanvas);
+
             window.addEventListener('mousemove', (e) => {
+                if (!isOscVisible) return; // Optimization: Don't track mouse if not visible
                 const rect = oscCanvas.getBoundingClientRect();
                 mouseX = e.clientX - rect.left;
                 mouseY = e.clientY - rect.top;
@@ -7267,6 +7332,11 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
             }, { passive: true });
 
             function animateOsc() {
+                if (!isOscVisible) {
+                    oscAnimationId = null;
+                    return;
+                }
+                
                 ctx.clearRect(0, 0, width, height);
                 
                 // Decay mouse speed
@@ -7305,9 +7375,14 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 });
                 
                 time += 0.02;
-                requestAnimationFrame(animateOsc);
+                oscAnimationId = requestAnimationFrame(animateOsc);
             }
-            animateOsc();
+            // Initial start handled by observer
+        }
+        
+        // Ensure icons are created if script loaded late
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
         }
     </script>
 </body>
