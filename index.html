@@ -6502,57 +6502,188 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                     }
                 };
             }
-            // 4. TaskFormer (Logic Gate)
+            // 4. TaskFormer (Strategic Flow Visualization)
             const canvas4 = document.getElementById('canvas-taskformer');
             if (canvas4) {
                 const ctx = canvas4.getContext('2d');
                 let width, height;
-                let pulse = 0;
+                let nodes = [];
+                let paths = [];
                 let isVisible = false;
                 let animationId = null;
+                let isHovered = false;
+                
+                const parent = canvas4.parentElement;
+                parent.addEventListener('mouseenter', () => isHovered = true);
+                parent.addEventListener('mouseleave', () => isHovered = false);
+                
+                // Create a flowing node in the system
+                const createNode = () => ({
+                    x: -20,
+                    y: Math.random() * height,
+                    vx: 0.3 + Math.random() * 0.4,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    size: 1.5 + Math.random() * 1,
+                    opacity: 0,
+                    life: 200 + Math.random() * 100,
+                    age: 0,
+                    path: Math.floor(Math.random() * 3) // Which path tier it follows
+                });
+                
+                // Create horizontal flow paths
+                const createPaths = () => {
+                    paths = [];
+                    const numPaths = 3;
+                    for (let i = 0; i < numPaths; i++) {
+                        paths.push({
+                            y: height * (0.25 + i * 0.25),
+                            baseY: height * (0.25 + i * 0.25),
+                            phase: Math.random() * Math.PI * 2,
+                            amplitude: 15 + Math.random() * 10,
+                            frequency: 0.002 + Math.random() * 0.001
+                        });
+                    }
+                };
                 
                 const resize = () => {
                     width = canvas4.width = canvas4.parentElement.offsetWidth;
                     height = canvas4.height = canvas4.parentElement.offsetHeight;
+                    createPaths();
+                    nodes = [];
+                    // Pre-populate with some nodes
+                    for (let i = 0; i < 20; i++) {
+                        const node = createNode();
+                        node.x = Math.random() * width;
+                        node.opacity = 1;
+                        node.age = Math.random() * 50;
+                        nodes.push(node);
+                    }
                 };
                 resize();
-                window.addEventListener('resize', resize);
+                window.addEventListener('resize', debounce(resize, 150));
+                
+                // Visibility detection
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isVisible = entry.isIntersecting;
+                        if (isVisible && !animationId) {
+                            animate();
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(canvas4);
 
                 const animate = () => {
-                    ctx.clearRect(0, 0, width, height);
+                    // Clear with slight trail for motion blur effect
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.15)';
+                    ctx.fillRect(0, 0, width, height);
                     
-                    // Draw Circuit Lines
-                    ctx.strokeStyle = '#333';
-                    ctx.lineWidth = 2;
-                    
-                    const midY = height / 2;
-                    const step = width / 4;
-                    
-                    // Main Path
-                    ctx.beginPath();
-                    ctx.moveTo(0, midY);
-                    ctx.lineTo(width, midY);
-                    ctx.stroke();
-                    
-                    // Nodes (Gates)
-                    for(let i=1; i<4; i++) {
-                        const x = i * step;
-                        ctx.fillStyle = '#111';
-                        ctx.fillRect(x - 10, midY - 10, 20, 20);
-                        ctx.strokeRect(x - 10, midY - 10, 20, 20);
+                    // Spawn new nodes periodically
+                    if (nodes.length < 30 && Math.random() < 0.15) {
+                        nodes.push(createNode());
                     }
                     
-                    // Pulse
-                    pulse += 2;
-                    if (pulse > width) pulse = 0;
+                    // Update path phases for wave motion
+                    paths.forEach(path => {
+                        path.phase += 0.01;
+                    });
                     
-                    ctx.fillStyle = '#fff';
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = '#fff';
-                    ctx.beginPath();
-                    ctx.arc(pulse, midY, 3, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
+                    // Draw subtle connection lines between nearby nodes
+                    ctx.globalAlpha = 1;
+                    nodes.forEach((node, i) => {
+                        nodes.forEach((other, j) => {
+                            if (i >= j) return;
+                            
+                            const dx = node.x - other.x;
+                            const dy = node.y - other.y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            
+                            const maxDist = isHovered ? 100 : 150;
+                            
+                            if (dist < maxDist && node.opacity > 0.3 && other.opacity > 0.3) {
+                                ctx.beginPath();
+                                ctx.moveTo(node.x, node.y);
+                                ctx.lineTo(other.x, other.y);
+                                
+                                const opacity = (1 - dist / maxDist) * 0.15 * Math.min(node.opacity, other.opacity);
+                                ctx.strokeStyle = isHovered ? `rgba(255, 51, 51, ${opacity})` : `rgba(68, 68, 68, ${opacity})`;
+                                ctx.lineWidth = 1;
+                                ctx.stroke();
+                            }
+                        });
+                    });
+                    
+                    // Draw flowing path lines
+                    ctx.globalAlpha = 1;
+                    paths.forEach((path, idx) => {
+                        ctx.beginPath();
+                        for (let x = 0; x < width; x += 2) {
+                            const y = path.baseY + Math.sin(x * path.frequency + path.phase) * path.amplitude;
+                            if (x === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.strokeStyle = isHovered ? 'rgba(68, 68, 68, 0.3)' : 'rgba(68, 68, 68, 0.15)';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    });
+                    
+                    // Update and draw nodes
+                    nodes.forEach((node, index) => {
+                        node.age++;
+                        
+                        // Fade in/out lifecycle
+                        if (node.age < 30) {
+                            node.opacity = node.age / 30;
+                        } else if (node.age > node.life - 30) {
+                            node.opacity = (node.life - node.age) / 30;
+                        } else {
+                            node.opacity = 1;
+                        }
+                        
+                        // Remove dead nodes
+                        if (node.age >= node.life) {
+                            nodes.splice(index, 1);
+                            return;
+                        }
+                        
+                        // Follow wave path
+                        const path = paths[node.path % paths.length];
+                        const targetY = path.baseY + Math.sin(node.x * path.frequency + path.phase) * path.amplitude;
+                        node.vy += (targetY - node.y) * 0.02; // Attraction to path
+                        node.vy *= 0.95; // Damping
+                        
+                        // Add shake on hover
+                        let shakeX = 0, shakeY = 0;
+                        if (isHovered) {
+                            shakeX = (Math.random() - 0.5) * 3;
+                            shakeY = (Math.random() - 0.5) * 3;
+                        }
+                        
+                        // Movement
+                        node.x += node.vx;
+                        node.y += node.vy;
+                        
+                        const drawX = node.x + shakeX;
+                        const drawY = node.y + shakeY;
+                        
+                        // Draw node
+                        ctx.globalAlpha = node.opacity;
+                        ctx.fillStyle = isHovered ? '#ff3333' : '#666';
+                        ctx.beginPath();
+                        ctx.arc(drawX, drawY, node.size, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        // Draw small directional tail
+                        ctx.globalAlpha = node.opacity * 0.4;
+                        ctx.beginPath();
+                        ctx.moveTo(drawX, drawY);
+                        ctx.lineTo(drawX - node.vx * 8, drawY - node.vy * 8);
+                        ctx.strokeStyle = isHovered ? '#ff3333' : '#444';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    });
+                    
+                    ctx.globalAlpha = 1;
 
                     if (isVisible) {
                         animationId = requestAnimationFrame(animate);
