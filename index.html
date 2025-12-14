@@ -462,6 +462,15 @@
             50% { transform: translateX(calc(100% - 3rem)); }
         }
 
+        /* --- TICKER ANIMATION --- */
+        @keyframes flash {
+            0% { color: #FFFFFF; text-shadow: 0 0 8px rgba(255,255,255,0.8); }
+            100% { color: inherit; text-shadow: none; }
+        }
+        .animate-flash {
+            animation: flash 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         /* --- ROW FADE IN ANIMATION --- */
         @keyframes fadeInRow {
             from {
@@ -1142,6 +1151,53 @@
         }
         .live-val { color: #EAEAEA; }
 
+        /* --- WRITING SECTION --- */
+        .writing-list {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .writing-list:hover .writing-item {
+            filter: blur(3px);
+            opacity: 0.4;
+            transform: scale(0.99);
+        }
+        .writing-list .writing-item:hover {
+            filter: blur(0);
+            opacity: 1;
+            transform: scale(1);
+            z-index: 10;
+            border-color: #0F0F0F;
+        }
+        .writing-item {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, filter, opacity;
+        }
+        
+        /* Filter Buttons */
+        .filter-btn {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .filter-btn.active::after,
+        .filter-btn:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .filter-btn.active {
+            color: #0F0F0F;
+        }
+
         /* --- UI IMPROVEMENTS --- */
         .glass-nav {
             background: rgba(3, 3, 3, 0.7);
@@ -1216,8 +1272,11 @@
             white-space: normal;
         }
 
-
-
+        /* Shadow Order Book Mask */
+        .mask-gradient-left {
+            mask-image: linear-gradient(to right, transparent, black 40%);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 40%);
+        }
 
     </style>
     <!-- Vercel Web Analytics -->
@@ -1546,83 +1605,143 @@
     <!-- Writing / Thoughts Section -->
     <section id="writing" class="py-40 px-6 md:px-12 bg-off-white text-off-black relative">
         <div class="max-w-[1200px] mx-auto">
-            <div class="flex items-center gap-4 mb-20 reveal-text">
-                <div class="w-2 h-2 bg-off-black rounded-full animate-pulse-slow"></div>
-                <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">Writing & Thoughts</h2>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 reveal-text gap-8">
+                <div class="flex items-center gap-4">
+                    <div class="w-2 h-2 bg-off-black rounded-full animate-pulse-slow"></div>
+                    <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">Writing & Thoughts</h2>
+                </div>
+                
+                <!-- Filter Controls -->
+                <div class="flex gap-8 font-mono text-xs tracking-widest uppercase text-neutral-400" id="writing-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="consulting">Consulting</button>
+                    <button class="filter-btn" data-filter="finance">Finance</button>
+                    <button class="filter-btn" data-filter="engineering">Engineering</button>
+                </div>
             </div>
 
-            <div class="space-y-8 writing-list">
-                <!-- Essay 1 -->
-                <div data-writing="convexity" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" aria-label="Read essay: The Convexity Trap">
+            <div class="space-y-8 writing-list" id="writing-grid">
+                
+                <!-- Consulting: Wind Down -->
+                <div data-category="consulting" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('legacy', 'writing')">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Legacy Systems & The Art of the Exit</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">CONSULTING</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Navigating the technical and operational complexities of winding down a mid-sized logistics firm. How we managed 15TB of legacy database archives, ensured regulatory compliance, and executed a graceful systematic shutdown.</p>
+                </div>
+
+                <!-- Consulting: Web3 Migration -->
+                <div data-category="consulting" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('web3_migration', 'writing')">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Bridging the Gap: Web2 to Web3</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">CONSULTING</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">A case study on helping a traditional fintech client integrate on-chain settlement layers. Overcoming custody challenges, smart contract auditing, and the cultural shift from centralized databases to distributed ledgers.</p>
+                </div>
+
+                <!-- Engineering: AI Agents -->
+                <div data-category="engineering" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('automating_alpha', 'writing')">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Automating Alpha</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">ENGINEERING</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Building autonomous research agents that parse 10-Ks and earnings call transcripts. Using LLMs to extract structured sentiment data and detect divergence from consensus estimates.</p>
+                </div>
+
+                <!-- Finance: Convexity -->
+                <div data-category="finance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('convexity', 'writing')">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
                              <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Convexity Trap</h3>
                         </div>
-                        <span class="font-mono text-xs text-neutral-400">DEC 2025</span>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Why negative convexity in MBS portfolios destroyed hedge funds in 2022. A technical autopsy of duration extension and gamma hedging failures.</p>
                 </div>
 
-                <!-- Essay 2 -->
-                <div data-writing="terminal" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" aria-label="Read essay: Terminal Value Deconstructed">
+                <!-- Finance: Terminal Value -->
+                <div data-category="finance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('terminal', 'writing')">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
                              <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Terminal Value Deconstructed</h3>
                         </div>
-                        <span class="font-mono text-xs text-neutral-400">NOV 2025</span>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">The 80% problem in DCF models. Why perpetuity growth assumptions mask value creation and how to build defensible exit multiples.</p>
                 </div>
 
-                <!-- Essay 3 -->
-                <div data-writing="variance" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" aria-label="Read essay: Variance Risk Premium Extraction">
+                <!-- Engineering: Web3 Systems -->
+                <div data-category="engineering" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('fintech_future', 'writing')">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Variance Risk Premium Extraction</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Future of Fintech</h3>
                         </div>
-                        <span class="font-mono text-xs text-neutral-400">OCT 2025</span>
+                        <span class="font-mono text-xs text-neutral-400">ENGINEERING</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Designing resilient financial systems on public blockchains. Exploring the intersection of zero-knowledge proofs and regulatory compliance in DeFi.</p>
+                </div>
+
+                 <!-- Finance: Variance -->
+                <div data-category="finance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('variance', 'writing')">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Variance Risk Premium</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Decomposing realized vs. implied volatility spreads. Statistical arbitrage strategies in VIX futures term structure and variance swap mechanics.</p>
                 </div>
 
-                <!-- Essay 4 -->
-                <div data-writing="bootstrap" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" aria-label="Read essay: Bootstrapping the Yield Curve">
-                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                <!-- Finance: Bootstrapping (NEW) -->
+                <div data-category="finance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('bootstrap', 'writing')">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
                              <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Bootstrapping the Yield Curve</h3>
                         </div>
-                        <span class="font-mono text-xs text-neutral-400">SEP 2025</span>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">From SOFR swaps to zero-coupon rates. The mechanics of curve construction, interpolation methods, and cross-currency basis adjustments.</p>
                 </div>
 
-                <!-- Essay 5 -->
-                <div data-writing="credit" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" aria-label="Read essay: Credit Spread Decomposition">
-                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                <!-- Finance: Credit (NEW) -->
+                <div data-category="finance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('credit', 'writing')">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
                              <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Credit Spread Decomposition</h3>
                         </div>
-                        <span class="font-mono text-xs text-neutral-400">AUG 2025</span>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Separating default probability from recovery rates in corporate bonds. Structural models vs. reduced-form approaches in distressed debt.</p>
                 </div>
 
-                <!-- Essay 6 -->
-                <div data-writing="leverage" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" aria-label="Read essay: The Leverage Ratchet">
-                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                <!-- Finance: Leverage (NEW) -->
+                <div data-category="finance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" onclick="openModal('leverage', 'writing')">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
                              <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Leverage Ratchet</h3>
                         </div>
-                        <span class="font-mono text-xs text-neutral-400">JUL 2025</span>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">LBO modeling beyond the template. Optimal capital structure, covenant design, and the hidden costs of financial engineering in leveraged buyouts.</p>
                 </div>
+
             </div>
         </div>
     </section>
@@ -1717,27 +1836,36 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-32 px-6 md:px-12 min-h-[80vh] flex flex-col justify-between bg-[#030303] text-off-white border-t border-off-white/10 relative overflow-hidden" aria-labelledby="contact-heading">
+    <section id="contact" class="py-20 px-6 md:px-12 min-h-screen flex flex-col justify-between bg-[#030303] text-off-white border-t border-off-white/10 relative overflow-hidden" aria-labelledby="contact-heading">
+        <!-- Shadow Order Book Visual -->
+        <div id="order-book-visual" class="absolute top-0 right-0 w-[40%] h-full pointer-events-none z-0 mix-blend-plus-lighter opacity-30 mask-gradient-left">
+            <canvas id="ob-canvas" class="w-full h-full"></canvas>
+        </div>
+
         <!-- Subtle Grid Background for Contact -->
         <div class="absolute inset-0 pointer-events-none opacity-[0.03]" style="background-image: linear-gradient(#EAEAEA 1px, transparent 1px), linear-gradient(90deg, #EAEAEA 1px, transparent 1px); background-size: 40px 40px;"></div>
         
-        <div class="max-w-[1600px] mx-auto w-full h-full flex flex-col justify-center flex-grow pt-20 relative z-10">
-            <div class="reveal-text mb-12">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Open for New Ventures</span>
+        <div class="max-w-[1600px] mx-auto w-full h-full flex flex-col justify-center flex-grow relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center w-full">
+                <div class="w-full md:w-1/2 reveal-text">
+                    <div class="flex items-center gap-3 mb-12">
+                        <span class="w-1.5 h-1.5 bg-off-white rounded-full animate-pulse"></span>
+                        <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Open for New Ventures</span>
+                    </div>
+                    
+                    <div class="space-y-12">
+                        <p class="font-sans text-xl md:text-2xl text-neutral-500 max-w-md leading-relaxed">
+                            Have a project? Building something that requires precision? Let's discuss how strategic clarity can transform complexity into competitive advantage.
+                        </p>
+                        
+                        <h2 id="contact-heading" onclick="this.querySelector('a').click()" class="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter hover:text-neutral-300 transition-all duration-300 cursor-pointer hover-target magnetic-wrap group inline-block">
+                            <a href="mailto:sulayman.bowles@gmail.com" class="magnetic-content block underline decoration-off-white/20 decoration-1 underline-offset-8 hover:decoration-off-white/60 transition-all duration-300 relative z-10">
+                                SULAYMAN.BOWLES<br>@GMAIL.COM
+                            </a>
+                            <span class="magnetic-area"></span>
+                        </h2>
+                    </div>
                 </div>
-                <p class="font-sans text-2xl md:text-3xl text-neutral-400 max-w-3xl leading-[1.6]">
-                    Have a project? Building something that requires precision? Let's discuss how strategic clarity can transform complexity into competitive advantage.
-                </p>
-            </div>
-            <div class="reveal-text">
-                <h2 id="contact-heading" class="font-display text-[9vw] leading-[0.9] font-bold tracking-tighter hover:text-neutral-300 transition-all duration-300 cursor-pointer hover-target magnetic-wrap group">
-                    <a href="mailto:sulayman.bowles@gmail.com" class="magnetic-content block underline decoration-off-white/20 decoration-1 underline-offset-8 hover:decoration-off-white/60 transition-all duration-300 relative z-10">
-                        SULAYMAN.BOWLES<br>@GMAIL.COM
-                    </a>
-                    <span class="magnetic-area"></span>
-                </h2>
             </div>
         </div>
 
@@ -1748,21 +1876,7 @@
                 <a href="Bowles Sulayman oih.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Download resume">Resume</a>
             </div>
             <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-6 text-right md:text-left uppercase items-center">
-                <div id="weather-ticker" class="flex items-center gap-2" title="Live Weather in Austin, TX">
-                     <span>ATX: <span id="weather-val" class="text-off-white">--°F</span></span>
-                </div>
-                <div id="btc-ticker" class="flex items-center gap-2" title="Live Bitcoin Price">
-                     <span>BTC: <span id="btc-val" class="text-off-white">$----</span></span>
-                </div>
-                <div id="eth-ticker" class="flex items-center gap-2" title="Live Ethereum Price">
-                     <span>ETH: <span id="eth-val" class="text-off-white">$----</span></span>
-                </div>
-                <div id="block-ticker" class="hidden md:flex items-center gap-2" title="Bitcoin Block Height">
-                     <span>BLOCK: <span id="block-val" class="text-off-white">------</span></span>
-                </div>
-                <div id="ping-ticker" class="hidden md:flex items-center gap-2" title="System Latency">
-                     <span>PING: <span id="ping-val" class="text-off-white">--ms</span></span>
-                </div>
+                <div id="live-ticker" class="contents"></div>
                 <time id="clock" class="tabular-nums">00:00:00 CST</time>
                 <span class="hidden md:inline">&copy; <span id="year"></span> S. BOWLES</span>
             </div>
@@ -3126,6 +3240,122 @@
         };
 
         const writingData = {
+            legacy: {
+                meta: { date: "DEC 2024", category: "CONSULTING", readTime: "6 MIN" },
+                title: "Legacy Systems & The Art of the Exit",
+                lede: "Navigating the technical and operational complexities of winding down a mid-sized logistics firm. How we managed 15TB of legacy database archives, ensured regulatory compliance, and executed a graceful systematic shutdown.",
+                content: `
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        There is no glory in a shutdown. It is the hospice care of the corporate world. Yet, the technical challenges of winding down a 20-year-old logistics firm with 15TB of data and 40 interconnected subsystems rival those of any greenfield launch. The goal is not growth; it is <span class="interactive-term" data-term="Data Archival">immutable finality<span class="term-tooltip">The process of preserving data in a state that cannot be modified, ensuring historical accuracy for regulatory and legal purposes.</span></span>.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Code is liability. Data is risk. The only secure system is one that is turned off."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        We faced a sprawling monolith of Oracle databases, SOAP APIs, and undocumented cron jobs. The first step was <span class="interactive-term" data-term="Dependency Mapping">dependency mapping<span class="term-tooltip">Visualizing and documenting the relationships between software components to understand the impact of removing or modifying them.</span></span>. We used static analysis tools to trace data flows, discovering that the payroll system depended on a legacy inventory view that hadn't been updated in three years. Turning off one server could trigger a cascade of failures in compliance reporting.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Archival Strategy</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Regulatory requirements demanded 7 years of data retention. Keeping the Oracle instances running was cost-prohibitive ($15k/month). We devised a <span class="interactive-term" data-term="Cold Storage">cold storage migration<span class="term-tooltip">Moving inactive data to low-cost storage tiers (like AWS Glacier) where retrieval is slow but retention is cheap.</span></span> plan. We exported all relational data to Apache Parquet files, preserving schema and types, and stored them in AWS S3 Glacier Deep Archive. Cost dropped to $40/month.
+                        <span class="sparkline" data-values="15000,15000,12000,8000,4000,1000,500,100,40,40,40"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        For the application logic, we containerized the core business rules into a lightweight Docker image, stripped of all UI and external integrations. This "black box" could be spun up on-demand if an auditor needed to re-run a specific calculation from 2018. It was a digital time capsule.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Human Element</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The hardest part wasn't technical. It was managing the morale of a team coding their own obsolescence. We implemented "retention bonuses" tied to successful decommissioning milestones. We framed the project not as a death, but as a "successful exit" – a final, professional execution of duty. In the end, the servers went dark, the S3 buckets were locked, and the keys were handed over. Silence is the sound of a job well done.
+                    </p>
+                `,
+                nextSlug: "web3_migration"
+            },
+            web3_migration: {
+                meta: { date: "NOV 2024", category: "CONSULTING", readTime: "7 MIN" },
+                title: "Bridging the Gap: Web2 to Web3",
+                lede: "A case study on helping a traditional fintech client integrate on-chain settlement layers. Overcoming custody challenges, smart contract auditing, and the cultural shift from centralized databases to distributed ledgers.",
+                content: `
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        The client was a mid-sized neobank processing $500M in monthly volume. They wanted "crypto exposure." They didn't understand that they were asking to replace their database with a global, adversarial state machine. Integrating <span class="interactive-term" data-term="Web3 Settlement">on-chain settlement<span class="term-tooltip">Finalizing financial transactions on a blockchain, providing transparency and immutability but requiring strict key management.</span></span> into a Web2 stack is not an API integration; it's a paradigm shift.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"In Web2, you trust the admin. In Web3, you trust the math. The admin is usually easier to sue."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The immediate hurdle was <span class="interactive-term" data-term="Custody">custody<span class="term-tooltip">The safeguarding of private keys that control digital assets. Self-custody means you hold the keys; third-party custody means a provider holds them.</span></span>. The client wanted to hold user funds. We explained that "holding funds" meant managing private keys in a Hardware Security Module (HSM) with multi-party computation (MPC) signing. One leaked key, and the bank is insolvent. We architected a hybrid solution: a qualified custodian for the bulk of assets, and a hot wallet for daily liquidity, rebalanced automatically via smart contracts.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Reconciliation Nightmare</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Blockchains don't close at 5 PM. They don't have weekends. The client's legacy ledger expected a daily "end of day" batch process. We built a real-time <span class="interactive-term" data-term="Indexer">indexer<span class="term-tooltip">Software that reads blockchain data, parses it, and stores it in a queryable database (like SQL) for applications to use.</span></span> that listened to chain events and updated the internal SQL ledger. The challenge was handling "reorgs" – when the blockchain rewrites the last few blocks. Our system had to be able to "rewind" the SQL state to match the chain truth.
+                        <span class="sparkline" data-values="0,10,25,40,35,50,65,60,80,90,100"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        We also implemented a "gas station" network to abstract transaction fees from users. The bank paid the ETH; the user just saw a "Processing..." spinner. It was a seamless UX wrapper around a chaotic decentralized core.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Cultural Divergence</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The biggest friction was cultural. Compliance officers wanted to "reverse" suspicious transactions. We had to explain immutability. Developers wanted to "hotfix" bugs. We had to explain smart contract audits and timelocks. Bridging Web2 and Web3 isn't just code; it's education. It's teaching a centralized organization how to survive in a decentralized world.
+                    </p>
+                `,
+                nextSlug: "automating_alpha"
+            },
+            automating_alpha: {
+                meta: { date: "OCT 2024", category: "ENGINEERING", readTime: "8 MIN" },
+                title: "Automating Alpha",
+                lede: "Building autonomous research agents that parse 10-Ks and earnings call transcripts. Using LLMs to extract structured sentiment data and detect divergence from consensus estimates.",
+                content: `
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        Alpha is information asymmetry. In the age of high-frequency trading, speed is commoditized. The new frontier is <span class="interactive-term" data-term="Unstructured Data">unstructured data<span class="term-tooltip">Information that doesn't fit into a pre-defined data model, like text, audio, and video. 80% of enterprise data is unstructured.</span></span>. 10-Ks, earnings calls, expert network transcripts – these contain the signal, buried in noise. We built a fleet of autonomous agents to mine it.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"The market reacts to the headline. The alpha is in the footnotes."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The pipeline starts with ingestion. We scrape EDGAR for filings and use speech-to-text for earnings calls. The raw text is chunked and fed into a vector database (Pinecone) for semantic search. But the real magic happens in the <span class="interactive-term" data-term="LLM Analysis">LLM layer<span class="term-tooltip">Using Large Language Models (like GPT-4) to reason about text, extract facts, and perform sentiment analysis.</span></span>. We don't just ask "is this positive?" We ask specific, structured questions: "What is the guidance for Q4?" "Is the CEO hedging on supply chain issues?" "Compare the tone of the CFO's answer to the analyst's question."
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Sentiment Divergence</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        We built a "Divergence Score." We compare the LLM's extracted sentiment of the management team against the consensus analyst ratings. When management sounds cautious but analysts are bullish, that's a short signal. When management is confident but the stock is beaten down, that's a long.
+                        <span class="sparkline" data-values="50,52,48,45,60,75,80,70,65,55,50"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The system flagged a divergence in a major retailer's Q3 call. The CEO mentioned "inventory headwinds" 12 times, up from 2 in Q2. Analysts ignored it, focusing on top-line growth. The stock dropped 15% two weeks later when they revised guidance. The agent saw the smoke before the fire.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Hallucination Risk</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        LLMs hallucinate. In finance, a hallucinated number is a P&L disaster. We implemented a "Citation Verification" step. The agent must provide the exact sentence from the source text that supports its conclusion. If it can't cite it, the insight is discarded. We also use an ensemble of models – if GPT-4, Claude, and Llama 3 disagree, a human analyst is alerted. Automation is leverage, not autopilot.
+                    </p>
+                `,
+                nextSlug: "fintech_future"
+            },
+            fintech_future: {
+                meta: { date: "SEP 2024", category: "ENGINEERING", readTime: "9 MIN" },
+                title: "The Future of Fintech",
+                lede: "Designing resilient financial systems on public blockchains. Exploring the intersection of zero-knowledge proofs and regulatory compliance in DeFi.",
+                content: `
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        DeFi (Decentralized Finance) promised a revolution: open, permissionless, transparent markets. It delivered a casino. But beneath the speculation, the infrastructure of the future is being laid. The convergence of <span class="interactive-term" data-term="ZK Proofs">Zero-Knowledge Proofs<span class="term-tooltip">Cryptographic methods that allow one party to prove to another that a statement is true without revealing any information beyond the validity of the statement itself.</span></span> and institutional compliance is where the real disruption lies.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Privacy is not secrecy. Privacy is the right to selectively reveal."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The problem with public blockchains is that they are *too* public. A hedge fund cannot trade on Uniswap if every competitor can see their position size and entry price. This is where ZK-rollups come in. They allow for computation to happen off-chain (privately) while posting a cryptographic proof of validity on-chain. You get the security of Ethereum with the privacy of a dark pool.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Compliance by Design</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Regulators demand KYC/AML. DeFi demands permissionlessness. These seem incompatible. They aren't. We are prototyping <span class="interactive-term" data-term="Verifiable Credentials">verifiable credentials<span class="term-tooltip">Digital credentials that are cryptographically signed by an issuer (like a government or bank) and can be presented by a holder to a verifier without revealing the underlying data.</span></span>. A user proves they are "Accredited" or "Not Sanctioned" using a ZK proof generated from their passport data, without revealing their identity to the protocol. The smart contract checks the proof, not the passport.
+                        <span class="sparkline" data-values="10,15,25,40,60,55,70,85,90,95,100"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        This "Compliance Layer" sits on top of the permissionless base layer. It allows institutions to participate in DeFi liquidity pools without violating their mandates. It is the bridge that brings the $100T of traditional assets on-chain.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Resilience Engineering</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Smart contracts are immutable. Bugs are forever. We are adopting formal verification methods – mathematically proving that the code behaves as intended – for core protocol logic. We are also designing "circuit breakers" that pause trading if volatility or drawdown metrics exceed safety thresholds. The future of fintech isn't just about moving money faster; it's about moving it safer, with mathematical guarantees that no central bank can offer.
+                    </p>
+                `,
+                nextSlug: "convexity"
+            },
             convexity: {
                 meta: { date: "DEC 2025", category: "FIXED INCOME", readTime: "8 MIN" },
                 title: "The Convexity Trap",
@@ -3348,7 +3578,7 @@
                         <span class="sparkline" data-values="25,24,22,18,15,10,5,-2,8,15,22"></span>
                     </p>
                 `,
-                nextSlug: "convexity"
+                nextSlug: "legacy"
             }
         };
 
@@ -6972,34 +7202,104 @@
         }
 
         // --- 11. LIVE TICKER ---
-        async function initLiveTicker() {
+        function initLiveTicker() {
             const ticker = document.getElementById('live-ticker');
-            
-            // Mock data initially to prevent empty space
-            ticker.innerHTML = `
-                <span>AUSTIN: <span class="live-val">72°F</span></span>
-                <span>ETH GAS: <span class="live-val">12 GWEI</span></span>
-            `;
+            if (!ticker) return;
 
-            try {
-                // 1. Weather (Open-Meteo)
-                const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m&temperature_unit=fahrenheit');
-                const weatherData = await weatherRes.json();
-                const temp = Math.round(weatherData.current.temperature_2m);
+            // Initial State (Updated Dec 2025)
+            const state = {
+                btc: { val: 90142, label: 'BTC' },
+                eth: { val: 3108, label: 'ETH' },
+                block: { val: 927811, label: 'BLOCK' },
+                ping: { val: 24, label: 'PING' }
+            };
 
-                // 2. ETH Gas (Etherscan proxy or similar - using CoinGecko for Price as Gas needs API key usually)
-                // Let's use CoinGecko for ETH Price instead as it's more stable free
-                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-                const cryptoData = await cryptoRes.json();
-                const ethPrice = Math.round(cryptoData.ethereum.usd);
-
+            // Render Function
+            function render() {
                 ticker.innerHTML = `
-                    <span>AUSTIN: <span class="live-val">${temp}°F</span></span>
-                    <span>ETH: <span class="live-val">$${ethPrice}</span></span>
+                    <div class="flex items-center gap-2"><span>${state.btc.label}: <span id="ticker-btc" class="text-off-white">$${state.btc.val.toLocaleString()}</span></span></div>
+                    <div class="flex items-center gap-2"><span>${state.eth.label}: <span id="ticker-eth" class="text-off-white">$${state.eth.val.toLocaleString()}</span></span></div>
+                    <div class="hidden md:flex items-center gap-2"><span>${state.block.label}: <span id="ticker-block" class="text-off-white">#${state.block.val.toLocaleString()}</span></span></div>
+                    <div class="hidden md:flex items-center gap-2"><span>${state.ping.label}: <span id="ticker-ping" class="text-off-white">${state.ping.val}ms</span></span></div>
                 `;
-            } catch (e) {
-                console.log('Live data fetch failed, using fallback');
             }
+            render();
+
+            // Update Helper
+            function updateValue(id, newValue, formatFn = v => v) {
+                const el = document.getElementById(id);
+                if (el && el.innerText !== formatFn(newValue)) {
+                    el.innerText = formatFn(newValue);
+                    el.classList.remove('animate-flash');
+                    void el.offsetWidth; // Trigger reflow
+                    el.classList.add('animate-flash');
+                }
+            }
+
+            // 1. Crypto Prices (Bitstamp WebSocket for Real-Time Data)
+            function initPriceWS() {
+                const ws = new WebSocket('wss://ws.bitstamp.net');
+                
+                ws.onopen = () => {
+                    ws.send(JSON.stringify({ event: 'bts:subscribe', data: { channel: 'live_trades_btcusd' } }));
+                    ws.send(JSON.stringify({ event: 'bts:subscribe', data: { channel: 'live_trades_ethusd' } }));
+                };
+
+                ws.onmessage = (event) => {
+                    try {
+                        const msg = JSON.parse(event.data);
+                        if (msg.event === 'trade') {
+                            if (msg.channel === 'live_trades_btcusd') {
+                                state.btc.val = msg.data.price;
+                                updateValue('ticker-btc', state.btc.val, v => `$${v.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`);
+                            } else if (msg.channel === 'live_trades_ethusd') {
+                                state.eth.val = msg.data.price;
+                                updateValue('ticker-eth', state.eth.val, v => `$${v.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`);
+                            }
+                        }
+                    } catch (e) {}
+                };
+
+                ws.onclose = () => setTimeout(initPriceWS, 5000);
+            }
+            
+            // 2. Block Height (Mempool.space Polling - Frequent)
+            async function fetchBlock() {
+                try {
+                    const res = await fetch('https://mempool.space/api/blocks/tip/height');
+                    const height = await res.text();
+                    if (height) {
+                        state.block.val = parseInt(height);
+                        updateValue('ticker-block', state.block.val, v => `#${v.toLocaleString()}`);
+                    }
+                } catch(e) {}
+            }
+
+            // 3. System Ping (Real Measurement)
+            async function measurePing() {
+                const start = performance.now();
+                try {
+                    // Fetch a small resource (favicon or current page HEAD) to measure RTT
+                    await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+                    const end = performance.now();
+                    const ping = Math.round(end - start);
+                    state.ping.val = ping;
+                    updateValue('ticker-ping', state.ping.val, v => `${v}ms`);
+                } catch (e) {
+                    // Fallback if fetch fails
+                    state.ping.val = 0;
+                    updateValue('ticker-ping', 'ERR', v => v);
+                }
+            }
+
+            // Start Loops
+            initPriceWS();
+            fetchBlock();
+            measurePing();
+
+            // Intervals
+            setInterval(measurePing, 2000);
+            setInterval(fetchBlock, 10000); // Check for blocks every 10s
         }
 
         // --- 6. CURSOR & MAGNETIC ---
@@ -7372,10 +7672,228 @@
             });
         }
         
+        // --- 10. WRITING FILTER ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const writingItems = document.querySelectorAll('.writing-item');
+        const writingGrid = document.getElementById('writing-grid');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                // Animate Grid
+                writingGrid.style.opacity = '0';
+                writingGrid.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    writingItems.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            item.style.display = 'block';
+                            // Small delay for stagger effect could be added here
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                    
+                    // Fade back in
+                    writingGrid.style.opacity = '1';
+                    writingGrid.style.transform = 'translateY(0)';
+                }, 300);
+            });
+        });
+
         // Ensure icons are created if script loaded late
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
+
+        // --- 11. SHADOW ORDER BOOK (LIVE DATA - BITSTAMP) ---
+        function initOrderBook() {
+            const canvas = document.getElementById('ob-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const container = document.getElementById('order-book-visual');
+            const contactSection = document.getElementById('contact');
+            
+            let width, height;
+            let animationId;
+            let isVisible = false;
+            let isHovered = false;
+            
+            // Data State
+            let bids = [];
+            let asks = [];
+            let lastPrice = 0;
+            let ws = null;
+            
+            // Initialize WebSocket (Bitstamp)
+            function connectWS() {
+                // Bitstamp public websocket
+                ws = new WebSocket('wss://ws.bitstamp.net');
+                
+                ws.onopen = () => {
+                    const msg1 = {
+                        event: 'bts:subscribe',
+                        data: { channel: 'order_book_btcusd' }
+                    };
+                    ws.send(JSON.stringify(msg1));
+
+                    const msg2 = {
+                        event: 'bts:subscribe',
+                        data: { channel: 'live_trades_btcusd' }
+                    };
+                    ws.send(JSON.stringify(msg2));
+                };
+
+                ws.onmessage = (event) => {
+                    try {
+                        const response = JSON.parse(event.data);
+                        
+                        // Handle Order Book
+                        if (response.channel === 'order_book_btcusd' && response.data.bids && response.data.asks) {
+                            const data = response.data;
+                            // Take top 20, convert to float
+                            bids = data.bids.slice(0, 20).map(b => ({ p: parseFloat(b[0]), q: parseFloat(b[1]) }));
+                            asks = data.asks.slice(0, 20).map(a => ({ p: parseFloat(a[0]), q: parseFloat(a[1]) }));
+                            
+                            // Fallback price if no trades yet
+                            if (lastPrice === 0 && bids.length > 0 && asks.length > 0) {
+                                lastPrice = (bids[0].p + asks[0].p) / 2;
+                            }
+                        }
+
+                        // Handle Live Trades (Instant Price Updates)
+                        if (response.channel === 'live_trades_btcusd' && response.data.price) {
+                            lastPrice = response.data.price;
+                        }
+                    } catch (e) {
+                        // console.error(e);
+                    }
+                };
+
+                ws.onclose = () => {
+                    // Simple reconnect logic
+                    setTimeout(connectWS, 3000);
+                };
+            }
+
+            // Start connection
+            connectWS();
+
+            function resize() {
+                width = canvas.width = container.offsetWidth;
+                height = canvas.height = container.offsetHeight;
+            }
+            window.addEventListener('resize', debounce(resize, 200));
+            resize();
+
+            // Interaction
+            contactSection.addEventListener('mouseenter', () => {
+                isHovered = true;
+                container.style.opacity = '0.8';
+                container.style.filter = 'blur(0px)';
+            });
+            contactSection.addEventListener('mouseleave', () => {
+                isHovered = false;
+                container.style.opacity = '0.3';
+                container.style.filter = 'blur(2px)';
+            });
+
+            // Animation Loop
+            function animate() {
+                if (!isVisible) {
+                    animationId = null;
+                    return;
+                }
+                
+                ctx.clearRect(0, 0, width, height);
+                
+                // Compact Layout Settings
+                const levels = 20; 
+                const paddingY = height * 0.2; 
+                const availableHeight = height - (paddingY * 2);
+                const barHeight = availableHeight / levels;
+                const midX = width * 0.5; 
+                const maxBarWidth = width * 0.45;
+                
+                // Dynamic Volume Normalization
+                // Find max volume in current view to scale bars appropriately
+                let currentMaxVol = 0.1;
+                bids.forEach(b => currentMaxVol = Math.max(currentMaxVol, b.q));
+                asks.forEach(a => currentMaxVol = Math.max(currentMaxVol, a.q));
+                
+                // Draw Bids (Left)
+                bids.forEach((b, i) => {
+                    const y = paddingY + (i * barHeight) + (barHeight / 2);
+                    const w = Math.min((b.q / currentMaxVol) * maxBarWidth, maxBarWidth);
+                    
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(234, 234, 234, ${0.1 + Math.min(b.q/currentMaxVol, 0.6)})`;
+                    ctx.lineWidth = barHeight * 0.6; 
+                    ctx.moveTo(midX - 4, y);
+                    ctx.lineTo(midX - 4 - w, y);
+                    ctx.stroke();
+                });
+
+                // Draw Asks (Right)
+                asks.forEach((a, i) => {
+                    const y = paddingY + (i * barHeight) + (barHeight / 2);
+                    const w = Math.min((a.q / currentMaxVol) * maxBarWidth, maxBarWidth);
+                    
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(234, 234, 234, ${0.1 + Math.min(a.q/currentMaxVol, 0.6)})`;
+                    ctx.lineWidth = barHeight * 0.6;
+                    ctx.setLineDash([2, 2]); 
+                    ctx.moveTo(midX + 4, y);
+                    ctx.lineTo(midX + 4 + w, y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                });
+                
+                // Mid Price & Info (Hover)
+                if (isHovered && lastPrice) {
+                    const centerY = height / 2;
+                    
+                    // Center Line
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'rgba(234, 234, 234, 0.3)';
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(midX, paddingY);
+                    ctx.lineTo(midX, height - paddingY);
+                    ctx.stroke();
+
+                    // Text Info
+                    ctx.fillStyle = '#EAEAEA';
+                    ctx.font = '10px Space Mono';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`BTC-USD: $${lastPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, midX + 10, centerY);
+                    
+                    ctx.fillStyle = '#666';
+                    ctx.font = '8px Space Mono';
+                    ctx.fillText('SRC: BITSTAMP', midX + 10, centerY + 12);
+                }
+
+                animationId = requestAnimationFrame(animate);
+            }
+
+            // Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible && !animationId) {
+                        animate();
+                    }
+                });
+            }, { threshold: 0.1 });
+            observer.observe(contactSection);
+        }
+        initOrderBook();
 
     </script>
 </body>
