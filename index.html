@@ -7710,24 +7710,53 @@
 
                 const filter = btn.getAttribute('data-filter');
 
-                // Animate Grid
+                // 1. Fade out grid container
+                writingGrid.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
                 writingGrid.style.opacity = '0';
                 writingGrid.style.transform = 'translateY(10px)';
                 
                 setTimeout(() => {
+                    // 2. Filter items and prepare for entry
+                    const visibleItems = [];
                     writingItems.forEach(item => {
                         const category = item.getAttribute('data-category');
                         if (filter === 'all' || category === filter) {
                             item.style.display = 'block';
-                            // Small delay for stagger effect could be added here
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            visibleItems.push(item);
                         } else {
                             item.style.display = 'none';
                         }
                     });
                     
-                    // Fade back in
+                    // 3. Reset grid container instantly
+                    writingGrid.style.transition = 'none';
                     writingGrid.style.opacity = '1';
                     writingGrid.style.transform = 'translateY(0)';
+                    
+                    // Force reflow
+                    void writingGrid.offsetWidth;
+
+                    // 4. Stagger animate items in
+                    visibleItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * 50);
+                    });
+
+                    // 5. Cleanup inline styles after animation to restore hover effects
+                    const totalAnimationTime = (visibleItems.length * 50) + 300;
+                    setTimeout(() => {
+                        visibleItems.forEach(item => {
+                            item.style.opacity = '';
+                            item.style.transform = '';
+                        });
+                        // Restore grid transition for next time
+                        writingGrid.style.transition = '';
+                    }, totalAnimationTime);
+
                 }, 300);
             });
         });
