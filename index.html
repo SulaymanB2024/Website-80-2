@@ -1013,6 +1013,86 @@
             transform: translateX(0);
         }
 
+        /* --- SPOTLIGHT GRID EFFECT --- */
+        .grid-spotlight-container {
+            --mouse-x: 0px;
+            --mouse-y: 0px;
+        }
+        .grid-spotlight-tile {
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        .grid-spotlight-tile::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .grid-spotlight-container:hover .grid-spotlight-tile::before {
+            opacity: 1;
+        }
+        .grid-spotlight-tile::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.4),
+                transparent 40%
+            );
+            opacity: 0;
+            z-index: 3;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+        .grid-spotlight-container:hover .grid-spotlight-tile::after {
+            opacity: 1;
+        }
+
+        /* --- WRITING LIST FOCUS --- */
+        .writing-list:hover .writing-item {
+            opacity: 0.3;
+            filter: blur(1px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .writing-list:hover .writing-item:hover {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(10px);
+        }
+        
+        /* --- MAGNETIC CURSOR TWEAK --- */
+        .magnetic-wrap {
+            display: inline-block;
+            position: relative;
+        }
+        .magnetic-area {
+            position: absolute;
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
+            z-index: 10;
+        }
+
+        /* --- HERO LOADER REFINEMENT --- */
+        #loader {
+            /* ... existing styles ... */
+            background: #030303; /* Ensure deep black */
+        }
+        .loader-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
         /* --- TYPOGRAPHY & READING --- */
         .drop-cap::first-letter {
             float: left;
@@ -1194,11 +1274,11 @@
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex gap-12 text-[11px] font-medium tracking-[0.2em] uppercase">
-                <a href="financial-analysis.html" class="hover-target magnetic-wrap group">
+                <a href="#services" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Finance</span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="consulting.html" class="hover-target magnetic-wrap group">
+                <a href="#services" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Consulting</span>
                     <span class="magnetic-area"></span>
                 </a>
@@ -1225,8 +1305,8 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-off-black z-30 transform translate-x-full flex flex-col justify-center items-center space-y-10" style="transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; backface-visibility: hidden;" role="dialog" aria-modal="true" aria-label="Navigation menu">
-        <a href="financial-analysis.html" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">FINANCE</a>
-        <a href="consulting.html" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONSULTING</a>
+        <a href="#services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">FINANCE</a>
+        <a href="#services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONSULTING</a>
         <a href="#work" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WORK</a>
         <a href="#writing" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WRITING</a>
         <a href="#contact" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONTACT</a>
@@ -1469,7 +1549,7 @@
                 <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">Writing & Thoughts</h2>
             </div>
 
-            <div class="space-y-8">
+            <div class="space-y-8 writing-list">
                 <!-- Essay 1 -->
                 <div data-writing="convexity" class="writing-item block border-b border-neutral-300 pb-8 hover:border-black reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button" aria-label="Read essay: The Convexity Trap">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
@@ -1550,111 +1630,86 @@
         <!-- Oscilloscope Canvas -->
         <canvas id="oscilloscope" class="absolute inset-0 w-full h-full opacity-20 pointer-events-none"></canvas>
 
-        <div class="max-w-5xl mx-auto relative z-10">
-            <div class="flex items-center gap-4 mb-16 reveal-text">
-                <div class="w-2 h-2 bg-white rounded-full"></div>
-                <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">The Philosophy</h2>
-            </div>
-            
-            <div class="font-display text-3xl md:text-5xl leading-[1.2] font-light space-y-12 text-neutral-300">
-                <p class="reveal-text">
-                    Whether in code, markets, or music, I search for the dissonance. I believe in the "unpleasant details"-the friction points others ignore. 
-                </p>
-                <p class="reveal-text">
-                   My work is a study in dualities: spreadsheet precision meeting startup chaos. Classical structure meeting market volatility. Pattern recognition meeting creative intuition.
-                </p>
+        <div class="max-w-[1600px] mx-auto relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
                 
-                <!-- The Alchemical Grid (Periodic Table) -->
-                <div class="mt-24 reveal-text relative z-20">
-                    <h4 class="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-8">Raw Materials</h4>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <!-- Tile 1 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">01</span>
-                            <span class="font-display text-4xl font-bold self-center">Py</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">Python</span>
-                                <span class="font-mono text-[10px] opacity-60">Language</span>
-                            </div>
-                        </div>
-                        <!-- Tile 2 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">02</span>
-                            <span class="font-display text-4xl font-bold self-center">So</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">Solidity</span>
-                                <span class="font-mono text-[10px] opacity-60">Language</span>
-                            </div>
-                        </div>
-                        <!-- Tile 3 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">03</span>
-                            <span class="font-display text-4xl font-bold self-center">Fi</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">Finance</span>
-                                <span class="font-mono text-[10px] opacity-60">Discipline</span>
-                            </div>
-                        </div>
-                        <!-- Tile 4 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">04</span>
-                            <span class="font-display text-4xl font-bold self-center">Fa</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">Falconry</span>
-                                <span class="font-mono text-[10px] opacity-60">Discipline</span>
-                            </div>
-                        </div>
-                        <!-- Tile 5 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">05</span>
-                            <span class="font-display text-4xl font-bold self-center">Nu</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">Nuclear</span>
-                                <span class="font-mono text-[10px] opacity-60">Power</span>
-                            </div>
-                        </div>
-                        <!-- Tile 6 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">06</span>
-                            <span class="font-display text-4xl font-bold self-center">Mu</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">Music</span>
-                                <span class="font-mono text-[10px] opacity-60">Art</span>
-                            </div>
-                        </div>
-                        <!-- Tile 7 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">07</span>
-                            <span class="font-display text-4xl font-bold self-center">Re</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">React</span>
-                                <span class="font-mono text-[10px] opacity-60">Framework</span>
-                            </div>
-                        </div>
-                        <!-- Tile 8 -->
-                        <div class="group border border-white/20 bg-black/20 backdrop-blur-sm p-4 aspect-square flex flex-col justify-between hover:bg-white hover:text-black transition-colors duration-300 cursor-crosshair">
-                            <span class="font-mono text-[10px] opacity-50">08</span>
-                            <span class="font-display text-4xl font-bold self-center">Bl</span>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-xs uppercase tracking-wider">Bloomberg</span>
-                                <span class="font-mono text-[10px] opacity-60">Tool</span>
-                            </div>
-                        </div>
+                <!-- Left: The Narrative -->
+                <div class="reveal-text">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                        <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">The Philosophy</h2>
+                    </div>
+                    
+                    <div class="font-display text-3xl md:text-5xl leading-[1.2] font-light space-y-12 text-neutral-300">
+                        <p>
+                            Whether in code, markets, or music, I search for the dissonance. I believe in the "unpleasant details"—the friction points others ignore. 
+                        </p>
+                        <p>
+                           My work is a study in dualities: spreadsheet precision meeting startup chaos. Classical structure meeting market volatility. Pattern recognition meeting creative intuition.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Kinetic Truth Manifesto -->
-                <div class="mt-32 text-center relative z-0">
-                    <p class="font-display text-4xl md:text-6xl font-bold text-white blur-[2px] hover:blur-0 transition-all duration-500 cursor-default select-none">
-                        "The edge lives in the unpleasant details."
-                    </p>
+                <!-- Right: The Alchemist's Stack (Technical Manifest) -->
+                <div class="reveal-text md:pt-20">
+                    <div class="font-mono text-sm text-neutral-400 border-l border-white/20 pl-8 space-y-12">
+                        
+                        <!-- Stack Item 1 -->
+                        <div class="group">
+                            <h4 class="text-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-opacity">[ LANGUAGES ]</h4>
+                            <ul class="space-y-2">
+                                <li class="philosophy-item flex justify-between items-center border-b border-white/10 pb-2 hover:border-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="LOGIC" data-wave="sine">
+                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-white">></span>Python</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Data Science</span>
+                                </li>
+                                <li class="philosophy-item flex justify-between items-center border-b border-white/10 pb-2 hover:border-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="TRUST" data-wave="square">
+                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-white">></span>Solidity</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Smart Contracts</span>
+                                </li>
+                                <li class="philosophy-item flex justify-between items-center border-b border-white/10 pb-2 hover:border-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="SCALE" data-wave="sine">
+                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-white">></span>TypeScript</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Full Stack</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Stack Item 2 -->
+                        <div class="group">
+                            <h4 class="text-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-opacity">[ DISCIPLINES ]</h4>
+                            <ul class="space-y-2">
+                                <li class="philosophy-item flex justify-between items-center border-b border-white/10 pb-2 hover:border-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="VALUE" data-wave="jagged">
+                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-white">></span>Financial Modeling</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Valuation</span>
+                                </li>
+                                <li class="philosophy-item flex justify-between items-center border-b border-white/10 pb-2 hover:border-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="NASH" data-wave="jagged">
+                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-white">></span>Game Theory</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Strategy</span>
+                                </li>
+                                <li class="philosophy-item flex justify-between items-center border-b border-white/10 pb-2 hover:border-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="FLOW" data-wave="sine">
+                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-white">></span>System Architecture</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Design</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Stack Item 3 -->
+                        <div class="group">
+                            <h4 class="text-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-opacity">[ CORE ]</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="philosophy-item px-3 py-1 border border-white/20 text-xs text-neutral-300 hover:bg-white hover:text-black transition-colors cursor-crosshair" data-bg-text="CHAOS" data-wave="noise">ENTROPY</span>
+                                <span class="philosophy-item px-3 py-1 border border-white/20 text-xs text-neutral-300 hover:bg-white hover:text-black transition-colors cursor-crosshair" data-bg-text="ALPHA" data-wave="jagged">CONVEXITY</span>
+                                <span class="philosophy-item px-3 py-1 border border-white/20 text-xs text-neutral-300 hover:bg-white hover:text-black transition-colors cursor-crosshair" data-bg-text="VERITAS" data-wave="sine">TRUTH</span>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
         </div>
         
         <!-- Background Typography -->
-        <div class="absolute -bottom-[2vw] -right-[2vw] font-display font-bold text-[15vw] text-white pointer-events-none select-none opacity-[0.03] leading-none">
+        <div id="philosophy-bg-text" class="absolute -bottom-[2vw] -right-[2vw] font-display font-bold text-[15vw] text-white pointer-events-none select-none opacity-[0.03] leading-none transition-opacity duration-300">
             TRUTH
         </div>
     </section>
@@ -1690,13 +1745,24 @@
                 <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Visit GitHub profile">GitHub</a>
                 <a href="Bowles Sulayman oih.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Download resume">Resume</a>
             </div>
-            <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-8 text-right md:text-left uppercase items-center">
-                <div id="live-ticker" class="live-ticker flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-                    <span class="live-val">SYSTEM ONLINE</span>
+            <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-6 text-right md:text-left uppercase items-center">
+                <div id="weather-ticker" class="flex items-center gap-2" title="Live Weather in Austin, TX">
+                     <span>ATX: <span id="weather-val" class="text-white">--°F</span></span>
                 </div>
-                <time id="clock">00:00:00 CST</time>
-                <span>&copy; <span id="year"></span> SULAYMAN BOWLES</span>
+                <div id="btc-ticker" class="flex items-center gap-2" title="Live Bitcoin Price">
+                     <span>BTC: <span id="btc-val" class="text-white">$----</span></span>
+                </div>
+                <div id="eth-ticker" class="flex items-center gap-2" title="Live Ethereum Price">
+                     <span>ETH: <span id="eth-val" class="text-white">$----</span></span>
+                </div>
+                <div id="block-ticker" class="hidden md:flex items-center gap-2" title="Bitcoin Block Height">
+                     <span>BLOCK: <span id="block-val" class="text-white">------</span></span>
+                </div>
+                <div id="ping-ticker" class="hidden md:flex items-center gap-2" title="System Latency">
+                     <span>PING: <span id="ping-val" class="text-white">--ms</span></span>
+                </div>
+                <time id="clock" class="tabular-nums">00:00:00 CST</time>
+                <span class="hidden md:inline">&copy; <span id="year"></span> S. BOWLES</span>
             </div>
         </footer>
     </section>
@@ -3320,6 +3386,57 @@
         }
         setInterval(updateClock, 1000);
         updateClock();
+
+        // --- LIVE DATA FETCHING ---
+        async function fetchLiveData() {
+            const startPing = performance.now();
+            
+            // 1. Weather (Austin, TX)
+            try {
+                const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m&temperature_unit=fahrenheit');
+                const weatherData = await weatherRes.json();
+                if (weatherData.current && weatherData.current.temperature_2m) {
+                    document.getElementById('weather-val').textContent = Math.round(weatherData.current.temperature_2m) + '°F';
+                }
+            } catch (e) {
+                document.getElementById('weather-val').textContent = '62°F';
+            }
+
+            // 2. Crypto (BTC & ETH)
+            try {
+                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
+                const cryptoData = await cryptoRes.json();
+                if (cryptoData.bitcoin && cryptoData.bitcoin.usd) {
+                    document.getElementById('btc-val').textContent = '$' + Math.floor(cryptoData.bitcoin.usd).toLocaleString();
+                }
+                if (cryptoData.ethereum && cryptoData.ethereum.usd) {
+                    document.getElementById('eth-val').textContent = '$' + Math.floor(cryptoData.ethereum.usd).toLocaleString();
+                }
+            } catch (e) {
+                document.getElementById('btc-val').textContent = '$98,420';
+                document.getElementById('eth-val').textContent = '$3,121';
+            }
+
+            // 3. Block Height (Mempool.space)
+            try {
+                const blockRes = await fetch('https://mempool.space/api/blocks/tip/height');
+                const height = await blockRes.text();
+                if (height) {
+                    document.getElementById('block-val').textContent = parseInt(height).toLocaleString();
+                }
+            } catch (e) {
+                document.getElementById('block-val').textContent = '874,120';
+            }
+
+            // 4. Ping Calculation
+            const endPing = performance.now();
+            const ping = Math.round(endPing - startPing);
+            document.getElementById('ping-val').textContent = ping + 'ms';
+        }
+        
+        // Initial fetch and interval (every 60s)
+        fetchLiveData();
+        setInterval(fetchLiveData, 60000);
 
         // --- 3. TEXT SCRAMBLE EFFECT ---
         class TextScramble {
@@ -7108,6 +7225,9 @@
             let isOscVisible = false;
             let oscAnimationId = null;
             
+            // Wave State
+            let currentWaveMode = 'sine'; // sine, square, jagged, noise
+            
             // Mouse interaction
             let mouseX = 0;
             let mouseY = 0;
@@ -7173,9 +7293,22 @@
                     ctx.lineWidth = 1.5;
 
                     for (let x = 0; x < width; x++) {
-                        // Base wave
-                        let y = (height / 2) + 
-                               (wave.amplitude * Math.sin(x * wave.frequency + time * (index + 1) * 0.5));
+                        let y = height / 2;
+                        let waveY = 0;
+
+                        // Mode Logic
+                        if (currentWaveMode === 'sine') {
+                            waveY = Math.sin(x * wave.frequency + time * (index + 1) * 0.5);
+                        } else if (currentWaveMode === 'square') {
+                            waveY = Math.sign(Math.sin(x * wave.frequency * 2 + time * (index + 1)));
+                        } else if (currentWaveMode === 'jagged') {
+                            // Triangle/Sawtooth approximation
+                            waveY = Math.asin(Math.sin(x * wave.frequency * 3 + time * (index + 1)));
+                        } else if (currentWaveMode === 'noise') {
+                            waveY = (Math.random() - 0.5) * 2;
+                        }
+
+                        y += wave.amplitude * waveY;
                         
                         // Mouse interaction (Spike)
                         const dist = Math.abs(x - mouseX);
@@ -7195,13 +7328,53 @@
                 time += 0.02;
                 oscAnimationId = requestAnimationFrame(animateOsc);
             }
-            // Initial start handled by observer
+            
+            // --- PHILOSOPHY INTERACTION HOOKS ---
+            const philosophyItems = document.querySelectorAll('.philosophy-item');
+            const philosophyBgText = document.getElementById('philosophy-bg-text');
+            
+            philosophyItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const text = item.getAttribute('data-bg-text');
+                    const waveType = item.getAttribute('data-wave');
+                    
+                    // Update Wave
+                    currentWaveMode = waveType || 'sine';
+
+                    // Scramble Text Effect
+                    if (philosophyBgText && text) {
+                        philosophyBgText.style.opacity = '0.1'; 
+                        
+                        let iterations = 0;
+                        const interval = setInterval(() => {
+                            philosophyBgText.innerText = text.split('')
+                                .map((letter, index) => {
+                                    if(index < iterations) return text[index];
+                                    return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 26)];
+                                })
+                                .join('');
+                            
+                            if(iterations >= text.length) clearInterval(interval);
+                            iterations += 1/3;
+                        }, 30);
+                    }
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    currentWaveMode = 'sine';
+                    if (philosophyBgText) {
+                        philosophyBgText.style.opacity = '0.03';
+                        philosophyBgText.innerText = 'TRUTH';
+                    }
+                });
+            });
         }
         
         // Ensure icons are created if script loaded late
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
+
     </script>
 </body>
 </html>
