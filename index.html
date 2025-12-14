@@ -90,15 +90,17 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
 
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -7084,11 +7086,10 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
         }, { passive: true });
 
         function animateCursor() {
-            // Increased speed from 0.15 to 0.35 for lower latency cursor following
-            const speed = 0.35; 
+            // Optimized speed - balance between responsiveness and smoothness
+            const speed = 0.25; 
             cursor.x += (mouse.x - cursor.x) * speed;
             cursor.y += (mouse.y - cursor.y) * speed;
-            // Use transform for better performance (hardware accelerated)
             cursorOutline.style.transform = `translate(${cursor.x - 16}px, ${cursor.y - 16}px)`;
             requestAnimationFrame(animateCursor);
         }
