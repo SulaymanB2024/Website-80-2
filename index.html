@@ -189,6 +189,60 @@
             }
         }
 
+        /* --- GLOBAL REFINEMENTS --- */
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030303;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+            border: 2px solid #030303;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Selection Style */
+        ::selection {
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            text-shadow: none;
+        }
+
+        /* Link Underline Animation */
+        .hover-underline {
+            position: relative;
+            text-decoration: none;
+        }
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hover-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
         /* --- DEPTH EFFECT CONTAINER --- */
         #app-container {
             position: relative;
@@ -201,6 +255,10 @@
             margin: 0 auto;
             min-height: 100vh;
             background-color: #030303;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 120px 120px;
             will-change: transform, filter;
         }
 
@@ -1002,6 +1060,57 @@
         }
         .live-val { color: #EAEAEA; }
 
+        /* --- UI IMPROVEMENTS --- */
+        .glass-nav {
+            background: rgba(3, 3, 3, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Tech Corners */
+        .tech-corner {
+            position: relative;
+        }
+        .tech-corner::before, .tech-corner::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .tech-corner::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+        .tech-corner::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+        
+        .tech-corner:hover::before, .tech-corner:hover::after {
+            width: 100%;
+            height: 100%;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Typography Refinements */
+        h1, h2, h3, .font-display {
+            letter-spacing: -0.02em;
+        }
+        p {
+            letter-spacing: 0.01em;
+        }
+        
+        /* Button Tech Style */
+        .btn-tech {
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        .btn-tech:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
         /* Screen reader only class */
         .sr-only {
             position: absolute;
@@ -1076,7 +1185,7 @@
     <main id="app-container">
 
     <!-- Navigation -->
-    <nav class="fixed w-full top-0 z-40 px-8 py-8 mix-blend-difference text-white transition-transform duration-500" id="navbar">
+    <nav class="fixed w-full top-0 z-40 px-8 py-8 glass-nav text-white transition-transform duration-500" id="navbar">
         <div class="max-w-[1600px] mx-auto flex justify-between items-center">
             <a href="#" class="hover-target magnetic-wrap font-display font-bold text-xl tracking-tighter">
                 <span class="magnetic-content block">S. BOWLES</span>
@@ -1154,7 +1263,7 @@
                     </p>
                     
                     <div class="reveal-text mb-8" style="transition-delay: 600ms;">
-                        <a href="#services" class="magnetic-wrap hover-target inline-flex items-center gap-3 px-8 py-4 border-2 border-white/40 hover:border-white hover:bg-white/5 group text-white text-base font-medium rounded-sm backdrop-blur-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
+                        <a href="#services" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-white text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
                             <span class="magnetic-content inline-flex items-center gap-2">
                                 View Services <i data-lucide="arrow-down-right" class="w-5 h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
                             </span>
@@ -1174,7 +1283,7 @@
     </section>
 
     <!-- Infinite Marquee -->
-    <div class="py-8 border-b border-white/15 bg-charcoal overflow-hidden flex relative z-20 pointer-events-none select-none">
+    <div class="py-8 border-y border-white/15 bg-charcoal overflow-hidden flex relative z-20 pointer-events-none select-none">
         <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#888888]">
             <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
             <span>FULL STACK</span> <span class="text-[#666666]">///</span>
@@ -1212,7 +1321,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-text">
                 
                 <!-- Service 1: Financial Consulting -->
-                <div class="group service-card cursor-pointer border border-white/15 bg-charcoal hover:border-white/30 transition-all duration-500 overflow-hidden" data-service="financial">
+                <div class="group service-card tech-corner cursor-pointer border border-white/15 bg-charcoal hover:border-white/30 transition-all duration-500 overflow-hidden" data-service="financial">
                     <div class="service-img-container relative w-full h-[50vh] bg-[#0A0A0A] overflow-hidden">
                         <canvas id="canvas-financial" class="gen-canvas"></canvas>
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-700"></div>
@@ -1238,7 +1347,7 @@
                 </div>
 
                 <!-- Service 2: Website Design -->
-                <div class="group service-card cursor-pointer border border-white/15 bg-charcoal hover:border-white/30 transition-all duration-500 overflow-hidden" data-service="website">
+                <div class="group service-card tech-corner cursor-pointer border border-white/15 bg-charcoal hover:border-white/30 transition-all duration-500 overflow-hidden" data-service="website">
                     <div class="service-img-container relative w-full h-[50vh] bg-[#0A0A0A] overflow-hidden">
                         <canvas id="canvas-website" class="gen-canvas"></canvas>
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-700"></div>
@@ -1279,7 +1388,7 @@
             </div>
 
             <!-- Project 1: VC-Backed Startup -->
-            <div class="group project-card mb-40 w-full cursor-pointer reveal-text view-project-target" data-project="bittensor">
+            <div class="group project-card tech-corner mb-40 w-full cursor-pointer reveal-text view-project-target" data-project="bittensor">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/10">
                     <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
                         <canvas id="canvas-bittensor" class="gen-canvas"></canvas>
@@ -1296,7 +1405,7 @@
             </div>
 
             <!-- Project 2: Web3 Payroll -->
-            <div class="group project-card mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="payroll">
+            <div class="group project-card tech-corner mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="payroll">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
                         <canvas id="canvas-payroll" class="gen-canvas"></canvas>
@@ -1312,7 +1421,7 @@
             </div>
 
              <!-- Project 3: Point72 -->
-             <div class="group project-card mb-40 w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72">
+             <div class="group project-card tech-corner mb-40 w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
                         <canvas id="canvas-point72" class="gen-canvas"></canvas>
@@ -1328,7 +1437,7 @@
             </div>
 
             <!-- Project 4: Consulting (TaskFormer) -->
-            <div class="group project-card w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="taskformer">
+            <div class="group project-card tech-corner w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="taskformer">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0A0A0A]">
                         <canvas id="canvas-taskformer" class="gen-canvas"></canvas>
@@ -1551,9 +1660,16 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-32 px-6 md:px-12 min-h-[80vh] flex flex-col justify-between bg-[#080808] text-white border-t border-white/10" aria-labelledby="contact-heading">
-        <div class="max-w-[1600px] mx-auto w-full h-full flex flex-col justify-center flex-grow pt-20">
+    <section id="contact" class="py-32 px-6 md:px-12 min-h-[80vh] flex flex-col justify-between bg-[#080808] text-white border-t border-white/10 relative overflow-hidden" aria-labelledby="contact-heading">
+        <!-- Subtle Grid Background for Contact -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.03]" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 40px 40px;"></div>
+        
+        <div class="max-w-[1600px] mx-auto w-full h-full flex flex-col justify-center flex-grow pt-20 relative z-10">
             <div class="reveal-text mb-12">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Open for New Ventures</span>
+                </div>
                 <p class="font-sans text-2xl md:text-3xl text-neutral-400 max-w-3xl leading-[1.6]">
                     Have a project? Building something that requires precision? Let's discuss how strategic clarity can transform complexity into competitive advantage.
                 </p>
@@ -1568,14 +1684,17 @@
             </div>
         </div>
 
-        <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-end md:items-center border-t border-white/10 pt-10 mt-20 reveal-text" role="contentinfo">
+        <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-end md:items-center border-t border-white/10 pt-10 mt-20 reveal-text relative z-10" role="contentinfo">
             <div class="flex gap-8 mb-8 md:mb-0">
-                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Visit LinkedIn profile">LinkedIn</a>
-                <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Visit GitHub profile">GitHub</a>
-                <a href="Bowles Sulayman oih.pdf" target="_blank" class="hover-target text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest border-b border-transparent hover:border-white pb-1" aria-label="Download resume">Resume</a>
+                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Visit LinkedIn profile">LinkedIn</a>
+                <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Visit GitHub profile">GitHub</a>
+                <a href="Bowles Sulayman oih.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Download resume">Resume</a>
             </div>
             <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-8 text-right md:text-left uppercase items-center">
-                <div id="live-ticker" class="live-ticker"></div>
+                <div id="live-ticker" class="live-ticker flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                    <span class="live-val">SYSTEM ONLINE</span>
+                </div>
                 <time id="clock">00:00:00 CST</time>
                 <span>&copy; <span id="year"></span> SULAYMAN BOWLES</span>
             </div>
