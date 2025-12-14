@@ -6813,9 +6813,9 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 };
             }
 
-            // 5. Financial Service (Optimization Streams)
-            // Concept: "Signal from Noise". Scattered, volatile paths (Risk/Inefficiency) 
-            // converge into a focused, optimized stream (Strategy/Growth).
+            // 5. Financial Service (Volatility Surface)
+            // Concept: "The Landscape of Risk". A 3D wireframe surface representing 
+            // the shifting terrain of market volatility (Implied Volatility Surface).
             const canvas5 = document.getElementById('canvas-financial');
             if (canvas5) {
                 const ctx = canvas5.getContext('2d');
@@ -6823,89 +6823,63 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 let isVisible = false;
                 let animationId = null;
                 
-                let particles = [];
-                const particleCount = 80;
-                let targetY = 0;
-                let mouse = { x: null, y: null };
-
-                // Interaction
+                // Grid Parameters
+                const cols = 20;
+                const rows = 20;
+                let points = [];
+                
+                // Camera / Interaction
+                let rotation = 0.6; 
+                let tilt = 0.4;
+                let targetRotation = 0.6;
+                let targetTilt = 0.4;
+                let mouseX = 0;
+                let mouseY = 0;
+                
                 canvas5.parentElement.addEventListener('mousemove', (e) => {
                     const rect = canvas5.getBoundingClientRect();
-                    mouse.x = e.clientX - rect.left;
-                    mouse.y = e.clientY - rect.top;
+                    mouseX = e.clientX - rect.left;
+                    mouseY = e.clientY - rect.top;
+                    
+                    // Subtle camera movement based on mouse
+                    const nx = mouseX / width;
+                    const ny = mouseY / height;
+                    targetRotation = 0.6 + (nx - 0.5) * 0.5;
+                    targetTilt = 0.4 + (ny - 0.5) * 0.2;
                 });
+                
                 canvas5.parentElement.addEventListener('mouseleave', () => {
-                    mouse.x = null;
-                    mouse.y = null;
+                    targetRotation = 0.6;
+                    targetTilt = 0.4;
+                    mouseX = -1; // Hide cursor highlight
                 });
-
-                class StreamParticle {
-                    constructor() {
-                        this.reset(true);
-                        // Randomize initial x to fill screen immediately
-                        this.x = Math.random() * width;
-                    }
-
-                    reset(startAtLeft = true) {
-                        this.x = startAtLeft ? 0 : Math.random() * width;
-                        // Start at random Y with high variance
-                        this.y = Math.random() * height;
-                        
-                        this.speed = Math.random() * 1.5 + 0.5;
-                        this.size = Math.random() * 1.2 + 0.5;
-                        
-                        // Noise properties
-                        this.wobbleSpeed = Math.random() * 0.05;
-                        this.wobbleAmp = Math.random() * 2;
-                        this.wobbleOffset = Math.random() * 100;
-                    }
-
-                    update() {
-                        this.x += this.speed;
-                        
-                        // Determine target Y (Mouse or Center)
-                        const destY = (mouse.y !== null) ? mouse.y : height / 2;
-                        
-                        // Convergence Logic
-                        // Progress 0 (Left) -> 1 (Right)
-                        const progress = this.x / width;
-                        
-                        // Attraction strength increases as we move right
-                        // Non-linear: starts weak, gets strong
-                        const attraction = Math.pow(progress, 1.5) * 0.08;
-                        
-                        const dy = destY - this.y;
-                        this.y += dy * attraction;
-                        
-                        // Add noise (decreases as we align)
-                        const noise = Math.sin(this.x * this.wobbleSpeed + this.wobbleOffset) * this.wobbleAmp;
-                        this.y += noise * (1 - progress); // Less noise at the end
-
-                        // Reset if off screen
-                        if (this.x > width) {
-                            this.reset(true);
-                        }
-                    }
-
-                    draw() {
-                        // Draw head
-                        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
 
                 const resize = () => {
                     width = canvas5.width = canvas5.parentElement.offsetWidth;
                     height = canvas5.height = canvas5.parentElement.offsetHeight;
-                    targetY = height / 2;
-                    
-                    particles = [];
-                    for(let i=0; i<particleCount; i++) {
-                        particles.push(new StreamParticle());
-                    }
+                    initGrid();
                 };
+                
+                function initGrid() {
+                    points = [];
+                    // Create a grid centered at 0,0
+                    const spacing = Math.min(width, height) / 12;
+                    
+                    for(let r=0; r<=rows; r++) {
+                        for(let c=0; c<=cols; c++) {
+                            points.push({
+                                r, c,
+                                x: (c - cols/2) * spacing,
+                                z: (r - rows/2) * spacing,
+                                y: 0,
+                                // Store original for noise calc
+                                ox: (c - cols/2) * spacing,
+                                oz: (r - rows/2) * spacing
+                            });
+                        }
+                    }
+                }
+
                 resize();
                 window.addEventListener('resize', debounce(resize, 150));
                 
@@ -6925,31 +6899,105 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                         return;
                     }
 
-                    // Trail effect: Low opacity fillRect
-                    // This creates the "long exposure" look of financial charts
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.08)'; 
-                    ctx.fillRect(0, 0, width, height);
-
-                    particles.forEach(p => {
-                        p.update();
-                        p.draw();
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    // Smooth camera
+                    rotation += (targetRotation - rotation) * 0.05;
+                    tilt += (targetTilt - tilt) * 0.05;
+                    
+                    const time = Date.now() * 0.0015;
+                    
+                    // Update Surface Heights
+                    points.forEach(p => {
+                        // "Volatility Smile" shape (parabolic on X) + "Term Structure" (log on Z)
+                        // Plus Perlin-ish noise for "Market Jitters"
+                        
+                        // Base structure: Smile
+                        const smile = (p.ox * p.ox) * 0.0005;
+                        
+                        // Waves
+                        const wave1 = Math.sin(p.ox * 0.02 + time) * 15;
+                        const wave2 = Math.cos(p.oz * 0.03 + time * 0.7) * 15;
+                        
+                        p.y = smile + wave1 + wave2;
                     });
 
-                    // Optional: Draw a subtle "Target Line" if mouse is active
-                    if (mouse.y !== null) {
+                    // Projection & Drawing
+                    const projected = points.map(p => {
+                        // Rotate Y
+                        let x1 = p.x * Math.cos(rotation) - p.z * Math.sin(rotation);
+                        let z1 = p.x * Math.sin(rotation) + p.z * Math.cos(rotation);
+                        
+                        // Rotate X
+                        let y1 = p.y * Math.cos(tilt) - z1 * Math.sin(tilt);
+                        let z2 = p.y * Math.sin(tilt) + z1 * Math.cos(tilt);
+                        
+                        // Perspective
+                        const scale = 800 / (800 + z2 + 400); // +400 pushes it back
+                        
+                        return {
+                            x: width/2 + x1 * scale,
+                            y: height/2 + y1 * scale,
+                            r: p.r,
+                            c: p.c,
+                            z: z2 // Keep depth for sorting if needed
+                        };
+                    });
+
+                    // Draw Grid Lines
+                    ctx.lineWidth = 1;
+                    
+                    // 1. Lateral Lines (Rows)
+                    for(let r=0; r<=rows; r++) {
                         ctx.beginPath();
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(0, mouse.y);
-                        ctx.lineTo(width, mouse.y);
+                        let first = true;
+                        for(let c=0; c<=cols; c++) {
+                            const idx = r * (cols+1) + c;
+                            const p = projected[idx];
+                            if(first) { ctx.moveTo(p.x, p.y); first = false; }
+                            else ctx.lineTo(p.x, p.y);
+                        }
+                        // Distance fade
+                        ctx.strokeStyle = `rgba(255, 255, 255, 0.15)`;
                         ctx.stroke();
                     }
+                    
+                    // 2. Longitudinal Lines (Cols)
+                    for(let c=0; c<=cols; c++) {
+                        ctx.beginPath();
+                        let first = true;
+                        for(let r=0; r<=rows; r++) {
+                            const idx = r * (cols+1) + c;
+                            const p = projected[idx];
+                            if(first) { ctx.moveTo(p.x, p.y); first = false; }
+                            else ctx.lineTo(p.x, p.y);
+                        }
+                        ctx.strokeStyle = `rgba(255, 255, 255, 0.15)`;
+                        ctx.stroke();
+                    }
+                    
+                    // 3. Highlight "Slice" (Active Analysis)
+                    // Animate a "scan line" moving through the grid
+                    const scanRow = Math.floor((Math.sin(time * 0.5) * 0.5 + 0.5) * rows);
+                    
+                    ctx.beginPath();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#ffffff';
+                    let first = true;
+                    for(let c=0; c<=cols; c++) {
+                        const idx = scanRow * (cols+1) + c;
+                        const p = projected[idx];
+                        if(first) { ctx.moveTo(p.x, p.y); first = false; }
+                        else ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.stroke();
 
                     animationId = requestAnimationFrame(animate);
                 };
             }
 
-            // 6. Website Service (Lorenz Attractor - Chaos Theory)
+            // 6. Website Service (Lorenz Attractor Particle Cloud)
+            // Concept: "Emergent Structure". Chaos theory creating form.
             const canvas6 = document.getElementById('canvas-website');
             if (canvas6) {
                 const ctx = canvas6.getContext('2d');
@@ -6957,19 +7005,104 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 let isVisible = false;
                 let animationId = null;
                 
-                // Lorenz System Parameters
-                let x = 0.1, y = 0, z = 0;
+                // System Parameters
                 const sigma = 10;
                 const rho = 28;
                 const beta = 8/3;
-                const dt = 0.01;
-                let points = [];
-                const maxPoints = 800; // Trail length
+                const dt = 0.008; // Slower time step for smoothness
+                
+                // Particles
+                const particleCount = 1200;
+                let particles = [];
+                
+                // Camera / Interaction
+                let rotation = 0;
+                let targetRotation = 0;
+                let pitch = 0;
+                let targetPitch = 0;
+                
+                // Mouse Interaction
+                canvas6.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = canvas6.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / width; // 0 to 1
+                    const y = (e.clientY - rect.top) / height; // 0 to 1
+                    
+                    targetRotation = (x - 0.5) * Math.PI * 2; // Full rotation
+                    targetPitch = (y - 0.5) * Math.PI;
+                });
+                
+                canvas6.parentElement.addEventListener('mouseleave', () => {
+                    targetRotation = 0;
+                    targetPitch = 0;
+                });
+
+                class LorenzParticle {
+                    constructor() {
+                        this.reset();
+                        // Randomize initial position along the attractor to fill it instantly
+                        // We simulate a few seconds of movement
+                        for(let i=0; i<Math.random()*1000; i++) {
+                            this.update();
+                        }
+                    }
+                    
+                    reset() {
+                        // Start near the center but slightly offset to trigger chaos
+                        this.x = 0.1 + (Math.random() - 0.5);
+                        this.y = 0.1 + (Math.random() - 0.5);
+                        this.z = 0.1 + (Math.random() - 0.5) + 25; // Start near the "eyes"
+                        this.age = 0;
+                        this.life = 500 + Math.random() * 500;
+                        this.opacity = 0;
+                    }
+                    
+                    update() {
+                        // Lorenz Equations
+                        const dx = (sigma * (this.y - this.x)) * dt;
+                        const dy = (this.x * (rho - this.z) - this.y) * dt;
+                        const dz = (this.x * this.y - beta * this.z) * dt;
+                        
+                        this.x += dx;
+                        this.y += dy;
+                        this.z += dz;
+                        
+                        this.age++;
+                        
+                        // Fade in/out
+                        if (this.age < 50) this.opacity = this.age / 50;
+                        else if (this.age > this.life - 50) this.opacity = (this.life - this.age) / 50;
+                        else this.opacity = 1;
+                        
+                        if (this.age >= this.life) this.reset();
+                    }
+                    
+                    draw(centerX, centerY, scale, rotX, rotY) {
+                        // 3D Rotation
+                        // Rotate around Y axis (Yaw)
+                        let x1 = this.x * Math.cos(rotX) - this.z * Math.sin(rotX);
+                        let z1 = this.x * Math.sin(rotX) + this.z * Math.cos(rotX);
+                        
+                        // Rotate around X axis (Pitch)
+                        let y1 = this.y * Math.cos(rotY) - z1 * Math.sin(rotY);
+                        // let z2 = this.y * Math.sin(rotY) + z1 * Math.cos(rotY); // Depth not needed for drawing
+                        
+                        // Projection
+                        const screenX = centerX + x1 * scale;
+                        const screenY = centerY - y1 * scale; // Invert Y for screen coords
+                        
+                        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.6})`;
+                        ctx.fillRect(screenX, screenY, 1.5, 1.5); // Draw pixel
+                    }
+                }
 
                 const resize = () => {
                     width = canvas6.width = canvas6.parentElement.offsetWidth;
                     height = canvas6.height = canvas6.parentElement.offsetHeight;
-                    points = []; // Reset on resize
+                    
+                    particles = [];
+                    for(let i=0; i<particleCount; i++) {
+                        particles.push(new LorenzParticle());
+                    }
                 };
                 resize();
                 window.addEventListener('resize', debounce(resize, 150));
@@ -6990,47 +7123,26 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                         return;
                     }
 
-                    // Fade effect for trail
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.1)'; // Very subtle fade
-                    ctx.fillRect(0, 0, width, height);
-
-                    // Calculate next point
-                    const dx = (sigma * (y - x)) * dt;
-                    const dy = (x * (rho - z) - y) * dt;
-                    const dz = (x * y - beta * z) * dt;
-                    x += dx;
-                    y += dy;
-                    z += dz;
-
-                    points.push({x, y, z});
-                    if (points.length > maxPoints) points.shift();
-
-                    // Draw
-                    ctx.beginPath();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-                    ctx.lineWidth = 0.8;
-
-                    // Projection scale
-                    const scale = Math.min(width, height) / 60;
-                    const centerX = width / 2;
-                    const centerY = height / 2 + 10; // Offset slightly down
-
-                    for (let i = 0; i < points.length - 1; i++) {
-                        const p1 = points[i];
-                        const p2 = points[i+1];
-                        
-                        // Simple 3D projection (isometric-ish)
-                        // Rotate slightly to see structure better
-                        const rotX1 = p1.x * Math.cos(0.5) - p1.y * Math.sin(0.5);
-                        const rotY1 = p1.x * Math.sin(0.5) + p1.y * Math.cos(0.5);
-                        
-                        const rotX2 = p2.x * Math.cos(0.5) - p2.y * Math.sin(0.5);
-                        const rotY2 = p2.x * Math.sin(0.5) + p2.y * Math.cos(0.5);
-
-                        ctx.moveTo(centerX + rotX1 * scale, centerY - (p1.z - 25) * scale);
-                        ctx.lineTo(centerX + rotX2 * scale, centerY - (p2.z - 25) * scale);
+                    // Clear
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    // Smooth rotation
+                    rotation += (targetRotation - rotation) * 0.05;
+                    pitch += (targetPitch - pitch) * 0.05;
+                    
+                    // Auto rotation if idle
+                    if (Math.abs(targetRotation) < 0.01) {
+                        rotation += 0.002;
                     }
-                    ctx.stroke();
+
+                    const scale = Math.min(width, height) / 50;
+                    const centerX = width / 2;
+                    const centerY = height / 2 + (height * 0.1); // Shift down slightly to center the attractor
+
+                    particles.forEach(p => {
+                        p.update();
+                        p.draw(centerX, centerY, scale, rotation, pitch);
+                    });
 
                     animationId = requestAnimationFrame(animate);
                 };
