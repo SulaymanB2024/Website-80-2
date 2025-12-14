@@ -3797,9 +3797,9 @@
         });
         const serviceData = {
             financial: {
-                title: "FINANCIAL CONSULTING",
+                title: "STRATEGIC CONSULTING",
                 subtitle: "Strategic Analysis & Decision Architecture",
-                description: "Let's discuss how strategic financial consulting can transform your organization's decision-making process.",
+                description: "Let's discuss how rigorous analysis and strategic clarity can transform your organization's decision-making process.",
                 formspreeId: "YOUR_FORMSPREE_ID_HERE",
                 services: [
                     "Financial Modeling & Valuation",
@@ -3837,37 +3837,37 @@
                 modalBody.innerHTML = `
                     <div class="max-w-[1600px] mx-auto">
                         <!-- Header -->
-                        <div class="modal-stagger mb-32" style="transition-delay: 0.05s">
+                        <div class="modal-stagger mb-24" style="transition-delay: 0.05s">
                             <div class="max-w-6xl">
-                                <div class="flex items-center gap-4 mb-12">
+                                <div class="flex items-center gap-4 mb-10">
                                     <div class="w-2 h-2 bg-white/40 rounded-full animate-pulse"></div>
-                                    <div class="font-mono text-xs text-neutral-600 uppercase tracking-[0.5em]">Live Financial Analysis</div>
+                                    <div class="font-mono text-xs text-neutral-600 uppercase tracking-[0.5em]">Strategic Consulting</div>
                                 </div>
-                                <h1 class="font-display text-8xl md:text-9xl font-medium mb-12 tracking-tight leading-[0.85]">
-                                    <span class="typing-text" id="main-title">${data.title}</span>
+                                <h1 class="font-display text-8xl md:text-9xl font-medium mb-10 tracking-tight leading-[0.85]">
+                                    <span class="typing-text" id="main-title">CONSULTING</span>
                                 </h1>
-                                <p class="font-sans text-2xl text-neutral-400 leading-[1.6] max-w-4xl opacity-0 transition-opacity duration-300" id="financial-subtitle-text" style="transition-delay: 1.8s;">
-                                    ${data.subtitle}
+                                <p class="font-sans text-2xl text-neutral-400 leading-[1.6] max-w-4xl opacity-0 transition-all duration-500 transform translate-y-4" id="financial-subtitle-text">
+                                    Delivering institutional-grade analysis and strategic clarity to drive enterprise value.
                                 </p>
                             </div>
                         </div>
 
                         <!-- Main Content Grid -->
-                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-20 mb-40">
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 mb-32">
                             
                             <!-- Left: Spreadsheet Analysis (3/5) -->
-                            <div class="lg:col-span-3 space-y-12 modal-stagger" style="transition-delay: 0.15s">
+                            <div class="lg:col-span-3 space-y-12 modal-stagger" style="transition-delay: 0.1s">
                                 
-                                <div class="space-y-10">
+                                <div class="space-y-8">
                                     <div class="flex items-baseline gap-6 pb-6 border-b border-white/10">
-                                        <h2 class="font-display text-3xl font-medium tracking-tight">Financial Statements</h2>
-                                        <span class="font-mono text-xs text-neutral-600 uppercase tracking-[0.3em]">FY 2024</span>
+                                        <h2 class="font-display text-3xl font-medium tracking-tight">Quantitative Strategy</h2>
+                                        <span class="font-mono text-xs text-neutral-600 uppercase tracking-[0.3em]">FY 2024 PROJECTION</span>
                                     </div>
 
                                     <!-- Statement Tabs -->
                                     <div class="flex gap-2 mb-6">
                                         <button onclick="switchStatement('income')" id="tab-income" class="statement-tab active font-mono text-xs px-4 py-2 border border-white/20 bg-white/10 hover:bg-white/15 transition-all duration-300 uppercase tracking-[0.3em]">
-                                            Income Statement
+                                            P&L Forecast
                                         </button>
                                         <button onclick="switchStatement('balance')" id="tab-balance" class="statement-tab font-mono text-xs px-4 py-2 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 uppercase tracking-[0.3em] text-neutral-500">
                                             Balance Sheet
@@ -3887,7 +3887,7 @@
                                                     <div class="w-3 h-3 rounded-full bg-neutral-800 group-hover:bg-white/30 transition-colors duration-500" style="transition-delay: 50ms"></div>
                                                     <div class="w-3 h-3 rounded-full bg-neutral-800 group-hover:bg-white/30 transition-colors duration-500" style="transition-delay: 100ms"></div>
                                                 </div>
-                                                <span class="font-mono text-xs text-neutral-500 tracking-wider" id="statement-filename">GREENSCAPE_INCOME_FY2024.xlsx</span>
+                                                <span class="font-mono text-xs text-neutral-500 tracking-wider" id="statement-filename">STRATEGIC_MODEL_V4.xlsx</span>
                                             </div>
                                             <div id="analysis-timer" class="font-mono text-xs text-neutral-600 tracking-wider tabular-nums">00:00</div>
                                         </div>
@@ -3917,40 +3917,40 @@
                             <!-- Right: Key Metrics (2/5) -->
                             <div class="lg:col-span-2 modal-stagger" style="transition-delay: 0.2s">
                                 
-                                <div class="sticky top-8 space-y-16">
-                                    <div class="space-y-10">
+                                <div class="sticky top-8 space-y-12">
+                                    <div class="space-y-8">
                                         <div class="pb-6 border-b border-white/10">
-                                            <h2 class="font-display text-3xl font-medium tracking-tight mb-3">Key Metrics</h2>
-                                            <p class="font-mono text-xs text-neutral-600 uppercase tracking-[0.3em]">Performance Indicators</p>
+                                            <h2 class="font-display text-3xl font-medium tracking-tight mb-3">Value Drivers</h2>
+                                            <p class="font-mono text-xs text-neutral-600 uppercase tracking-[0.3em]">Key Performance Indicators</p>
                                         </div>
 
                                         <!-- Metrics Grid -->
-                                        <div class="space-y-12" id="metrics-container">
+                                        <div class="space-y-10" id="metrics-container">
                                             <div class="border-l-2 border-white/20 pl-8 opacity-0 transition-all duration-1000" id="metric-1">
-                                                <div class="text-xs text-neutral-600 mb-5 uppercase tracking-[0.4em] font-mono" id="metric-1-label">Gross Margin</div>
-                                                <div class="text-6xl font-display font-medium text-white mb-8 tracking-tight transition-all duration-700" id="metric-1-value">0.0<span class="text-neutral-700">%</span></div>
+                                                <div class="text-xs text-neutral-600 mb-4 uppercase tracking-[0.4em] font-mono" id="metric-1-label">Gross Margin</div>
+                                                <div class="text-6xl font-display font-medium text-white mb-6 tracking-tight transition-all duration-700" id="metric-1-value">0.0<span class="text-neutral-700">%</span></div>
                                                 <div class="h-0.5 bg-white/10 w-full relative overflow-hidden rounded-full">
                                                     <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-white to-neutral-400 rounded-full" style="width: 0%; transition: width 2000ms cubic-bezier(0.4, 0, 0.2, 1);" id="metric-1-bar"></div>
                                                 </div>
-                                                <div class="text-xs text-neutral-600 mt-5 font-sans" id="metric-1-benchmark">Industry benchmark: 55.0%</div>
+                                                <div class="text-xs text-neutral-600 mt-4 font-sans" id="metric-1-benchmark">Target: >55.0%</div>
                                             </div>
 
                                             <div class="border-l-2 border-white/20 pl-8 opacity-0 transition-all duration-1000" id="metric-2">
-                                                <div class="text-xs text-neutral-600 mb-5 uppercase tracking-[0.4em] font-mono" id="metric-2-label">EBITDA Margin</div>
-                                                <div class="text-6xl font-display font-medium text-white mb-8 tracking-tight transition-all duration-700" id="metric-2-value">0.0<span class="text-neutral-700">%</span></div>
+                                                <div class="text-xs text-neutral-600 mb-4 uppercase tracking-[0.4em] font-mono" id="metric-2-label">EBITDA Margin</div>
+                                                <div class="text-6xl font-display font-medium text-white mb-6 tracking-tight transition-all duration-700" id="metric-2-value">0.0<span class="text-neutral-700">%</span></div>
                                                 <div class="h-0.5 bg-white/10 w-full relative overflow-hidden rounded-full">
                                                     <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-white to-neutral-400 rounded-full" style="width: 0%; transition: width 2000ms cubic-bezier(0.4, 0, 0.2, 1);" id="metric-2-bar"></div>
                                                 </div>
-                                                <div class="text-xs text-neutral-600 mt-5 font-sans" id="metric-2-benchmark">Industry benchmark: 28.0%</div>
+                                                <div class="text-xs text-neutral-600 mt-4 font-sans" id="metric-2-benchmark">Target: >28.0%</div>
                                             </div>
 
                                             <div class="border-l-2 border-white/20 pl-8 opacity-0 transition-all duration-1000" id="metric-3">
-                                                <div class="text-xs text-neutral-600 mb-5 uppercase tracking-[0.4em] font-mono" id="metric-3-label">Net Margin</div>
-                                                <div class="text-6xl font-display font-medium text-white mb-8 tracking-tight transition-all duration-700" id="metric-3-value">0.0<span class="text-neutral-700">%</span></div>
+                                                <div class="text-xs text-neutral-600 mb-4 uppercase tracking-[0.4em] font-mono" id="metric-3-label">Net Margin</div>
+                                                <div class="text-6xl font-display font-medium text-white mb-6 tracking-tight transition-all duration-700" id="metric-3-value">0.0<span class="text-neutral-700">%</span></div>
                                                 <div class="h-0.5 bg-white/10 w-full relative overflow-hidden rounded-full">
                                                     <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-white to-neutral-400 rounded-full" style="width: 0%; transition: width 2000ms cubic-bezier(0.4, 0, 0.2, 1);" id="metric-3-bar"></div>
                                                 </div>
-                                                <div class="text-xs text-neutral-600 mt-5 font-sans" id="metric-3-benchmark">Industry benchmark: 18.0%</div>
+                                                <div class="text-xs text-neutral-600 mt-4 font-sans" id="metric-3-benchmark">Target: >18.0%</div>
                                             </div>
                                         </div>
                                     </div>
@@ -3960,45 +3960,45 @@
                         </div>
 
                         <!-- Why Work With Me -->
-                        <div class="modal-stagger border-t border-white/10 pt-40 mb-40" style="transition-delay: 0.25s">
+                        <div class="modal-stagger border-t border-white/10 pt-32 mb-32" style="transition-delay: 0.25s">
                             <div class="max-w-6xl">
-                                <div class="mb-24">
-                                    <div class="font-mono text-xs uppercase tracking-[0.5em] text-neutral-600 mb-10">Process</div>
+                                <div class="mb-20">
+                                    <div class="font-mono text-xs uppercase tracking-[0.5em] text-neutral-600 mb-8">Methodology</div>
                                     <h2 class="font-display text-6xl md:text-7xl font-medium mb-8 tracking-tight leading-[0.95]">
-                                        How We Work Together
+                                        Engagement Model
                                     </h2>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-16">
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">01</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Understand<br/>& Frame</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
-                                            Deep dive into your business model, competitive landscape, and strategic objectives to frame the right questions.
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">01</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Diagnosis<br/>& Framing</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                            Deconstruct complex challenges into solvable components. We identify the core strategic levers that drive outsized value.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">02</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Model<br/>& Analyze</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
-                                            Build sophisticated financial models with institutional-grade rigor. Scenario testing and sensitivity analysis included.
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">02</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Rigorous<br/>Analysis</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                            Data-driven validation of strategic hypotheses. We build institutional-grade models to stress-test scenarios and quantify risk.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">03</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Synthesize<br/>& Deliver</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
-                                            Decision-ready outputs with clear recommendations. Interactive models your team can own and iterate on.
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">03</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Strategic<br/>Direction</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                            Synthesize insights into a clear, actionable roadmap. We prioritize initiatives based on ROI and operational feasibility.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">04</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Support<br/>& Iterate</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
-                                            Post-delivery support to ensure full adoption. Model updates and ongoing strategic counsel as needed.
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">04</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Execution<br/>& Impact</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                            Partner with leadership to drive change. We establish governance structures and KPIs to ensure sustained performance improvement.
                                         </p>
                                     </div>
                                 </div>
@@ -4006,13 +4006,13 @@
                         </div>
 
                         <!-- Contact -->
-                        <div class="modal-stagger border-t border-white/10 pt-40" style="transition-delay: 0.3s">
+                        <div class="modal-stagger border-t border-white/10 pt-32" style="transition-delay: 0.3s">
                             <div class="max-w-3xl mx-auto">
-                                <div class="mb-16 text-center">
-                                    <div class="font-mono text-xs uppercase tracking-[0.5em] text-neutral-600 mb-6">Get Started</div>
-                                    <h2 class="font-display text-5xl font-medium mb-6 tracking-tight">Let's Discuss Your Project</h2>
+                                <div class="mb-12 text-center">
+                                    <div class="font-mono text-xs uppercase tracking-[0.5em] text-neutral-600 mb-6">Initiate Engagement</div>
+                                    <h2 class="font-display text-5xl font-medium mb-6 tracking-tight">Request Consultation</h2>
                                     <p class="font-sans text-lg text-neutral-400 leading-relaxed">
-                                        Share what you're working on. I'll respond within 48 hours with initial thoughts and potential next steps.
+                                        Briefly describe your strategic objectives. I will review and respond with a preliminary perspective.
                                     </p>
                                 </div>
 
@@ -4021,40 +4021,40 @@
                                     <div>
                                         <input type="text" name="name" required 
                                             class="w-full bg-transparent border-b border-white/20 pb-4 text-white font-sans text-base placeholder:text-neutral-600 focus:border-white focus:outline-none transition-colors duration-300" 
-                                            placeholder="Your Name *">
+                                            placeholder="Name *">
                                     </div>
                                     <div>
                                         <input type="email" name="email" required 
                                             class="w-full bg-transparent border-b border-white/20 pb-4 text-white font-sans text-base placeholder:text-neutral-600 focus:border-white focus:outline-none transition-colors duration-300" 
-                                            placeholder="Email Address *">
+                                            placeholder="Business Email *">
                                     </div>
                                 </div>
                                 
                                 <div>
                                     <input type="text" name="company" 
                                         class="w-full bg-transparent border-b border-white/20 pb-4 text-white font-sans text-base placeholder:text-neutral-600 focus:border-white focus:outline-none transition-colors duration-300" 
-                                        placeholder="Company">
+                                        placeholder="Company / Organization">
                                 </div>
 
                                 <div>
                                     <textarea name="message" required rows="4" 
                                         class="w-full bg-transparent border-b border-white/20 pb-4 text-white font-sans text-base placeholder:text-neutral-600 focus:border-white focus:outline-none transition-colors duration-300 resize-none" 
-                                        placeholder="Tell me about your needs... *"></textarea>
+                                        placeholder="Outline your key strategic questions... *"></textarea>
                                 </div>
 
                                 <div class="pt-8">
                                     <button type="submit" 
                                         class="w-full bg-white text-black font-display text-base font-medium py-5 px-8 hover:bg-neutral-200 hover:shadow-2xl hover:shadow-white/20 transition-all duration-500 uppercase tracking-[0.2em]">
-                                        Submit Inquiry
+                                        Request Briefing
                                     </button>
                                     <div class="flex items-center justify-center gap-8 mt-8 text-xs text-neutral-600 font-mono">
                                         <div class="flex items-center gap-2">
                                             <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                            <span>Confidential</span>
+                                            <span>Strictly Confidential</span>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <i data-lucide="clock" class="w-3 h-3"></i>
-                                            <span>48hr Response</span>
+                                            <span>24hr Response</span>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <i data-lucide="check-circle" class="w-3 h-3"></i>
@@ -4076,25 +4076,25 @@
                 modalBody.innerHTML = `
                     <div class="max-w-[1600px] mx-auto">
                         <!-- Hero Header -->
-                        <div class="modal-stagger mb-32" style="transition-delay: 0.05s">
+                        <div class="modal-stagger mb-24" style="transition-delay: 0.05s">
                             <div class="max-w-6xl">
-                                <div class="flex items-center gap-4 mb-12">
+                                <div class="flex items-center gap-4 mb-10">
                                     <div class="w-2 h-2 bg-white/40 rounded-full animate-pulse"></div>
                                     <div class="font-mono text-xs text-neutral-600 uppercase tracking-[0.5em]">Live Design System</div>
                                 </div>
-                                <h1 class="font-display text-8xl md:text-9xl font-medium mb-12 tracking-tight leading-[0.85]">
+                                <h1 class="font-display text-8xl md:text-9xl font-medium mb-10 tracking-tight leading-[0.85]">
                                     <span class="typing-text" id="website-main-title">${data.title}</span>
                                 </h1>
-                                <p class="font-sans text-2xl text-neutral-400 leading-[1.6] max-w-4xl opacity-0 transition-opacity duration-300" id="website-subtitle-text" style="transition-delay: 1.8s;">
+                                <p class="font-sans text-2xl text-neutral-400 leading-[1.6] max-w-4xl opacity-0 transition-all duration-500 transform translate-y-4" id="website-subtitle-text">
                                     ${data.subtitle}
                                 </p>
                             </div>
                         </div>
 
                         <!-- Main Content Grid -->
-                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 mb-32">
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 mb-24">
                             <!-- Left: Interactive Design Showcase (3/5) -->
-                            <div class="lg:col-span-3 modal-stagger space-y-16" style="transition-delay: 0.1s">
+                            <div class="lg:col-span-3 modal-stagger space-y-12" style="transition-delay: 0.1s">
                                 
                                 <!-- Design Mode Tabs -->
                                 <div class="border-b border-white/10 flex gap-8 mb-8" id="design-tabs">
@@ -4107,9 +4107,9 @@
                                 <div class="design-modes relative">
                                     <!-- Layout Mode -->
                                     <div id="design-layout" class="design-content">
-                                        <div class="space-y-16">
+                                        <div class="space-y-12">
                                             <!-- Browser Window -->
-                                            <div class="border border-white/10 overflow-hidden shadow-2xl shadow-black/50 opacity-0 design-element" style="animation: fadeInDesign 0.8s ease-out 0.2s forwards;">
+                                            <div class="border border-white/10 overflow-hidden shadow-2xl shadow-black/50 opacity-0 design-element" style="animation: fadeInDesign 0.8s ease-out 0.1s forwards;">
                                                 <!-- Browser Header -->
                                                 <div class="bg-[#0A0A0A] border-b border-white/10 px-4 py-3 flex items-center gap-3">
                                                     <div class="flex gap-2">
@@ -4150,21 +4150,21 @@
                                                     <!-- Mock Content -->
                                                     <div class="relative z-10 space-y-10" id="preview-content">
                                                         <!-- Hero Section -->
-                                                        <div class="opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.3s forwards;">
+                                                        <div class="opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.2s forwards;">
                                                             <div class="h-14 bg-gradient-to-r from-white/30 via-white/20 to-white/5 rounded-lg flex items-center px-6 shadow-lg shadow-white/5" style="width: 45%;">
                                                                 <div class="h-3 bg-white/100 rounded animate-pulse" style="width: 60%;"></div>
                                                             </div>
                                                         </div>
                                                         
                                                         <!-- Body Text -->
-                                                        <div class="space-y-3 opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.5s forwards;">
+                                                        <div class="space-y-3 opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.3s forwards;">
                                                             <div class="h-4 bg-gradient-to-r from-white/15 to-white/5 rounded" style="width: 75%;"></div>
                                                             <div class="h-4 bg-gradient-to-r from-white/15 to-white/5 rounded" style="width: 90%;"></div>
                                                             <div class="h-4 bg-gradient-to-r from-white/15 to-white/5 rounded" style="width: 65%;"></div>
                                                         </div>
 
                                                         <!-- CTA Button -->
-                                                        <div class="opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.7s forwards;">
+                                                        <div class="opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.4s forwards;">
                                                             <div class="inline-flex items-center gap-3 bg-white/95 hover:bg-white hover:scale-105 transition-all duration-500 px-8 py-4 rounded-lg shadow-xl shadow-white/30 cursor-pointer group">
                                                                 <div class="h-3 bg-black/80 rounded" style="width: 100px;"></div>
                                                                 <div class="w-4 h-4 border-2 border-black/80 rounded-full flex items-center justify-center">
@@ -4174,7 +4174,7 @@
                                                         </div>
                                                         
                                                         <!-- Feature Cards -->
-                                                        <div class="grid grid-cols-3 gap-6 mt-16 opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.9s forwards;">
+                                                        <div class="grid grid-cols-3 gap-6 mt-16 opacity-0 preview-element" style="animation: fadeInDesign 0.6s ease-out 0.5s forwards;">
                                                             <div class="border border-white/10 bg-white/10 backdrop-blur-sm p-6 rounded-lg hover:border-white/30 hover:bg-white/10 hover:scale-105 transition-all duration-500 cursor-pointer group shadow-lg shadow-black/20">
                                                                 <div class="w-12 h-12 bg-white/20 rounded-lg mb-4 flex items-center justify-center group-hover:bg-white/40 group-hover:shadow-lg group-hover:shadow-white/30 transition-all duration-500">
                                                                     <div class="w-6 h-6 bg-white/70 rounded group-hover:rotate-12 transition-transform duration-500"></div>
@@ -4296,7 +4296,7 @@
 
                                     <!-- Typography Mode -->
                                     <div id="design-typography" class="design-content hidden">
-                                        <div class="space-y-16">
+                                        <div class="space-y-12">
                                             <!-- Type Scale Demonstration -->
                                             <div class="border border-white/10 overflow-hidden shadow-2xl shadow-black/50 opacity-0 design-element" style="animation: fadeInDesign 0.8s ease-out 0.2s forwards;">
                                                 <div class="bg-[#0A0A0A] border-b border-white/10 px-4 py-3">
@@ -4402,7 +4402,7 @@
 
                                     <!-- Motion Mode -->
                                     <div id="design-motion" class="design-content hidden">
-                                        <div class="space-y-16">
+                                        <div class="space-y-12">
                                             <!-- Easing Functions -->
                                             <div class="border border-white/10 overflow-hidden shadow-2xl shadow-black/50 opacity-0 design-element" style="animation: fadeInDesign 0.8s ease-out 0.2s forwards;">
                                                 <div class="bg-[#0A0A0A] border-b border-white/10 px-4 py-3 flex items-center justify-between">
@@ -4525,7 +4525,7 @@
                             <!-- Right: Build Metrics & Deliverables (2/5) -->
                             <div class="lg:col-span-2 modal-stagger" style="transition-delay: 0.15s">
                                 
-                                <div class="sticky top-8 space-y-16">
+                                <div class="sticky top-8 space-y-12">
                                     <!-- Build Metrics -->
                                     <div class="space-y-10">
                                         <div class="pb-6 border-b border-white/10">
@@ -4605,44 +4605,44 @@
                         </div>
 
                         <!-- Process Overview -->
-                        <div class="modal-stagger border-t border-white/10 pt-40 mb-40" style="transition-delay: 0.2s">
+                        <div class="modal-stagger border-t border-white/10 pt-32 mb-32" style="transition-delay: 0.2s">
                             <div class="max-w-6xl">
-                                <div class="mb-24">
-                                    <div class="font-mono text-xs uppercase tracking-[0.5em] text-neutral-600 mb-10">Process</div>
+                                <div class="mb-20">
+                                    <div class="font-mono text-xs uppercase tracking-[0.5em] text-neutral-600 mb-8">Process</div>
                                     <h2 class="font-display text-6xl md:text-7xl font-medium mb-8 tracking-tight leading-[0.95]">
                                         How We Build Together
                                     </h2>
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-16">
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">01</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Discovery &<br/>Strategy</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">01</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Discovery &<br/>Strategy</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
                                             Deep dive into your brand, audience, and goals. Competitive analysis and user research to inform design decisions.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">02</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Design &<br/>Prototype</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">02</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Design &<br/>Prototype</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
                                             High-fidelity designs in Figma with interactive prototypes. Design system creation for consistency and scalability.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">03</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Development &<br/>Testing</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">03</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Development &<br/>Testing</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
                                             Production-grade code with performance optimization. Cross-browser testing and accessibility compliance.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-white/5 mb-8 group-hover:text-white/10 transition-colors duration-700">04</div>
-                                        <h3 class="font-display text-2xl mb-6 leading-tight">Launch &<br/>Support</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.9] text-sm">
+                                        <div class="text-8xl font-display font-medium text-white/5 mb-6 group-hover:text-white/10 transition-colors duration-700">04</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight">Launch &<br/>Support</h3>
+                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
                                             Deployment with monitoring setup. Post-launch support and iterative improvements based on real data.
                                         </p>
                                     </div>
@@ -4651,9 +4651,9 @@
                         </div>
 
                         <!-- Contact Form -->
-                        <div class="modal-stagger border-t border-white/10 pt-40" style="transition-delay: 0.25s">
+                        <div class="modal-stagger border-t border-white/10 pt-32" style="transition-delay: 0.25s">
                             <div class="max-w-3xl mx-auto">
-                                <div class="mb-16 text-center">
+                                <div class="mb-12 text-center">
                                     <div class="font-mono text-xs uppercase tracking-[0.5em] text-neutral-600 mb-6">Let's Build</div>
                                     <h2 class="font-display text-5xl font-medium mb-6 tracking-tight">Start Your Project</h2>
                                     <p class="font-sans text-lg text-neutral-400 leading-relaxed">
@@ -4738,9 +4738,10 @@
                 `;
 
                 // Start design system animation
+                // Reduced delay for snappier feel
                 setTimeout(() => {
                     initDesignSystem();
-                }, 500);
+                }, 100);
             }
 
             modal.classList.add('active');
@@ -4757,42 +4758,57 @@
             // Sequence 1: Title typing (0-2s)
             setTimeout(() => {
                 const titleEl = document.getElementById('main-title');
-                const subtitleEl = document.getElementById('subtitle-text');
+                const subtitleEl = document.getElementById('financial-subtitle-text');
+                
                 if (titleEl) {
-                    setTimeout(() => {
-                        titleEl.classList.add('complete');
-                        if (subtitleEl) {
-                            subtitleEl.style.opacity = '1';
+                    const text = titleEl.textContent;
+                    titleEl.textContent = '';
+                    let i = 0;
+                    
+                    // Fast typing effect
+                    const typeInterval = setInterval(() => {
+                        if (i < text.length) {
+                            titleEl.textContent += text.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typeInterval);
+                            titleEl.classList.add('complete');
+                            
+                            // Fade in subtitle immediately
+                            if (subtitleEl) {
+                                subtitleEl.style.opacity = '1';
+                                subtitleEl.style.transform = 'translateY(0)';
+                            }
                         }
-                    }, 2000);
+                    }, 30);
                 }
             }, 100);
             
-            // Sequence 2: Populate spreadsheet (at 1s, visible during typing)
+            // Sequence 2: Populate spreadsheet (much faster)
             setTimeout(() => {
                 populateIncomeStatement();
-            }, 1000);
+            }, 400);
             
-            // Sequence 3: Fade in metrics sidebar (at 2.5s, after title completes)
+            // Sequence 3: Fade in metrics sidebar (overlapping with spreadsheet)
             setTimeout(() => {
                 const metric1 = document.getElementById('metric-1');
                 const metric2 = document.getElementById('metric-2');
                 const metric3 = document.getElementById('metric-3');
                 
                 if (metric1) metric1.style.opacity = '1';
-                setTimeout(() => { if (metric2) metric2.style.opacity = '1'; }, 400);
-                setTimeout(() => { if (metric3) metric3.style.opacity = '1'; }, 800);
-            }, 2500);
+                setTimeout(() => { if (metric2) metric2.style.opacity = '1'; }, 200);
+                setTimeout(() => { if (metric3) metric3.style.opacity = '1'; }, 400);
+            }, 800);
             
-            // Sequence 4: Animate metric values (at 3s)
+            // Sequence 4: Animate metric values
             setTimeout(() => {
                 animateLiveMetrics('income');
-            }, 3000);
+            }, 1200);
             
-            // Sequence 5: Start cell scanning (at 4s, after metrics start animating)
+            // Sequence 5: Start cell scanning
             setTimeout(() => {
                 startCellScanning();
-            }, 4000);
+            }, 1800);
         }
 
         // Store timer interval globally to clear on modal close
@@ -5512,6 +5528,7 @@
                 const text = titleEl.textContent;
                 titleEl.textContent = '';
                 let i = 0;
+                // Faster typing for modern feel
                 const typeInterval = setInterval(() => {
                     if (i < text.length) {
                         titleEl.textContent += text.charAt(i);
@@ -5520,26 +5537,27 @@
                         clearInterval(typeInterval);
                         titleEl.classList.add('complete');
                         
-                        // 2. Fade in subtitle after typing completes
+                        // 2. Fade in subtitle immediately after typing
                         setTimeout(() => {
                             const subtitleEl = document.getElementById('website-subtitle-text');
                             if (subtitleEl) {
                                 subtitleEl.style.opacity = '1';
+                                subtitleEl.style.transform = 'translateY(0)'; // Ensure it moves up if needed
                             }
-                        }, 300);
+                        }, 50);
                     }
-                }, 60);
+                }, 30); // Speed up from 60ms to 30ms
             }
 
-            // 3. Animate build metrics
+            // 3. Animate build metrics much sooner
             setTimeout(() => {
                 animateBuildMetrics();
-            }, 2000);
+            }, 800); // Reduced from 2000ms
 
             // 4. Initialize design mode tabs
             setTimeout(() => {
                 initDesignTabs();
-            }, 500);
+            }, 300); // Reduced from 500ms
         }
 
         function animateBuildMetrics() {
@@ -6818,52 +6836,86 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
             // the shifting terrain of market volatility (Implied Volatility Surface).
             const canvas5 = document.getElementById('canvas-financial');
             if (canvas5) {
-                const ctx = canvas5.getContext('2d');
+                const ctx = canvas5.getContext('2d', { alpha: false });
                 let width, height;
                 let isVisible = false;
                 let animationId = null;
                 
                 // Grid Parameters
-                const cols = 20;
-                const rows = 20;
+                let cols = 24; // Higher density for more detail
+                let rows = 24;
                 let points = [];
+                let projected = [];
                 
                 // Camera / Interaction
-                let rotation = 0.6; 
-                let tilt = 0.4;
-                let targetRotation = 0.6;
-                let targetTilt = 0.4;
+                let rotation = 0.7; 
+                let tilt = 0.5;
+                let targetRotation = 0.7;
+                let targetTilt = 0.5;
                 let mouseX = 0;
                 let mouseY = 0;
                 
-                canvas5.parentElement.addEventListener('mousemove', (e) => {
-                    const rect = canvas5.getBoundingClientRect();
-                    mouseX = e.clientX - rect.left;
-                    mouseY = e.clientY - rect.top;
+                // Wave Physics
+                let timeOffset = 0;
+                
+                const handleMove = (x, y) => {
+                    mouseX = x;
+                    mouseY = y;
                     
-                    // Subtle camera movement based on mouse
                     const nx = mouseX / width;
                     const ny = mouseY / height;
-                    targetRotation = 0.6 + (nx - 0.5) * 0.5;
-                    targetTilt = 0.4 + (ny - 0.5) * 0.2;
+                    targetRotation = 0.7 + (nx - 0.5) * 0.8; // More rotation range
+                    targetTilt = 0.5 + (ny - 0.5) * 0.4;
+                };
+
+                canvas5.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = canvas5.getBoundingClientRect();
+                    handleMove(e.clientX - rect.left, e.clientY - rect.top);
                 });
                 
-                canvas5.parentElement.addEventListener('mouseleave', () => {
-                    targetRotation = 0.6;
-                    targetTilt = 0.4;
-                    mouseX = -1; // Hide cursor highlight
-                });
+                canvas5.parentElement.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const rect = canvas5.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    handleMove(touch.clientX - rect.left, touch.clientY - rect.top);
+                }, { passive: false });
+                
+                const handleLeave = () => {
+                    targetRotation = 0.7;
+                    targetTilt = 0.5;
+                    mouseX = -1;
+                };
+
+                canvas5.parentElement.addEventListener('mouseleave', handleLeave);
+                canvas5.parentElement.addEventListener('touchend', handleLeave);
 
                 const resize = () => {
-                    width = canvas5.width = canvas5.parentElement.offsetWidth;
-                    height = canvas5.height = canvas5.parentElement.offsetHeight;
+                    const parent = canvas5.parentElement;
+                    const dpr = window.devicePixelRatio || 1;
+                    
+                    width = parent.offsetWidth;
+                    height = parent.offsetHeight;
+                    
+                    canvas5.width = width * dpr;
+                    canvas5.height = height * dpr;
+                    
+                    ctx.scale(dpr, dpr);
+                    
+                    if (width < 768) {
+                        cols = 16;
+                        rows = 16;
+                    } else {
+                        cols = 24;
+                        rows = 24;
+                    }
+                    
                     initGrid();
                 };
                 
                 function initGrid() {
                     points = [];
-                    // Create a grid centered at 0,0
-                    const spacing = Math.min(width, height) / 12;
+                    projected = [];
+                    const spacing = Math.min(width, height) / (width < 768 ? 10 : 16);
                     
                     for(let r=0; r<=rows; r++) {
                         for(let c=0; c<=cols; c++) {
@@ -6872,10 +6924,10 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                                 x: (c - cols/2) * spacing,
                                 z: (r - rows/2) * spacing,
                                 y: 0,
-                                // Store original for noise calc
                                 ox: (c - cols/2) * spacing,
                                 oz: (r - rows/2) * spacing
                             });
+                            projected.push({ x: 0, y: 0, z: 0, alpha: 0 });
                         }
                     }
                 }
@@ -6888,6 +6940,9 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                         isVisible = entry.isIntersecting;
                         if (isVisible && !animationId) {
                             animate();
+                        } else if (!isVisible && animationId) {
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
                         }
                     });
                 }, { threshold: 0.1 });
@@ -6905,46 +6960,54 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                     rotation += (targetRotation - rotation) * 0.05;
                     tilt += (targetTilt - tilt) * 0.05;
                     
-                    const time = Date.now() * 0.0015;
+                    timeOffset += 0.02; // Constant flow
                     
-                    // Update Surface Heights
-                    points.forEach(p => {
-                        // "Volatility Smile" shape (parabolic on X) + "Term Structure" (log on Z)
-                        // Plus Perlin-ish noise for "Market Jitters"
+                    const cosRot = Math.cos(rotation);
+                    const sinRot = Math.sin(rotation);
+                    const cosTilt = Math.cos(tilt);
+                    const sinTilt = Math.sin(tilt);
+                    
+                    // Update & Project
+                    for(let i=0; i<points.length; i++) {
+                        const p = points[i];
+                        const proj = projected[i];
                         
-                        // Base structure: Smile
-                        const smile = (p.ox * p.ox) * 0.0005;
+                        // Complex Surface Math
+                        // 1. Volatility Smile (Parabolic base)
+                        const smile = (p.ox * p.ox) * 0.0008;
                         
-                        // Waves
-                        const wave1 = Math.sin(p.ox * 0.02 + time) * 15;
-                        const wave2 = Math.cos(p.oz * 0.03 + time * 0.7) * 15;
+                        // 2. Market Noise (Superposition of sine waves)
+                        // Creates a "rolling hills" effect that looks like financial terrain
+                        const noise = Math.sin(p.ox * 0.03 + timeOffset) * 8 + 
+                                      Math.cos(p.oz * 0.04 + timeOffset * 0.8) * 8 +
+                                      Math.sin((p.ox + p.oz) * 0.05 + timeOffset * 1.5) * 4;
                         
-                        p.y = smile + wave1 + wave2;
-                    });
+                        p.y = smile + noise;
+                        
+                        // 3D Rotation
+                        const x1 = p.x * cosRot - p.z * sinRot;
+                        const z1 = p.x * sinRot + p.z * cosRot;
+                        
+                        const y1 = p.y * cosTilt - z1 * sinTilt;
+                        const z2 = p.y * sinTilt + z1 * cosTilt;
+                        
+                        // Perspective Projection
+                        // Depth factor: things further away are smaller
+                        const depth = 800;
+                        const scale = depth / (depth + z2 + 300); 
+                        
+                        proj.x = width/2 + x1 * scale;
+                        proj.y = height/2 + y1 * scale;
+                        
+                        // Calculate opacity based on depth (Fog effect)
+                        // z2 ranges roughly from -300 to 300
+                        // Map to 0.1 - 0.8
+                        let alpha = 1 - ((z2 + 300) / 800);
+                        alpha = Math.max(0.05, Math.min(0.8, alpha));
+                        proj.alpha = alpha;
+                    }
 
-                    // Projection & Drawing
-                    const projected = points.map(p => {
-                        // Rotate Y
-                        let x1 = p.x * Math.cos(rotation) - p.z * Math.sin(rotation);
-                        let z1 = p.x * Math.sin(rotation) + p.z * Math.cos(rotation);
-                        
-                        // Rotate X
-                        let y1 = p.y * Math.cos(tilt) - z1 * Math.sin(tilt);
-                        let z2 = p.y * Math.sin(tilt) + z1 * Math.cos(tilt);
-                        
-                        // Perspective
-                        const scale = 800 / (800 + z2 + 400); // +400 pushes it back
-                        
-                        return {
-                            x: width/2 + x1 * scale,
-                            y: height/2 + y1 * scale,
-                            r: p.r,
-                            c: p.c,
-                            z: z2 // Keep depth for sorting if needed
-                        };
-                    });
-
-                    // Draw Grid Lines
+                    // Draw Grid
                     ctx.lineWidth = 1;
                     
                     // 1. Lateral Lines (Rows)
@@ -6957,8 +7020,9 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                             if(first) { ctx.moveTo(p.x, p.y); first = false; }
                             else ctx.lineTo(p.x, p.y);
                         }
-                        // Distance fade
-                        ctx.strokeStyle = `rgba(255, 255, 255, 0.15)`;
+                        // Use the alpha of the middle point for the line stroke
+                        const midIdx = r * (cols+1) + Math.floor(cols/2);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${projected[midIdx].alpha * 0.3})`;
                         ctx.stroke();
                     }
                     
@@ -6972,25 +7036,42 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                             if(first) { ctx.moveTo(p.x, p.y); first = false; }
                             else ctx.lineTo(p.x, p.y);
                         }
-                        ctx.strokeStyle = `rgba(255, 255, 255, 0.15)`;
+                        const midIdx = Math.floor(rows/2) * (cols+1) + c;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${projected[midIdx].alpha * 0.3})`;
                         ctx.stroke();
                     }
                     
-                    // 3. Highlight "Slice" (Active Analysis)
-                    // Animate a "scan line" moving through the grid
-                    const scanRow = Math.floor((Math.sin(time * 0.5) * 0.5 + 0.5) * rows);
-                    
-                    ctx.beginPath();
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = '#ffffff';
-                    let first = true;
-                    for(let c=0; c<=cols; c++) {
-                        const idx = scanRow * (cols+1) + c;
-                        const p = projected[idx];
-                        if(first) { ctx.moveTo(p.x, p.y); first = false; }
-                        else ctx.lineTo(p.x, p.y);
+                    // 3. Data Points (Vertices) - Adds "Tech" feel
+                    // Only draw every other point to reduce noise
+                    for(let i=0; i<projected.length; i+=2) {
+                        const p = projected[i];
+                        if(p.alpha > 0.2) { // Only visible ones
+                            ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * 0.4})`;
+                            ctx.fillRect(p.x - 0.5, p.y - 0.5, 1, 1);
+                        }
                     }
-                    ctx.stroke();
+                    
+                    // 4. Active Scan Line (The "Analysis")
+                    // Moves back and forth
+                    const scanPos = (Math.sin(timeOffset * 0.5) * 0.5 + 0.5) * rows;
+                    const scanRow = Math.floor(scanPos);
+                    
+                    if(scanRow >= 0 && scanRow <= rows) {
+                        ctx.beginPath();
+                        let first = true;
+                        for(let c=0; c<=cols; c++) {
+                            const idx = scanRow * (cols+1) + c;
+                            const p = projected[idx];
+                            if(first) { ctx.moveTo(p.x, p.y); first = false; }
+                            else ctx.lineTo(p.x, p.y);
+                        }
+                        ctx.lineWidth = 1.5;
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+                        ctx.shadowBlur = 4;
+                        ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+                        ctx.stroke();
+                        ctx.shadowBlur = 0; // Reset
+                    }
 
                     animationId = requestAnimationFrame(animate);
                 };
@@ -7000,7 +7081,7 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
             // Concept: "Emergent Structure". Chaos theory creating form.
             const canvas6 = document.getElementById('canvas-website');
             if (canvas6) {
-                const ctx = canvas6.getContext('2d');
+                const ctx = canvas6.getContext('2d', { alpha: false });
                 let width, height;
                 let isVisible = false;
                 let animationId = null;
@@ -7009,10 +7090,10 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 const sigma = 10;
                 const rho = 28;
                 const beta = 8/3;
-                const dt = 0.008; // Slower time step for smoothness
+                const dt = 0.006; // Even smoother
                 
                 // Particles
-                const particleCount = 1200;
+                let particleCount = 1500; // Increased for density
                 let particles = [];
                 
                 // Camera / Interaction
@@ -7021,43 +7102,53 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 let pitch = 0;
                 let targetPitch = 0;
                 
-                // Mouse Interaction
+                const handleMove = (x, y) => {
+                    const normX = x / width;
+                    const normY = y / height;
+                    
+                    targetRotation = (normX - 0.5) * Math.PI * 2;
+                    targetPitch = (normY - 0.5) * Math.PI;
+                };
+
                 canvas6.parentElement.addEventListener('mousemove', (e) => {
                     const rect = canvas6.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / width; // 0 to 1
-                    const y = (e.clientY - rect.top) / height; // 0 to 1
-                    
-                    targetRotation = (x - 0.5) * Math.PI * 2; // Full rotation
-                    targetPitch = (y - 0.5) * Math.PI;
+                    handleMove(e.clientX - rect.left, e.clientY - rect.top);
                 });
                 
-                canvas6.parentElement.addEventListener('mouseleave', () => {
+                canvas6.parentElement.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const rect = canvas6.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    handleMove(touch.clientX - rect.left, touch.clientY - rect.top);
+                }, { passive: false });
+                
+                const handleLeave = () => {
                     targetRotation = 0;
                     targetPitch = 0;
-                });
+                };
+
+                canvas6.parentElement.addEventListener('mouseleave', handleLeave);
+                canvas6.parentElement.addEventListener('touchend', handleLeave);
 
                 class LorenzParticle {
                     constructor() {
                         this.reset();
-                        // Randomize initial position along the attractor to fill it instantly
-                        // We simulate a few seconds of movement
-                        for(let i=0; i<Math.random()*1000; i++) {
+                        // Pre-warm
+                        for(let i=0; i<Math.random()*2000; i++) {
                             this.update();
                         }
                     }
                     
                     reset() {
-                        // Start near the center but slightly offset to trigger chaos
                         this.x = 0.1 + (Math.random() - 0.5);
                         this.y = 0.1 + (Math.random() - 0.5);
-                        this.z = 0.1 + (Math.random() - 0.5) + 25; // Start near the "eyes"
-                        this.age = 0;
-                        this.life = 500 + Math.random() * 500;
-                        this.opacity = 0;
+                        this.z = 0.1 + (Math.random() - 0.5) + 25;
+                        this.age = Math.random() * 100; // Staggered start
+                        this.life = 1000 + Math.random() * 1000;
+                        this.baseAlpha = 0.3 + Math.random() * 0.5; // Varying brightness
                     }
                     
                     update() {
-                        // Lorenz Equations
                         const dx = (sigma * (this.y - this.x)) * dt;
                         const dy = (this.x * (rho - this.z) - this.y) * dt;
                         const dz = (this.x * this.y - beta * this.z) * dt;
@@ -7067,37 +7158,58 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                         this.z += dz;
                         
                         this.age++;
-                        
-                        // Fade in/out
-                        if (this.age < 50) this.opacity = this.age / 50;
-                        else if (this.age > this.life - 50) this.opacity = (this.life - this.age) / 50;
-                        else this.opacity = 1;
-                        
                         if (this.age >= this.life) this.reset();
                     }
                     
-                    draw(centerX, centerY, scale, rotX, rotY) {
+                    draw(centerX, centerY, scale, cosRot, sinRot, cosPitch, sinPitch) {
                         // 3D Rotation
-                        // Rotate around Y axis (Yaw)
-                        let x1 = this.x * Math.cos(rotX) - this.z * Math.sin(rotX);
-                        let z1 = this.x * Math.sin(rotX) + this.z * Math.cos(rotX);
+                        const x1 = this.x * cosRot - this.z * sinRot;
+                        const z1 = this.x * sinRot + this.z * cosRot;
                         
-                        // Rotate around X axis (Pitch)
-                        let y1 = this.y * Math.cos(rotY) - z1 * Math.sin(rotY);
-                        // let z2 = this.y * Math.sin(rotY) + z1 * Math.cos(rotY); // Depth not needed for drawing
+                        const y1 = this.y * cosPitch - z1 * sinPitch;
+                        const z2 = this.y * sinPitch + z1 * cosPitch;
                         
-                        // Projection
-                        const screenX = centerX + x1 * scale;
-                        const screenY = centerY - y1 * scale; // Invert Y for screen coords
+                        // Perspective Scale
+                        // z2 ranges approx -30 to +30
+                        const depthScale = 600 / (600 + z2);
                         
-                        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.6})`;
-                        ctx.fillRect(screenX, screenY, 1.5, 1.5); // Draw pixel
+                        const screenX = centerX + x1 * scale * depthScale;
+                        const screenY = centerY - y1 * scale * depthScale;
+                        
+                        // Size based on depth (closer = bigger)
+                        const size = Math.max(0.5, 1.8 * depthScale);
+                        
+                        // Opacity based on depth (closer = brighter)
+                        // and lifecycle fade in/out
+                        let alpha = this.baseAlpha;
+                        if (this.age < 50) alpha *= (this.age / 50);
+                        if (this.age > this.life - 50) alpha *= ((this.life - this.age) / 50);
+                        
+                        // Depth fade
+                        alpha *= depthScale; 
+                        
+                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.fillRect(screenX, screenY, size, size);
                     }
                 }
 
                 const resize = () => {
-                    width = canvas6.width = canvas6.parentElement.offsetWidth;
-                    height = canvas6.height = canvas6.parentElement.offsetHeight;
+                    const parent = canvas6.parentElement;
+                    const dpr = window.devicePixelRatio || 1;
+                    
+                    width = parent.offsetWidth;
+                    height = parent.offsetHeight;
+                    
+                    canvas6.width = width * dpr;
+                    canvas6.height = height * dpr;
+                    
+                    ctx.scale(dpr, dpr);
+                    
+                    if (width < 768) {
+                        particleCount = 800; 
+                    } else {
+                        particleCount = 1500;
+                    }
                     
                     particles = [];
                     for(let i=0; i<particleCount; i++) {
@@ -7112,6 +7224,9 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                         isVisible = entry.isIntersecting;
                         if (isVisible && !animationId) {
                             animate();
+                        } else if (!isVisible && animationId) {
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
                         }
                     });
                 }, { threshold: 0.1 });
@@ -7123,25 +7238,27 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                         return;
                     }
 
-                    // Clear
                     ctx.clearRect(0, 0, width, height);
                     
-                    // Smooth rotation
                     rotation += (targetRotation - rotation) * 0.05;
                     pitch += (targetPitch - pitch) * 0.05;
                     
-                    // Auto rotation if idle
                     if (Math.abs(targetRotation) < 0.01) {
-                        rotation += 0.002;
+                        rotation += 0.003; // Slow idle rotation
                     }
 
-                    const scale = Math.min(width, height) / 50;
+                    const scale = Math.min(width, height) / 45;
                     const centerX = width / 2;
-                    const centerY = height / 2 + (height * 0.1); // Shift down slightly to center the attractor
+                    const centerY = height / 2 + (height * 0.1);
+
+                    const cosRot = Math.cos(rotation);
+                    const sinRot = Math.sin(rotation);
+                    const cosPitch = Math.cos(pitch);
+                    const sinPitch = Math.sin(pitch);
 
                     particles.forEach(p => {
                         p.update();
-                        p.draw(centerX, centerY, scale, rotation, pitch);
+                        p.draw(centerX, centerY, scale, cosRot, sinRot, cosPitch, sinPitch);
                     });
 
                     animationId = requestAnimationFrame(animate);
