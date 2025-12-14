@@ -90,7 +90,7 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -100,7 +100,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -109,6 +109,7 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
                         serif: ['Lora', 'serif'],
                         playfair: ['Playfair Display', 'serif'],
                     },
@@ -6651,7 +6652,12 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 let drops = [];
                 let isVisible = false;
                 let animationId = null;
+                let isHovered = false;
                 
+                const parent = canvas2.parentElement;
+                parent.addEventListener('mouseenter', () => isHovered = true);
+                parent.addEventListener('mouseleave', () => isHovered = false);
+
                 const resize = () => {
                     width = canvas2.width = canvas2.parentElement.offsetWidth;
                     height = canvas2.height = canvas2.parentElement.offsetHeight;
@@ -6680,14 +6686,18 @@ You're an assistant, not Sulayman himself. Guide, inform, and facilitate.`;
                 observer.observe(canvas2);
 
                 const animate = () => {
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.1)'; // Trail effect
+                    ctx.fillStyle = 'rgba(3, 3, 3, 0.1)'; // Trail effect (Consistent with bg)
                     ctx.fillRect(0, 0, width, height);
-                    ctx.fillStyle = '#333';
+                    
                     ctx.font = '10px monospace';
 
                     drops.forEach(drop => {
+                        // Brighter on hover
+                        ctx.fillStyle = isHovered ? '#EAEAEA' : '#666';
                         ctx.fillText(drop.chars[Math.floor(Math.random()*drop.chars.length)], drop.x, drop.y);
-                        drop.y += drop.speed;
+                        
+                        // Speed up slightly on hover
+                        drop.y += isHovered ? drop.speed * 1.5 : drop.speed;
                         if(drop.y > height) drop.y = 0;
                     });
                     if (isVisible) {
