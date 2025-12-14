@@ -7235,7 +7235,7 @@
             const state = {
                 btc: { val: 90142, label: 'BTC' },
                 eth: { val: 3108, label: 'ETH' },
-                block: { val: 927811, label: 'BLOCK' },
+                block: { val: 927878, label: 'BLOCK' },
                 ping: { val: 24, label: 'PING' }
             };
 
@@ -7288,16 +7288,33 @@
                 ws.onclose = () => setTimeout(initPriceWS, 5000);
             }
             
-            // 2. Block Height (Mempool.space Polling - Frequent)
+            // 2. Block Height (Polling with Fallbacks)
             async function fetchBlock() {
-                try {
-                    const res = await fetch('https://mempool.space/api/blocks/tip/height');
-                    const height = await res.text();
-                    if (height) {
-                        state.block.val = parseInt(height);
-                        updateValue('ticker-block', state.block.val, v => `#${v.toLocaleString()}`);
+                const endpoints = [
+                    'https://mempool.space/api/blocks/tip/height',
+                    'https://blockstream.info/api/blocks/tip/height'
+                ];
+
+                for (const url of endpoints) {
+                    try {
+                        // Add timestamp to prevent caching
+                        const res = await fetch(`${url}?t=${Date.now()}`, { cache: 'no-store' });
+                        if (!res.ok) continue;
+                        
+                        const text = await res.text();
+                        const height = parseInt(text);
+                        
+                        if (!isNaN(height) && height > 0) {
+                            if (state.block.val !== height) {
+                                state.block.val = height;
+                                updateValue('ticker-block', state.block.val, v => `#${v.toLocaleString()}`);
+                            }
+                            return; // Success, exit loop
+                        }
+                    } catch(e) {
+                        console.warn('Block fetch failed:', e);
                     }
-                } catch(e) {}
+                }
             }
 
             // 3. System Ping (Real Measurement)
