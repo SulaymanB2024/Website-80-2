@@ -139,10 +139,16 @@
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: #555; }
 
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background-color: #030303;
             color: #EAEAEA;
-            overflow-x: hidden;
             font-feature-settings: "ss01", "ss02", "salt"; 
             transition: background-color 0.5s ease;
         }
@@ -190,6 +196,8 @@
                         border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             transform-origin: center top;
             width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
             min-height: 100vh;
             background-color: #030303;
             will-change: transform, filter;
@@ -2883,6 +2891,11 @@
                 tags: ["M&A Advisory", "Financial Modeling", "Strategic Planning", "Process Optimization"],
                 description: "Transforming organizational complexity into competitive advantage. I partner with founders and investors to diagnose operational friction, quantify strategic opportunities, and architect decision frameworks that drive measurable ROI.",
                 details: `
+                    <!-- Interactive Canvas -->
+                    <div class="relative w-full h-[300px] bg-[#0A0A0A] mb-12 border border-white/10 overflow-hidden">
+                        <canvas id="canvas-taskformer-modal" class="w-full h-full"></canvas>
+                    </div>
+
                     <!-- Value Proposition Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                         <div>
@@ -3570,6 +3583,112 @@
         const closeModal = document.getElementById('close-modal');
         const progressBar = document.getElementById('reading-progress');
         
+        function initTaskFormerModalCanvas() {
+            const canvas4 = document.getElementById('canvas-taskformer-modal');
+            if (canvas4) {
+                const ctx = canvas4.getContext('2d');
+                let width, height;
+                let particles = [];
+                let isHovered = false;
+                let animationId = null;
+                let rotation = 0;
+                
+                const parent = canvas4.parentElement;
+                parent.addEventListener('mouseenter', () => isHovered = true);
+                parent.addEventListener('mouseleave', () => isHovered = false);
+                
+                const resize = () => {
+                    width = canvas4.width = canvas4.parentElement.offsetWidth;
+                    height = canvas4.height = canvas4.parentElement.offsetHeight;
+                    
+                    particles = [];
+                    const count = 80; 
+                    for(let i=0; i<count; i++) {
+                        particles.push({
+                            x: Math.random() * width,
+                            y: Math.random() * height,
+                            vx: (Math.random() - 0.5) * 1.5,
+                            vy: (Math.random() - 0.5) * 1.5,
+                            size: Math.random() * 2 + 1.5,
+                            angle: (i / count) * Math.PI * 2, 
+                            radius: height * 0.3 
+                        });
+                    }
+                };
+                resize();
+
+                const animate = () => {
+                    if (!document.getElementById('canvas-taskformer-modal')) {
+                        cancelAnimationFrame(animationId);
+                        return;
+                    }
+
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    if (isHovered) {
+                        rotation += 0.005; 
+                    }
+
+                    particles.forEach((p, i) => {
+                        let tx, ty;
+
+                        if (!isHovered) {
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            
+                            if(p.x < 0 || p.x > width) p.vx *= -1;
+                            if(p.y < 0 || p.y > height) p.vy *= -1;
+                        } 
+                        else {
+                            tx = width/2 + Math.cos(p.angle + rotation) * p.radius;
+                            ty = height/2 + Math.sin(p.angle + rotation) * p.radius;
+
+                            p.x += (tx - p.x) * 0.08;
+                            p.y += (ty - p.y) * 0.08;
+                        }
+                        
+                        ctx.fillStyle = isHovered ? '#FFFFFF' : '#888888';
+                        ctx.globalAlpha = isHovered ? 0.9 : 0.6;
+                        ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
+                        
+                        particles.forEach((other, j) => {
+                            if (i >= j) return;
+                            const dx = p.x - other.x;
+                            const dy = p.y - other.y;
+                            const dist = Math.sqrt(dx*dx + dy*dy);
+                            
+                            const connectDist = isHovered ? 50 : 70;
+
+                            if (dist < connectDist) {
+                                ctx.strokeStyle = isHovered ? 'rgba(255, 255, 255, 0.2)' : 'rgba(136, 136, 136, 0.15)';
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(other.x, other.y);
+                                ctx.stroke();
+                            }
+                        });
+                    });
+                    
+                    if (isHovered) {
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.arc(width/2, height/2, height * 0.3, 0, Math.PI*2);
+                        ctx.stroke();
+                        
+                        ctx.beginPath();
+                        ctx.arc(width/2, height/2, height * 0.2, 0, Math.PI*2);
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                        ctx.stroke();
+                    }
+
+                    animationId = requestAnimationFrame(animate);
+                };
+                animate();
+            }
+        }
+
         function openModal(id, type = 'project') {
             let data;
             const content = modal.querySelector('.modal-content');
@@ -3657,6 +3776,10 @@
                         ${data.details}
                     </div>
                 `;
+                
+                if (id === 'taskformer') {
+                    setTimeout(initTaskFormerModalCanvas, 100);
+                }
             }
 
             modal.classList.add('active');
@@ -5979,7 +6102,7 @@
 
         // --- CHATBOT SYSTEM ---
         const GEMINI_API_KEY = 'AIzaSyB8qNBZZhZBLZw1P-yzQpEz0_W1xMyXr9M';
-        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
         
         const chatbotToggle = document.getElementById('chatbot-toggle');
         const chatbotWindow = document.getElementById('chatbot-window');
