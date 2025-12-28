@@ -1,0 +1,25 @@
+{
+  "name": "sulayman-bowles-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio of Sulayman Bowles. Co-Founder, Analyst, and Digital Alchemist based in Austin, TX.",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "deploy": "vercel deploy --prod"
+  },
+  "keywords": [
+    "Sulayman Bowles",
+    "portfolio",
+    "financial analysis",
+    "equity research",
+    "software development",
+    "AI",
+    "blockchain"
+  ],
+  "author": "Sulayman Bowles",
+  "license": "MIT",
+  "devDependencies": {},
+  "optionalDependencies": {
+    "vercel": "^latest"
+  }
+}
