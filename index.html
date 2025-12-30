@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SULAYMAN BOWLES | Digital Portfolio</title>
-    <meta name="description" content="Portfolio of Sulayman Bowles. Co-Founder, Analyst, and Digital Alchemist based in Austin, TX.">
+    <title>Sulayman Bowles – Financial Analyst & Developer</title>
+    <meta name="description" content="UT Austin student and equity research analyst who builds valuation models and interactive web experiences. View projects and download résumé.">
     
     <!-- SEO Meta Tags -->
     <meta name="author" content="Sulayman Bowles">
     <meta name="keywords" content="Sulayman Bowles, portfolio, financial analysis, equity research, software development, AI agent, Austin, web3, blockchain, fintech, Point72, digital portfolio, analyst, developer">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
-    <link rel="canonical" href="https://sulaymanbowles.com/">
+    <link rel="canonical" href="https://sulayman-bowles.dev/">
     
     <!-- Theme Color -->
     <meta name="theme-color" content="#030303">
@@ -98,6 +98,9 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- TradingView Widget Script -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1278,6 +1281,17 @@
             -webkit-mask-image: linear-gradient(to right, transparent, black 40%);
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .animate-marquee { animation: none !important; }
+            #canvas-container, .gen-canvas, #oscilloscope, #order-book-visual { display: none !important; }
+        }
+
     </style>
     <!-- Vercel Web Analytics -->
     <script defer src="https://va.vercel-analytics.com/jsr" data-attribution="vercel"></script>
@@ -1285,7 +1299,7 @@
 <body class="antialiased">
 
     <!-- Skip to main content for accessibility -->
-    <a href="#work" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-off-white focus:text-black focus:px-4 focus:py-2">Skip to main content</a>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-off-white focus:text-black focus:px-4 focus:py-2">Skip to main content</a>
 
     <!-- Cursor -->
     <div class="cursor-dot hidden md:block" aria-hidden="true"></div>
@@ -1311,8 +1325,8 @@
             <!-- Reading Progress Bar -->
             <div id="reading-progress" class="absolute top-0 left-0 h-1 bg-off-white w-0 z-50" style="transition: width 0.1s ease-out; will-change: width;"></div>
             
-            <button id="close-modal" class="absolute top-6 right-6 hover:rotate-90 transition-transform duration-300 group z-50" style="will-change: transform;" aria-label="Close modal">
-                <i data-lucide="x" class="w-8 h-8 text-neutral-500 group-hover:text-off-white transition-colors duration-200"></i>
+            <button id="close-modal" class="sticky top-6 float-right mr-6 z-50 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 hover:bg-white/10 transition-all duration-300 group hover:rotate-90 hover:scale-105" style="will-change: transform; margin-bottom: -44px;" aria-label="Close modal">
+                <i data-lucide="x" class="w-6 h-6 text-neutral-400 group-hover:text-off-white transition-colors duration-200"></i>
             </button>
             
             <!-- Content Injection Area -->
@@ -1335,30 +1349,30 @@
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex gap-12 text-[11px] font-medium tracking-[0.2em] uppercase">
-                <a href="#services" class="hover-target magnetic-wrap group">
+                <a href="#section-services" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Finance</span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#services" class="hover-target magnetic-wrap group">
+                <a href="#section-services" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Consulting</span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#work" class="hover-target magnetic-wrap group">
+                <a href="#section-work" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Work</span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#writing" class="hover-target magnetic-wrap group">
+                <a href="#section-writing" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Writing</span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#contact" class="hover-target magnetic-wrap group">
+                <a href="#section-contact" class="hover-target magnetic-wrap group">
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Contact</span>
                     <span class="magnetic-area"></span>
                 </a>
             </div>
 
             <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="hover-target md:hidden group" aria-label="Open navigation menu" aria-expanded="false">
+            <button id="menu-btn" class="hover-target md:hidden group p-3" aria-label="Open navigation menu" aria-expanded="false">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
@@ -1366,11 +1380,11 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-off-black z-30 transform translate-x-full flex flex-col justify-center items-center space-y-10" style="transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; backface-visibility: hidden;" role="dialog" aria-modal="true" aria-label="Navigation menu">
-        <a href="#services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">FINANCE</a>
-        <a href="#services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONSULTING</a>
-        <a href="#work" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WORK</a>
-        <a href="#writing" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WRITING</a>
-        <a href="#contact" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONTACT</a>
+        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">FINANCE</a>
+        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONSULTING</a>
+        <a href="#section-work" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WORK</a>
+        <a href="#section-writing" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WRITING</a>
+        <a href="#section-contact" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONTACT</a>
         <button id="close-menu-btn" class="absolute top-8 right-8 p-4 hover:rotate-90 transition-transform duration-300" aria-label="Close navigation menu">
             <i data-lucide="x" class="w-8 h-8 text-off-white"></i>
         </button>
@@ -1380,33 +1394,35 @@
     <main id="main-content" role="main">
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 overflow-hidden border-b border-off-white/10" aria-label="Hero section">
+    <section id="hero" class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 overflow-hidden border-b border-off-white/10" aria-label="Hero section">
         <div id="canvas-container"></div>
 
         <div class="max-w-[1600px] w-full mx-auto z-10 relative pointer-events-none">
             <!-- Main Title -->
             <div class="pointer-events-auto relative select-none">
-                <h1 class="font-display text-[12vw] leading-[0.8] font-bold tracking-tighter text-off-white reveal-text scramble-hover" data-final="DIGITAL" style="transition-delay: 100ms;">
-                    DIGITAL
-                </h1>
-            </div>
-            <div class="pointer-events-auto relative select-none">
-                <h1 class="font-display text-[12vw] leading-[0.8] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-off-white via-neutral-400 to-neutral-900 reveal-text scramble-hover" data-final="ALCHEMY" style="transition-delay: 250ms;">
-                    ALCHEMY
+                <h1 class="font-display text-[8vw] leading-[0.9] font-bold tracking-tighter text-off-white reveal-text" style="transition-delay: 100ms;">
+                    <span class="scramble-hover" data-final="FINANCIAL ANALYST">FINANCIAL ANALYST</span><br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-off-white via-neutral-400 to-neutral-900 scramble-hover" data-final="& BUILDER">& BUILDER</span>
                 </h1>
             </div>
             
             <!-- Bio / Details -->
             <div class="mt-20 max-w-6xl pointer-events-auto relative">
-                <div class="max-w-[580px] relative z-10">
+                <div class="max-w-[650px] relative z-10">
                     <p class="font-sans text-xl md:text-2xl text-neutral-200 leading-[1.7] reveal-text mb-12" style="transition-delay: 500ms;">
-                        I build the <span class="text-off-white font-medium border-b border-off-white/30 pb-1" style="transition: border-color 0.3s ease;">financial models investors trust</span>, and the <span class="text-off-white font-medium border-b border-off-white/30 pb-1" style="transition: border-color 0.3s ease;">digital experiences that capture their attention</span>. Data-driven design meets visually intuitive analysis.
+                        I turn complex markets into clear, actionable models and lead teams to deliver results—equities, crypto, and beyond.
                     </p>
                     
-                    <div class="reveal-text mb-8" style="transition-delay: 600ms;">
-                        <a href="#services" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-off-white text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
+                    <div class="reveal-text mb-8 flex flex-wrap gap-4" style="transition-delay: 600ms;">
+                        <a href="#section-work" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-off-white text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
                             <span class="magnetic-content inline-flex items-center gap-2">
-                                View Services <i data-lucide="arrow-down-right" class="w-5 h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
+                                See Valuation Work <i data-lucide="arrow-down-right" class="w-5 h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
+                            </span>
+                            <span class="magnetic-area"></span>
+                        </a>
+                        <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-off-white text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
+                            <span class="magnetic-content inline-flex items-center gap-2">
+                                Download Résumé <i data-lucide="download" class="w-5 h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
                             </span>
                             <span class="magnetic-area"></span>
                         </a>
@@ -1448,7 +1464,7 @@
     </div>
 
     <!-- Services Section -->
-    <section id="services" class="py-40 px-6 md:px-12 relative border-b border-off-white/10" aria-labelledby="services-heading">
+    <section id="section-services" class="py-40 px-6 md:px-12 relative border-b border-off-white/10" aria-labelledby="services-heading">
         <div class="max-w-[1600px] mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-off-white/10 pb-8 reveal-text">
                 <h2 id="services-heading" class="font-display text-6xl md:text-8xl font-bold tracking-tight text-off-white">SERVICES</h2>
@@ -1518,7 +1534,7 @@
     </section>
 
     <!-- Selected Work Section -->
-    <section id="work" class="py-40 px-6 md:px-12 relative" aria-labelledby="work-heading">
+    <section id="section-work" class="py-40 px-6 md:px-12 relative" aria-labelledby="work-heading">
         <div class="max-w-[1600px] mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-32 border-b border-off-white/10 pb-8 reveal-text">
                 <h2 id="work-heading" class="font-display text-6xl md:text-8xl font-bold tracking-tight mix-blend-difference">SELECTED<br>WORKS</h2>
@@ -1528,8 +1544,8 @@
                 </div>
             </div>
 
-            <!-- Project 1: VC-Backed Startup -->
-            <div class="group project-card tech-corner mb-40 w-full cursor-pointer reveal-text view-project-target" data-project="bittensor">
+            <!-- Project 1: Crypto Research -->
+            <div class="group project-card tech-corner mb-40 w-full cursor-pointer reveal-text view-project-target" data-project="bittensor" onclick="openModal('bittensor', 'project')">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
                     <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-bittensor" class="gen-canvas"></canvas>
@@ -1538,15 +1554,15 @@
                 </div>
                 <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
                     <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">BITTENSOR STARTUP</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Co-Founder / $80K Revenue / Decentralized AI</p>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">CRYPTO RESEARCH</h3>
+                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Long/Short Theses / On-Chain Analysis / Market Structure</p>
                     </div>
                     <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">01</span>
                 </div>
             </div>
 
             <!-- Project 2: Web3 Payroll -->
-            <div class="group project-card tech-corner mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="payroll">
+            <div class="group project-card tech-corner mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="payroll" onclick="openModal('payroll', 'project')">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-payroll" class="gen-canvas"></canvas>
@@ -1562,7 +1578,7 @@
             </div>
 
              <!-- Project 3: Point72 -->
-             <div class="group project-card tech-corner mb-40 w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72">
+             <div class="group project-card tech-corner mb-40 w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72" onclick="openModal('point72', 'project')">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-point72" class="gen-canvas"></canvas>
@@ -1578,7 +1594,7 @@
             </div>
 
             <!-- Project 4: Consulting (TaskFormer) -->
-            <div class="group project-card tech-corner w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="taskformer">
+            <div class="group project-card tech-corner w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="taskformer" onclick="openModal('taskformer', 'project')">
                 <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-taskformer" class="gen-canvas"></canvas>
@@ -1594,7 +1610,7 @@
             </div>
             
             <div class="mt-32 text-center reveal-text">
-                <a href="Bowles Sulayman oih.pdf" target="_blank" class="magnetic-wrap hover-target inline-block font-display text-lg border border-off-white/20 px-10 py-5 hover:bg-off-white hover:text-black transition-colors duration-500">
+                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target inline-block font-display text-lg border border-off-white/20 px-10 py-5 hover:bg-off-white hover:text-black transition-colors duration-500">
                     <span class="magnetic-content block tracking-widest uppercase">View Full Resume</span>
                     <span class="magnetic-area"></span>
                 </a>
@@ -1603,7 +1619,7 @@
     </section>
 
     <!-- Writing / Thoughts Section -->
-    <section id="writing" class="py-40 px-6 md:px-12 bg-off-white text-off-black relative">
+    <section id="section-writing" class="py-40 px-6 md:px-12 bg-off-white text-off-black relative">
         <div class="max-w-[1200px] mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 reveal-text gap-8">
                 <div class="flex items-center gap-4">
@@ -1836,7 +1852,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 px-6 md:px-12 min-h-screen flex flex-col justify-between bg-[#030303] text-off-white border-t border-off-white/10 relative overflow-hidden" aria-labelledby="contact-heading">
+    <section id="section-contact" class="py-20 px-6 md:px-12 min-h-screen flex flex-col justify-between bg-[#030303] text-off-white border-t border-off-white/10 relative overflow-hidden" aria-labelledby="contact-heading">
         <!-- Shadow Order Book Visual -->
         <div id="order-book-visual" class="absolute top-0 right-0 w-[40%] h-full pointer-events-none z-0 mix-blend-plus-lighter opacity-30 mask-gradient-left">
             <canvas id="ob-canvas" class="w-full h-full"></canvas>
@@ -1864,6 +1880,19 @@
                             </a>
                             <span class="magnetic-area"></span>
                         </h2>
+
+                        <!-- Calendly & Forms -->
+                        <div class="flex flex-wrap gap-6 mt-8">
+                            <!-- Calendly -->
+                            <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+                            <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+                            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sulayman-bowles/30min'});return false;" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-off-white text-base font-medium rounded-sm backdrop-blur-sm">
+                                <span class="magnetic-content inline-flex items-center gap-2">
+                                    Schedule Call <i data-lucide="calendar" class="w-5 h-5"></i>
+                                </span>
+                                <span class="magnetic-area"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1873,7 +1902,7 @@
             <div class="flex gap-8 mb-8 md:mb-0">
                 <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Visit LinkedIn profile">LinkedIn</a>
                 <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Visit GitHub profile">GitHub</a>
-                <a href="Bowles Sulayman oih.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Download resume">Resume</a>
+                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Download resume">Resume</a>
             </div>
             <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-6 text-right md:text-left uppercase items-center">
                 <div id="live-ticker" class="contents"></div>
@@ -2261,60 +2290,636 @@
 
         const projectData = {
             bittensor: {
-                title: "BITTENSOR STARTUP",
-                subtitle: "Co-Founder & Tech Lead",
-                tags: ["Bittensor", "Python", "AI Architecture", "Revenue: $80k"],
-                description: "A VC-backed experiment in decentralized AI. We built a Bittensor-based project that generated $80k in revenue before strategic pivot. This wasn't just code-it was an exercise in market timing, rapid scaling, and knowing when to change direction.",
+                title: "CRYPTO RESEARCH THESES",
+                subtitle: "Market Structure & Asymmetric Opportunities",
+                tags: ["DeFi", "Governance", "Tokenomics", "On-Chain Data"],
+                description: "A collection of high-conviction research theses focused on market inefficiencies. Leveraging on-chain data endpoints and real-time market feeds to identify mispriced assets in the DeFi and governance sectors.",
                 details: `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Objective</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                Leverage the Bittensor network to create a decentralized compute marketplace. We aimed to lower the barrier to entry for AI model training by aggregating idle GPU power.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Reality</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                While revenue was high ($80k), network volatility and liquidity constraints created significant friction. We secured a $10K seed grant from DormDAO, but unit economics ultimately required a strategic pivot.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Unit Economics Graph -->
-                    <div class="mt-12 p-6 border border-off-white/10 bg-black/20">
-                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6">The Liquidity Trap (Unit Economics)</h4>
-                        <div class="relative w-full h-64">
-                            <!-- Graph Container -->
-                            <svg viewBox="0 0 800 300" class="w-full h-full overflow-visible">
-                                <!-- Grid Lines -->
-                                <line x1="0" y1="250" x2="800" y2="250" stroke="#2A2A2A" stroke-width="1" />
-                                <line x1="0" y1="150" x2="800" y2="150" stroke="#2A2A2A" stroke-width="1" stroke-dasharray="4" />
-                                <line x1="0" y1="50" x2="800" y2="50" stroke="#2A2A2A" stroke-width="1" stroke-dasharray="4" />
-                                
-                                <!-- Revenue Line (Solid White) -->
-                                <path d="M0,250 C200,240 400,100 800,20" fill="none" stroke="#EAEAEA" stroke-width="2" />
-                                <text x="750" y="15" fill="#EAEAEA" font-family="Space Mono, monospace" font-size="10">REVENUE</text>
-                                
-                                <!-- Cost Line (Dashed Grey - Exponential) -->
-                                <path d="M0,255 C300,250 500,200 800,0" fill="none" stroke="#666666" stroke-width="2" stroke-dasharray="5,5" />
-                                <text x="750" y="290" fill="#666666" font-family="Space Mono, monospace" font-size="10">COST</text>
-                                
-                                <!-- Intersection Point -->
-                                <circle cx="620" cy="80" r="4" fill="#ff3333" />
-                                <text x="630" y="80" fill="#ff3333" font-family="Space Mono, monospace" font-size="10">CROSSOVER (FAILURE)</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs font-mono text-neutral-400 mt-4 text-center">FIG 1.1: REVENUE VS. LIQUIDITY COST</p>
-                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+                        <!-- LEFT COLUMN: THESES (8 cols) -->
+                        <div class="lg:col-span-8 space-y-8">
+                            
+                            <!-- SYRUP -->
+                            <div class="group relative bg-charcoal border border-mid-gray hover:border-off-white/30 transition-colors duration-500 overflow-hidden cursor-pointer" onclick="openModal('syrup')">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-off-white/50"></div>
+                                <div class="p-6 md:p-8">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-2">
+                                                <h3 class="font-display text-3xl text-off-white group-hover:underline decoration-1 underline-offset-4">SYRUP</h3>
+                                                <span class="px-2 py-1 bg-off-white/10 text-off-white text-[10px] font-mono uppercase tracking-wider border border-off-white/20">LONG</span>
+                                            </div>
+                                            <p class="font-mono text-xs text-dim-gray uppercase tracking-widest">Institutional Yield // Maple Finance</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="font-mono text-2xl text-off-white tracking-tight" id="price-syrup">--</div>
+                                            <div class="font-mono text-xs text-neutral-400" id="change-syrup">--</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="prose prose-invert max-w-none mb-8">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            Syrup bridges the gap between permissioned institutional lending and permissionless DeFi yield. By wrapping Maple Finance's secured lending pools, it offers a sustainable yield that is uncorrelated to crypto volatility.
+                                        </p>
+                                    </div>
 
-                    <div class="mt-8 pt-8 border-t border-off-white/10">
-                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">Tech Stack</h4>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">Python</span>
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">Rust</span>
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">TensorFlow</span>
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">PostgreSQL</span>
+                                    <!-- Data Grid -->
+                                    <div class="grid grid-cols-3 gap-4 border-t border-mid-gray pt-6">
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">TVL</div>
+                                            <div class="text-sm text-off-white font-mono" id="tvl-syrup">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white w-[75%]"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">APY</div>
+                                            <div class="text-sm text-off-white font-mono" id="apy-syrup">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white w-[90%]"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">FDV</div>
+                                            <div class="text-sm text-off-white font-mono" id="fdv-syrup">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white/40 w-[88%]"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- METADAO -->
+                            <div class="group relative bg-charcoal border border-mid-gray hover:border-off-white/30 transition-colors duration-500 overflow-hidden cursor-pointer" onclick="openModal('metadao')">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-off-white/50"></div>
+                                <div class="p-6 md:p-8">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-2">
+                                                <h3 class="font-display text-3xl text-off-white group-hover:underline decoration-1 underline-offset-4">MetaDAO</h3>
+                                                <span class="px-2 py-1 bg-off-white/10 text-off-white text-[10px] font-mono uppercase tracking-wider border border-off-white/20">LONG</span>
+                                            </div>
+                                            <p class="font-mono text-xs text-dim-gray uppercase tracking-widest">Governance Arb // Treasury Value</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="font-mono text-2xl text-off-white tracking-tight" id="price-metdao">--</div>
+                                            <div class="font-mono text-xs text-neutral-400" id="change-metdao">--</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="prose prose-invert max-w-none mb-8">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            Trading at a discount to NAV. The proposal to enable treasury buybacks creates a mathematical floor price, offering an asymmetric risk/reward profile.
+                                        </p>
+                                    </div>
+
+                                    <!-- Data Grid -->
+                                    <div class="grid grid-cols-3 gap-4 border-t border-mid-gray pt-6">
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">Liquidity</div>
+                                            <div class="text-sm text-off-white font-mono" id="liquidity-metdao">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white w-[35%]"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">FDV</div>
+                                            <div class="text-sm text-off-white font-mono" id="fdv-metdao">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white/40 w-[60%]"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">Volume (24h)</div>
+                                            <div class="text-sm text-off-white font-mono" id="volume-metdao">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white w-[100%] animate-pulse"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MYX -->
+                            <div class="group relative bg-charcoal border border-mid-gray hover:border-off-white/30 transition-colors duration-500 overflow-hidden cursor-pointer" onclick="openModal('myx')">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-off-white/50"></div>
+                                <div class="p-6 md:p-8">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-2">
+                                                <h3 class="font-display text-3xl text-off-white group-hover:underline decoration-1 underline-offset-4">MYX</h3>
+                                                <span class="px-2 py-1 bg-off-white/10 text-off-white text-[10px] font-mono uppercase tracking-wider border border-off-white/20">SHORT</span>
+                                            </div>
+                                            <p class="font-mono text-xs text-dim-gray uppercase tracking-widest">Perp DEX // Inflationary</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="font-mono text-2xl text-off-white tracking-tight" id="price-myx">--</div>
+                                            <div class="font-mono text-xs text-neutral-400" id="change-myx">--</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="prose prose-invert max-w-none mb-8">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            Aggressive token unlocks coincide with stagnating volume. Competitors are capturing market share while MYX's FDV/Revenue ratio remains high.
+                                        </p>
+                                    </div>
+
+                                    <!-- Data Grid -->
+                                    <div class="grid grid-cols-3 gap-4 border-t border-mid-gray pt-6">
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">FDV</div>
+                                            <div class="text-sm text-off-white font-mono" id="fdv-myx">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white w-[95%]"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">Volume (24h)</div>
+                                            <div class="text-sm text-off-white font-mono" id="volume-myx">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white/20 w-[10%]"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] font-mono text-dim-gray uppercase mb-1">Liquidity</div>
+                                            <div class="text-sm text-off-white font-mono" id="liquidity-myx">Loading...</div>
+                                            <div class="w-full h-1 bg-mid-gray mt-2"><div class="h-full bg-off-white/40 w-[100%]"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT COLUMN: TERMINAL & INFO (4 cols) -->
+                        <div class="lg:col-span-4 space-y-8">
+                            
+                            <!-- Live Terminal -->
+                            <div class="border border-mid-gray bg-off-black font-mono text-xs h-[400px] flex flex-col">
+                                <div class="flex items-center justify-between px-4 py-3 border-b border-mid-gray bg-charcoal">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-off-white animate-pulse"></div>
+                                        <span class="text-light-gray">RESEARCH_NODE_v1</span>
+                                    </div>
+                                    <span class="text-dim-gray">LIVE</span>
+                                </div>
+                                <div class="p-4 overflow-y-auto flex-grow space-y-2" id="crypto-terminal-log">
+                                    <div class="text-dim-gray">Initializing stream...</div>
+                                </div>
+
+                                <div class="p-2 border-t border-white/10 bg-neutral-900/30">
+                                    <div class="flex gap-2 text-neutral-500">
+                                        <span>></span>
+                                        <span class="animate-pulse">_</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Portfolio Stats -->
+                            <div class="border border-white/10 bg-neutral-900/20 p-6 hover:border-off-white/30 transition-colors duration-300 group">
+                                <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-6 group-hover:text-neutral-400 transition-colors">Portfolio Exposure</h4>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between text-xs font-mono mb-2">
+                                            <span class="text-neutral-300">LONG EXPOSURE</span>
+                                            <span class="text-off-white">65%</span>
+                                        </div>
+                                        <div class="w-full h-1 bg-white/10">
+                                            <div class="h-full bg-off-white w-[65%]"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex justify-between text-xs font-mono mb-2">
+                                            <span class="text-neutral-300">SHORT EXPOSURE</span>
+                                            <span class="text-off-white">35%</span>
+                                        </div>
+                                        <div class="w-full h-1 bg-white/10">
+                                            <div class="h-full bg-neutral-500 w-[35%]"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-4 border-t border-white/5">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xs font-mono text-neutral-500">NET DELTA</span>
+                                            <span class="text-sm font-mono text-off-white">BETA NEUTRAL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                `
+            },
+            syrup: {
+                title: "SYRUP",
+                subtitle: "Institutional Yield // Maple Finance",
+                tags: ["DeFi", "Yield", "Institutional", "Lending"],
+                contract: "0x643C4E15d7d62Ad0aBeC4a9BD4b001aA3Ef52d66",
+                links: { website: "https://syrup.fi", x: "https://x.com/SyrupFi" },
+                description: "Syrup bridges the gap between permissioned institutional lending and permissionless DeFi yield. By wrapping Maple Finance's secured lending pools, it offers a sustainable yield that is uncorrelated to crypto volatility.",
+                details: `
+                    <div class="space-y-16 mt-12">
+                        <!-- Chart Section -->
+                        <div class="h-[500px] w-full bg-charcoal border border-mid-gray relative overflow-hidden modal-stagger" style="transition-delay: 0.4s">
+                            <!-- Chart Container -->
+                            <div id="tv-chart-syrup" style="height:100%;width:100%"></div>
+                        </div>
+
+                        <!-- Deep Dive Metrics -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-mid-gray border border-mid-gray modal-stagger" style="transition-delay: 0.5s">
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">TVL</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-tvl-syrup">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">APY</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-apy-syrup">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">FDV</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-fdv-syrup">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Risk Score</div>
+                                <div class="flex items-center gap-2">
+                                    <div class="text-2xl font-mono text-off-white">LOW</div>
+                                    <div class="flex gap-1 h-2">
+                                        <div class="w-2 bg-green-500 rounded-sm"></div>
+                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Thesis Content -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 modal-stagger" style="transition-delay: 0.6s">
+                            <!-- Main Analysis -->
+                            <div class="lg:col-span-8 space-y-16">
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">The Convergence of TradFi and DeFi</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            Syrup represents a critical infrastructure layer for the maturation of DeFi, bridging the gap between permissioned institutional lending and permissionless yield. Unlike inflationary yield farming, Syrup's yield is derived from real-world lending activity to institutional borrowers. This creates a "real yield" narrative that becomes increasingly attractive as risk-free rates in TradFi begin to compress.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            The protocol's architecture allows for permissionless deposits while maintaining strict KYC/AML compliance on the borrower side, effectively solving the "identity gap" that has historically prevented large-scale capital migration on-chain. By wrapping Maple Finance's secured lending pools, Syrup offers a product that is both compliant for institutions and accessible for retail.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Sustainable Yield Mechanics</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            The yield generated by Syrup is not a function of token emissions but rather interest paid by borrowers. These borrowers are typically market makers (e.g., Wintermute, Auros) or crypto-native funds who require working capital. This creates a sustainable economic loop where yield is backed by actual cash flow rather than speculative token printing.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            Because the loans are short-term and over-collateralized, the yield is highly responsive to market demand for leverage. In a bull market, as demand for borrowing increases, Syrup's APY naturally rises, creating a perfect hedge against the "risk-on" rotation where stablecoin yields typically lag. This dynamic makes Syrup a unique portfolio component that performs well in both high-volatility and sideways markets.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Market Structure & Correlation</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            Current market structure suggests a rotation from high-beta altcoins into sustainable yield products. Syrup's correlation to ETH is currently 0.12, making it an ideal portfolio hedge. The token acts as a proxy for the health of the institutional crypto credit market, which is currently in a recovery phase following the deleveraging events of the previous cycle.
+                                        </p>
+                                        <ul class="list-disc pl-5 mt-4 space-y-2 text-light-gray font-serif">
+                                            <li><strong>Supply Dynamics:</strong> 85% of supply is locked in governance or lending pools, creating a supply shock scenario as demand increases.</li>
+                                            <li><strong>Demand Drivers:</strong> Integration with Base and Solana will open access to retail users previously priced out by ETH gas fees, significantly expanding the Total Addressable Market (TAM).</li>
+                                        </ul>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Competitive Moat & The 'Drip'</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            While other RWA (Real World Asset) protocols exist, Syrup benefits from Maple Finance's established reputation and 3-year track record. The "Drip" mechanism, which allows for instant liquidity on deposits (unlike the lock-up periods of competitors), is a significant UX improvement that positions Syrup as a superior "savings account" for on-chain capital.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            This instant liquidity feature is powered by a buffer pool and algorithmic rebalancing, a technical moat that is difficult for newer competitors to replicate without significant capital inefficiency. This positions Syrup to capture the majority of the "lazy capital" seeking yield on-chain.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Risk Stratification</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            The primary risk in Syrup is not code, but credit. If a borrower defaults, the pool takes a loss. However, Syrup mitigates this through a multi-tranche structure where "First Loss Capital" provided by pool delegates absorbs the initial impact of any default. This aligns the incentives of the underwriters with the depositors.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            From a smart contract perspective, the protocol has undergone audits from Spearbit and Cantina. The codebase is relatively lean, reducing the surface area for exploits compared to more complex DeFi primitives. The protocol also maintains an active bug bounty program, further hardening its security posture.
+                                        </p>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <!-- Sidebar Info -->
+                            <div class="lg:col-span-4 space-y-8">
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Key Catalysts</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">01</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Expansion to Base and Solana chains (Q1 2026)</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">02</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Launch of "Syrup Pro" for institutional allocators</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">03</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Potential "Fee Switch" activation for token holders</p>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Risk Factors</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Borrower default risk (mitigated by pool delegates)</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Smart contract risk in new chain deployments</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Regulatory uncertainty regarding "securities" classification</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            metadao: {
+                title: "MetaDAO",
+                subtitle: "Governance Arb // Treasury Value",
+                tags: ["DeFi", "Governance", "Futarchy", "Solana"],
+                contract: "METAwkXcqyXKy1AtsSgJ8JiUHwGCafnZL38n3vYmeta",
+                links: { website: "https://www.metadao.fi", x: "https://x.com/MetaDAOProject" },
+                description: "MetaDAO is pioneering 'Futarchy', a governance model where markets decide policy. The current thesis is based on a significant discount to Net Asset Value (NAV) and upcoming proposals to unlock treasury value.",
+                details: `
+                    <div class="space-y-16 mt-12">
+                        <!-- Chart Section -->
+                        <div class="h-[500px] w-full bg-charcoal border border-mid-gray relative overflow-hidden modal-stagger" style="transition-delay: 0.4s">
+                            <!-- Chart Container -->
+                            <div id="tv-chart-metadao" style="height:100%;width:100%"></div>
+                        </div>
+
+                        <!-- Deep Dive Metrics -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-mid-gray border border-mid-gray modal-stagger" style="transition-delay: 0.5s">
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Liquidity</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-liquidity-metadao">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Volume</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-volume-metadao">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">FDV</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-fdv-metadao">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">NAV Discount</div>
+                                <div class="flex items-center gap-2">
+                                    <div class="text-2xl font-mono text-off-white">35%</div>
+                                    <div class="flex gap-1 h-2">
+                                        <div class="w-2 bg-yellow-500 rounded-sm"></div>
+                                        <div class="w-2 bg-yellow-500 rounded-sm"></div>
+                                        <div class="w-2 bg-yellow-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-yellow-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-yellow-500/30 rounded-sm"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Thesis Content -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 modal-stagger" style="transition-delay: 0.6s">
+                            <!-- Main Analysis -->
+                            <div class="lg:col-span-8 space-y-16">
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Futarchy: Replacing Politics with Markets</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            MetaDAO replaces political voting with market speculation, a concept known as "Futarchy". Proposals are passed only if the market predicts they will increase the token's value. This aligns incentives perfectly but is currently misunderstood by the broader market, leading to a mispricing of the governance token relative to its treasury assets.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            The "Futarchy" model is gaining traction as DAOs struggle with voter apathy and bad decision-making. MetaDAO is the first working implementation on Solana, positioning it as the standard-bearer for this new governance paradigm. By forcing participants to "put their money where their mouth is," MetaDAO filters out noise and ensures that only value-accretive decisions are made.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Mechanism Design: Conditional Markets</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            In MetaDAO, every proposal creates two conditional markets: "Pass" and "Fail". Traders speculate on the future price of the META token in both scenarios. If the Time-Weighted Average Price (TWAP) of the "Pass" market is higher than the "Fail" market after a set period, the proposal executes automatically.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            This mechanism eliminates the "principal-agent problem" inherent in representative governance. There are no politicians to bribe; you must put capital at risk to influence the outcome. This creates a Darwinian governance structure where the most accurate predictors of value are rewarded, and poor predictors are taxed by the market.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Deep Value: The NAV Discount Thesis</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            The DAO treasury holds significant assets in USDC and SOL. At current prices, META is trading at a 35% discount to the book value of these assets. This is a classic "Benjamin Graham" value play in a sector dominated by meme coins. The market is effectively pricing the governance layer as a liability rather than an asset.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            Proposal MIP-12 aims to utilize a portion of this treasury to buy back META tokens if the price remains below NAV for 30 days. This creates a "soft floor" for the price and an asymmetric upside opportunity. If passed, this mechanism would mechanically close the valuation gap, providing a clear catalyst for price appreciation.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Security Model: Mitigating Manipulation</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            Critics of Futarchy often point to market manipulation as a potential attack vector. A wealthy attacker could theoretically short the "Pass" market to tank a proposal. However, in doing so, they would be selling the token at a discount to rational buyers who see the proposal's value. This creates a "subsidy" for honest actors.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            MetaDAO's implementation uses a Time-Weighted Average Price (TWAP) over several days to make such attacks prohibitively expensive. The cost to manipulate the market for a sustained period would likely exceed the potential gain from sabotaging the proposal. Furthermore, the open nature of the order book allows for "white knight" arbitrageurs to counter-trade any manipulation attempts.
+                                        </p>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <!-- Sidebar Info -->
+                            <div class="lg:col-span-4 space-y-8">
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Key Catalysts</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">01</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">MIP-12 Proposal: Treasury buyback activation</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">02</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Integration with major Solana lending protocols</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">03</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Launch of V2 Conditional Markets (lower friction)</p>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Risk Factors</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Low liquidity on Solana DEXs</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Complexity of Futarchy mechanism may deter retail</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Oracle manipulation risks in conditional markets</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            myx: {
+                title: "MYX",
+                subtitle: "Perp DEX // Inflationary",
+                tags: ["DeFi", "Perps", "Short", "BSC"],
+                contract: "0xD82544bf0dfe8385eF8FA34D67e6e4940CC63e16",
+                links: { website: "https://myx.finance", x: "https://x.com/MYX_Finance" },
+                description: "MYX is a perpetual DEX facing significant headwinds. A combination of aggressive token unlocks and stagnating volume growth presents a compelling short opportunity.",
+                details: `
+                    <div class="space-y-16 mt-12">
+                        <!-- Chart Section -->
+                        <div class="h-[500px] w-full bg-charcoal border border-mid-gray relative overflow-hidden modal-stagger" style="transition-delay: 0.4s">
+                            <!-- Chart Container -->
+                            <div id="tv-chart-myx" style="height:100%;width:100%"></div>
+                        </div>
+
+                        <!-- Deep Dive Metrics -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-mid-gray border border-mid-gray modal-stagger" style="transition-delay: 0.5s">
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Liquidity</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-liquidity-myx">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Volume</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-volume-myx">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">FDV</div>
+                                <div class="text-2xl font-mono text-off-white" id="detail-fdv-myx">--</div>
+                            </div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Inflation Rate</div>
+                                <div class="flex items-center gap-2">
+                                    <div class="text-2xl font-mono text-off-white">HIGH</div>
+                                    <div class="flex gap-1 h-2">
+                                        <div class="w-2 bg-red-500 rounded-sm"></div>
+                                        <div class="w-2 bg-red-500 rounded-sm"></div>
+                                        <div class="w-2 bg-red-500 rounded-sm"></div>
+                                        <div class="w-2 bg-red-500 rounded-sm"></div>
+                                        <div class="w-2 bg-red-500/30 rounded-sm"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Thesis Content -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 modal-stagger" style="transition-delay: 0.6s">
+                            <!-- Main Analysis -->
+                            <div class="lg:col-span-8 space-y-16">
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">The Great Unlock: A Supply Shock Event</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            The fundamental thesis for shorting MYX is anchored in an impending supply shock. On January 15th, the protocol is scheduled to unlock 12% of its total supply—approximately 15 million tokens—to early venture capital investors and the founding team. This represents a 40% increase in the current circulating supply overnight.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            Historically, "cliff unlocks" of this magnitude act as a massive dampener on price action. Early investors, sitting on paper gains from seed rounds priced significantly lower than the current market value, have a strong incentive to realize liquidity. The market is currently front-running this event, but the sheer volume of tokens hitting the order books is likely to overwhelm existing buy-side liquidity.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Broken Tokenomics: The Inflationary Spiral</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            MYX utilizes a "Vote Escrow" (ve) model similar to Curve, but it lacks the critical bribe revenue ecosystem that makes the Curve model sustainable. The protocol is currently emitting 450,000 MYX per week to incentivize liquidity providers. This aggressive emission schedule is diluting existing holders at an annualized rate of over 22%.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            With trading fees declining by 15% month-over-month, the "Real Yield" paid to stakers is compressing rapidly. This creates a negative feedback loop: Price drops -> Staking Yield drops -> Stakers unlock and sell -> Price drops further. We are witnessing the early stages of this "death spiral" as the total value locked (TVL) in the staking contract begins to bleed.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Competitive Obsolescence</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            The perpetual DEX landscape has evolved rapidly, leaving MYX behind. Competitors like Hyperliquid and dYdX v4 offer superior latency, deeper liquidity, and better user experiences. MYX, built on BSC, suffers from the chain's declining relevance in the high-frequency trading sector.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            MYX's fee structure is uncompetitive, and its "trade-to-earn" incentives have attracted mercenary capital that washes volume rather than sticky, organic users. Once these incentives dry up, we expect volume to collapse by 60-70%, revealing the protocol's lack of genuine product-market fit.
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h3 class="font-display text-3xl text-off-white mb-6">Valuation Disconnect</h3>
+                                    <div class="prose prose-invert max-w-none">
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg">
+                                            Despite these headwinds, MYX trades at a Fully Diluted Valuation (FDV) to Revenue ratio of 85x. The sector average for mature perp DEXs is closer to 25x. This implies that MYX is overvalued by a factor of 3 relative to its peers, even before accounting for the upcoming supply shock.
+                                        </p>
+                                        <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
+                                            The market is effectively pricing MYX as a high-growth tech stock, while its fundamentals resemble a declining utility. This mispricing presents a high-conviction short opportunity with a clear catalyst (the unlock) and a fundamental backstop (valuation compression).
+                                        </p>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <!-- Sidebar Info -->
+                            <div class="lg:col-span-4 space-y-8">
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Key Catalysts</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">01</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">January 15th Token Unlock (~15M tokens)</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">02</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">End of current trading incentive program</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">03</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Competitor Hyperliquid launching mainnet</p>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Risk Factors</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Short squeeze risk on major partnership news</p>
+                                        </li>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Potential for team to delay unlock (low probability)</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `
@@ -3837,10 +4442,22 @@
             }
         }
 
+        let cryptoDashboardInterval = null;
+
+        /* 
+        // Old mock data function replaced by crypto-data.js
+        function initCryptoDashboard() {
+             // ... removed ...
+        }
+        */
+
         function openModal(id, type = 'project') {
             let data;
             const content = modal.querySelector('.modal-content');
             const closeBtnIcon = document.querySelector('#close-modal i');
+            
+            // Add glassmorphism to modal background
+            modal.classList.add('backdrop-blur-md', 'bg-black/80');
             
             // Preload portfolio widgets if opening point72
             if (id === 'point72') {
@@ -3939,6 +4556,31 @@
                         <div class="flex flex-wrap gap-2 mb-8">
                             ${data.tags.map(tag => `<span class="px-3 py-1 bg-off-white/10 text-xs font-mono uppercase text-neutral-300 tracking-widest">${tag}</span>`).join('')}
                         </div>
+                        
+                        ${data.contract ? `
+                        <div class="flex flex-wrap items-center gap-6 mb-8 pt-6 border-t border-white/5">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Contract</span>
+                                <div class="flex items-center gap-2 bg-off-white/5 px-3 py-1.5 rounded border border-white/10 group hover:border-white/30 transition-colors cursor-pointer" onclick="navigator.clipboard.writeText('${data.contract}'); this.querySelector('span').textContent = 'COPIED!'; setTimeout(() => this.querySelector('span').textContent = '${data.contract.slice(0,6)}...${data.contract.slice(-4)}', 2000);">
+                                    <span class="font-mono text-xs text-neutral-300">${data.contract.slice(0,6)}...${data.contract.slice(-4)}</span>
+                                    <i data-lucide="copy" class="w-3 h-3 text-neutral-500 group-hover:text-off-white transition-colors"></i>
+                                </div>
+                            </div>
+                            ${data.links ? `
+                            <div class="flex items-center gap-4">
+                                <a href="${data.links.website}" target="_blank" class="flex items-center gap-2 text-neutral-400 hover:text-off-white transition-colors">
+                                    <i data-lucide="globe" class="w-4 h-4"></i>
+                                    <span class="text-xs font-mono uppercase tracking-wider">Website</span>
+                                </a>
+                                <a href="${data.links.x}" target="_blank" class="flex items-center gap-2 text-neutral-400 hover:text-off-white transition-colors">
+                                    <i data-lucide="twitter" class="w-4 h-4"></i>
+                                    <span class="text-xs font-mono uppercase tracking-wider">Twitter</span>
+                                </a>
+                            </div>
+                            ` : ''}
+                        </div>
+                        ` : ''}
+
                     </div>
                     <div class="modal-stagger" style="transition-delay: 0.2s">
                         <p class="font-display text-xl md:text-2xl leading-relaxed text-off-white font-light border-l-2 border-off-white/30 pl-6 mb-8 drop-cap">
@@ -3951,7 +4593,15 @@
                 `;
                 
                 if (id === 'taskformer') {
-                    setTimeout(initTaskFormerModalCanvas, 100);
+                    requestAnimationFrame(() => initTaskFormerModalCanvas());
+                }
+                
+                if (id === 'bittensor') {
+                    requestAnimationFrame(() => initCryptoDashboard());
+                }
+
+                if (['syrup', 'metadao', 'myx'].includes(id)) {
+                    requestAnimationFrame(() => window.initProjectDetail(id));
                 }
             }
 
@@ -3975,6 +4625,7 @@
 
         function closeModalFunc() {
             modal.classList.remove('active');
+            modal.classList.remove('backdrop-blur-md', 'bg-black/80'); // Clean up glass effect
             document.body.classList.remove('modal-open');
             progressBar.style.width = '0%';
             
@@ -3982,6 +4633,10 @@
             if (analysisTimerInterval) {
                 clearInterval(analysisTimerInterval);
                 analysisTimerInterval = null;
+            }
+            if (cryptoDashboardInterval) {
+                clearInterval(cryptoDashboardInterval);
+                cryptoDashboardInterval = null;
             }
             Object.keys(metricIntervals).forEach(key => {
                 clearInterval(metricIntervals[key]);
@@ -7967,5 +8622,13 @@
         initOrderBook();
 
     </script>
+    <!-- Chart Warehouse (Hidden) -->
+    <div id="chart-warehouse" style="position: absolute; top: -9999px; left: -9999px; width: 100%; height: 500px; visibility: hidden; overflow: hidden;">
+        <div id="warehouse-syrup" style="width: 100%; height: 100%;"></div>
+        <div id="warehouse-metadao" style="width: 100%; height: 100%;"></div>
+        <div id="warehouse-myx" style="width: 100%; height: 100%;"></div>
+    </div>
+
+    <script src="crypto-data.js?v=2.3"></script>
 </body>
 </html>

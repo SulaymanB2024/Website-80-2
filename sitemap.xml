@@ -6,34 +6,50 @@
     
     <!-- Homepage -->
     <url>
-        <loc>https://sulaymanbowles.com/</loc>
-        <lastmod>2025-12-08</lastmod>
+        <loc>https://sulayman-bowles.dev/</loc>
+        <lastmod>2025-12-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
     <!-- Services Section -->
     <url>
-        <loc>https://sulaymanbowles.com/#services</loc>
-        <lastmod>2025-12-08</lastmod>
+        <loc>https://sulayman-bowles.dev/#section-services</loc>
+        <lastmod>2025-12-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <!-- Work/Portfolio Section -->
     <url>
-        <loc>https://sulaymanbowles.com/#work</loc>
-        <lastmod>2025-12-08</lastmod>
+        <loc>https://sulayman-bowles.dev/#section-work</loc>
+        <lastmod>2025-12-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     
+    <!-- Writing Section -->
+    <url>
+        <loc>https://sulayman-bowles.dev/#section-writing</loc>
+        <lastmod>2025-12-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
     <!-- Contact Section -->
     <url>
-        <loc>https://sulaymanbowles.com/#contact</loc>
-        <lastmod>2025-12-08</lastmod>
+        <loc>https://sulayman-bowles.dev/#section-contact</loc>
+        <lastmod>2025-12-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
+    </url>
+
+    <!-- Resume -->
+    <url>
+        <loc>https://sulayman-bowles.dev/Sulayman_Bowles_Resume_2025.pdf</loc>
+        <lastmod>2025-12-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
     </url>
     
 </urlset>
