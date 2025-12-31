@@ -395,12 +395,6 @@ async function initProjectDetail(id) {
 // Expose init functions
 window.initCryptoDashboard = initCryptoDashboard;
 window.initProjectDetail = initProjectDetail;
-// window.saveChartToWarehouse = saveChartToWarehouse; // Removed for stability
 
-
-// Auto-initialize on load
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCryptoDashboard);
-} else {
-    initCryptoDashboard();
-}
+// Don't auto-initialize - let the main page control initialization
+// The modal will call initCryptoDashboard when needed

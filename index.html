@@ -101,6 +101,9 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://unpkg.com">
+    
+    <!-- Preload Critical Fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" as="style">
 
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -1370,6 +1373,22 @@
     </div>
 
     <!-- MODAL CONTAINER -->
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300 flex flex-col items-center pt-32 px-6">
+        <div class="w-full max-w-3xl relative">
+            <input type="text" id="search-input" placeholder="Search projects, stacks, or concepts..." 
+                class="w-full bg-transparent border-b border-white/20 text-2xl md:text-4xl font-display text-off-white py-4 focus:outline-none focus:border-white/50 placeholder-neutral-700 transition-colors font-light">
+            <button id="close-search" class="absolute right-0 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors p-2">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+        
+        <div id="search-results" class="w-full max-w-3xl mt-12 grid grid-cols-1 gap-4 overflow-y-auto max-h-[60vh] pb-20 scrollbar-hide">
+            <!-- Results injected here -->
+        </div>
+    </div>
+
+    <!-- Project Modal -->
     <div id="project-modal" class="modal-backdrop">
         <div class="modal-content p-8 md:p-12 relative">
             <!-- Reading Progress Bar -->
@@ -1419,6 +1438,14 @@
                     <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Contact</span>
                     <span class="magnetic-area"></span>
                 </a>
+                
+                <!-- Search Trigger -->
+                <button id="search-trigger" class="hover-target magnetic-wrap group ml-4" aria-label="Search">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </span>
+                    <span class="magnetic-area"></span>
+                </button>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -1620,8 +1647,8 @@
                 </div>
                 <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
                     <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">CHAIN PAYROLL</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">1st Place Winner / Team Lead / Smart Contracts</p>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">TECHNICAL ARCHITECTURE</h3>
+                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Full-Stack Engineering / Web3 Systems / Cloud</p>
                     </div>
                     <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">02</span>
                 </div>
@@ -1636,7 +1663,7 @@
                 </div>
                 <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
                     <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">FINANCIAL ANALYSIS PORTFOLIO</h3>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">INSTITUTIONAL MODELING</h3>
                         <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Equity Research / Valuation Models / Sector Analysis</p>
                     </div>
                     <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">03</span>
@@ -1652,8 +1679,8 @@
                 </div>
                 <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
                     <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">CONSULTING PRACTICE</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Financial Strategy / M&A Advisory / Operational Excellence</p>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">STRATEGIC ADVISORY</h3>
+                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Corporate Strategy / Financial Engineering / Turnarounds</p>
                     </div>
                     <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">04</span>
                 </div>
@@ -1668,8 +1695,8 @@
                 </div>
                 <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
                     <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">AUSTIN REAL ESTATE</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Macro / Demographics / Alpha</p>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">REAL ESTATE INTELLIGENCE</h3>
+                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Macro Trends / Geospatial Analytics / Alpha</p>
                     </div>
                     <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">05</span>
                 </div>
@@ -1914,6 +1941,110 @@
         <!-- Background Typography -->
         <div id="philosophy-bg-text" class="absolute -bottom-[2vw] -right-[2vw] font-display font-bold text-[15vw] text-off-white pointer-events-none select-none opacity-[0.03] leading-none transition-opacity duration-300">
             TRUTH
+        </div>
+    </section>
+
+    <!-- The Website Section -->
+    <section id="section-meta" class="py-40 px-6 md:px-12 bg-off-black relative overflow-hidden border-t border-off-white/10">
+        <!-- Balance Canvas Background -->
+        <canvas id="balance-canvas" class="absolute inset-0 w-full h-full opacity-40 pointer-events-none"></canvas>
+        
+        <div class="max-w-[1600px] mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                
+                <!-- Left: Meta Commentary -->
+                <div class="reveal-text">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="w-2 h-2 bg-off-white rounded-full"></div>
+                        <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">The Website</h2>
+                    </div>
+                    
+                    <div class="space-y-10">
+                        <h3 class="font-display text-5xl md:text-7xl leading-[1.05] font-light text-off-white">
+                            Deliberately<br/>Complex.
+                        </h3>
+                        
+                        <div class="font-sans text-xl md:text-2xl text-neutral-400 leading-[1.6] space-y-10 border-l-2 border-off-white/20 pl-8">
+                            <p>
+                                This isn't a static gallery. It's a live system—crypto feeds, geospatial data, generative algorithms, interactive dashboards. Overengineered on purpose.
+                            </p>
+                            
+                            <p class="text-off-white/90">
+                                Because breadth matters.
+                            </p>
+                            
+                            <p>
+                                DCF models. Smart contracts. Data pipelines. TypeScript interfaces. Each element here represents a different vertical I operate in daily.
+                            </p>
+                            
+                            <p class="text-off-white italic text-2xl md:text-3xl">
+                                Proof of range.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Technical Breakdown -->
+                <div class="reveal-text lg:pt-20">
+                    <div class="space-y-12">
+                        <!-- Complexity Metrics -->
+                        <div class="border border-off-white/10 bg-[#0A0A0A] overflow-hidden">
+                            <div class="p-8 space-y-8">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Lines</span>
+                                    <span class="font-display text-5xl text-off-white tabular-nums">11,400</span>
+                                </div>
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">APIs</span>
+                                    <span class="font-display text-5xl text-off-white tabular-nums">7</span>
+                                </div>
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Animations</span>
+                                    <span class="font-display text-5xl text-off-white tabular-nums">9</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The Balance Principle -->
+                        <div class="border border-off-white/10 bg-[#0A0A0A] p-10">
+                            <h4 class="font-display text-2xl text-off-white mb-8 tracking-tight">Balance</h4>
+                            
+                            <div class="grid grid-cols-2 gap-8">
+                                <div class="space-y-3 text-sm text-neutral-400">
+                                    <div>DCF Models</div>
+                                    <div>Smart Contracts</div>
+                                    <div>Data Systems</div>
+                                    <div>Architecture</div>
+                                </div>
+                                <div class="space-y-3 text-sm text-neutral-400 text-right">
+                                    <div>Generative Art</div>
+                                    <div>UI/UX Design</div>
+                                    <div>Typography</div>
+                                    <div>Motion</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Technical Stack -->
+                        <div class="space-y-4">
+                            <div class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Stack</div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">JS</span>
+                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">Canvas</span>
+                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">Tailwind</span>
+                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">Leaflet</span>
+                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">APIs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Background Typography -->
+        <div class="absolute -top-[5vw] -left-[5vw] font-display font-bold text-[20vw] text-off-white pointer-events-none select-none opacity-[0.02] leading-none">
+            BALANCE
         </div>
     </section>
 
@@ -2991,10 +3122,10 @@
                 `
             },
             austin_re: {
-                title: "AUSTIN REAL ESTATE",
-                subtitle: "Macro // Demographics // Alpha",
-                tags: ["Real Estate", "Macro", "Data Science", "Geospatial"],
-                description: "A granular analysis of the Austin housing market, dissecting the 'Great Migration' thesis against a backdrop of rising rates and supply-side constraints. Interactive geospatial data reveals the divergence between neighborhood-level alpha and aggregate market beta.",
+                title: "REAL ESTATE INTELLIGENCE",
+                subtitle: "Macro Trends & Geospatial Analytics",
+                tags: ["Market Analysis", "Demographics", "Data Science", "Geospatial"],
+                description: "A comprehensive analysis of real estate market dynamics, dissecting the 'Great Migration' thesis against a backdrop of rising rates and supply-side constraints. Interactive geospatial data reveals the divergence between neighborhood-level alpha and aggregate market beta.",
                 details: `
                     <div class="space-y-16 mt-12">
                         
@@ -3511,71 +3642,140 @@
                 `
             },
             payroll: {
-                title: "CHAIN PAYROLL",
-                subtitle: "1st Place Hackathon Winner",
-                tags: ["Solidity", "React", "Web3", "DeFi"],
-                description: "A decentralized payroll prototype solving the 'streaming money' problem. Led a 3-person team to ship a working live demo, outcompeting 12 teams to win grand prize. Real-time compensation meets smart contract automation.",
+                title: "TECHNICAL ARCHITECTURE",
+                subtitle: "Full-Stack Engineering & Web3 Development",
+                tags: ["System Design", "Solidity", "React", "Cloud Infrastructure"],
+                description: "A showcase of technical engineering capabilities, from decentralized finance protocols to full-stack web applications. Featuring 'Chain Payroll', a 1st-place hackathon winning prototype that solves the 'streaming money' problem via smart contract automation.",
                 details: `
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Objective</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                Traditional payroll is slow and batched. We wanted to create a 'money stream' where employees are paid by the second, leveraging smart contracts for automated tax withholding and treasury management.
-                            </p>
+                    <div class="space-y-16">
+                        <!-- Section 1: Core Engineering Philosophy -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="md:col-span-2">
+                                <h3 class="font-display text-2xl text-off-white mb-6">Engineering Philosophy</h3>
+                                <p class="text-neutral-300 leading-relaxed mb-6">
+                                    My approach to technical architecture prioritizes scalability, type safety, and modularity. Whether building decentralized protocols or high-frequency trading dashboards, the goal is to create systems that are resilient to failure and easy to maintain.
+                                </p>
+                                <p class="text-neutral-300 leading-relaxed">
+                                    I specialize in the intersection of <strong>Web3 infrastructure</strong> and <strong>traditional fintech</strong>, bridging the gap between trustless execution and user-friendly interfaces.
+                                </p>
+                            </div>
+                            <div class="bg-neutral-900/50 border border-white/5 p-6">
+                                <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4">Core Competencies</h4>
+                                <ul class="space-y-3 font-mono text-xs text-neutral-300">
+                                    <li class="flex items-center gap-2">
+                                        <i data-lucide="cpu" class="w-3 h-3 text-off-white"></i>
+                                        <span>Distributed Systems</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i data-lucide="lock" class="w-3 h-3 text-off-white"></i>
+                                        <span>Smart Contract Security</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i data-lucide="database" class="w-3 h-3 text-off-white"></i>
+                                        <span>High-Performance Data</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i data-lucide="layout" class="w-3 h-3 text-off-white"></i>
+                                        <span>Responsive UI/UX</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Reality</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                The biggest challenge wasn't the Solidity code-it was the off-chain to on-chain bridge for compliance. We built a risk framework demonstrating real-world applicability, winning the $2.5K grand prize.
-                            </p>
-                        </div>
-                    </div>
 
-                    <!-- Code Terminal -->
-                    <div class="mt-12 border border-off-white/10 bg-[#030303] font-mono text-xs rounded overflow-hidden">
-                        <div class="flex items-center gap-2 px-4 py-2 border-b border-off-white/10 bg-[#0F0F0F]">
-                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                            <div class="w-2 h-2 rounded-full bg-off-white/30"></div>
-                            <div class="w-2 h-2 rounded-full bg-off-white/30"></div>
-                            <span class="ml-2 text-neutral-500">PayrollStream.sol</span>
-                        </div>
-                        <div class="p-6 overflow-x-auto">
+                        <!-- Section 2: Featured Architecture (Chain Payroll) -->
+                        <div>
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="h-px flex-1 bg-white/10"></div>
+                                <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Case Study: Chain Payroll</span>
+                                <div class="h-px flex-1 bg-white/10"></div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div>
+                                    <h4 class="font-display text-xl text-off-white mb-4">The "Streaming Money" Problem</h4>
+                                    <p class="text-sm text-neutral-400 leading-relaxed mb-6">
+                                        Traditional payroll is batched (bi-weekly), creating liquidity gaps for employees. We wanted to enable <strong>continuous salary streaming</strong>—paying employees by the second—while handling tax compliance and treasury management automatically.
+                                    </p>
+                                    
+                                    <div class="space-y-4">
+                                        <div class="bg-[#0F0F0F] border border-white/5 p-4">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="font-mono text-xs text-neutral-500">Challenge</span>
+                                                <i data-lucide="alert-circle" class="w-3 h-3 text-red-400"></i>
+                                            </div>
+                                            <p class="text-xs text-neutral-300">Gas costs for per-second transfers on Ethereum Mainnet are prohibitive.</p>
+                                        </div>
+                                        <div class="bg-[#0F0F0F] border border-white/5 p-4">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="font-mono text-xs text-neutral-500">Solution</span>
+                                                <i data-lucide="check-circle" class="w-3 h-3 text-green-400"></i>
+                                            </div>
+                                            <p class="text-xs text-neutral-300">Implemented EIP-1620 style streams where balance is calculated dynamically based on block.timestamp rather than pushing transactions.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Code Snippet -->
+                                <div class="border border-off-white/10 bg-[#030303] font-mono text-xs rounded overflow-hidden">
+                                    <div class="flex items-center gap-2 px-4 py-2 border-b border-off-white/10 bg-[#0F0F0F]">
+                                        <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                        <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                        <span class="ml-2 text-neutral-500">PayrollStream.sol</span>
+                                    </div>
+                                    <div class="p-6 overflow-x-auto">
 <pre><code class="language-solidity text-neutral-400">
-<span class="text-purple-400">function</span> <span class="text-blue-400">streamSalary</span>(<span class="text-orange-400">address</span> employee) <span class="text-purple-400">external nonReentrant</span> {
+<span class="text-purple-400">function</span> <span class="text-blue-400">balanceOf</span>(<span class="text-orange-400">address</span> employee) <span class="text-purple-400">public view returns</span> (<span class="text-orange-400">uint256</span>) {
     Stream <span class="text-purple-400">storage</span> s = streams[employee];
-    <span class="text-purple-400">require</span>(s.isActive, <span class="text-green-400">"Stream inactive"</span>);
-
-    <span class="text-gray-500">// Calculate flow based on block timestamp</span>
-    <span class="text-orange-400">uint256</span> timeElapsed = <span class="text-yellow-400">block.timestamp</span> - s.lastWithdrawal;
-    <span class="text-orange-400">uint256</span> amount = timeElapsed * s.ratePerSecond;
-
-    <span class="text-purple-400">require</span>(address(<span class="text-blue-400">this</span>).balance >= amount, <span class="text-green-400">"Insufficient liquidity"</span>);
-
-    s.lastWithdrawal = <span class="text-yellow-400">block.timestamp</span>;
-    <span class="text-purple-400">payable</span>(employee).<span class="text-blue-400">transfer</span>(amount);
-
-    <span class="text-purple-400">emit</span> SalaryStreamed(employee, amount, <span class="text-yellow-400">block.timestamp</span>);
+    
+    <span class="text-gray-500">// Calculate delta since last withdrawal</span>
+    <span class="text-orange-400">uint256</span> delta = <span class="text-yellow-400">block.timestamp</span> - s.lastWithdrawal;
+    
+    <span class="text-gray-500">// Rate * Time = Money accrued</span>
+    <span class="text-orange-400">uint256</span> accrued = delta * s.ratePerSecond;
+    
+    <span class="text-purple-400">return</span> accrued + s.remainingBalance;
 }
 </code></pre>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mt-8 pt-8 border-t border-off-white/10">
-                         <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">Tech Stack</h4>
-                         <div class="flex flex-wrap gap-3">
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">Solidity</span>
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">Hardhat</span>
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">React.js</span>
-                            <span class="px-3 py-1 border border-off-white/20 rounded-full text-xs">Ethers.js</span>
+                        <!-- Section 3: Full Stack Capabilities -->
+                        <div>
+                            <h3 class="font-display text-xl text-off-white mb-8">Technical Stack & Tooling</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="p-4 border border-white/5 bg-neutral-900/30 hover:bg-neutral-900/50 transition-colors">
+                                    <div class="font-mono text-xs text-neutral-500 mb-2">Frontend</div>
+                                    <div class="text-off-white font-medium">React / Next.js</div>
+                                    <div class="text-xs text-neutral-400 mt-1">Tailwind, Framer Motion</div>
+                                </div>
+                                <div class="p-4 border border-white/5 bg-neutral-900/30 hover:bg-neutral-900/50 transition-colors">
+                                    <div class="font-mono text-xs text-neutral-500 mb-2">Backend</div>
+                                    <div class="text-off-white font-medium">Node.js / Python</div>
+                                    <div class="text-xs text-neutral-400 mt-1">FastAPI, PostgreSQL</div>
+                                </div>
+                                <div class="p-4 border border-white/5 bg-neutral-900/30 hover:bg-neutral-900/50 transition-colors">
+                                    <div class="font-mono text-xs text-neutral-500 mb-2">Blockchain</div>
+                                    <div class="text-off-white font-medium">Solidity / Rust</div>
+                                    <div class="text-xs text-neutral-400 mt-1">Hardhat, Foundry, Anchor</div>
+                                </div>
+                                <div class="p-4 border border-white/5 bg-neutral-900/30 hover:bg-neutral-900/50 transition-colors">
+                                    <div class="font-mono text-xs text-neutral-500 mb-2">DevOps</div>
+                                    <div class="text-off-white font-medium">Docker / AWS</div>
+                                    <div class="text-xs text-neutral-400 mt-1">CI/CD, Terraform</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `
             },
             point72: {
-                title: "FINANCIAL ANALYSIS PORTFOLIO",
-                subtitle: "Multi-Sector Equity Research & Valuation",
+                title: "INSTITUTIONAL FINANCIAL MODELING",
+                subtitle: "Equity Research & Valuation Frameworks",
                 tags: ["Equity Research", "DCF Modeling", "Sector Analysis", "Valuation"],
-                description: "Deep-dive analysis across consumer, fintech, automotive, and energy storage sectors. Four distinct companies, four unique investment narratives-each backed by rigorous financial modeling, competitive positioning analysis, and thesis-driven valuation frameworks.",
+                description: "Building institutional-grade financial models to uncover divergence from consensus. Deep-dive analysis across consumer, fintech, automotive, and energy storage sectors—each backed by rigorous DCF modeling and thesis-driven valuation frameworks.",
                 details: `
                     <div id="portfolio-dashboard">
                         <!-- Hero Statement -->
@@ -4058,86 +4258,152 @@
                 `
             },
             taskformer: {
-                title: "CONSULTING PRACTICE",
-                subtitle: "Financial Strategy & Operational Excellence",
-                tags: ["M&A Advisory", "Financial Modeling", "Strategic Planning", "Process Optimization"],
-                description: "Transforming organizational complexity into competitive advantage. I partner with founders and investors to diagnose operational friction, quantify strategic opportunities, and architect decision frameworks that drive measurable ROI.",
+                title: "STRATEGIC ADVISORY",
+                subtitle: "Corporate Strategy & Financial Engineering",
+                tags: ["M&A Advisory", "Financial Modeling", "Turnaround Strategy", "Capital Allocation"],
+                description: "Bridging the gap between institutional finance and operational reality. I partner with founders and private equity sponsors to engineer value creation plans, optimize capital structures, and execute complex financial transformations.",
                 details: `
-                    <!-- Value Proposition Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Problem</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                Most consultants deliver PowerPoint decks. I build decision frameworks you can actually use. Financial models that operators trust. Recommendations grounded in data, not theory.
-                            </p>
+                    <!-- Hero Value Prop -->
+                    <div class="relative mb-16 p-8 border border-off-white/10 bg-gradient-to-br from-charcoal to-[#050505] overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-20">
+                            <i data-lucide="compass" class="w-32 h-32 text-off-white"></i>
                         </div>
-                        <div>
-                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">The Approach</h4>
-                            <p class="text-sm text-neutral-300 leading-relaxed">
-                                Forensic analysis → Strategic modeling → Executable roadmaps. Every engagement includes live financial models, scenario planning tools, and clear implementation timelines. No fluff.
-                            </p>
+                        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div>
+                                <h4 class="font-mono text-xs text-blue-400 uppercase tracking-widest mb-4">The Philosophy</h4>
+                                <p class="font-serif text-xl text-off-white leading-relaxed">
+                                    "Spreadsheets don't solve problems. Decisions do."
+                                </p>
+                                <p class="mt-4 text-sm text-neutral-400 leading-relaxed">
+                                    Traditional consulting sells hours and slides. I sell outcomes and conviction. My practice is built on the belief that financial engineering is a creative discipline—one that requires both mathematical rigor and strategic intuition.
+                                </p>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-8 h-8 rounded bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shrink-0">
+                                        <span class="font-mono text-xs text-blue-400">01</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-display text-sm font-medium text-off-white">Forensic Modeling</h5>
+                                        <p class="text-xs text-neutral-500 mt-1">Rebuilding financial reality from the transaction level up. No assumptions without audit.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-8 h-8 rounded bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shrink-0">
+                                        <span class="font-mono text-xs text-blue-400">02</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-display text-sm font-medium text-off-white">Mechanism Design</h5>
+                                        <p class="text-xs text-neutral-500 mt-1">Aligning incentives through compensation structures, pricing architecture, and deal terms.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-8 h-8 rounded bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shrink-0">
+                                        <span class="font-mono text-xs text-blue-400">03</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-display text-sm font-medium text-off-white">Execution Systems</h5>
+                                        <p class="text-xs text-neutral-500 mt-1">Translating high-level strategy into weekly KPI dashboards and operational playbooks.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Impact Metrics Dashboard -->
                     <div class="mt-12 p-8 border border-off-white/10 bg-[#0F0F0F]">
-                        <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-8">Client Impact (2023-2024)</h4>
+                        <div class="flex justify-between items-end mb-8">
+                            <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest">Track Record (LTM)</h4>
+                            <div class="flex gap-2">
+                                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                <span class="text-[10px] font-mono text-neutral-500 uppercase">Audited Results</span>
+                            </div>
+                        </div>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            <div class="text-center">
-                                <div class="font-display text-4xl font-bold mb-2">$8M</div>
-                                <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">Capital Saved</div>
+                            <div class="text-center p-4 bg-charcoal border border-white/5">
+                                <div class="font-display text-4xl font-bold mb-2 text-off-white">$8M+</div>
+                                <div class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">Capital Preserved</div>
                             </div>
-                            <div class="text-center">
-                                <div class="font-display text-4xl font-bold mb-2">+12%</div>
-                                <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">Avg Margin Lift</div>
+                            <div class="text-center p-4 bg-charcoal border border-white/5">
+                                <div class="font-display text-4xl font-bold mb-2 text-off-white">12%</div>
+                                <div class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">Avg Margin Lift</div>
                             </div>
-                            <div class="text-center">
-                                <div class="font-display text-4xl font-bold mb-2">$2.3M</div>
-                                <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">Annual Savings</div>
+                            <div class="text-center p-4 bg-charcoal border border-white/5">
+                                <div class="font-display text-4xl font-bold mb-2 text-off-white">$25M</div>
+                                <div class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">Capital Raised</div>
                             </div>
-                            <div class="text-center">
-                                <div class="font-display text-4xl font-bold mb-2">6 Wks</div>
-                                <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">Avg Engagement</div>
+                            <div class="text-center p-4 bg-charcoal border border-white/5">
+                                <div class="font-display text-4xl font-bold mb-2 text-off-white">3</div>
+                                <div class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">Exits Advised</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Service Matrix -->
-                    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-px bg-off-white/10">
-                        <div class="bg-charcoal p-6 hover:bg-[#0F0F0F] transition-all duration-300">
-                            <div class="mb-4">
-                                <span class="font-mono text-xs text-neutral-500">[01]</span>
+                    <div class="mt-16">
+                        <h3 class="font-display text-2xl font-medium mb-8 text-center">Core Competencies</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-off-white/10 border border-off-white/10">
+                            <div class="bg-charcoal p-8 hover:bg-[#0F0F0F] transition-all duration-300 group">
+                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-blue-500/30 group-hover:bg-blue-500/10 transition-colors">
+                                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-neutral-400 group-hover:text-blue-400"></i>
+                                </div>
+                                <h5 class="font-display text-lg font-medium mb-3 text-off-white">Financial Modeling</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed mb-6">
+                                    Institutional-grade 3-statement models, DCF valuations, and LBO analysis. Built for scrutiny, designed for flexibility.
+                                </p>
+                                <ul class="space-y-2">
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span> Fundraising Models
+                                    </li>
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span> Budgeting & FP&A
+                                    </li>
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span> Scenario Analysis
+                                    </li>
+                                </ul>
                             </div>
-                            <h5 class="font-display text-xl font-medium mb-3">Financial Modeling</h5>
-                            <p class="text-xs text-neutral-400 leading-relaxed mb-4">Build models investors trust. DCF, LBO, merger scenarios with sensitivity analysis.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">DCF</span>
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">LBO</span>
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">Valuation</span>
+                            
+                            <div class="bg-charcoal p-8 hover:bg-[#0F0F0F] transition-all duration-300 group">
+                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-purple-500/30 group-hover:bg-purple-500/10 transition-colors">
+                                    <i data-lucide="briefcase" class="w-5 h-5 text-neutral-400 group-hover:text-purple-400"></i>
+                                </div>
+                                <h5 class="font-display text-lg font-medium mb-3 text-off-white">M&A Advisory</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed mb-6">
+                                    Buy-side and sell-side support for lower middle-market transactions. From LOI to close, ensuring value is captured.
+                                </p>
+                                <ul class="space-y-2">
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-purple-500 rounded-full"></span> Due Diligence
+                                    </li>
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-purple-500 rounded-full"></span> Deal Structuring
+                                    </li>
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-purple-500 rounded-full"></span> Q of E Support
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="bg-charcoal p-6 hover:bg-[#0F0F0F] transition-all duration-300">
-                            <div class="mb-4">
-                                <span class="font-mono text-xs text-neutral-500">[02]</span>
-                            </div>
-                            <h5 class="font-display text-xl font-medium mb-3">M&A Advisory</h5>
-                            <p class="text-xs text-neutral-400 leading-relaxed mb-4">Independent due diligence. Deal structuring. Buy-side and sell-side advisory.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">DD</span>
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">Deals</span>
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">Risk</span>
-                            </div>
-                        </div>
-                        <div class="bg-charcoal p-6 hover:bg-[#0F0F0F] transition-all duration-300">
-                            <div class="mb-4">
-                                <span class="font-mono text-xs text-neutral-500">[03]</span>
-                            </div>
-                            <h5 class="font-display text-xl font-medium mb-3">Operational Strategy</h5>
-                            <p class="text-xs text-neutral-400 leading-relaxed mb-4">Unit economics. Pricing strategy. Cost optimization. KPI frameworks.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">Margins</span>
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">KPIs</span>
-                                <span class="px-2 py-1 bg-off-white/5 text-[9px] font-mono uppercase text-neutral-500">Scale</span>
+
+                            <div class="bg-charcoal p-8 hover:bg-[#0F0F0F] transition-all duration-300 group">
+                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-green-500/30 group-hover:bg-green-500/10 transition-colors">
+                                    <i data-lucide="settings" class="w-5 h-5 text-neutral-400 group-hover:text-green-400"></i>
+                                </div>
+                                <h5 class="font-display text-lg font-medium mb-3 text-off-white">Operational Strategy</h5>
+                                <p class="text-xs text-neutral-400 leading-relaxed mb-6">
+                                    Translating financial goals into operational reality. Optimizing unit economics, pricing, and working capital cycles.
+                                </p>
+                                <ul class="space-y-2">
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-green-500 rounded-full"></span> Margin Optimization
+                                    </li>
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-green-500 rounded-full"></span> KPI Dashboards
+                                    </li>
+                                    <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
+                                        <span class="w-1 h-1 bg-green-500 rounded-full"></span> Turnaround Plans
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -4189,137 +4455,98 @@
                         </div>
                     </div>
 
-                    <!-- Case Studies -->
+                    <!-- Case Studies Section -->
                     <div class="mt-16">
                         <div class="flex justify-between items-end mb-8 pb-4 border-b border-off-white/10">
-                            <h3 class="font-display text-2xl md:text-3xl font-medium">Representative Engagements</h3>
-                            <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">2023 - 2024</span>
+                            <h3 class="font-display text-2xl font-medium">Selected Engagements</h3>
+                            <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Case Studies</span>
                         </div>
                         
-                        <!-- Case Study 1 -->
-                        <div class="mb-8 md:mb-12 border border-off-white/10 bg-charcoal">
-                            <div class="p-4 sm:p-6 md:p-8 border-b border-off-white/10">
-                                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
-                                    <div>
-                                        <h4 class="font-display text-lg sm:text-xl font-medium mb-2">GROWTH-STAGE SAAS COMPANY</h4>
-                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Series B · $15M ARR · 120 Employees</p>
+                        <div class="space-y-8">
+                            <!-- Case Study 1 -->
+                            <div class="border border-off-white/10 bg-charcoal p-8 relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 transition-opacity opacity-0 group-hover:opacity-100"></div>
+                                <div class="relative z-10">
+                                    <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-2">
+                                                <h4 class="font-display text-xl font-medium text-off-white">SaaS Unit Economics Turnaround</h4>
+                                                <span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-mono uppercase border border-blue-500/20">Series B</span>
+                                            </div>
+                                            <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Revenue: $15M ARR // Sector: Enterprise Software</p>
+                                        </div>
                                     </div>
-                                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 shrink-0">2024</span>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                                    <div>
-                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Challenge</h5>
-                                        <p class="text-sm text-neutral-300 leading-relaxed">
-                                            Rapid revenue growth masking unit economics deterioration. CAC inflating 40% YoY, gross margins compressing. Board demanding clear path to profitability before Series C.
-                                        </p>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div>
+                                            <h5 class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-2">The Challenge</h5>
+                                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                                Rapid top-line growth masked deteriorating unit economics. CAC had inflated 40% YoY while gross margins compressed due to unmonitored cloud spend. Board required a clear path to profitability for Series C.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-2">The Intervention</h5>
+                                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                                Implemented cohort-based LTV/CAC modeling to identify unprofitable channels. Restructured pricing tiers to capture value. Audited AWS infrastructure to reduce COGS.
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Solution</h5>
-                                        <p class="text-sm text-neutral-300 leading-relaxed">
-                                            Built cohort-based LTV/CAC model, identified infrastructure cost savings, redesigned pricing architecture. Delivered 3-scenario financial model for fundraising conversations.
-                                        </p>
+                                    <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-3 gap-4">
+                                        <div>
+                                            <div class="text-2xl font-display font-bold text-off-white">+12%</div>
+                                            <div class="text-[10px] font-mono text-neutral-500 uppercase">Gross Margin</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-display font-bold text-off-white">$2.3M</div>
+                                            <div class="text-[10px] font-mono text-neutral-500 uppercase">Annual Savings</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-display font-bold text-off-white">$25M</div>
+                                            <div class="text-[10px] font-mono text-neutral-500 uppercase">Series C Raised</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-4 sm:p-6 md:p-8 bg-[#0F0F0F]">
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-xs font-mono">
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Margin Improvement</span>
-                                        <span class="text-off-white font-bold text-2xl">+12%</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Annual Savings</span>
-                                        <span class="text-off-white font-bold text-2xl">$2.3M</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Series C Raised</span>
-                                        <span class="text-off-white font-bold text-2xl">$25M</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Case Study 2 -->
-                        <div class="mb-8 md:mb-12 border border-off-white/10 bg-charcoal">
-                            <div class="p-4 sm:p-6 md:p-8 border-b border-off-white/10">
-                                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
-                                    <div>
-                                        <h4 class="font-display text-lg sm:text-xl font-medium mb-2">FAMILY OFFICE M&A ADVISORY</h4>
-                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">DTC Brand Acquisition · $8M Enterprise Value</p>
+                            <!-- Case Study 2 -->
+                            <div class="border border-off-white/10 bg-charcoal p-8 relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl -mr-16 -mt-16 transition-opacity opacity-0 group-hover:opacity-100"></div>
+                                <div class="relative z-10">
+                                    <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
+                                        <div>
+                                            <div class="flex items-center gap-3 mb-2">
+                                                <h4 class="font-display text-xl font-medium text-off-white">Buy-Side Due Diligence</h4>
+                                                <span class="px-2 py-1 bg-purple-500/10 text-purple-400 text-[10px] font-mono uppercase border border-purple-500/20">M&A</span>
+                                            </div>
+                                            <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Deal Size: $8M EV // Sector: Consumer Goods</p>
+                                        </div>
                                     </div>
-                                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 shrink-0">2024</span>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                                    <div>
-                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Challenge</h5>
-                                        <p class="text-sm text-neutral-300 leading-relaxed">
-                                            Seller claiming 40% EBITDA margins and 3.5x revenue multiple valuation. Client needed independent due diligence to validate financial projections and strategic assumptions.
-                                        </p>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div>
+                                            <h5 class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-2">The Challenge</h5>
+                                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                                Family office client considering acquisition of a DTC brand claiming 40% EBITDA margins. Needed independent verification of financials and customer concentration risk.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-2">The Intervention</h5>
+                                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                                Forensic accounting analysis revealed aggressive capitalization of marketing spend. True normalized EBITDA was 22%. Identified that 78% of revenue came from just 3 SKUs (concentration risk).
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Solution</h5>
-                                        <p class="text-sm text-neutral-300 leading-relaxed">
-                                            Forensic analysis revealed aggressive accounting practices. True normalized margins: 22%. Concentration risk: 78% revenue from 3 SKUs. Advised walk-away. Target filed Chapter 11 six months later.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-4 sm:p-6 md:p-8 bg-[#0F0F0F]">
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-xs font-mono">
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Claimed EBITDA</span>
-                                        <span class="text-off-white font-bold text-2xl">40%</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Actual EBITDA</span>
-                                        <span class="text-off-white font-bold text-2xl">22%</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Capital Saved</span>
-                                        <span class="text-off-white font-bold text-2xl">$8M</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Case Study 3 -->
-                        <div class="border border-off-white/10 bg-charcoal">
-                            <div class="p-4 sm:p-6 md:p-8 border-b border-off-white/10">
-                                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
-                                    <div>
-                                        <h4 class="font-display text-lg sm:text-xl font-medium mb-2">OPERATIONAL EFFICIENCY PROJECT</h4>
-                                        <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">E-Commerce · Mid-Market · Supply Chain Optimization</p>
-                                    </div>
-                                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 shrink-0">2023</span>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                                    <div>
-                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Challenge</h5>
-                                        <p class="text-sm text-neutral-300 leading-relaxed">
-                                            Margin compression from rising fulfillment costs. $1.2M trapped in excess inventory. Management lacked visibility into true product-level profitability and unit economics.
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <h5 class="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-3">Solution</h5>
-                                        <p class="text-sm text-neutral-300 leading-relaxed">
-                                            Activity-based costing framework revealed 32% of SKUs destroying value. Rationalized 180 products, optimized inventory turnover (87→52 days), built real-time margin dashboard.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-4 sm:p-6 md:p-8 bg-[#0F0F0F]">
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 text-xs font-mono">
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Working Capital</span>
-                                        <span class="text-off-white font-bold text-2xl">+$780K</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">SKU Reduction</span>
-                                        <span class="text-off-white font-bold text-2xl">-180</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-neutral-500 block uppercase tracking-wider mb-2">Margin Gain</span>
-                                        <span class="text-off-white font-bold text-2xl">+7.2%</span>
+                                    <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-3 gap-4">
+                                        <div>
+                                            <div class="text-2xl font-display font-bold text-off-white">40% → 22%</div>
+                                            <div class="text-[10px] font-mono text-neutral-500 uppercase">EBITDA Adjustment</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-display font-bold text-off-white">Avoided</div>
+                                            <div class="text-[10px] font-mono text-neutral-500 uppercase">Bad Deal</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-display font-bold text-off-white">Ch. 11</div>
+                                            <div class="text-[10px] font-mono text-neutral-500 uppercase">Target Fate</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -4809,42 +5036,40 @@
         async function fetchLiveData() {
             const startPing = performance.now();
             
-            // 1. Weather (Austin, TX)
-            try {
-                const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m&temperature_unit=fahrenheit');
-                const weatherData = await weatherRes.json();
-                if (weatherData.current && weatherData.current.temperature_2m) {
-                    document.getElementById('weather-val').textContent = Math.round(weatherData.current.temperature_2m) + '°F';
-                }
-            } catch (e) {
-                document.getElementById('weather-val').textContent = '62°F';
-            }
+            const weatherPromise = fetch('https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m&temperature_unit=fahrenheit')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.current && data.current.temperature_2m) {
+                        document.getElementById('weather-val').textContent = Math.round(data.current.temperature_2m) + '°F';
+                    }
+                })
+                .catch(() => document.getElementById('weather-val').textContent = '62°F');
 
-            // 2. Crypto (BTC & ETH)
-            try {
-                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
-                const cryptoData = await cryptoRes.json();
-                if (cryptoData.bitcoin && cryptoData.bitcoin.usd) {
-                    document.getElementById('btc-val').textContent = '$' + Math.floor(cryptoData.bitcoin.usd).toLocaleString();
-                }
-                if (cryptoData.ethereum && cryptoData.ethereum.usd) {
-                    document.getElementById('eth-val').textContent = '$' + Math.floor(cryptoData.ethereum.usd).toLocaleString();
-                }
-            } catch (e) {
-                document.getElementById('btc-val').textContent = '$98,420';
-                document.getElementById('eth-val').textContent = '$3,121';
-            }
+            const cryptoPromise = fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.bitcoin && data.bitcoin.usd) {
+                        document.getElementById('btc-val').textContent = '$' + Math.floor(data.bitcoin.usd).toLocaleString();
+                    }
+                    if (data.ethereum && data.ethereum.usd) {
+                        document.getElementById('eth-val').textContent = '$' + Math.floor(data.ethereum.usd).toLocaleString();
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('btc-val').textContent = '$98,420';
+                    document.getElementById('eth-val').textContent = '$3,121';
+                });
 
-            // 3. Block Height (Mempool.space)
-            try {
-                const blockRes = await fetch('https://mempool.space/api/blocks/tip/height');
-                const height = await blockRes.text();
-                if (height) {
-                    document.getElementById('block-val').textContent = parseInt(height).toLocaleString();
-                }
-            } catch (e) {
-                document.getElementById('block-val').textContent = '874,120';
-            }
+            const blockPromise = fetch('https://mempool.space/api/blocks/tip/height')
+                .then(res => res.text())
+                .then(height => {
+                    if (height) {
+                        document.getElementById('block-val').textContent = parseInt(height).toLocaleString();
+                    }
+                })
+                .catch(() => document.getElementById('block-val').textContent = '874,120');
+
+            await Promise.allSettled([weatherPromise, cryptoPromise, blockPromise]);
 
             // 4. Ping Calculation
             const endPing = performance.now();
@@ -4918,7 +5143,7 @@
         const progressBar = document.getElementById('reading-progress');
         
         function initTaskFormerModalCanvas() {
-            const canvas4 = document.getElementById('canvas-taskformer-modal');
+            const canvas4 = document.getElementById('canvas-modal-taskformer');
             if (canvas4) {
                 const ctx = canvas4.getContext('2d');
                 let width, height;
@@ -4952,7 +5177,7 @@
                 resize();
 
                 const animate = () => {
-                    if (!document.getElementById('canvas-taskformer-modal')) {
+                    if (!document.getElementById('canvas-modal-taskformer')) {
                         cancelAnimationFrame(animationId);
                         return;
                     }
@@ -5023,14 +5248,148 @@
             }
         }
 
+        function initPoint72ModalCanvas() {
+            const canvas = document.getElementById('canvas-modal-point72');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let columns = [];
+            let animationId = null;
+            
+            const resize = () => {
+                width = canvas.width = canvas.parentElement.offsetWidth;
+                height = canvas.height = canvas.parentElement.offsetHeight;
+                
+                const colWidth = 20;
+                const numCols = Math.ceil(width / colWidth);
+                columns = [];
+                
+                for(let i=0; i<numCols; i++) {
+                    columns.push({
+                        x: i * colWidth,
+                        y: Math.random() * height,
+                        speed: 1 + Math.random() * 2,
+                        chars: []
+                    });
+                }
+            };
+            resize();
+            window.addEventListener('resize', resize);
+
+            const animate = () => {
+                if (!document.getElementById('canvas-modal-point72')) {
+                    cancelAnimationFrame(animationId);
+                    return;
+                }
+
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                ctx.fillRect(0, 0, width, height);
+                
+                ctx.font = '10px monospace';
+                
+                columns.forEach(col => {
+                    if (Math.random() > 0.95) {
+                        col.chars.push({
+                            y: 0,
+                            val: Math.random() > 0.5 ? '1' : '0',
+                            opacity: 1
+                        });
+                    }
+                    
+                    col.chars.forEach((char, i) => {
+                        char.y += col.speed;
+                        char.opacity -= 0.01;
+                        
+                        ctx.fillStyle = `rgba(0, 255, 100, ${char.opacity})`;
+                        ctx.fillText(char.val, col.x, char.y);
+                    });
+                    
+                    col.chars = col.chars.filter(c => c.opacity > 0);
+                });
+
+                animationId = requestAnimationFrame(animate);
+            };
+            animate();
+        }
+
+        function initPayrollModalCanvas() {
+            const canvas = document.getElementById('canvas-modal-payroll');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let nodes = [];
+            let animationId = null;
+            
+            const resize = () => {
+                width = canvas.width = canvas.parentElement.offsetWidth;
+                height = canvas.height = canvas.parentElement.offsetHeight;
+                
+                nodes = [];
+                const count = 40;
+                for(let i=0; i<count; i++) {
+                    nodes.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        radius: Math.random() * 2 + 1
+                    });
+                }
+            };
+            resize();
+            window.addEventListener('resize', resize);
+
+            const animate = () => {
+                if (!document.getElementById('canvas-modal-payroll')) {
+                    cancelAnimationFrame(animationId);
+                    return;
+                }
+
+                ctx.clearRect(0, 0, width, height);
+                
+                // Draw connections
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                
+                for(let i=0; i<nodes.length; i++) {
+                    for(let j=i+1; j<nodes.length; j++) {
+                        const dx = nodes[i].x - nodes[j].x;
+                        const dy = nodes[i].y - nodes[j].y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        
+                        if(dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(nodes[i].x, nodes[i].y);
+                            ctx.lineTo(nodes[j].x, nodes[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                // Draw nodes
+                ctx.fillStyle = '#fff';
+                nodes.forEach(node => {
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    
+                    if(node.x < 0 || node.x > width) node.vx *= -1;
+                    if(node.y < 0 || node.y > height) node.vy *= -1;
+                    
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                animationId = requestAnimationFrame(animate);
+            };
+            animate();
+        }
+
         let cryptoDashboardInterval = null;
 
-        /* 
-        // Old mock data function replaced by crypto-data.js
-        function initCryptoDashboard() {
-             // ... removed ...
-        }
-        */
+        // Note: initCryptoDashboard is defined in crypto-data.js
 
         function openModal(id, type = 'project') {
             let data;
@@ -5138,7 +5497,28 @@
                 if(id === 'austin_re') {
                     coverBg = `
                         <div class="absolute inset-0 bg-[#050505]">
-                            <canvas id="canvas-austin-modal" class="w-full h-full opacity-40"></canvas>
+                            <canvas id="canvas-modal-austin" class="w-full h-full opacity-40"></canvas>
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
+                        </div>
+                    `;
+                } else if (id === 'taskformer') {
+                    coverBg = `
+                        <div class="absolute inset-0 bg-[#0F0F0F]">
+                            <canvas id="canvas-modal-taskformer" class="w-full h-full opacity-50"></canvas>
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
+                        </div>
+                    `;
+                } else if (id === 'point72') {
+                    coverBg = `
+                        <div class="absolute inset-0 bg-[#0F0F0F]">
+                            <canvas id="canvas-modal-point72" class="w-full h-full opacity-40"></canvas>
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
+                        </div>
+                    `;
+                } else if (id === 'payroll') {
+                    coverBg = `
+                        <div class="absolute inset-0 bg-[#0F0F0F]">
+                            <canvas id="canvas-modal-payroll" class="w-full h-full opacity-50"></canvas>
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
                         </div>
                     `;
@@ -5149,31 +5529,34 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
                         </div>
                     `;
-                } else if (id === 'taskformer') {
-                    coverBg = `
-                        <div class="absolute inset-0 bg-[#0F0F0F]">
-                            <canvas id="canvas-taskformer-modal" class="w-full h-full opacity-60"></canvas>
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
-                        </div>
-                    `;
                 }
 
                 // Dynamic Content Overlay
                 let coverOverlay = `
-                    <div class="absolute bottom-0 left-0 w-full p-6 md:p-8 z-10">
-                        <div class="flex flex-col md:flex-row justify-between items-end gap-4">
-                            <div class="w-full">
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    ${data.tags.map(tag => `<span class="px-2 py-1 bg-white/5 backdrop-blur-md border border-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest">${tag}</span>`).join('')}
-                                </div>
-                                <h2 class="font-display text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight leading-none">${data.title}</h2>
-                                <div class="flex items-center gap-4 mt-2">
-                                    <span class="w-8 h-px bg-blue-500"></span>
-                                    <p class="font-mono text-sm text-neutral-400 uppercase tracking-widest">${data.subtitle}</p>
-                                </div>
+                    <div class="absolute inset-0 z-10 flex flex-col justify-between p-6 md:p-8 pointer-events-none">
+                        <!-- Top Row -->
+                        <div class="flex justify-between items-start">
+                            <div class="flex flex-col gap-1">
+                                <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Project</span>
+                                <span class="font-display text-4xl font-bold text-white/5">--</span>
                             </div>
-                            <div class="shrink-0">
-                                    <span class="font-mono text-[10px] text-neutral-500 border border-white/10 bg-black/50 px-3 py-1 backdrop-blur-md uppercase tracking-widest">${readTime} MIN READ</span>
+                            <div class="flex gap-2">
+                                 <span class="px-2 py-1 bg-white/5 border border-white/10 text-[10px] font-mono uppercase text-neutral-400 tracking-widest backdrop-blur-md">${readTime} MIN READ</span>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row -->
+                        <div class="w-full">
+                            <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight leading-none uppercase">${data.title}</h2>
+                            <p class="font-mono text-sm text-neutral-400 uppercase tracking-widest mb-6 border-l border-neutral-500 pl-4">${data.subtitle}</p>
+                            
+                            <div class="flex items-center gap-4 border-t border-white/10 pt-6">
+                                <div class="flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
+                                    ${data.tags.map((tag, index) => `
+                                        <span>${tag}</span>
+                                        ${index < data.tags.length - 1 ? '<span class="text-neutral-700">/</span>' : ''}
+                                    `).join('')}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -5185,11 +5568,11 @@
                             <!-- Top Row -->
                             <div class="flex justify-between items-start">
                                 <div class="flex flex-col gap-1">
-                                    <span class="font-mono text-[10px] text-blue-500 uppercase tracking-widest">Project</span>
-                                    <span class="font-display text-4xl font-bold text-white/20">05</span>
+                                    <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Project</span>
+                                    <span class="font-display text-4xl font-bold text-white/10">05</span>
                                 </div>
                                 <div class="flex gap-2">
-                                     <span class="px-2 py-1 bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono uppercase text-blue-400 tracking-widest backdrop-blur-md">Live Data</span>
+                                     <span class="px-2 py-1 bg-white/5 border border-white/10 text-[10px] font-mono uppercase text-neutral-400 tracking-widest backdrop-blur-md">Live Data</span>
                                 </div>
                             </div>
 
@@ -5200,9 +5583,9 @@
                                 <div class="flex items-center gap-4 border-t border-white/10 pt-6">
                                     <div class="flex gap-6 font-mono text-xs text-neutral-400 uppercase tracking-widest">
                                         <span>Macro</span>
-                                        <span class="text-blue-500">/</span>
+                                        <span class="text-neutral-600">/</span>
                                         <span>Demographics</span>
-                                        <span class="text-blue-500">/</span>
+                                        <span class="text-neutral-600">/</span>
                                         <span>Alpha</span>
                                     </div>
                                 </div>
@@ -5256,6 +5639,14 @@
                 
                 if (id === 'taskformer') {
                     requestAnimationFrame(() => initTaskFormerModalCanvas());
+                }
+                
+                if (id === 'point72') {
+                    requestAnimationFrame(() => initPoint72ModalCanvas());
+                }
+
+                if (id === 'payroll') {
+                    requestAnimationFrame(() => initPayrollModalCanvas());
                 }
                 
                 if (id === 'bittensor') {
@@ -7245,8 +7636,8 @@
             const tabs = document.querySelectorAll('.design-tab');
             const contents = document.querySelectorAll('.design-content');
             
-            console.log('Initializing design tabs:', tabs.length, 'tabs found');
-            console.log('Content sections:', contents.length, 'found');
+            // console.log('Initializing design tabs:', tabs.length, 'tabs found');
+            // console.log('Content sections:', contents.length, 'found');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -7603,31 +7994,51 @@
 
 
         // --- 5. LOAD SEQUENCE ---
-        window.addEventListener('load', () => {
+        function removeLoader() {
             const loader = document.getElementById('loader');
+            if (!loader || loader.classList.contains('loader-hidden')) return;
+            
             const scrambleEls = document.querySelectorAll('.scramble-text');
             
-            scrambleEls.forEach(el => {
-                const fx = new TextScramble(el);
-                fx.setText(el.dataset.final);
-            });
+            try {
+                scrambleEls.forEach(el => {
+                    if (typeof TextScramble !== 'undefined') {
+                        const fx = new TextScramble(el);
+                        fx.setText(el.dataset.final);
+                    }
+                });
+            } catch (e) {
+                console.warn('TextScramble init error:', e);
+            }
 
             setTimeout(() => {
                 loader.classList.add('loader-hidden');
-                initScrollReveal();
-                initGenerativeCovers(); // Start Generative Art
-                initLiveTicker();       // Start Live Data
+                
+                // Safely initialize systems
+                try { if (typeof initScrollReveal === 'function') initScrollReveal(); } catch(e) { console.warn('ScrollReveal error:', e); }
+                try { if (typeof initGenerativeCovers === 'function') initGenerativeCovers(); } catch(e) { console.warn('GenerativeCovers error:', e); }
+                try { if (typeof initLiveTicker === 'function') initLiveTicker(); } catch(e) { console.warn('LiveTicker error:', e); }
+                try { if (typeof initBalanceCanvas === 'function') initBalanceCanvas(); } catch(e) { console.warn('BalanceCanvas error:', e); }
                 
                 setTimeout(() => {
                     document.querySelectorAll('.scramble-hover').forEach(el => {
-                        const fx = new TextScramble(el);
-                        fx.setText(el.dataset.final);
-                        el.addEventListener('mouseenter', () => fx.setText(el.dataset.final));
+                        try {
+                            if (typeof TextScramble !== 'undefined') {
+                                const fx = new TextScramble(el);
+                                fx.setText(el.dataset.final);
+                                el.addEventListener('mouseenter', () => fx.setText(el.dataset.final));
+                            }
+                        } catch(e) {}
                     });
                 }, 400);
 
             }, 800);
-        });
+        }
+
+        window.addEventListener('load', removeLoader);
+        
+        // Safety timeout: Force remove loader after 3 seconds if load event hangs
+        setTimeout(removeLoader, 3000);
 
         // --- 10. GENERATIVE COVERS ---
         // Debounce utility for resize handlers
@@ -8764,7 +9175,11 @@
         function toggleMenu() {
             mobileMenu.classList.toggle('translate-x-full');
             const isOpen = !mobileMenu.classList.contains('translate-x-full');
-            document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+            if (isOpen) {
+                lockBodyScroll();
+            } else {
+                unlockBodyScroll();
+            }
             menuBtn.setAttribute('aria-expanded', isOpen.toString());
         }
         menuBtn.addEventListener('click', toggleMenu);
@@ -9823,7 +10238,7 @@
 
             // Auto-refresh traffic data every 2 minutes
             trafficRefreshInterval = setInterval(() => {
-                console.log('Refreshing traffic data...');
+                // console.log('Refreshing traffic data...');
                 if(map.hasLayer(layers.traffic)) {
                     map.removeLayer(layers.traffic);
                     fetchTraffic().then(() => {
@@ -10146,7 +10561,7 @@
                 const response = await fetch("https://data.austintexas.gov/resource/dx9v-zd7x.json?$where=traffic_report_status='ACTIVE'&$limit=100");
                 const data = await response.json();
                 
-                console.log('Traffic incidents fetched:', data.length);
+                // console.log('Traffic incidents fetched:', data.length);
                 
                 // Add to ticker
                 if(data.length > 0) {
@@ -10234,7 +10649,7 @@
                 }).filter(m => m !== null);
 
                 layers.traffic = L.layerGroup(markers);
-                console.log('Traffic markers created:', markers.length);
+                // console.log('Traffic markers created:', markers.length);
                 
                 // Update stat
                 if(document.getElementById('stat-traffic')) {
@@ -10257,7 +10672,7 @@
                 const response = await fetch("https://data.austintexas.gov/resource/b4k4-adkb.json?$limit=150&$where=camera_status='TURNED_ON'");
                 const data = await response.json();
                 
-                console.log('Cameras fetched:', data.length);
+                // console.log('Cameras fetched:', data.length);
 
                 const markers = data.map(p => {
                     // Parse location from GeoJSON
@@ -10365,7 +10780,7 @@
                 }).filter(m => m !== null);
 
                 layers.cameras = L.layerGroup(markers);
-                console.log('Camera markers created:', markers.length);
+                // console.log('Camera markers created:', markers.length);
                 
                 // Update stat
                 if(document.getElementById('stat-cameras')) {
@@ -10387,7 +10802,7 @@
                 const response = await fetch("https://data.austintexas.gov/resource/keqk-e8rp.json?$limit=300");
                 const data = await response.json();
                 
-                console.log('Schools fetched:', data.length);
+                // console.log('Schools fetched:', data.length);
 
                 const markers = data.map(p => {
                     let lat, lng;
@@ -10449,7 +10864,7 @@
                 }).filter(m => m !== null);
 
                 layers.schools = L.layerGroup(markers);
-                console.log('School markers created:', markers.length);
+                // console.log('School markers created:', markers.length);
                 
                 // Update stat
                 if(document.getElementById('stat-schools')) {
@@ -10468,7 +10883,7 @@
                 const response = await fetch("https://data.austintexas.gov/resource/hkka-ahkr.json?$limit=200");
                 const data = await response.json();
                 
-                console.log('Parks fetched:', data.length);
+                // console.log('Parks fetched:', data.length);
 
                 const markers = data.map(p => {
                     let lat, lng;
@@ -10537,7 +10952,7 @@
                 }).filter(m => m !== null);
 
                 layers.parks = L.layerGroup(markers);
-                console.log('Park markers created:', markers.length);
+                // console.log('Park markers created:', markers.length);
 
             } catch (e) {
                 console.error("Failed to fetch parks:", e);
@@ -10551,7 +10966,7 @@
                 const response = await fetch("https://data.austintexas.gov/resource/6wt5-spbx.json?$limit=500");
                 const data = await response.json();
                 
-                console.log('Bike lanes fetched:', data.length);
+                // console.log('Bike lanes fetched:', data.length);
 
                 const lines = data.map(p => {
                     if(!p.the_geom || !p.the_geom.coordinates) return null;
@@ -10572,7 +10987,7 @@
                 }).filter(m => m !== null);
 
                 layers.bikes = L.layerGroup(lines);
-                console.log('Bike lane lines created:', lines.length);
+                // console.log('Bike lane lines created:', lines.length);
 
             } catch (e) {
                 console.error("Failed to fetch bike lanes:", e);
@@ -10635,6 +11050,46 @@
                 console.error('Failed to fetch property market data:', e);
             }
         }
+
+        // --- AUSTIN DASHBOARD LOGIC ---
+        window.initAustinDashboard = function() {
+            const slider = document.getElementById('rate-slider');
+            const display = document.getElementById('rate-display');
+            const power = document.getElementById('model-power');
+            const spread = document.getElementById('model-spread');
+            const refi = document.getElementById('model-refi');
+            
+            if (!slider) return;
+            
+            const updateModel = () => {
+                const rate = parseFloat(slider.value);
+                if (display) display.textContent = rate.toFixed(1) + '%';
+                
+                // Simple mock calculations
+                const monthlyPayment = 3500;
+                // PV calculation: PV = PMT * (1 - (1 + r)^-n) / r
+                // r = rate / 12 / 100
+                // n = 360
+                const r = rate / 12 / 100;
+                const n = 360;
+                const pv = monthlyPayment * (1 - Math.pow(1 + r, -n)) / r;
+                
+                if (power) power.textContent = '$' + Math.round(pv / 1000) + 'k';
+                
+                const treasuryYield = 4.2; // Mock 10Y yield
+                const spreadVal = (rate - treasuryYield).toFixed(1);
+                if (spread) spread.textContent = (spreadVal > 0 ? '+' : '') + spreadVal + '%';
+                
+                if (refi) {
+                    if (rate > 7.5) refi.textContent = 'High';
+                    else if (rate > 6.0) refi.textContent = 'Medium';
+                    else refi.textContent = 'Low';
+                }
+            };
+            
+            slider.addEventListener('input', updateModel);
+            updateModel(); // Initial call
+        };
 
         // Add Market Heatmap Layer
         function addHeatmapLayer() {
@@ -10901,8 +11356,207 @@
             animate();
         }
 
+        // --- BALANCE CANVAS (META SECTION) ---
+        function initBalanceCanvas() {
+            const canvas = document.getElementById('balance-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let animationId = null;
+            let isVisible = false;
+            let time = 0;
+            
+            // Dual orbiting masses with trail history
+            const system = {
+                centerX: 0,
+                centerY: 0,
+                mass1: { angle: 0, radius: 0, size: 12, trail: [] },
+                mass2: { angle: Math.PI, radius: 0, size: 12, trail: [] },
+                orbitSpeed: 0.008, // Increased speed for power
+                particles: []
+            };
+
+            const resize = () => {
+                width = canvas.width = canvas.parentElement.offsetWidth;
+                height = canvas.height = canvas.parentElement.offsetHeight;
+                system.centerX = width / 2;
+                system.centerY = height / 2;
+                system.mass1.radius = Math.min(width, height) * 0.18;
+                system.mass2.radius = Math.min(width, height) * 0.18;
+            };
+            resize();
+            window.addEventListener('resize', debounce(resize, 150));
+
+            const animate = () => {
+                if (!isVisible) {
+                    animationId = requestAnimationFrame(animate);
+                    return;
+                }
+
+                // Fade effect for trails
+                ctx.fillStyle = 'rgba(3, 3, 3, 0.08)';
+                ctx.fillRect(0, 0, width, height);
+                
+                time += 0.016;
+
+                // Update orbital positions
+                system.mass1.angle += system.orbitSpeed;
+                system.mass2.angle += system.orbitSpeed;
+
+                const m1x = system.centerX + Math.cos(system.mass1.angle) * system.mass1.radius;
+                const m1y = system.centerY + Math.sin(system.mass1.angle) * system.mass1.radius;
+                const m2x = system.centerX + Math.cos(system.mass2.angle) * system.mass2.radius;
+                const m2y = system.centerY + Math.sin(system.mass2.angle) * system.mass2.radius;
+
+                // Add to trails
+                system.mass1.trail.push({ x: m1x, y: m1y });
+                system.mass2.trail.push({ x: m2x, y: m2y });
+                if (system.mass1.trail.length > 80) system.mass1.trail.shift();
+                if (system.mass2.trail.length > 80) system.mass2.trail.shift();
+
+                // Draw orbital rings (multiple for depth)
+                for (let i = 0; i < 3; i++) {
+                    ctx.beginPath();
+                    ctx.arc(system.centerX, system.centerY, system.mass1.radius + (i * 15), 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(234, 234, 234, ${0.03 - i * 0.01})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+
+                // Draw trails
+                system.mass1.trail.forEach((pos, i) => {
+                    const opacity = (i / system.mass1.trail.length) * 0.4;
+                    ctx.fillStyle = `rgba(234, 234, 234, ${opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                system.mass2.trail.forEach((pos, i) => {
+                    const opacity = (i / system.mass2.trail.length) * 0.4;
+                    ctx.fillStyle = `rgba(234, 234, 234, ${opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                // Draw connection line with glow
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = 'rgba(234, 234, 234, 0.5)';
+                ctx.beginPath();
+                ctx.moveTo(m1x, m1y);
+                ctx.lineTo(m2x, m2y);
+                ctx.strokeStyle = 'rgba(234, 234, 234, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+
+                // Spawn particles at midpoint
+                if (Math.random() > 0.85) {
+                    const midX = (m1x + m2x) / 2;
+                    const midY = (m1y + m2y) / 2;
+                    system.particles.push({
+                        x: midX,
+                        y: midY,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2,
+                        life: 1,
+                        decay: 0.015
+                    });
+                }
+
+                // Update and draw particles
+                system.particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= p.decay;
+                    p.vx *= 0.98;
+                    p.vy *= 0.98;
+
+                    if (p.life <= 0) {
+                        system.particles.splice(i, 1);
+                        return;
+                    }
+
+                    ctx.fillStyle = `rgba(234, 234, 234, ${p.life * 0.5})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                // Draw center fulcrum with pulse
+                const pulse = Math.sin(time * 2) * 0.3 + 0.7;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = 'rgba(234, 234, 234, 0.8)';
+                ctx.beginPath();
+                ctx.arc(system.centerX, system.centerY, 4 * pulse, 0, Math.PI * 2);
+                ctx.fillStyle = '#EAEAEA';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Draw masses with strong glow
+                [{ x: m1x, y: m1y }, { x: m2x, y: m2y }].forEach(pos => {
+                    // Outer glow
+                    const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 40);
+                    gradient.addColorStop(0, 'rgba(234, 234, 234, 0.6)');
+                    gradient.addColorStop(0.5, 'rgba(234, 234, 234, 0.2)');
+                    gradient.addColorStop(1, 'rgba(234, 234, 234, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 40, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Core
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = 'rgba(234, 234, 234, 1)';
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, system.mass1.size, 0, Math.PI * 2);
+                    ctx.fillStyle = '#EAEAEA';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    // Inner highlight
+                    ctx.beginPath();
+                    ctx.arc(pos.x - 3, pos.y - 3, 4, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fill();
+                });
+
+                // Draw force lines to center (dashed)
+                ctx.setLineDash([4, 8]);
+                ctx.strokeStyle = 'rgba(234, 234, 234, 0.15)';
+                ctx.lineWidth = 1;
+                
+                ctx.beginPath();
+                ctx.moveTo(m1x, m1y);
+                ctx.lineTo(system.centerX, system.centerY);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(m2x, m2y);
+                ctx.lineTo(system.centerX, system.centerY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                animationId = requestAnimationFrame(animate);
+            };
+
+            // Intersection Observer for Performance
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible && !animationId) {
+                        animate();
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            observer.observe(canvas);
+        }
+
         function initAustinModalCanvas() {
-            const canvas = document.getElementById('canvas-austin-modal');
+            const canvas = document.getElementById('canvas-modal-austin');
             if (!canvas) return;
             
             const ctx = canvas.getContext('2d');
@@ -10982,6 +11636,86 @@
         
         // Initialize
         initAustinCanvas();
+
+        // --- SEARCH FUNCTIONALITY ---
+        const searchTrigger = document.getElementById('search-trigger');
+        const searchOverlay = document.getElementById('search-overlay');
+        const closeSearch = document.getElementById('close-search');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        function toggleSearch() {
+            const isOpen = !searchOverlay.classList.contains('opacity-0');
+            if (!isOpen) {
+                searchOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                lockBodyScroll();
+                setTimeout(() => searchInput.focus(), 100);
+            } else {
+                searchOverlay.classList.add('opacity-0', 'pointer-events-none');
+                unlockBodyScroll();
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+            }
+        }
+
+        if (searchTrigger) {
+            searchTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleSearch();
+            });
+        }
+
+        if (closeSearch) {
+            closeSearch.addEventListener('click', toggleSearch);
+        }
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !searchOverlay.classList.contains('opacity-0')) {
+                toggleSearch();
+            }
+        });
+
+        // Search Input Logic
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                if (query.length < 2) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+
+                const results = Object.entries(projectData).filter(([key, data]) => {
+                    return data.title.toLowerCase().includes(query) ||
+                           data.subtitle.toLowerCase().includes(query) ||
+                           data.description.toLowerCase().includes(query) ||
+                           (data.tags && data.tags.some(tag => tag.toLowerCase().includes(query)));
+                });
+
+                if (results.length === 0) {
+                    searchResults.innerHTML = `
+                        <div class="text-center text-neutral-500 font-mono text-sm py-8">
+                            No results found for "${e.target.value}"
+                        </div>
+                    `;
+                    return;
+                }
+
+                searchResults.innerHTML = results.map(([key, data]) => `
+                    <div class="group flex items-center justify-between p-6 border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer" onclick="toggleSearch(); openModal('${key}')">
+                        <div>
+                            <h4 class="font-display text-xl text-off-white mb-1 group-hover:text-white transition-colors">${data.title}</h4>
+                            <p class="font-mono text-xs text-neutral-400">${data.subtitle}</p>
+                        </div>
+                        <i data-lucide="arrow-right" class="w-5 h-5 text-neutral-500 group-hover:text-white transition-colors"></i>
+                    </div>
+                `).join('');
+                
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            });
+        }
 
         initOrderBook();
 
