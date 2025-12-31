@@ -184,7 +184,9 @@
         body {
             background-color: #030303;
             color: #EAEAEA;
-            font-feature-settings: "ss01", "ss02", "salt"; 
+            font-feature-settings: "ss01", "ss02", "salt";
+            line-height: 1.6;
+            letter-spacing: -0.01em;
             transition: background-color 0.5s ease;
         }
 
@@ -197,6 +199,7 @@
         input:focus-visible, textarea:focus-visible, select:focus-visible {
             outline: 2px solid #EAEAEA;
             outline-offset: 2px;
+            transition: outline 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         /* Ensure minimum touch target sizes on mobile */
@@ -211,11 +214,13 @@
         input:invalid:not(:placeholder-shown),
         textarea:invalid:not(:placeholder-shown) {
             border-color: rgba(239, 68, 68, 0.5);
+            transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         input:valid:not(:placeholder-shown),
         textarea:valid:not(:placeholder-shown) {
             border-color: rgba(255, 255, 255, 0.3);
+            transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @media (min-width: 768px) {
             body {
@@ -243,9 +248,24 @@
             background: #2A2A2A;
             border-radius: 4px;
             border: 2px solid #030303;
+            transition: background 0.3s ease;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #666666;
+        }
+
+        /* Focus States for Accessibility */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid rgba(234, 234, 234, 0.6);
+            outline-offset: 3px;
+            border-radius: 2px;
+            transition: outline-offset 0.2s ease;
+        }
+        
+        button:active {
+            transform: scale(0.97);
+            transition: transform 0.1s ease;
         }
 
         /* Selection Style */
@@ -303,11 +323,12 @@
 
         body.modal-open #app-container {
             transform: scale(0.95) translate3d(0, 15px, 0);
-            filter: brightness(0.35) blur(2px);
+            filter: brightness(0.35) blur(3px);
             border-radius: 16px;
             pointer-events: none;
             will-change: transform, filter;
             backface-visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         ::selection {
@@ -347,13 +368,14 @@
             border-bottom: 1px dotted #666666;
             cursor: help;
             position: relative;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-block;
         }
         .interactive-term:hover {
             background-color: rgba(0,0,0,0.05);
             border-bottom-style: solid;
             border-bottom-color: #030303;
+            padding: 0 2px;
         }
         .term-tooltip {
             position: absolute;
@@ -365,14 +387,15 @@
             padding: 0.75rem 1rem;
             font-family: 'Inter', sans-serif;
             font-size: 0.75rem;
-            line-height: 1.4;
+            line-height: 1.5;
+            letter-spacing: 0.01em;
             width: max-content;
             max-width: 250px;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 100;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 1px rgba(255,255,255,0.1);
             border-radius: 4px;
             font-weight: 400;
             text-align: center;
@@ -587,6 +610,7 @@
             width: 60px !important; height: 60px !important;
             background-color: rgba(255, 255, 255, 0.15);
             border: 2px solid rgba(255, 255, 255, 0.5) !important;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         body.hovering .cursor-dot { opacity: 0; }
 
@@ -595,6 +619,7 @@
             background-color: #EAEAEA;
             border-color: transparent !important;
             mix-blend-mode: normal;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         body.viewing-project .cursor-outline::after {
             content: 'OPEN';
@@ -615,12 +640,14 @@
         }
         
         #virtual-cursor {
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
         }
         
         #cell-selection {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(255, 255, 255, 0.05);
+            will-change: transform;
         }
 
         /* --- NOISE OVERLAY --- */
@@ -637,14 +664,14 @@
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(3, 3, 3, 0.85);
+            background: rgba(3, 3, 3, 0.92);
             backdrop-filter: blur(0px);
             -webkit-backdrop-filter: blur(0px);
             z-index: 90;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        backdrop-filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -727,11 +754,11 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             color: #666666;
             border: none;
             border-bottom: 2px solid transparent;
-            transition: all 0.3s;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
             background: none;
             cursor: pointer;
@@ -739,7 +766,11 @@
         }
         .tab-btn:hover {
             color: #EAEAEA;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.03);
+            transform: translateY(-1px);
+        }
+        .tab-btn:active {
+            transform: translateY(0);
         }
         .tab-btn.active {
             color: #EAEAEA;
@@ -747,13 +778,13 @@
         }
         .tab-content {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .tab-content.active {
             display: block;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .tv-widget-container {
@@ -766,8 +797,13 @@
             position: relative;
             border: 1px solid rgba(255,255,255,0.1);
             background: #0F0F0F;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
+        }
+        .stock-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
         .stock-card::before {
             content: '';
@@ -864,6 +900,12 @@
             padding: 1.25rem;
             background: rgba(0,0,0,0.4);
             border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .metric-block:hover {
+            background: rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
         }
         .metric-label {
             font-family: 'Inter', sans-serif;
@@ -944,6 +986,10 @@
             outline: 2px solid rgba(255, 255, 255, 0.8);
             outline-offset: 4px;
             border-radius: 4px;
+            transition: outline-offset 0.2s ease;
+        }
+        .magnetic-wrap:hover {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .magnetic-area {
             position: absolute;
@@ -959,11 +1005,11 @@
         .project-img {
             will-change: transform;
             transform: scale(1.01);
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             backface-visibility: hidden;
         }
         .group:hover .project-img {
-            transform: scale(1.08);
+            transform: scale(1.06);
         }
 
         /* Service Card Special Effects */
@@ -1062,7 +1108,10 @@
         }
 
         .writing-item { 
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .writing-item:hover {
+            transform: translateX(4px);
         }
         .writing-item:focus-visible {
             outline: 2px solid #0F0F0F;
@@ -1072,7 +1121,7 @@
         .writing-arrow { 
             opacity: 0; 
             transform: translateX(-10px); 
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .writing-item:hover .writing-arrow,
         .writing-item:focus-visible .writing-arrow {
@@ -1128,14 +1177,14 @@
 
         /* --- WRITING LIST FOCUS --- */
         .writing-list:hover .writing-item {
-            opacity: 0.3;
-            filter: blur(1px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0.35;
+            filter: blur(1.5px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .writing-list:hover .writing-item:hover {
             opacity: 1;
             filter: blur(0);
-            transform: translateX(10px);
+            transform: translateX(10px) scale(1.01);
         }
         
         /* --- MAGNETIC CURSOR TWEAK --- */
@@ -1272,7 +1321,7 @@
             width: 6px;
             height: 6px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none;
         }
         .tech-corner::before { top: 0; left: 0; border-right: none; border-bottom: none; }
@@ -1281,7 +1330,7 @@
         .tech-corner:hover::before, .tech-corner:hover::after {
             width: 100%;
             height: 100%;
-            border-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
         /* Typography Refinements */
@@ -1298,11 +1347,16 @@
             overflow: hidden;
             background: transparent;
             border: 1px solid rgba(255,255,255,0.2);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-tech:hover {
             border-color: #EAEAEA;
             background: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .btn-tech:active {
+            transform: translateY(0);
         }
 
         /* Screen reader only class */
@@ -1364,9 +1418,9 @@
     <!-- Loading Screen -->
     <div id="loader">
         <div class="flex flex-col items-center gap-6">
-            <div class="font-mono text-[10px] text-neutral-400 tracking-[0.5em] uppercase">Sulayman Bowles</div>
-            <div class="font-display text-5xl font-bold tracking-tight scramble-text" data-final="OBLIVION">INIT</div>
-            <div class="w-24 h-[1px] bg-neutral-800 mt-4 relative overflow-hidden">
+            <div class="font-mono text-[10px] text-neutral-400 tracking-[0.6em] uppercase" style="letter-spacing: 0.6em;">Sulayman Bowles</div>
+            <div class="font-display text-5xl font-bold scramble-text" data-final="OBLIVION" style="letter-spacing: -0.025em;">INIT</div>
+            <div class="w-32 h-[1px] bg-neutral-800 mt-6 relative overflow-hidden">
                 <div class="absolute inset-0 bg-off-white w-full -translate-x-full animate-[marquee_1.5s_ease-in-out_forwards]"></div>
             </div>
         </div>
@@ -1377,8 +1431,8 @@
     <div id="search-overlay" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300 flex flex-col items-center pt-32 px-6">
         <div class="w-full max-w-3xl relative">
             <input type="text" id="search-input" placeholder="Search projects, stacks, or concepts..." 
-                class="w-full bg-transparent border-b border-white/20 text-2xl md:text-4xl font-display text-off-white py-4 focus:outline-none focus:border-white/50 placeholder-neutral-700 transition-colors font-light">
-            <button id="close-search" class="absolute right-0 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors p-2">
+                class="w-full bg-transparent border-b border-white/20 text-2xl md:text-4xl font-display text-off-white py-4 focus:outline-none focus:border-white/50 placeholder-neutral-700 transition-all duration-400 font-light" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+            <button id="close-search" class="absolute right-0 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-all duration-300 p-2 hover:rotate-90" style="transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
                 <i data-lucide="x" class="w-8 h-8"></i>
             </button>
         </div>
@@ -1394,7 +1448,7 @@
             <!-- Reading Progress Bar -->
             <div id="reading-progress" class="absolute top-0 left-0 h-1 bg-off-white w-0 z-50" style="transition: width 0.1s ease-out; will-change: width;"></div>
             
-            <button id="close-modal" class="sticky top-6 float-right mr-6 z-50 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 hover:bg-white/10 transition-all duration-300 group hover:rotate-90 hover:scale-105" style="will-change: transform; margin-bottom: -44px;" aria-label="Close modal">
+            <button id="close-modal" class="sticky top-6 float-right mr-6 z-50 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group hover:rotate-90 hover:scale-110 active:scale-95" style="will-change: transform; margin-bottom: -44px;" aria-label="Close modal">
                 <i data-lucide="x" class="w-6 h-6 text-neutral-400 group-hover:text-off-white transition-colors duration-200"></i>
             </button>
             
@@ -1418,24 +1472,29 @@
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex gap-12 text-[11px] font-medium tracking-[0.2em] uppercase">
-                <a href="#section-services" class="hover-target magnetic-wrap group">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Finance</span>
+                <a href="#section-services" class="hover-target magnetic-wrap group relative">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Finance</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#section-services" class="hover-target magnetic-wrap group">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Consulting</span>
+                <a href="#section-services" class="hover-target magnetic-wrap group relative">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Consulting</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#section-work" class="hover-target magnetic-wrap group">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Work</span>
+                <a href="#section-work" class="hover-target magnetic-wrap group relative">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Work</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#section-writing" class="hover-target magnetic-wrap group">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Writing</span>
+                <a href="#section-writing" class="hover-target magnetic-wrap group relative">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Writing</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#section-contact" class="hover-target magnetic-wrap group">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">Contact</span>
+                <a href="#section-contact" class="hover-target magnetic-wrap group relative">
+                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Contact</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
                 
@@ -1457,11 +1516,11 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-off-black z-30 transform translate-x-full flex flex-col justify-center items-center space-y-10" style="transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; backface-visibility: hidden;" role="dialog" aria-modal="true" aria-label="Navigation menu">
-        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">FINANCE</a>
-        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONSULTING</a>
-        <a href="#section-work" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WORK</a>
-        <a href="#section-writing" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">WRITING</a>
-        <a href="#section-contact" class="font-display text-5xl hover:text-gray-500 mobile-link transition-colors">CONTACT</a>
+        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">FINANCE</a>
+        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">CONSULTING</a>
+        <a href="#section-work" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">WORK</a>
+        <a href="#section-writing" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">WRITING</a>
+        <a href="#section-contact" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">CONTACT</a>
         <button id="close-menu-btn" class="absolute top-8 right-8 p-4 hover:rotate-90 transition-transform duration-300" aria-label="Close navigation menu">
             <i data-lucide="x" class="w-8 h-8 text-off-white"></i>
         </button>
@@ -1477,7 +1536,7 @@
         <div class="max-w-[1600px] w-full mx-auto z-10 relative pointer-events-none">
             <!-- Main Title -->
             <div class="pointer-events-auto relative select-none">
-                <h1 class="font-display text-[8vw] leading-[0.9] font-bold tracking-tighter text-off-white reveal-text" style="transition-delay: 100ms;">
+                <h1 class="font-display text-[8vw] leading-[0.9] font-bold text-off-white reveal-text" style="transition-delay: 100ms; letter-spacing: -0.03em;">
                     <span class="scramble-hover" data-final="FINANCIAL ANALYST">FINANCIAL ANALYST</span><br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-off-white via-neutral-400 to-neutral-900 scramble-hover" data-final="& BUILDER">& BUILDER</span>
                 </h1>
@@ -1518,7 +1577,7 @@
 
     <!-- Infinite Marquee -->
     <div class="py-8 border-y border-off-white/15 bg-charcoal overflow-hidden flex relative z-20 pointer-events-none select-none">
-        <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]">
+        <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;">
             <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
             <span>FULL STACK</span> <span class="text-[#666666]">///</span>
             <span>WEB3 SYSTEMS</span> <span class="text-[#666666]">///</span>
@@ -1528,7 +1587,7 @@
             <span>WEB3 SYSTEMS</span> <span class="text-[#666666]">///</span>
             <span>DATA SCIENCE</span> <span class="text-[#666666]">///</span>
         </div>
-        <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]" aria-hidden="true">
+        <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;" aria-hidden="true">
             <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
             <span>FULL STACK</span> <span class="text-[#666666]">///</span>
             <span>WEB3 SYSTEMS</span> <span class="text-[#666666]">///</span>
@@ -1544,10 +1603,10 @@
     <section id="section-services" class="py-40 px-6 md:px-12 relative border-b border-off-white/10" aria-labelledby="services-heading">
         <div class="max-w-[1600px] mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-off-white/10 pb-8 reveal-text">
-                <h2 id="services-heading" class="font-display text-6xl md:text-8xl font-bold tracking-tight text-off-white">SERVICES</h2>
+                <h2 id="services-heading" class="font-display text-6xl md:text-8xl font-bold text-off-white" style="letter-spacing: -0.025em;">SERVICES</h2>
                 <div class="flex flex-col items-end mt-6 md:mt-0">
-                    <span class="font-mono text-xs text-neutral-400 mb-2 tracking-widest uppercase">Available Now</span>
-                    <span class="font-mono text-xs text-off-white tracking-widest">RETAINER / PROJECT</span>
+                    <span class="font-mono text-xs text-neutral-400 mb-2 uppercase" style="letter-spacing: 0.15em;">Available Now</span>
+                    <span class="font-mono text-xs text-off-white" style="letter-spacing: 0.15em;">RETAINER / PROJECT</span>
                 </div>
             </div>
 
@@ -1614,10 +1673,10 @@
     <section id="section-work" class="py-40 px-6 md:px-12 relative" aria-labelledby="work-heading">
         <div class="max-w-[1600px] mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-end mb-32 border-b border-off-white/10 pb-8 reveal-text">
-                <h2 id="work-heading" class="font-display text-6xl md:text-8xl font-bold tracking-tight mix-blend-difference">SELECTED<br>WORKS</h2>
+                <h2 id="work-heading" class="font-display text-6xl md:text-8xl font-bold mix-blend-difference" style="letter-spacing: -0.025em;">SELECTED<br>WORKS</h2>
                 <div class="flex flex-col items-end mt-6 md:mt-0">
-                    <span class="font-mono text-xs text-neutral-400 mb-2 tracking-widest uppercase">Archive</span>
-                    <span class="font-mono text-xs text-off-white tracking-widest">(2023 - 2025)</span>
+                    <span class="font-mono text-xs text-neutral-400 mb-2 uppercase" style="letter-spacing: 0.15em;">Archive</span>
+                    <span class="font-mono text-xs text-off-white" style="letter-spacing: 0.15em;">(2023 - 2025)</span>
                 </div>
             </div>
 
@@ -1736,7 +1795,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Legacy Systems & The Art of the Exit</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Legacy Systems & The Art of the Exit</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">CONSULTING</span>
                     </div>
@@ -1748,7 +1807,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Bridging the Gap: Web2 to Web3</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Bridging the Gap: Web2 to Web3</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">CONSULTING</span>
                     </div>
@@ -1760,7 +1819,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Automating Alpha</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Automating Alpha</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">ENGINEERING</span>
                     </div>
@@ -1772,7 +1831,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Convexity Trap</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">The Convexity Trap</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
@@ -1784,7 +1843,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Terminal Value Deconstructed</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Terminal Value Deconstructed</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
@@ -1796,7 +1855,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Future of Fintech</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">The Future of Fintech</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">ENGINEERING</span>
                     </div>
@@ -1808,7 +1867,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Variance Risk Premium</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Variance Risk Premium</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
@@ -1820,7 +1879,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Bootstrapping the Yield Curve</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Bootstrapping the Yield Curve</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
@@ -1832,7 +1891,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">Credit Spread Decomposition</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Credit Spread Decomposition</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
@@ -1844,7 +1903,7 @@
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
-                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800">The Leverage Ratchet</h3>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">The Leverage Ratchet</h3>
                         </div>
                         <span class="font-mono text-xs text-neutral-400">FINANCE</span>
                     </div>
@@ -1944,107 +2003,61 @@
         </div>
     </section>
 
-    <!-- The Website Section -->
-    <section id="section-meta" class="py-40 px-6 md:px-12 bg-off-black relative overflow-hidden border-t border-off-white/10">
-        <!-- Balance Canvas Background -->
-        <canvas id="balance-canvas" class="absolute inset-0 w-full h-full opacity-40 pointer-events-none"></canvas>
-        
+    <!-- Colophon / Architecture Section -->
+    <section id="colophon" class="py-40 px-6 md:px-12 bg-[#050505] relative overflow-hidden border-t border-off-white/10">
         <div class="max-w-[1600px] mx-auto relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
                 
-                <!-- Left: Meta Commentary -->
-                <div class="reveal-text">
-                    <div class="flex items-center gap-4 mb-12">
-                        <div class="w-2 h-2 bg-off-white rounded-full"></div>
-                        <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">The Website</h2>
-                    </div>
-                    
-                    <div class="space-y-10">
-                        <h3 class="font-display text-5xl md:text-7xl leading-[1.05] font-light text-off-white">
-                            Deliberately<br/>Complex.
-                        </h3>
-                        
-                        <div class="font-sans text-xl md:text-2xl text-neutral-400 leading-[1.6] space-y-10 border-l-2 border-off-white/20 pl-8">
-                            <p>
-                                This isn't a static gallery. It's a live system—crypto feeds, geospatial data, generative algorithms, interactive dashboards. Overengineered on purpose.
-                            </p>
-                            
-                            <p class="text-off-white/90">
-                                Because breadth matters.
-                            </p>
-                            
-                            <p>
-                                DCF models. Smart contracts. Data pipelines. TypeScript interfaces. Each element here represents a different vertical I operate in daily.
-                            </p>
-                            
-                            <p class="text-off-white italic text-2xl md:text-3xl">
-                                Proof of range.
-                            </p>
-                        </div>
+                <!-- Left: The Generative Art (Balance) -->
+                <div class="relative w-full h-[60vh] border border-off-white/10 bg-[#020202] overflow-hidden reveal-text order-2 md:order-1">
+                    <canvas id="balance-canvas" class="absolute inset-0 w-full h-full"></canvas>
+                    <div class="absolute bottom-6 left-6 font-mono text-xs text-neutral-500 z-10 pointer-events-none">
+                        <span class="block">FIG. 01 — ORBITAL RESONANCE</span>
+                        <span class="block text-neutral-700">φ = 1.618 // n = 7</span>
                     </div>
                 </div>
 
-                <!-- Right: Technical Breakdown -->
-                <div class="reveal-text lg:pt-20">
-                    <div class="space-y-12">
-                        <!-- Complexity Metrics -->
-                        <div class="border border-off-white/10 bg-[#0A0A0A] overflow-hidden">
-                            <div class="p-8 space-y-8">
-                                <div class="flex justify-between items-baseline">
-                                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Lines</span>
-                                    <span class="font-display text-5xl text-off-white tabular-nums">11,400</span>
-                                </div>
-                                <div class="flex justify-between items-baseline">
-                                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">APIs</span>
-                                    <span class="font-display text-5xl text-off-white tabular-nums">7</span>
-                                </div>
-                                <div class="flex justify-between items-baseline">
-                                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Animations</span>
-                                    <span class="font-display text-5xl text-off-white tabular-nums">9</span>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Right: The Copy -->
+                <div class="reveal-text order-1 md:order-2">
+                    <div class="flex items-center gap-4 mb-12">
+                        <div class="w-2 h-2 bg-off-white rounded-full"></div>
+                        <h2 class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-neutral-400">The Architecture</h2>
+                    </div>
+                    
+                    <h3 class="font-display text-4xl md:text-5xl font-medium mb-8 text-off-white">
+                        Complexity, <br>
+                        <span class="text-neutral-500">Balanced.</span>
+                    </h3>
 
-                        <!-- The Balance Principle -->
-                        <div class="border border-off-white/10 bg-[#0A0A0A] p-10">
-                            <h4 class="font-display text-2xl text-off-white mb-8 tracking-tight">Balance</h4>
-                            
-                            <div class="grid grid-cols-2 gap-8">
-                                <div class="space-y-3 text-sm text-neutral-400">
-                                    <div>DCF Models</div>
-                                    <div>Smart Contracts</div>
-                                    <div>Data Systems</div>
-                                    <div>Architecture</div>
-                                </div>
-                                <div class="space-y-3 text-sm text-neutral-400 text-right">
-                                    <div>Generative Art</div>
-                                    <div>UI/UX Design</div>
-                                    <div>Typography</div>
-                                    <div>Motion</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="space-y-8 font-sans text-neutral-400 leading-relaxed max-w-xl">
+                        <p>
+                            This platform is a living artifact—a testament to the belief that technical rigor and aesthetic beauty are not mutually exclusive. Built without bloated frameworks, it relies on raw mathematics and physics to render real-time data streams, geospatial analytics, and interactive financial models.
+                        </p>
+                        <p>
+                            It represents the full breadth of my work: the precision required for institutional finance, the logic needed for systems architecture, and the creativity essential for modern web design.
+                        </p>
+                        <p>
+                            A digital twin of my professional philosophy: finding equilibrium in the chaos.
+                        </p>
+                    </div>
 
-                        <!-- Technical Stack -->
-                        <div class="space-y-4">
-                            <div class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Stack</div>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">JS</span>
-                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">Canvas</span>
-                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">Tailwind</span>
-                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">Leaflet</span>
-                                <span class="px-3 py-1 bg-off-white/5 border border-off-white/10 text-xs font-mono text-neutral-400">APIs</span>
-                            </div>
+                    <div class="mt-12 pt-8 border-t border-off-white/10 flex gap-8">
+                        <div>
+                            <span class="block font-mono text-xs text-neutral-500 mb-1">STACK</span>
+                            <span class="font-display text-lg text-off-white">Vanilla JS + Tailwind</span>
+                        </div>
+                        <div>
+                            <span class="block font-mono text-xs text-neutral-500 mb-1">DATA</span>
+                            <span class="font-display text-lg text-off-white">Real-time WebSocket</span>
+                        </div>
+                        <div>
+                            <span class="block font-mono text-xs text-neutral-500 mb-1">RENDER</span>
+                            <span class="font-display text-lg text-off-white">Canvas API</span>
                         </div>
                     </div>
                 </div>
 
             </div>
-        </div>
-        
-        <!-- Background Typography -->
-        <div class="absolute -top-[5vw] -left-[5vw] font-display font-bold text-[20vw] text-off-white pointer-events-none select-none opacity-[0.02] leading-none">
-            BALANCE
         </div>
     </section>
 
@@ -2097,9 +2110,9 @@
 
         <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-end md:items-center border-t border-off-white/10 pt-10 mt-20 reveal-text relative z-10" role="contentinfo">
             <div class="flex gap-8 mb-8 md:mb-0">
-                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Visit LinkedIn profile">LinkedIn</a>
-                <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Visit GitHub profile">GitHub</a>
-                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" aria-label="Download resume">Resume</a>
+                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Visit LinkedIn profile">LinkedIn</a>
+                <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Visit GitHub profile">GitHub</a>
+                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Download resume">Resume</a>
             </div>
             <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-6 text-right md:text-left uppercase items-center">
                 <div id="live-ticker" class="contents"></div>
@@ -3159,12 +3172,8 @@
                             <!-- Map Layer Controls -->
                             <div class="absolute top-4 left-4 md:top-6 md:left-6 z-[1000] flex flex-col gap-3 max-w-[220px] md:max-w-[280px]">
                                 <div class="bg-[#030303]/95 backdrop-blur-md border border-white/10 p-3 md:p-4">
-                                    <h3 class="font-display text-base md:text-lg text-off-white mb-1">AUSTIN METRO</h3>
-                                    <p class="font-mono text-[8px] md:text-[9px] text-neutral-500 uppercase tracking-wider mb-2 md:mb-3">Real Estate Intelligence</p>
-                                    <div class="flex items-center gap-2 text-[9px] md:text-[10px]">
-                                        <div class="w-2 h-2 bg-off-white rounded-full animate-pulse"></div>
-                                        <span class="font-mono text-neutral-400 uppercase tracking-widest">Live Data</span>
-                                    </div>
+                                    <h3 class="font-display text-base md:text-lg text-off-white mb-1 tracking-tight">AUSTIN METRO</h3>
+                                    <p class="font-mono text-[8px] md:text-[9px] text-neutral-500 uppercase tracking-wider">Real Estate Intelligence</p>
                                 </div>
                             </div>
 
@@ -3348,11 +3357,8 @@
                                 <div class="p-8 border-b border-mid-gray">
                                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                                         <div>
-                                            <h3 class="font-display text-xl text-off-white mb-2">Housing Market Inventory</h3>
-                                            <p class="font-mono text-xs text-dim-gray">Active listings and days on market trends</p>
-                                        </div>
-                                        <div class="flex gap-2">
-                                            <span class="px-3 py-1 bg-white/5 border border-white/10 text-[10px] font-mono text-neutral-400 uppercase">Live Data</span>
+                                            <h3 class="font-display text-xl text-off-white mb-2 tracking-tight">Housing Market Inventory</h3>
+                                            <p class="font-mono text-xs text-dim-gray leading-relaxed">Active listings and days on market trends</p>
                                         </div>
                                     </div>
                                 </div>
@@ -3451,10 +3457,9 @@
                                 <div class="p-8 border-b border-mid-gray">
                                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                                         <div>
-                                            <h3 class="font-display text-xl text-off-white mb-2">Neighborhood Alpha Analysis</h3>
-                                            <p class="font-mono text-xs text-dim-gray">Comparative metrics across key Austin zip codes</p>
+                                            <h3 class="font-display text-xl text-off-white mb-2 tracking-tight">Neighborhood Alpha Analysis</h3>
+                                            <p class="font-mono text-xs text-dim-gray leading-relaxed">Comparative metrics across key Austin zip codes</p>
                                         </div>
-                                        <span class="px-3 py-1 bg-green-500/10 border border-green-500/20 text-[10px] font-mono text-green-400 uppercase tracking-wider">Live Data</span>
                                     </div>
                                 </div>
                                 <div class="overflow-x-auto">
@@ -4089,7 +4094,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="font-mono text-xs text-neutral-500 uppercase tracking-wider">LIVE DATA VIA TRADINGVIEW</span>
+                                <span class="font-mono text-xs text-neutral-500 uppercase tracking-wider opacity-50">VIA TRADINGVIEW</span>
                             </div>
                         </div>
 
@@ -4654,7 +4659,7 @@
 
         const writingData = {
             legacy: {
-                meta: { date: "DEC 2024", category: "CONSULTING", readTime: "6 MIN" },
+                meta: { date: "DEC 2024", category: "CONSULTING" },
                 title: "Legacy Systems & The Art of the Exit",
                 lede: "Navigating the technical and operational complexities of winding down a mid-sized logistics firm. How we managed 15TB of legacy database archives, ensured regulatory compliance, and executed a graceful systematic shutdown.",
                 content: `
@@ -4683,7 +4688,7 @@
                 nextSlug: "web3_migration"
             },
             web3_migration: {
-                meta: { date: "NOV 2024", category: "CONSULTING", readTime: "7 MIN" },
+                meta: { date: "NOV 2024", category: "CONSULTING" },
                 title: "Bridging the Gap: Web2 to Web3",
                 lede: "A case study on helping a traditional fintech client integrate on-chain settlement layers. Overcoming custody challenges, smart contract auditing, and the cultural shift from centralized databases to distributed ledgers.",
                 content: `
@@ -4712,7 +4717,7 @@
                 nextSlug: "automating_alpha"
             },
             automating_alpha: {
-                meta: { date: "OCT 2024", category: "ENGINEERING", readTime: "8 MIN" },
+                meta: { date: "OCT 2024", category: "ENGINEERING" },
                 title: "Automating Alpha",
                 lede: "Building autonomous research agents that parse 10-Ks and earnings call transcripts. Using LLMs to extract structured sentiment data and detect divergence from consensus estimates.",
                 content: `
@@ -4741,7 +4746,7 @@
                 nextSlug: "fintech_future"
             },
             fintech_future: {
-                meta: { date: "SEP 2024", category: "ENGINEERING", readTime: "9 MIN" },
+                meta: { date: "SEP 2024", category: "ENGINEERING" },
                 title: "The Future of Fintech",
                 lede: "Designing resilient financial systems on public blockchains. Exploring the intersection of zero-knowledge proofs and regulatory compliance in DeFi.",
                 content: `
@@ -4770,7 +4775,7 @@
                 nextSlug: "convexity"
             },
             convexity: {
-                meta: { date: "DEC 2025", category: "FIXED INCOME", readTime: "8 MIN" },
+                meta: { date: "DEC 2025", category: "FIXED INCOME" },
                 title: "The Convexity Trap",
                 lede: "Why negative convexity in MBS portfolios destroyed hedge funds in 2022. A technical autopsy of duration extension and gamma hedging failures.",
                 content: `
@@ -4803,7 +4808,7 @@
                 nextSlug: "terminal"
             },
             terminal: {
-                meta: { date: "NOV 2025", category: "VALUATION", readTime: "7 MIN" },
+                meta: { date: "NOV 2025", category: "VALUATION" },
                 title: "Terminal Value Deconstructed",
                 lede: "The 80% problem in DCF models. Why perpetuity growth assumptions mask value creation and how to build defensible exit multiples.",
                 content: `
@@ -4836,7 +4841,7 @@
                 nextSlug: "variance"
             },
             variance: {
-                meta: { date: "OCT 2025", category: "DERIVATIVES", readTime: "9 MIN" },
+                meta: { date: "OCT 2025", category: "DERIVATIVES" },
                 title: "Variance Risk Premium Extraction",
                 lede: "Decomposing realized vs. implied volatility spreads. Statistical arbitrage strategies in VIX futures term structure and variance swap mechanics.",
                 content: `
@@ -4873,7 +4878,7 @@
                 nextSlug: "bootstrap"
             },
             bootstrap: {
-                meta: { date: "SEP 2025", category: "FIXED INCOME", readTime: "8 MIN" },
+                meta: { date: "SEP 2025", category: "FIXED INCOME" },
                 title: "Bootstrapping the Yield Curve",
                 lede: "From SOFR swaps to zero-coupon rates. The mechanics of curve construction, interpolation methods, and cross-currency basis adjustments.",
                 content: `
@@ -4913,7 +4918,7 @@
                 nextSlug: "credit"
             },
             credit: {
-                meta: { date: "AUG 2025", category: "CREDIT", readTime: "8 MIN" },
+                meta: { date: "AUG 2025", category: "CREDIT" },
                 title: "Credit Spread Decomposition",
                 lede: "Separating default probability from recovery rates in corporate bonds. Structural models vs. reduced-form approaches in distressed debt.",
                 content: `
@@ -4953,7 +4958,7 @@
                 nextSlug: "leverage"
             },
             leverage: {
-                meta: { date: "JUL 2025", category: "LBO / PE", readTime: "9 MIN" },
+                meta: { date: "JUL 2025", category: "LBO / PE" },
                 title: "The Leverage Ratchet",
                 lede: "LBO modeling beyond the template. Optimal capital structure, covenant design, and the hidden costs of financial engineering in leveraged buyouts.",
                 content: `
@@ -5482,9 +5487,7 @@
                 data = projectData[id];
                 if (!data) return;
 
-                // Calculate Read Time
-                const wordCount = data.description.split(' ').length + data.details.split(' ').length;
-                const readTime = Math.ceil(wordCount / 200);
+                // Project metadata ready
 
                 // Dynamic Cover Background based on ID
                 let coverBg = `
@@ -5540,9 +5543,6 @@
                                 <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Project</span>
                                 <span class="font-display text-4xl font-bold text-white/5">--</span>
                             </div>
-                            <div class="flex gap-2">
-                                 <span class="px-2 py-1 bg-white/5 border border-white/10 text-[10px] font-mono uppercase text-neutral-400 tracking-widest backdrop-blur-md">${readTime} MIN READ</span>
-                            </div>
                         </div>
 
                         <!-- Bottom Row -->
@@ -5570,9 +5570,6 @@
                                 <div class="flex flex-col gap-1">
                                     <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Project</span>
                                     <span class="font-display text-4xl font-bold text-white/10">05</span>
-                                </div>
-                                <div class="flex gap-2">
-                                     <span class="px-2 py-1 bg-white/5 border border-white/10 text-[10px] font-mono uppercase text-neutral-400 tracking-widest backdrop-blur-md">Live Data</span>
                                 </div>
                             </div>
 
@@ -6059,7 +6056,7 @@
 
                                 <div class="pt-8">
                                     <button type="submit" 
-                                        class="w-full bg-off-white text-black font-display text-base font-medium py-5 px-8 hover:bg-neutral-200 hover:shadow-2xl hover:shadow-white/20 transition-all duration-500 uppercase tracking-[0.2em]">
+                                        class="w-full bg-off-white text-black font-display text-base font-medium py-5 px-8 hover:bg-neutral-200 hover:shadow-2xl hover:shadow-white/20 active:scale-[0.98] uppercase tracking-[0.2em]" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); letter-spacing: 0.2em;">
                                         Request Briefing
                                     </button>
                                     <div class="flex items-center justify-center gap-8 mt-8 text-xs text-neutral-600 font-mono">
@@ -8018,7 +8015,6 @@
                 try { if (typeof initScrollReveal === 'function') initScrollReveal(); } catch(e) { console.warn('ScrollReveal error:', e); }
                 try { if (typeof initGenerativeCovers === 'function') initGenerativeCovers(); } catch(e) { console.warn('GenerativeCovers error:', e); }
                 try { if (typeof initLiveTicker === 'function') initLiveTicker(); } catch(e) { console.warn('LiveTicker error:', e); }
-                try { if (typeof initBalanceCanvas === 'function') initBalanceCanvas(); } catch(e) { console.warn('BalanceCanvas error:', e); }
                 
                 setTimeout(() => {
                     document.querySelectorAll('.scramble-hover').forEach(el => {
@@ -9533,7 +9529,7 @@
             
             const ctx = canvas.getContext('2d');
             const container = document.getElementById('order-book-visual');
-            const contactSection = document.getElementById('contact');
+            const contactSection = document.getElementById('section-contact');
             
             let width, height;
             let animationId;
@@ -9546,6 +9542,17 @@
             let lastPrice = 0;
             let ws = null;
             
+            // Mock Data Initialization (Instant Visuals)
+            function initMockData() {
+                const basePrice = 95000;
+                for(let i=0; i<20; i++) {
+                    bids.push({ p: basePrice - i*10, q: Math.random() * 2 });
+                    asks.push({ p: basePrice + i*10, q: Math.random() * 2 });
+                }
+                lastPrice = basePrice;
+            }
+            initMockData();
+
             // Initialize WebSocket (Bitstamp)
             function connectWS() {
                 // Bitstamp public websocket
@@ -9601,23 +9608,25 @@
             connectWS();
 
             function resize() {
-                width = canvas.width = container.offsetWidth;
-                height = canvas.height = container.offsetHeight;
+                width = canvas.width = container.offsetWidth || 300;
+                height = canvas.height = container.offsetHeight || 600;
             }
             window.addEventListener('resize', debounce(resize, 200));
             resize();
 
             // Interaction
-            contactSection.addEventListener('mouseenter', () => {
-                isHovered = true;
-                container.style.opacity = '0.8';
-                container.style.filter = 'blur(0px)';
-            });
-            contactSection.addEventListener('mouseleave', () => {
-                isHovered = false;
-                container.style.opacity = '0.3';
-                container.style.filter = 'blur(2px)';
-            });
+            if (contactSection) {
+                contactSection.addEventListener('mouseenter', () => {
+                    isHovered = true;
+                    container.style.opacity = '0.8';
+                    container.style.filter = 'blur(0px)';
+                });
+                contactSection.addEventListener('mouseleave', () => {
+                    isHovered = false;
+                    container.style.opacity = '0.3';
+                    container.style.filter = 'blur(2px)';
+                });
+            }
 
             // Animation Loop
             function animate() {
@@ -9705,7 +9714,11 @@
                     }
                 });
             }, { threshold: 0.1 });
-            observer.observe(contactSection);
+            if (contactSection) {
+                observer.observe(contactSection);
+                // Start immediately if in view
+                if (isVisible) animate();
+            }
         }
         // Austin Real Estate Dashboard Logic
         window.tickerItems = [
@@ -11356,205 +11369,6 @@
             animate();
         }
 
-        // --- BALANCE CANVAS (META SECTION) ---
-        function initBalanceCanvas() {
-            const canvas = document.getElementById('balance-canvas');
-            if (!canvas) return;
-
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            let animationId = null;
-            let isVisible = false;
-            let time = 0;
-            
-            // Dual orbiting masses with trail history
-            const system = {
-                centerX: 0,
-                centerY: 0,
-                mass1: { angle: 0, radius: 0, size: 12, trail: [] },
-                mass2: { angle: Math.PI, radius: 0, size: 12, trail: [] },
-                orbitSpeed: 0.008, // Increased speed for power
-                particles: []
-            };
-
-            const resize = () => {
-                width = canvas.width = canvas.parentElement.offsetWidth;
-                height = canvas.height = canvas.parentElement.offsetHeight;
-                system.centerX = width / 2;
-                system.centerY = height / 2;
-                system.mass1.radius = Math.min(width, height) * 0.18;
-                system.mass2.radius = Math.min(width, height) * 0.18;
-            };
-            resize();
-            window.addEventListener('resize', debounce(resize, 150));
-
-            const animate = () => {
-                if (!isVisible) {
-                    animationId = requestAnimationFrame(animate);
-                    return;
-                }
-
-                // Fade effect for trails
-                ctx.fillStyle = 'rgba(3, 3, 3, 0.08)';
-                ctx.fillRect(0, 0, width, height);
-                
-                time += 0.016;
-
-                // Update orbital positions
-                system.mass1.angle += system.orbitSpeed;
-                system.mass2.angle += system.orbitSpeed;
-
-                const m1x = system.centerX + Math.cos(system.mass1.angle) * system.mass1.radius;
-                const m1y = system.centerY + Math.sin(system.mass1.angle) * system.mass1.radius;
-                const m2x = system.centerX + Math.cos(system.mass2.angle) * system.mass2.radius;
-                const m2y = system.centerY + Math.sin(system.mass2.angle) * system.mass2.radius;
-
-                // Add to trails
-                system.mass1.trail.push({ x: m1x, y: m1y });
-                system.mass2.trail.push({ x: m2x, y: m2y });
-                if (system.mass1.trail.length > 80) system.mass1.trail.shift();
-                if (system.mass2.trail.length > 80) system.mass2.trail.shift();
-
-                // Draw orbital rings (multiple for depth)
-                for (let i = 0; i < 3; i++) {
-                    ctx.beginPath();
-                    ctx.arc(system.centerX, system.centerY, system.mass1.radius + (i * 15), 0, Math.PI * 2);
-                    ctx.strokeStyle = `rgba(234, 234, 234, ${0.03 - i * 0.01})`;
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-                }
-
-                // Draw trails
-                system.mass1.trail.forEach((pos, i) => {
-                    const opacity = (i / system.mass1.trail.length) * 0.4;
-                    ctx.fillStyle = `rgba(234, 234, 234, ${opacity})`;
-                    ctx.beginPath();
-                    ctx.arc(pos.x, pos.y, 1.5, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                system.mass2.trail.forEach((pos, i) => {
-                    const opacity = (i / system.mass2.trail.length) * 0.4;
-                    ctx.fillStyle = `rgba(234, 234, 234, ${opacity})`;
-                    ctx.beginPath();
-                    ctx.arc(pos.x, pos.y, 1.5, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                // Draw connection line with glow
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = 'rgba(234, 234, 234, 0.5)';
-                ctx.beginPath();
-                ctx.moveTo(m1x, m1y);
-                ctx.lineTo(m2x, m2y);
-                ctx.strokeStyle = 'rgba(234, 234, 234, 0.6)';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.shadowBlur = 0;
-
-                // Spawn particles at midpoint
-                if (Math.random() > 0.85) {
-                    const midX = (m1x + m2x) / 2;
-                    const midY = (m1y + m2y) / 2;
-                    system.particles.push({
-                        x: midX,
-                        y: midY,
-                        vx: (Math.random() - 0.5) * 2,
-                        vy: (Math.random() - 0.5) * 2,
-                        life: 1,
-                        decay: 0.015
-                    });
-                }
-
-                // Update and draw particles
-                system.particles.forEach((p, i) => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.life -= p.decay;
-                    p.vx *= 0.98;
-                    p.vy *= 0.98;
-
-                    if (p.life <= 0) {
-                        system.particles.splice(i, 1);
-                        return;
-                    }
-
-                    ctx.fillStyle = `rgba(234, 234, 234, ${p.life * 0.5})`;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                // Draw center fulcrum with pulse
-                const pulse = Math.sin(time * 2) * 0.3 + 0.7;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = 'rgba(234, 234, 234, 0.8)';
-                ctx.beginPath();
-                ctx.arc(system.centerX, system.centerY, 4 * pulse, 0, Math.PI * 2);
-                ctx.fillStyle = '#EAEAEA';
-                ctx.fill();
-                ctx.shadowBlur = 0;
-
-                // Draw masses with strong glow
-                [{ x: m1x, y: m1y }, { x: m2x, y: m2y }].forEach(pos => {
-                    // Outer glow
-                    const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 40);
-                    gradient.addColorStop(0, 'rgba(234, 234, 234, 0.6)');
-                    gradient.addColorStop(0.5, 'rgba(234, 234, 234, 0.2)');
-                    gradient.addColorStop(1, 'rgba(234, 234, 234, 0)');
-                    ctx.fillStyle = gradient;
-                    ctx.beginPath();
-                    ctx.arc(pos.x, pos.y, 40, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Core
-                    ctx.shadowBlur = 20;
-                    ctx.shadowColor = 'rgba(234, 234, 234, 1)';
-                    ctx.beginPath();
-                    ctx.arc(pos.x, pos.y, system.mass1.size, 0, Math.PI * 2);
-                    ctx.fillStyle = '#EAEAEA';
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-
-                    // Inner highlight
-                    ctx.beginPath();
-                    ctx.arc(pos.x - 3, pos.y - 3, 4, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                    ctx.fill();
-                });
-
-                // Draw force lines to center (dashed)
-                ctx.setLineDash([4, 8]);
-                ctx.strokeStyle = 'rgba(234, 234, 234, 0.15)';
-                ctx.lineWidth = 1;
-                
-                ctx.beginPath();
-                ctx.moveTo(m1x, m1y);
-                ctx.lineTo(system.centerX, system.centerY);
-                ctx.stroke();
-                
-                ctx.beginPath();
-                ctx.moveTo(m2x, m2y);
-                ctx.lineTo(system.centerX, system.centerY);
-                ctx.stroke();
-                ctx.setLineDash([]);
-
-                animationId = requestAnimationFrame(animate);
-            };
-
-            // Intersection Observer for Performance
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    isVisible = entry.isIntersecting;
-                    if (isVisible && !animationId) {
-                        animate();
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            observer.observe(canvas);
-        }
-
         function initAustinModalCanvas() {
             const canvas = document.getElementById('canvas-modal-austin');
             if (!canvas) return;
@@ -11718,6 +11532,189 @@
         }
 
         initOrderBook();
+
+        // --- BALANCE CANVAS (Orbital Resonance) ---
+        function initBalanceCanvas() {
+            const canvas = document.getElementById('balance-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let time = 0;
+            const orbitals = [];
+            const numOrbitals = 7;
+            const phi = 1.618033988749; // Golden ratio
+            let animationId;
+            let isVisible = true;
+            let mouse = { x: 0, y: 0, active: false };
+
+            class Orbital {
+                constructor(index) {
+                    this.index = index;
+                    // Each orbital has a frequency based on golden ratio
+                    this.frequency = 1 + (index * phi * 0.15);
+                    this.radius = 40 + (index * 25);
+                    this.phase = (index * Math.PI * 2) / numOrbitals;
+                    this.trail = [];
+                    this.maxTrail = 150;
+                    this.hue = (index / numOrbitals) * 60 + 180; // Blue to cyan range
+                }
+
+                getPosition(t) {
+                    // Lissajous-inspired motion with mouse influence
+                    const centerX = width / 2;
+                    const centerY = height / 2;
+                    
+                    // Mouse creates gravity well
+                    let pullX = 0, pullY = 0;
+                    if (mouse.active) {
+                        const dx = mouse.x - centerX;
+                        const dy = mouse.y - centerY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 200) {
+                            const force = (200 - dist) / 200 * 0.3;
+                            pullX = dx * force;
+                            pullY = dy * force;
+                        }
+                    }
+
+                    const x = centerX + pullX + 
+                             Math.cos(t * this.frequency + this.phase) * this.radius +
+                             Math.sin(t * this.frequency * phi + this.phase) * (this.radius * 0.5);
+                    
+                    const y = centerY + pullY + 
+                             Math.sin(t * this.frequency + this.phase) * this.radius +
+                             Math.cos(t * this.frequency * phi + this.phase) * (this.radius * 0.5);
+                    
+                    return { x, y };
+                }
+
+                update(t) {
+                    const pos = this.getPosition(t);
+                    this.trail.push(pos);
+                    if (this.trail.length > this.maxTrail) {
+                        this.trail.shift();
+                    }
+                }
+
+                draw() {
+                    // Draw trail
+                    if (this.trail.length > 1) {
+                        ctx.beginPath();
+                        ctx.moveTo(this.trail[0].x, this.trail[0].y);
+                        
+                        for (let i = 1; i < this.trail.length; i++) {
+                            const alpha = (i / this.trail.length) * 0.5;
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                            ctx.lineWidth = 1;
+                            ctx.lineTo(this.trail[i].x, this.trail[i].y);
+                        }
+                        ctx.stroke();
+                    }
+
+                    // Draw current position
+                    const pos = this.trail[this.trail.length - 1];
+                    if (pos) {
+                        const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 4);
+                        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.3)');
+                        
+                        ctx.fillStyle = gradient;
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                drawConnection(other) {
+                    // Draw connections between nearby orbitals
+                    if (this.trail.length === 0 || other.trail.length === 0) return;
+                    
+                    const myPos = this.trail[this.trail.length - 1];
+                    const otherPos = other.trail[other.trail.length - 1];
+                    
+                    const dx = myPos.x - otherPos.x;
+                    const dy = myPos.y - otherPos.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 100) {
+                        const alpha = (1 - dist / 100) * 0.15;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(myPos.x, myPos.y);
+                        ctx.lineTo(otherPos.x, otherPos.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            function init() {
+                orbitals.length = 0;
+                for (let i = 0; i < numOrbitals; i++) {
+                    orbitals.push(new Orbital(i));
+                }
+            }
+
+            function resize() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                width = canvas.width = rect.width || window.innerWidth;
+                height = canvas.height = rect.height || 500;
+                init();
+            }
+
+            function animate() {
+                if (isVisible) {
+                    // Fade out effect for trails
+                    ctx.fillStyle = 'rgba(2, 2, 2, 0.08)';
+                    ctx.fillRect(0, 0, width, height);
+                    
+                    time += 0.008;
+                    
+                    // Update all orbitals
+                    orbitals.forEach(o => o.update(time));
+                    
+                    // Draw connections
+                    for (let i = 0; i < orbitals.length; i++) {
+                        for (let j = i + 1; j < orbitals.length; j++) {
+                            orbitals[i].drawConnection(orbitals[j]);
+                        }
+                    }
+                    
+                    // Draw orbitals
+                    orbitals.forEach(o => o.draw());
+                }
+                animationId = requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            canvas.addEventListener('mousemove', e => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+                mouse.active = true;
+            });
+            canvas.addEventListener('mouseleave', () => {
+                mouse.active = false;
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                });
+            }, { threshold: 0 });
+            observer.observe(canvas);
+
+            resize();
+            animate();
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initBalanceCanvas);
+        } else {
+            initBalanceCanvas();
+        }
 
     </script>
     <!-- Chart Warehouse (Hidden) -->
