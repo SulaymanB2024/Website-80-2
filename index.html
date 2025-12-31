@@ -1399,6 +1399,14 @@
             #canvas-container, .gen-canvas, #oscilloscope, #order-book-visual { display: none !important; }
         }
 
+        /* Search Filter Buttons */
+        .search-filter {
+            @apply px-4 py-2 text-xs font-mono uppercase tracking-wider border border-off-white/10 bg-transparent text-neutral-500 hover:text-off-white hover:border-off-white/30 transition-all duration-300 rounded;
+        }
+        .search-filter.active {
+            @apply bg-off-white text-black border-off-white;
+        }
+
     </style>
     <!-- Vercel Web Analytics -->
     <script defer src="https://va.vercel-analytics.com/jsr" data-attribution="vercel"></script>
@@ -1428,17 +1436,45 @@
 
     <!-- MODAL CONTAINER -->
     <!-- Search Overlay -->
-    <div id="search-overlay" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300 flex flex-col items-center pt-32 px-6">
-        <div class="w-full max-w-3xl relative">
-            <input type="text" id="search-input" placeholder="Search projects, stacks, or concepts..." 
-                class="w-full bg-transparent border-b border-white/20 text-2xl md:text-4xl font-display text-off-white py-4 focus:outline-none focus:border-white/50 placeholder-neutral-700 transition-all duration-400 font-light" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-            <button id="close-search" class="absolute right-0 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-all duration-300 p-2 hover:rotate-90" style="transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
-                <i data-lucide="x" class="w-8 h-8"></i>
-            </button>
+    <div id="search-overlay" class="fixed inset-0 z-50 bg-black/98 backdrop-blur-2xl opacity-0 pointer-events-none transition-all duration-500 flex flex-col items-center justify-start" style="transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="w-full max-w-5xl px-6 mt-24">
+            <!-- Search Header -->
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-[0.3em] mb-3">Universal Search</div>
+                    <h2 class="font-display text-3xl font-medium text-off-white tracking-tight">Find Projects, Writing & More</h2>
+                </div>
+                <button id="close-search" class="text-neutral-500 hover:text-white transition-all duration-300 p-3 hover:rotate-90 hover:bg-white/5 rounded-full" style="transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <!-- Search Input -->
+            <div class="relative mb-12">
+                <i data-lucide="search" class="w-5 h-5 absolute left-0 top-1/2 -translate-y-1/2 text-neutral-500"></i>
+                <input type="text" id="search-input" placeholder="Search by name, technology, or keyword..." 
+                    class="w-full bg-transparent border-b-2 border-white/20 text-xl font-display text-off-white py-4 pl-8 focus:outline-none focus:border-white placeholder-neutral-600 transition-all duration-400 font-light" style="letter-spacing: -0.01em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+                <div id="search-count" class="absolute right-0 top-1/2 -translate-y-1/2 font-mono text-xs text-neutral-600"></div>
+            </div>
+            
+            <!-- Quick Filters -->
+            <div id="search-filters" class="flex flex-wrap gap-2 mb-8">
+                <button class="search-filter active" data-filter="all">All</button>
+                <button class="search-filter" data-filter="projects">Projects</button>
+                <button class="search-filter" data-filter="writing">Writing</button>
+                <button class="search-filter" data-filter="services">Services</button>
+            </div>
         </div>
         
-        <div id="search-results" class="w-full max-w-3xl mt-12 grid grid-cols-1 gap-4 overflow-y-auto max-h-[60vh] pb-20 scrollbar-hide">
-            <!-- Results injected here -->
+        <!-- Results Container -->
+        <div class="w-full max-w-5xl px-6 flex-1 overflow-y-auto pb-20" style="scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;">
+            <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Results injected here -->
+            </div>
+            <div id="search-empty" class="hidden text-center py-20">
+                <i data-lucide="search-x" class="w-16 h-16 text-neutral-700 mx-auto mb-4"></i>
+                <p class="font-mono text-sm text-neutral-600">No results found</p>
+            </div>
         </div>
     </div>
 
@@ -1448,8 +1484,8 @@
             <!-- Reading Progress Bar -->
             <div id="reading-progress" class="absolute top-0 left-0 h-1 bg-off-white w-0 z-50" style="transition: width 0.1s ease-out; will-change: width;"></div>
             
-            <button id="close-modal" class="sticky top-6 float-right mr-6 z-50 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group hover:rotate-90 hover:scale-110 active:scale-95" style="will-change: transform; margin-bottom: -44px;" aria-label="Close modal">
-                <i data-lucide="x" class="w-6 h-6 text-neutral-400 group-hover:text-off-white transition-colors duration-200"></i>
+            <button id="close-modal" class="sticky top-6 float-right mr-6 z-50 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 hover:bg-white/10 hover:border-white/20 group hover:rotate-90 hover:scale-110 active:scale-95" style="will-change: transform; margin-bottom: -44px; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Close modal">
+                <i data-lucide="x" class="w-6 h-6 text-neutral-400 group-hover:text-off-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);"></i>
             </button>
             
             <!-- Content Injection Area -->
@@ -1463,45 +1499,43 @@
     <main id="app-container">
 
     <!-- Navigation -->
-    <nav class="fixed w-full top-0 z-40 px-8 py-8 glass-nav text-off-white transition-transform duration-500" id="navbar">
-        <div class="max-w-[1600px] mx-auto flex justify-between items-center">
-            <a href="#" class="hover-target magnetic-wrap font-display font-bold text-xl tracking-tighter">
-                <span class="magnetic-content block">S. BOWLES</span>
+    <nav class="fixed w-full top-0 z-40 px-8 py-6 glass-nav text-off-white transition-all duration-500" id="navbar">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-center">
+            <a href="#" class="hover-target magnetic-wrap font-display font-bold text-2xl tracking-tighter group">
+                <span class="magnetic-content block transition-all duration-300 group-hover:scale-105">S. BOWLES</span>
                 <span class="magnetic-area"></span>
             </a>
             
             <!-- Desktop Menu -->
-            <div class="hidden md:flex gap-12 text-[11px] font-medium tracking-[0.2em] uppercase">
-                <a href="#section-services" class="hover-target magnetic-wrap group relative">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Finance</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
+            <div class="hidden md:flex items-center gap-10 text-[11px] font-medium tracking-[0.2em] uppercase">
+                <a href="#section-services" class="hover-target magnetic-wrap group relative py-2">
+                    <span class="magnetic-content block group-hover:text-off-white transition-all duration-300">Services</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-off-white group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#section-services" class="hover-target magnetic-wrap group relative">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Consulting</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
+                <a href="#section-work" class="hover-target magnetic-wrap group relative py-2">
+                    <span class="magnetic-content block group-hover:text-off-white transition-all duration-300">Projects</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-off-white group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#section-work" class="hover-target magnetic-wrap group relative">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Work</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
+                <a href="#section-writing" class="hover-target magnetic-wrap group relative py-2">
+                    <span class="magnetic-content block group-hover:text-off-white transition-all duration-300">Writing</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-off-white group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
-                <a href="#section-writing" class="hover-target magnetic-wrap group relative">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Writing</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
-                    <span class="magnetic-area"></span>
-                </a>
-                <a href="#section-contact" class="hover-target magnetic-wrap group relative">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-all duration-300">Contact</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-px bg-gray-200 group-hover:w-full transition-all duration-300"></span>
+                <a href="#section-contact" class="hover-target magnetic-wrap group relative py-2">
+                    <span class="magnetic-content block group-hover:text-off-white transition-all duration-300">Contact</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-off-white group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
                 
+                <div class="h-4 w-px bg-off-white/20 mx-2"></div>
+                
                 <!-- Search Trigger -->
-                <button id="search-trigger" class="hover-target magnetic-wrap group ml-4" aria-label="Search">
-                    <span class="magnetic-content block group-hover:text-gray-200 transition-colors">
+                <button id="search-trigger" class="hover-target magnetic-wrap group relative py-2 px-3 border border-off-white/20 hover:border-off-white hover:bg-off-white/5 transition-all duration-300 rounded" aria-label="Search">
+                    <span class="magnetic-content flex items-center gap-2 group-hover:text-off-white transition-colors">
                         <i data-lucide="search" class="w-4 h-4"></i>
+                        <span class="text-[10px]">SEARCH</span>
                     </span>
                     <span class="magnetic-area"></span>
                 </button>
@@ -1546,7 +1580,7 @@
             <div class="mt-20 max-w-6xl pointer-events-auto relative">
                 <div class="max-w-[650px] relative z-10">
                     <p class="font-sans text-xl md:text-2xl text-neutral-200 leading-[1.7] reveal-text mb-12" style="transition-delay: 500ms;">
-                        I turn complex markets into clear, actionable models and lead teams to deliver results—equities, crypto, and beyond.
+                        I turn complex markets into clear, actionable models and lead teams to deliver results: equities, crypto, and beyond.
                     </p>
                     
                     <div class="reveal-text mb-8 flex flex-wrap gap-4" style="transition-delay: 600ms;">
@@ -1579,23 +1613,39 @@
     <div class="py-8 border-y border-off-white/15 bg-charcoal overflow-hidden flex relative z-20 pointer-events-none select-none">
         <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;">
             <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
-            <span>FULL STACK</span> <span class="text-[#666666]">///</span>
+            <span>EQUITY RESEARCH</span> <span class="text-[#666666]">///</span>
+            <span>DCF VALUATION</span> <span class="text-[#666666]">///</span>
+            <span>FULL STACK DEV</span> <span class="text-[#666666]">///</span>
+            <span>REACT / NEXT.JS</span> <span class="text-[#666666]">///</span>
+            <span>TYPESCRIPT</span> <span class="text-[#666666]">///</span>
+            <span>PYTHON</span> <span class="text-[#666666]">///</span>
             <span>WEB3 SYSTEMS</span> <span class="text-[#666666]">///</span>
+            <span>SOLIDITY</span> <span class="text-[#666666]">///</span>
+            <span>SMART CONTRACTS</span> <span class="text-[#666666]">///</span>
             <span>DATA SCIENCE</span> <span class="text-[#666666]">///</span>
-            <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
-            <span>FULL STACK</span> <span class="text-[#666666]">///</span>
-            <span>WEB3 SYSTEMS</span> <span class="text-[#666666]">///</span>
-            <span>DATA SCIENCE</span> <span class="text-[#666666]">///</span>
+            <span>MACHINE LEARNING</span> <span class="text-[#666666]">///</span>
+            <span>SQL / POSTGRES</span> <span class="text-[#666666]">///</span>
+            <span>GEOSPATIAL ANALYSIS</span> <span class="text-[#666666]">///</span>
+            <span>API DESIGN</span> <span class="text-[#666666]">///</span>
+            <span>FIGMA / UI/UX</span> <span class="text-[#666666]">///</span>
         </div>
         <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;" aria-hidden="true">
             <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
-            <span>FULL STACK</span> <span class="text-[#666666]">///</span>
+            <span>EQUITY RESEARCH</span> <span class="text-[#666666]">///</span>
+            <span>DCF VALUATION</span> <span class="text-[#666666]">///</span>
+            <span>FULL STACK DEV</span> <span class="text-[#666666]">///</span>
+            <span>REACT / NEXT.JS</span> <span class="text-[#666666]">///</span>
+            <span>TYPESCRIPT</span> <span class="text-[#666666]">///</span>
+            <span>PYTHON</span> <span class="text-[#666666]">///</span>
             <span>WEB3 SYSTEMS</span> <span class="text-[#666666]">///</span>
+            <span>SOLIDITY</span> <span class="text-[#666666]">///</span>
+            <span>SMART CONTRACTS</span> <span class="text-[#666666]">///</span>
             <span>DATA SCIENCE</span> <span class="text-[#666666]">///</span>
-            <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
-            <span>FULL STACK</span> <span class="text-[#666666]">///</span>
-            <span>WEB3 SYSTEMS</span> <span class="text-[#666666]">///</span>
-            <span>DATA SCIENCE</span> <span class="text-[#666666]">///</span>
+            <span>MACHINE LEARNING</span> <span class="text-[#666666]">///</span>
+            <span>SQL / POSTGRES</span> <span class="text-[#666666]">///</span>
+            <span>GEOSPATIAL ANALYSIS</span> <span class="text-[#666666]">///</span>
+            <span>API DESIGN</span> <span class="text-[#666666]">///</span>
+            <span>FIGMA / UI/UX</span> <span class="text-[#666666]">///</span>
         </div>
     </div>
 
@@ -1760,6 +1810,22 @@
                     <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">05</span>
                 </div>
             </div>
+
+            <!-- Project 6: Music / Double Bass -->
+            <div class="group project-card tech-corner w-full md:w-3/4 ml-auto cursor-pointer reveal-text view-project-target mt-32" data-project="music" onclick="openModal('music', 'project')">
+                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
+                     <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
+                        <canvas id="canvas-music" class="gen-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
+                    <div>
+                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">PERFORMANCE / COMPOSITION</h3>
+                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Double Bass / Classical Training / Jazz Exploration</p>
+                    </div>
+                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">06</span>
+                </div>
+            </div>
             
             <div class="mt-32 text-center reveal-text">
                 <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target inline-block font-display text-lg border border-off-white/20 px-10 py-5 hover:bg-off-white hover:text-black transition-colors duration-500">
@@ -1863,7 +1929,7 @@
                 </div>
 
                  <!-- Finance: Variance -->
-                <div data-category="finance" data-writing="variance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <div data-category="finance" data-writing="variance" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -1875,7 +1941,7 @@
                 </div>
 
                 <!-- Finance: Bootstrapping (NEW) -->
-                <div data-category="finance" data-writing="bootstrap" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <div data-category="finance" data-writing="bootstrap" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -1887,7 +1953,7 @@
                 </div>
 
                 <!-- Finance: Credit (NEW) -->
-                <div data-category="finance" data-writing="credit" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <div data-category="finance" data-writing="credit" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -1899,7 +1965,7 @@
                 </div>
 
                 <!-- Finance: Leverage (NEW) -->
-                <div data-category="finance" data-writing="leverage" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <div data-category="finance" data-writing="leverage" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -1931,7 +1997,7 @@
                     
                     <div class="font-display text-3xl md:text-5xl leading-[1.2] font-light space-y-12 text-neutral-300">
                         <p>
-                            Whether in code, markets, or music, I search for the dissonance. I believe in the "unpleasant details"—the friction points others ignore. 
+                            Whether in code, markets, or music, I search for the dissonance. I believe in the "unpleasant details": the friction points others ignore. 
                         </p>
                         <p>
                            My work is a study in dualities: spreadsheet precision meeting startup chaos. Classical structure meeting market volatility. Pattern recognition meeting creative intuition.
@@ -2012,7 +2078,7 @@
                 <div class="relative w-full h-[60vh] border border-off-white/10 bg-[#020202] overflow-hidden reveal-text order-2 md:order-1">
                     <canvas id="balance-canvas" class="absolute inset-0 w-full h-full"></canvas>
                     <div class="absolute bottom-6 left-6 font-mono text-xs text-neutral-500 z-10 pointer-events-none">
-                        <span class="block">FIG. 01 — ORBITAL RESONANCE</span>
+                        <span class="block">FIG. 01 / ORBITAL RESONANCE</span>
                         <span class="block text-neutral-700">φ = 1.618 // n = 7</span>
                     </div>
                 </div>
@@ -2031,7 +2097,7 @@
 
                     <div class="space-y-8 font-sans text-neutral-400 leading-relaxed max-w-xl">
                         <p>
-                            This platform is a living artifact—a testament to the belief that technical rigor and aesthetic beauty are not mutually exclusive. Built without bloated frameworks, it relies on raw mathematics and physics to render real-time data streams, geospatial analytics, and interactive financial models.
+                            This platform is a living artifact: a testament to the belief that technical rigor and aesthetic beauty are not mutually exclusive. Built without bloated frameworks, it relies on raw mathematics and physics to render real-time data streams, geospatial analytics, and interactive financial models.
                         </p>
                         <p>
                             It represents the full breadth of my work: the precision required for institutional finance, the logic needed for systems architecture, and the creativity essential for modern web design.
@@ -2725,9 +2791,9 @@
 
                         <!-- Deep Dive Metrics -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-mid-gray border border-mid-gray modal-stagger" style="transition-delay: 0.5s">
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">TVL</div>
-                                <div class="text-2xl font-mono text-off-white" id="detail-tvl-syrup">--</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);" class="group-hover:text-neutral-400">TVL</div>
+                                <div class="text-2xl font-mono text-off-white" style="letter-spacing: -0.02em;" id="detail-tvl-syrup">--</div>
                             </div>
                             <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
                                 <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">APY</div>
@@ -2742,11 +2808,11 @@
                                 <div class="flex items-center gap-2">
                                     <div class="text-2xl font-mono text-off-white">LOW</div>
                                     <div class="flex gap-1 h-2">
-                                        <div class="w-2 bg-green-500 rounded-sm"></div>
-                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
-                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
-                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
-                                        <div class="w-2 bg-green-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
                                     </div>
                                 </div>
                             </div>
@@ -2757,7 +2823,7 @@
                             <!-- Main Analysis -->
                             <div class="lg:col-span-8 space-y-16">
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">The Convergence of TradFi and DeFi</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">The Convergence of TradFi and DeFi</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             Syrup represents a critical infrastructure layer for the maturation of DeFi, bridging the gap between permissioned institutional lending and permissionless yield. Unlike inflationary yield farming, Syrup's yield is derived from real-world lending activity to institutional borrowers. This creates a "real yield" narrative that becomes increasingly attractive as risk-free rates in TradFi begin to compress.
@@ -2769,7 +2835,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Sustainable Yield Mechanics</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Sustainable Yield Mechanics</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             The yield generated by Syrup is not a function of token emissions but rather interest paid by borrowers. These borrowers are typically market makers (e.g., Wintermute, Auros) or crypto-native funds who require working capital. This creates a sustainable economic loop where yield is backed by actual cash flow rather than speculative token printing.
@@ -2781,7 +2847,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Market Structure & Correlation</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Market Structure & Correlation</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             Current market structure suggests a rotation from high-beta altcoins into sustainable yield products. Syrup's correlation to ETH is currently 0.12, making it an ideal portfolio hedge. The token acts as a proxy for the health of the institutional crypto credit market, which is currently in a recovery phase following the deleveraging events of the previous cycle.
@@ -2794,7 +2860,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Competitive Moat & The 'Drip'</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Competitive Moat & The 'Drip'</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             While other RWA (Real World Asset) protocols exist, Syrup benefits from Maple Finance's established reputation and 3-year track record. The "Drip" mechanism, which allows for instant liquidity on deposits (unlike the lock-up periods of competitors), is a significant UX improvement that positions Syrup as a superior "savings account" for on-chain capital.
@@ -2806,7 +2872,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Risk Stratification</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Risk Stratification</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             The primary risk in Syrup is not code, but credit. If a borrower defaults, the pool takes a loss. However, Syrup mitigates this through a multi-tranche structure where "First Loss Capital" provided by pool delegates absorbs the initial impact of any default. This aligns the incentives of the underwriters with the depositors.
@@ -2820,12 +2886,12 @@
 
                             <!-- Sidebar Info -->
                             <div class="lg:col-span-4 space-y-8">
-                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
-                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Key Catalysts</h4>
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6" style="transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase mb-4" style="letter-spacing: 0.15em;">Key Catalysts</h4>
                                     <ul class="space-y-2">
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">01</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Expansion to Base and Solana chains (Q1 2026)</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">01</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">Expansion to Base and Solana chains (Q1 2026)</p>
                                         </li>
                                         <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
                                             <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">02</span>
@@ -2838,20 +2904,20 @@
                                     </ul>
                                 </div>
 
-                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
-                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Risk Factors</h4>
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6" style="transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase mb-4" style="letter-spacing: 0.15em;">Risk Factors</h4>
                                     <ul class="space-y-2">
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Borrower default risk (mitigated by pool delegates)</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">Borrower default risk (mitigated by pool delegates)</p>
                                         </li>
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Smart contract risk in new chain deployments</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">Smart contract risk in new chain deployments</p>
                                         </li>
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Regulatory uncertainty regarding "securities" classification</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">!!</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">Regulatory uncertainty regarding "securities" classification</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -2877,28 +2943,28 @@
 
                         <!-- Deep Dive Metrics -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-mid-gray border border-mid-gray modal-stagger" style="transition-delay: 0.5s">
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Liquidity</div>
-                                <div class="text-2xl font-mono text-off-white" id="detail-liquidity-metadao">--</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">Liquidity</div>
+                                <div class="text-2xl font-mono text-off-white" style="letter-spacing: -0.02em;" id="detail-liquidity-metadao">--</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Volume</div>
-                                <div class="text-2xl font-mono text-off-white" id="detail-volume-metadao">--</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">Volume</div>
+                                <div class="text-2xl font-mono text-off-white" style="letter-spacing: -0.02em;" id="detail-volume-metadao">--</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">FDV</div>
-                                <div class="text-2xl font-mono text-off-white" id="detail-fdv-metadao">--</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">FDV</div>
+                                <div class="text-2xl font-mono text-off-white" style="letter-spacing: -0.02em;" id="detail-fdv-metadao">--</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">NAV Discount</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">NAV Discount</div>
                                 <div class="flex items-center gap-2">
                                     <div class="text-2xl font-mono text-off-white">35%</div>
                                     <div class="flex gap-1 h-2">
-                                        <div class="w-2 bg-yellow-500 rounded-sm"></div>
-                                        <div class="w-2 bg-yellow-500 rounded-sm"></div>
-                                        <div class="w-2 bg-yellow-500/30 rounded-sm"></div>
-                                        <div class="w-2 bg-yellow-500/30 rounded-sm"></div>
-                                        <div class="w-2 bg-yellow-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white rounded-sm"></div>
+                                        <div class="w-2 bg-white rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
                                     </div>
                                 </div>
                             </div>
@@ -2909,7 +2975,7 @@
                             <!-- Main Analysis -->
                             <div class="lg:col-span-8 space-y-16">
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Futarchy: Replacing Politics with Markets</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Futarchy: Replacing Politics with Markets</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             MetaDAO replaces political voting with market speculation, a concept known as "Futarchy". Proposals are passed only if the market predicts they will increase the token's value. This aligns incentives perfectly but is currently misunderstood by the broader market, leading to a mispricing of the governance token relative to its treasury assets.
@@ -2921,7 +2987,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Mechanism Design: Conditional Markets</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Mechanism Design: Conditional Markets</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             In MetaDAO, every proposal creates two conditional markets: "Pass" and "Fail". Traders speculate on the future price of the META token in both scenarios. If the Time-Weighted Average Price (TWAP) of the "Pass" market is higher than the "Fail" market after a set period, the proposal executes automatically.
@@ -2933,7 +2999,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Deep Value: The NAV Discount Thesis</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Deep Value: The NAV Discount Thesis</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             The DAO treasury holds significant assets in USDC and SOL. At current prices, META is trading at a 35% discount to the book value of these assets. This is a classic "Benjamin Graham" value play in a sector dominated by meme coins. The market is effectively pricing the governance layer as a liability rather than an asset.
@@ -2945,7 +3011,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Security Model: Mitigating Manipulation</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Security Model: Mitigating Manipulation</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             Critics of Futarchy often point to market manipulation as a potential attack vector. A wealthy attacker could theoretically short the "Pass" market to tank a proposal. However, in doing so, they would be selling the token at a discount to rational buyers who see the proposal's value. This creates a "subsidy" for honest actors.
@@ -2959,15 +3025,15 @@
 
                             <!-- Sidebar Info -->
                             <div class="lg:col-span-4 space-y-8">
-                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
-                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Key Catalysts</h4>
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6" style="transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase mb-4" style="letter-spacing: 0.15em;">Key Catalysts</h4>
                                     <ul class="space-y-2">
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">01</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">MIP-12 Proposal: Treasury buyback activation</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">01</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">MIP-12 Proposal: Treasury buyback activation</p>
                                         </li>
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">02</span>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">02</span>
                                             <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Integration with major Solana lending protocols</p>
                                         </li>
                                         <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
@@ -2981,15 +3047,15 @@
                                     <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Risk Factors</h4>
                                     <ul class="space-y-2">
                                         <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300 transition-colors">!!</span>
                                             <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Low liquidity on Solana DEXs</p>
                                         </li>
                                         <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300 transition-colors">!!</span>
                                             <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Complexity of Futarchy mechanism may deter retail</p>
                                         </li>
                                         <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300 transition-colors">!!</span>
                                             <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Oracle manipulation risks in conditional markets</p>
                                         </li>
                                     </ul>
@@ -3016,28 +3082,28 @@
 
                         <!-- Deep Dive Metrics -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-mid-gray border border-mid-gray modal-stagger" style="transition-delay: 0.5s">
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Liquidity</div>
-                                <div class="text-2xl font-mono text-off-white" id="detail-liquidity-myx">--</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">Liquidity</div>
+                                <div class="text-2xl font-mono text-off-white" style="letter-spacing: -0.02em;" id="detail-liquidity-myx">--</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Volume</div>
-                                <div class="text-2xl font-mono text-off-white" id="detail-volume-myx">--</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">Volume</div>
+                                <div class="text-2xl font-mono text-off-white" style="letter-spacing: -0.02em;" id="detail-volume-myx">--</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">FDV</div>
-                                <div class="text-2xl font-mono text-off-white" id="detail-fdv-myx">--</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">FDV</div>
+                                <div class="text-2xl font-mono text-off-white" style="letter-spacing: -0.02em;" id="detail-fdv-myx">--</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#151515] transition-colors duration-300 group">
-                                <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest mb-2 group-hover:text-neutral-400 transition-colors">Inflation Rate</div>
+                            <div class="p-6 bg-charcoal hover:bg-[#151515] group" style="transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <div class="text-[10px] font-mono text-dim-gray uppercase mb-2 group-hover:text-neutral-400" style="letter-spacing: 0.15em; transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">Inflation Rate</div>
                                 <div class="flex items-center gap-2">
                                     <div class="text-2xl font-mono text-off-white">HIGH</div>
                                     <div class="flex gap-1 h-2">
-                                        <div class="w-2 bg-red-500 rounded-sm"></div>
-                                        <div class="w-2 bg-red-500 rounded-sm"></div>
-                                        <div class="w-2 bg-red-500 rounded-sm"></div>
-                                        <div class="w-2 bg-red-500 rounded-sm"></div>
-                                        <div class="w-2 bg-red-500/30 rounded-sm"></div>
+                                        <div class="w-2 bg-white rounded-sm"></div>
+                                        <div class="w-2 bg-white rounded-sm"></div>
+                                        <div class="w-2 bg-white rounded-sm"></div>
+                                        <div class="w-2 bg-white rounded-sm"></div>
+                                        <div class="w-2 bg-white/30 rounded-sm"></div>
                                     </div>
                                 </div>
                             </div>
@@ -3048,10 +3114,10 @@
                             <!-- Main Analysis -->
                             <div class="lg:col-span-8 space-y-16">
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">The Great Unlock: A Supply Shock Event</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">The Great Unlock: A Supply Shock Event</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
-                                            The fundamental thesis for shorting MYX is anchored in an impending supply shock. On January 15th, the protocol is scheduled to unlock 12% of its total supply—approximately 15 million tokens—to early venture capital investors and the founding team. This represents a 40% increase in the current circulating supply overnight.
+                                            The fundamental thesis for shorting MYX is anchored in an impending supply shock. On January 15th, the protocol is scheduled to unlock 12% of its total supply: approximately 15 million tokens to early venture capital investors and the founding team. This represents a 40% increase in the current circulating supply overnight.
                                         </p>
                                         <p class="font-serif text-light-gray leading-relaxed text-lg mt-4">
                                             Historically, "cliff unlocks" of this magnitude act as a massive dampener on price action. Early investors, sitting on paper gains from seed rounds priced significantly lower than the current market value, have a strong incentive to realize liquidity. The market is currently front-running this event, but the sheer volume of tokens hitting the order books is likely to overwhelm existing buy-side liquidity.
@@ -3060,7 +3126,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Broken Tokenomics: The Inflationary Spiral</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Broken Tokenomics: The Inflationary Spiral</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             MYX utilizes a "Vote Escrow" (ve) model similar to Curve, but it lacks the critical bribe revenue ecosystem that makes the Curve model sustainable. The protocol is currently emitting 450,000 MYX per week to incentivize liquidity providers. This aggressive emission schedule is diluting existing holders at an annualized rate of over 22%.
@@ -3072,7 +3138,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Competitive Obsolescence</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Competitive Obsolescence</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             The perpetual DEX landscape has evolved rapidly, leaving MYX behind. Competitors like Hyperliquid and dYdX v4 offer superior latency, deeper liquidity, and better user experiences. MYX, built on BSC, suffers from the chain's declining relevance in the high-frequency trading sector.
@@ -3084,7 +3150,7 @@
                                 </section>
 
                                 <section>
-                                    <h3 class="font-display text-3xl text-off-white mb-6">Valuation Disconnect</h3>
+                                    <h3 class="font-display text-3xl text-off-white mb-6" style="letter-spacing: -0.01em; line-height: 1.2;">Valuation Disconnect</h3>
                                     <div class="prose prose-invert max-w-none">
                                         <p class="font-serif text-light-gray leading-relaxed text-lg">
                                             Despite these headwinds, MYX trades at a Fully Diluted Valuation (FDV) to Revenue ratio of 85x. The sector average for mature perp DEXs is closer to 25x. This implies that MYX is overvalued by a factor of 3 relative to its peers, even before accounting for the upcoming supply shock.
@@ -3098,33 +3164,33 @@
 
                             <!-- Sidebar Info -->
                             <div class="lg:col-span-4 space-y-8">
-                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
-                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Key Catalysts</h4>
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6" style="transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase mb-4" style="letter-spacing: 0.15em;">Key Catalysts</h4>
                                     <ul class="space-y-2">
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">01</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">January 15th Token Unlock (~15M tokens)</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">01</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">January 15th Token Unlock (~15M tokens)</p>
                                         </li>
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">02</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">End of current trading incentive program</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">02</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">End of current trading incentive program</p>
                                         </li>
-                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white transition-colors">03</span>
-                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Competitor Hyperliquid launching mainnet</p>
+                                        <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded cursor-default group" style="transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                            <span class="text-off-white font-mono text-xs mt-1 group-hover:text-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">03</span>
+                                            <p class="text-sm text-neutral-400 group-hover:text-neutral-300" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);">Competitor Hyperliquid launching mainnet</p>
                                         </li>
                                     </ul>
                                 </div>
 
-                                <div class="bg-neutral-900/30 border border-mid-gray p-6">
-                                    <h4 class="font-mono text-xs text-dim-gray uppercase tracking-widest mb-4">Risk Factors</h4>
+                                <div class="bg-neutral-900/30 border border-mid-gray p-6" style="transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                                    <h4 class="font-mono text-xs text-dim-gray uppercase mb-4" style="letter-spacing: 0.15em;">Risk Factors</h4>
                                     <ul class="space-y-2">
                                         <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300 transition-colors">!!</span>
                                             <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Short squeeze risk on major partnership news</p>
                                         </li>
                                         <li class="flex gap-3 items-start hover:bg-white/5 p-2 -mx-2 rounded transition-colors cursor-default group">
-                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-red-400 transition-colors">!!</span>
+                                            <span class="text-neutral-500 font-mono text-xs mt-1 group-hover:text-neutral-300 transition-colors">!!</span>
                                             <p class="text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">Potential for team to delay unlock (low probability)</p>
                                         </li>
                                     </ul>
@@ -3319,7 +3385,7 @@
                             <div class="border border-mid-gray bg-charcoal p-6 hover:bg-[#151515] transition-colors">
                                 <div class="flex items-start justify-between mb-4">
                                     <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest">Population Growth</div>
-                                    <i data-lucide="trending-up" class="w-4 h-4 text-green-500"></i>
+                                    <i data-lucide="trending-up" class="w-4 h-4 text-neutral-400"></i>
                                 </div>
                                 <div class="text-3xl font-display text-off-white mb-2" id="pop-growth">+2.8%</div>
                                 <div class="text-xs text-light-gray">YoY (2024 vs 2023)</div>
@@ -3330,7 +3396,7 @@
                             <div class="border border-mid-gray bg-charcoal p-6 hover:bg-[#151515] transition-colors">
                                 <div class="flex items-start justify-between mb-4">
                                     <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest">Tech Employment</div>
-                                    <i data-lucide="briefcase" class="w-4 h-4 text-blue-400"></i>
+                                    <i data-lucide="briefcase" class="w-4 h-4 text-neutral-400"></i>
                                 </div>
                                 <div class="text-3xl font-display text-off-white mb-2">28.4%</div>
                                 <div class="text-xs text-light-gray">Of total workforce</div>
@@ -3341,7 +3407,7 @@
                             <div class="border border-mid-gray bg-charcoal p-6 hover:bg-[#151515] transition-colors">
                                 <div class="flex items-start justify-between mb-4">
                                     <div class="text-[10px] font-mono text-dim-gray uppercase tracking-widest">Median HH Income</div>
-                                    <i data-lucide="dollar-sign" class="w-4 h-4 text-yellow-400"></i>
+                                    <i data-lucide="dollar-sign" class="w-4 h-4 text-neutral-400"></i>
                                 </div>
                                 <div class="text-3xl font-display text-off-white mb-2">$91,500</div>
                                 <div class="text-xs text-light-gray">Austin Metro (2024)</div>
@@ -3367,7 +3433,7 @@
                                         <div class="text-xs font-mono text-dim-gray uppercase mb-3">Active Listings</div>
                                         <div class="text-4xl font-display text-off-white mb-2">4,287</div>
                                         <div class="flex items-center gap-2 text-xs">
-                                            <span class="text-red-400">↓ 8.3%</span>
+                                            <span class="text-neutral-400">↓ 8.3%</span>
                                             <span class="text-dim-gray">vs last quarter</span>
                                         </div>
                                     </div>
@@ -3375,7 +3441,7 @@
                                         <div class="text-xs font-mono text-dim-gray uppercase mb-3">Days on Market</div>
                                         <div class="text-4xl font-display text-off-white mb-2">42</div>
                                         <div class="flex items-center gap-2 text-xs">
-                                            <span class="text-green-400">↓ 12 days</span>
+                                            <span class="text-neutral-400">↓ 12 days</span>
                                             <span class="text-dim-gray">vs 2024 avg</span>
                                         </div>
                                     </div>
@@ -3383,7 +3449,7 @@
                                         <div class="text-xs font-mono text-dim-gray uppercase mb-3">Sold Properties</div>
                                         <div class="text-4xl font-display text-off-white mb-2">3,921</div>
                                         <div class="flex items-center gap-2 text-xs">
-                                            <span class="text-green-400">↑ 5.7%</span>
+                                            <span class="text-neutral-400">↑ 5.7%</span>
                                             <span class="text-dim-gray">last 90 days</span>
                                         </div>
                                     </div>
@@ -3391,14 +3457,14 @@
                                         <div class="text-xs font-mono text-dim-gray uppercase mb-3">Absorption Rate</div>
                                         <div class="text-4xl font-display text-off-white mb-2">3.2</div>
                                         <div class="flex items-center gap-2 text-xs">
-                                            <span class="text-yellow-400">Balanced</span>
+                                            <span class="text-neutral-400">Balanced</span>
                                             <span class="text-dim-gray">months supply</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="p-8 bg-[#0A0A0A] border-t border-mid-gray">
                                     <div class="font-mono text-xs text-dim-gray leading-relaxed">
-                                        <strong class="text-neutral-300">Market Analysis:</strong> Austin's inventory remains constrained at 3.2 months supply (balanced market: 4-6 months). Days on market decreasing indicates strong buyer demand. Permits data shows 8,500+ new construction starts—pipeline will ease inventory pressure in 12-18 months.
+                                        <strong class="text-neutral-300">Market Analysis:</strong> Austin's inventory remains constrained at 3.2 months supply (balanced market: 4-6 months). Days on market decreasing indicates strong buyer demand. Permits data shows 8,500+ new construction starts: pipeline will ease inventory pressure in 12-18 months.
                                     </div>
                                 </div>
                             </div>
@@ -3480,12 +3546,12 @@
                                                 <td class="p-4 font-mono text-off-white">78702</td>
                                                 <td class="p-4 text-light-gray">East Downtown</td>
                                                 <td class="p-4 text-right font-mono text-off-white">$675,000</td>
-                                                <td class="p-4 text-right font-mono text-green-400">+8.2%</td>
+                                                <td class="p-4 text-right font-mono text-neutral-400">+8.2%</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">18</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">2.1 mo</td>
                                                 <td class="p-4 text-center">
                                                     <span class="inline-flex items-center gap-1">
-                                                        <i data-lucide="trending-up" class="w-3 h-3 text-green-400"></i>
+                                                        <i data-lucide="trending-up" class="w-3 h-3 text-neutral-400"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -3493,12 +3559,12 @@
                                                 <td class="p-4 font-mono text-off-white">78704</td>
                                                 <td class="p-4 text-light-gray">South Austin</td>
                                                 <td class="p-4 text-right font-mono text-off-white">$825,000</td>
-                                                <td class="p-4 text-right font-mono text-green-400">+4.1%</td>
+                                                <td class="p-4 text-right font-mono text-neutral-400">+4.1%</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">22</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">2.8 mo</td>
                                                 <td class="p-4 text-center">
                                                     <span class="inline-flex items-center gap-1">
-                                                        <i data-lucide="trending-up" class="w-3 h-3 text-green-400"></i>
+                                                        <i data-lucide="trending-up" class="w-3 h-3 text-neutral-400"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -3506,12 +3572,12 @@
                                                 <td class="p-4 font-mono text-off-white">78721</td>
                                                 <td class="p-4 text-light-gray">Eastside Tech</td>
                                                 <td class="p-4 text-right font-mono text-off-white">$485,000</td>
-                                                <td class="p-4 text-right font-mono text-green-400">+12.5%</td>
+                                                <td class="p-4 text-right font-mono text-neutral-400">+12.5%</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">15</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">1.6 mo</td>
                                                 <td class="p-4 text-center">
                                                     <span class="inline-flex items-center gap-1">
-                                                        <i data-lucide="trending-up" class="w-3 h-3 text-green-400"></i>
+                                                        <i data-lucide="trending-up" class="w-3 h-3 text-neutral-400"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -3532,12 +3598,12 @@
                                                 <td class="p-4 font-mono text-off-white">78758</td>
                                                 <td class="p-4 text-light-gray">North Loop</td>
                                                 <td class="p-4 text-right font-mono text-off-white">$495,000</td>
-                                                <td class="p-4 text-right font-mono text-green-400">+6.8%</td>
+                                                <td class="p-4 text-right font-mono text-neutral-400">+6.8%</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">28</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">3.1 mo</td>
                                                 <td class="p-4 text-center">
                                                     <span class="inline-flex items-center gap-1">
-                                                        <i data-lucide="trending-up" class="w-3 h-3 text-green-400"></i>
+                                                        <i data-lucide="trending-up" class="w-3 h-3 text-neutral-400"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -3545,12 +3611,12 @@
                                                 <td class="p-4 font-mono text-off-white">78701</td>
                                                 <td class="p-4 text-light-gray">Downtown</td>
                                                 <td class="p-4 text-right font-mono text-off-white">$595,000</td>
-                                                <td class="p-4 text-right font-mono text-red-400">-5.2%</td>
+                                                <td class="p-4 text-right font-mono text-neutral-400">-5.2%</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">52</td>
                                                 <td class="p-4 text-right font-mono text-light-gray">5.8 mo</td>
                                                 <td class="p-4 text-center">
                                                     <span class="inline-flex items-center gap-1">
-                                                        <i data-lucide="trending-down" class="w-3 h-3 text-red-400"></i>
+                                                        <i data-lucide="trending-down" class="w-3 h-3 text-neutral-400"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -3559,7 +3625,7 @@
                                 </div>
                                 <div class="p-6 border-t border-mid-gray bg-[#0A0A0A]">
                                     <div class="flex items-start gap-3 text-xs">
-                                        <i data-lucide="info" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                                        <i data-lucide="info" class="w-4 h-4 text-neutral-400 shrink-0 mt-0.5"></i>
                                         <p class="text-dim-gray leading-relaxed">
                                             <span class="text-light-gray font-medium">DOM:</span> Days on Market &nbsp;|&nbsp; <span class="text-light-gray font-medium">Inventory:</span> Months of supply &nbsp;|&nbsp; Data reflects Q4 2024 market conditions
                                         </p>
@@ -3577,7 +3643,7 @@
                                             <h3 class="font-display text-xl text-off-white mb-2">Building Permit Valuations</h3>
                                             <p class="font-mono text-xs text-dim-gray">Construction investment by month (2024)</p>
                                         </div>
-                                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono text-blue-400 uppercase tracking-wider">City of Austin Open Data</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 text-[10px] font-mono text-neutral-400 uppercase tracking-wider">City of Austin Open Data</span>
                                     </div>
                                 </div>
                                 <div class="p-8 h-[350px]">
@@ -3699,21 +3765,21 @@
                                 <div>
                                     <h4 class="font-display text-xl text-off-white mb-4">The "Streaming Money" Problem</h4>
                                     <p class="text-sm text-neutral-400 leading-relaxed mb-6">
-                                        Traditional payroll is batched (bi-weekly), creating liquidity gaps for employees. We wanted to enable <strong>continuous salary streaming</strong>—paying employees by the second—while handling tax compliance and treasury management automatically.
+                                        Traditional payroll is batched (bi-weekly), creating liquidity gaps for employees. We wanted to enable <strong>continuous salary streaming</strong>: paying employees by the second while handling tax compliance and treasury management automatically.
                                     </p>
                                     
                                     <div class="space-y-4">
                                         <div class="bg-[#0F0F0F] border border-white/5 p-4">
                                             <div class="flex justify-between items-center mb-2">
                                                 <span class="font-mono text-xs text-neutral-500">Challenge</span>
-                                                <i data-lucide="alert-circle" class="w-3 h-3 text-red-400"></i>
+                                                <i data-lucide="alert-circle" class="w-3 h-3 text-neutral-400"></i>
                                             </div>
                                             <p class="text-xs text-neutral-300">Gas costs for per-second transfers on Ethereum Mainnet are prohibitive.</p>
                                         </div>
                                         <div class="bg-[#0F0F0F] border border-white/5 p-4">
                                             <div class="flex justify-between items-center mb-2">
                                                 <span class="font-mono text-xs text-neutral-500">Solution</span>
-                                                <i data-lucide="check-circle" class="w-3 h-3 text-green-400"></i>
+                                                <i data-lucide="check-circle" class="w-3 h-3 text-neutral-400"></i>
                                             </div>
                                             <p class="text-xs text-neutral-300">Implemented EIP-1620 style streams where balance is calculated dynamically based on block.timestamp rather than pushing transactions.</p>
                                         </div>
@@ -3723,23 +3789,23 @@
                                 <!-- Code Snippet -->
                                 <div class="border border-off-white/10 bg-[#030303] font-mono text-xs rounded overflow-hidden">
                                     <div class="flex items-center gap-2 px-4 py-2 border-b border-off-white/10 bg-[#0F0F0F]">
-                                        <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                                        <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
-                                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                        <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                                        <div class="w-2 h-2 rounded-full bg-white/40"></div>
+                                        <div class="w-2 h-2 rounded-full bg-white/60"></div>
                                         <span class="ml-2 text-neutral-500">PayrollStream.sol</span>
                                     </div>
                                     <div class="p-6 overflow-x-auto">
 <pre><code class="language-solidity text-neutral-400">
-<span class="text-purple-400">function</span> <span class="text-blue-400">balanceOf</span>(<span class="text-orange-400">address</span> employee) <span class="text-purple-400">public view returns</span> (<span class="text-orange-400">uint256</span>) {
-    Stream <span class="text-purple-400">storage</span> s = streams[employee];
+<span class="text-neutral-400">function</span> <span class="text-neutral-300">balanceOf</span>(<span class="text-neutral-400">address</span> employee) <span class="text-neutral-400">public view returns</span> (<span class="text-neutral-400">uint256</span>) {
+    Stream <span class="text-neutral-400">storage</span> s = streams[employee];
     
     <span class="text-gray-500">// Calculate delta since last withdrawal</span>
-    <span class="text-orange-400">uint256</span> delta = <span class="text-yellow-400">block.timestamp</span> - s.lastWithdrawal;
+    <span class="text-neutral-400">uint256</span> delta = <span class="text-neutral-300">block.timestamp</span> - s.lastWithdrawal;
     
     <span class="text-gray-500">// Rate * Time = Money accrued</span>
-    <span class="text-orange-400">uint256</span> accrued = delta * s.ratePerSecond;
+    <span class="text-neutral-400">uint256</span> accrued = delta * s.ratePerSecond;
     
-    <span class="text-purple-400">return</span> accrued + s.remainingBalance;
+    <span class="text-neutral-400">return</span> accrued + s.remainingBalance;
 }
 </code></pre>
                                     </div>
@@ -3780,7 +3846,7 @@
                 title: "INSTITUTIONAL FINANCIAL MODELING",
                 subtitle: "Equity Research & Valuation Frameworks",
                 tags: ["Equity Research", "DCF Modeling", "Sector Analysis", "Valuation"],
-                description: "Building institutional-grade financial models to uncover divergence from consensus. Deep-dive analysis across consumer, fintech, automotive, and energy storage sectors—each backed by rigorous DCF modeling and thesis-driven valuation frameworks.",
+                description: "Building institutional-grade financial models to uncover divergence from consensus. Deep-dive analysis across consumer, fintech, automotive, and energy storage sectors, each backed by rigorous DCF modeling and thesis-driven valuation frameworks.",
                 details: `
                     <div id="portfolio-dashboard">
                         <!-- Hero Statement -->
@@ -3807,7 +3873,7 @@
                                 </div>
                                 <h4 class="text-lg md:text-xl font-display font-medium mb-4">The Philosophy</h4>
                                 <p class="text-sm text-neutral-300 leading-relaxed">
-                                    Markets price in consensus. Alpha comes from divergence—finding mispriced narratives, overlooked inflection points, and structural advantages the Street hasn't modeled.
+                                    Markets price in consensus. Alpha comes from divergence: finding mispriced narratives, overlooked inflection points, and structural advantages the Street hasn't modeled.
                                 </p>
                             </div>
                         </div>
@@ -3985,7 +4051,7 @@
                                             <span class="rating-badge buy">BUY</span>
                                         </div>
                                         <p class="text-sm text-neutral-400 leading-relaxed mb-8">
-                                            Production inflection meets gross margin expansion. Technology differentiation is real—this is Tesla 2018.
+                                            Production inflection meets gross margin expansion. Technology differentiation is real: this is Tesla 2018.
                                         </p>
                                         <div class="grid grid-cols-3 gap-px bg-off-white/10">
                                             <div class="bg-[#0F0F0F] p-4">
@@ -4275,18 +4341,18 @@
                         </div>
                         <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
                             <div>
-                                <h4 class="font-mono text-xs text-blue-400 uppercase tracking-widest mb-4">The Philosophy</h4>
+                                <h4 class="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-4">The Philosophy</h4>
                                 <p class="font-serif text-xl text-off-white leading-relaxed">
                                     "Spreadsheets don't solve problems. Decisions do."
                                 </p>
                                 <p class="mt-4 text-sm text-neutral-400 leading-relaxed">
-                                    Traditional consulting sells hours and slides. I sell outcomes and conviction. My practice is built on the belief that financial engineering is a creative discipline—one that requires both mathematical rigor and strategic intuition.
+                                    Traditional consulting sells hours and slides. I sell outcomes and conviction. My practice is built on the belief that financial engineering is a creative discipline: one that requires both mathematical rigor and strategic intuition.
                                 </p>
                             </div>
                             <div class="space-y-6">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-8 h-8 rounded bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shrink-0">
-                                        <span class="font-mono text-xs text-blue-400">01</span>
+                                    <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                                        <span class="font-mono text-xs text-neutral-400">01</span>
                                     </div>
                                     <div>
                                         <h5 class="font-display text-sm font-medium text-off-white">Forensic Modeling</h5>
@@ -4294,8 +4360,8 @@
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="w-8 h-8 rounded bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shrink-0">
-                                        <span class="font-mono text-xs text-blue-400">02</span>
+                                    <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                                        <span class="font-mono text-xs text-neutral-400">02</span>
                                     </div>
                                     <div>
                                         <h5 class="font-display text-sm font-medium text-off-white">Mechanism Design</h5>
@@ -4303,8 +4369,8 @@
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="w-8 h-8 rounded bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shrink-0">
-                                        <span class="font-mono text-xs text-blue-400">03</span>
+                                    <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
+                                        <span class="font-mono text-xs text-neutral-400">03</span>
                                     </div>
                                     <div>
                                         <h5 class="font-display text-sm font-medium text-off-white">Execution Systems</h5>
@@ -4320,7 +4386,7 @@
                         <div class="flex justify-between items-end mb-8">
                             <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest">Track Record (LTM)</h4>
                             <div class="flex gap-2">
-                                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                <span class="w-2 h-2 rounded-full bg-white/40 animate-pulse"></span>
                                 <span class="text-[10px] font-mono text-neutral-500 uppercase">Audited Results</span>
                             </div>
                         </div>
@@ -4349,8 +4415,8 @@
                         <h3 class="font-display text-2xl font-medium mb-8 text-center">Core Competencies</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-off-white/10 border border-off-white/10">
                             <div class="bg-charcoal p-8 hover:bg-[#0F0F0F] transition-all duration-300 group">
-                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-blue-500/30 group-hover:bg-blue-500/10 transition-colors">
-                                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-neutral-400 group-hover:text-blue-400"></i>
+                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-colors">
+                                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-neutral-400 group-hover:text-neutral-300"></i>
                                 </div>
                                 <h5 class="font-display text-lg font-medium mb-3 text-off-white">Financial Modeling</h5>
                                 <p class="text-xs text-neutral-400 leading-relaxed mb-6">
@@ -4358,20 +4424,20 @@
                                 </p>
                                 <ul class="space-y-2">
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span> Fundraising Models
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Fundraising Models
                                     </li>
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span> Budgeting & FP&A
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Budgeting & FP&A
                                     </li>
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span> Scenario Analysis
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Scenario Analysis
                                     </li>
                                 </ul>
                             </div>
                             
                             <div class="bg-charcoal p-8 hover:bg-[#0F0F0F] transition-all duration-300 group">
-                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-purple-500/30 group-hover:bg-purple-500/10 transition-colors">
-                                    <i data-lucide="briefcase" class="w-5 h-5 text-neutral-400 group-hover:text-purple-400"></i>
+                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-colors">
+                                    <i data-lucide="briefcase" class="w-5 h-5 text-neutral-400 group-hover:text-neutral-300"></i>
                                 </div>
                                 <h5 class="font-display text-lg font-medium mb-3 text-off-white">M&A Advisory</h5>
                                 <p class="text-xs text-neutral-400 leading-relaxed mb-6">
@@ -4379,20 +4445,20 @@
                                 </p>
                                 <ul class="space-y-2">
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-purple-500 rounded-full"></span> Due Diligence
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Due Diligence
                                     </li>
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-purple-500 rounded-full"></span> Deal Structuring
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Deal Structuring
                                     </li>
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-purple-500 rounded-full"></span> Q of E Support
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Q of E Support
                                     </li>
                                 </ul>
                             </div>
 
                             <div class="bg-charcoal p-8 hover:bg-[#0F0F0F] transition-all duration-300 group">
-                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-green-500/30 group-hover:bg-green-500/10 transition-colors">
-                                    <i data-lucide="settings" class="w-5 h-5 text-neutral-400 group-hover:text-green-400"></i>
+                                <div class="w-10 h-10 mb-6 border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-colors">
+                                    <i data-lucide="settings" class="w-5 h-5 text-neutral-400 group-hover:text-neutral-300"></i>
                                 </div>
                                 <h5 class="font-display text-lg font-medium mb-3 text-off-white">Operational Strategy</h5>
                                 <p class="text-xs text-neutral-400 leading-relaxed mb-6">
@@ -4400,13 +4466,13 @@
                                 </p>
                                 <ul class="space-y-2">
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-green-500 rounded-full"></span> Margin Optimization
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Margin Optimization
                                     </li>
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-green-500 rounded-full"></span> KPI Dashboards
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> KPI Dashboards
                                     </li>
                                     <li class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-green-500 rounded-full"></span> Turnaround Plans
+                                        <span class="w-1 h-1 bg-white/30 rounded-full"></span> Turnaround Plans
                                     </li>
                                 </ul>
                             </div>
@@ -4470,13 +4536,13 @@
                         <div class="space-y-8">
                             <!-- Case Study 1 -->
                             <div class="border border-off-white/10 bg-charcoal p-8 relative overflow-hidden group">
-                                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 transition-opacity opacity-0 group-hover:opacity-100"></div>
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 transition-opacity opacity-0 group-hover:opacity-100"></div>
                                 <div class="relative z-10">
                                     <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
                                         <div>
                                             <div class="flex items-center gap-3 mb-2">
                                                 <h4 class="font-display text-xl font-medium text-off-white">SaaS Unit Economics Turnaround</h4>
-                                                <span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-mono uppercase border border-blue-500/20">Series B</span>
+                                                <span class="px-2 py-1 bg-white/5 text-neutral-400 text-[10px] font-mono uppercase border border-white/10">Series B</span>
                                             </div>
                                             <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Revenue: $15M ARR // Sector: Enterprise Software</p>
                                         </div>
@@ -4514,13 +4580,13 @@
 
                             <!-- Case Study 2 -->
                             <div class="border border-off-white/10 bg-charcoal p-8 relative overflow-hidden group">
-                                <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl -mr-16 -mt-16 transition-opacity opacity-0 group-hover:opacity-100"></div>
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 transition-opacity opacity-0 group-hover:opacity-100"></div>
                                 <div class="relative z-10">
                                     <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
                                         <div>
                                             <div class="flex items-center gap-3 mb-2">
                                                 <h4 class="font-display text-xl font-medium text-off-white">Buy-Side Due Diligence</h4>
-                                                <span class="px-2 py-1 bg-purple-500/10 text-purple-400 text-[10px] font-mono uppercase border border-purple-500/20">M&A</span>
+                                                <span class="px-2 py-1 bg-white/5 text-neutral-400 text-[10px] font-mono uppercase border border-white/10">M&A</span>
                                             </div>
                                             <p class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Deal Size: $8M EV // Sector: Consumer Goods</p>
                                         </div>
@@ -4651,6 +4717,138 @@
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                `
+            },
+            music: {
+                title: "PERFORMANCE / COMPOSITION",
+                subtitle: "Double Bass / Classical Training / Jazz Exploration",
+                tags: ["Double Bass", "Classical Performance", "Jazz", "Composition"],
+                description: "A parallel pursuit of musical excellence. From classical repertoire to jazz improvisation, exploring the harmonic and rhythmic foundations that mirror analytical thinking in finance.",
+                details: `
+                    <div class="space-y-16">
+                        <!-- Hero Statement -->
+                        <div class="mb-12 pb-8 border-b border-off-white/10">
+                            <p class="font-display text-2xl md:text-3xl leading-relaxed text-neutral-300">
+                                The double bass is an instrument of discipline. It demands precision, endurance, and a deep understanding of harmonic structure. The same analytical rigor that drives financial modeling finds expression here in rhythm, tone, and improvisation.
+                            </p>
+                        </div>
+
+                        <!-- Training Background -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div>
+                                <h3 class="font-display text-2xl text-off-white mb-6">Classical Foundation</h3>
+                                <p class="text-neutral-300 leading-relaxed mb-6">
+                                    My training began in classical orchestral traditions. Studying works from the Romantic and Baroque eras, focusing on bow technique, intonation, and ensemble playing. The bass serves as the harmonic anchor—the financial foundation, if you will—of any orchestral work.
+                                </p>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="music" class="w-4 h-4 text-off-white shrink-0 mt-1"></i>
+                                        <div>
+                                            <div class="text-sm font-medium text-off-white">Orchestral Repertoire</div>
+                                            <div class="text-xs text-neutral-500">Beethoven, Brahms, Dvořák symphonies</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="music" class="w-4 h-4 text-off-white shrink-0 mt-1"></i>
+                                        <div>
+                                            <div class="text-sm font-medium text-off-white">Solo Works</div>
+                                            <div class="text-xs text-neutral-500">Bottesini, Koussevitzky concertos</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="music" class="w-4 h-4 text-off-white shrink-0 mt-1"></i>
+                                        <div>
+                                            <div class="text-sm font-medium text-off-white">Chamber Music</div>
+                                            <div class="text-xs text-neutral-500">String quartets, piano trios</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="font-display text-2xl text-off-white mb-6">Jazz Exploration</h3>
+                                <p class="text-neutral-300 leading-relaxed mb-6">
+                                    Jazz introduced improvisation: the art of creating structure in real-time. Walking bass lines, chord substitutions, and harmonic reinterpretation. It's a conversation, much like market analysis—responding to what you hear, anticipating where it's going, and adding your own voice.
+                                </p>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="radio" class="w-4 h-4 text-off-white shrink-0 mt-1"></i>
+                                        <div>
+                                            <div class="text-sm font-medium text-off-white">Standards & Bebop</div>
+                                            <div class="text-xs text-neutral-500">Walking bass, swing feel, improvisation</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="radio" class="w-4 h-4 text-off-white shrink-0 mt-1"></i>
+                                        <div>
+                                            <div class="text-sm font-medium text-off-white">Modal Jazz</div>
+                                            <div class="text-xs text-neutral-500">Miles Davis, John Coltrane era exploration</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="radio" class="w-4 h-4 text-off-white shrink-0 mt-1"></i>
+                                        <div>
+                                            <div class="text-sm font-medium text-off-white">Contemporary Fusion</div>
+                                            <div class="text-xs text-neutral-500">Blending classical technique with modern harmony</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Philosophy Parallel -->
+                        <div class="border border-off-white/10 bg-neutral-900/30 p-8">
+                            <div class="flex items-start gap-4 mb-6">
+                                <i data-lucide="layers" class="w-6 h-6 text-off-white shrink-0"></i>
+                                <div>
+                                    <h4 class="font-display text-xl text-off-white mb-3">The Analytical Parallel</h4>
+                                    <p class="text-neutral-300 leading-relaxed">
+                                        Music and finance share a common language: patterns, structure, improvisation within constraints. A jazz solo follows harmonic progressions the same way a trading strategy follows market structure. Both require deep knowledge of fundamentals and the confidence to deviate when the moment demands it.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                                <div class="text-center p-4 bg-charcoal border border-white/5">
+                                    <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider mb-2">Discipline</div>
+                                    <div class="text-neutral-300 text-sm">Mastery through repetition</div>
+                                </div>
+                                <div class="text-center p-4 bg-charcoal border border-white/5">
+                                    <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider mb-2">Structure</div>
+                                    <div class="text-neutral-300 text-sm">Rules provide creative freedom</div>
+                                </div>
+                                <div class="text-center p-4 bg-charcoal border border-white/5">
+                                    <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider mb-2">Improvisation</div>
+                                    <div class="text-neutral-300 text-sm">Adaptation in real-time</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Experience -->
+                        <div>
+                            <h3 class="font-display text-2xl text-off-white mb-8">Performance Experience</h3>
+                            <div class="space-y-6">
+                                <div class="border-l-2 border-off-white/20 pl-6 py-2">
+                                    <div class="font-mono text-xs text-neutral-500 uppercase mb-2">Orchestra</div>
+                                    <div class="text-neutral-300">Principal bass section member, performing classical symphonies and contemporary works in ensemble settings</div>
+                                </div>
+                                <div class="border-l-2 border-off-white/20 pl-6 py-2">
+                                    <div class="font-mono text-xs text-neutral-500 uppercase mb-2">Chamber Groups</div>
+                                    <div class="text-neutral-300">String quartets and small ensembles, exploring intimate repertoire and collaborative interpretation</div>
+                                </div>
+                                <div class="border-l-2 border-off-white/20 pl-6 py-2">
+                                    <div class="font-mono text-xs text-neutral-500 uppercase mb-2">Jazz Combos</div>
+                                    <div class="text-neutral-300">Walking bass lines, improvisation, and harmonic exploration in small group settings</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Final Note -->
+                        <div class="border-t border-off-white/10 pt-8">
+                            <p class="font-display text-lg text-neutral-400 italic text-center">
+                                "Music is the hidden arithmetic of the soul, unconscious that it calculates." — Leibniz
+                            </p>
                         </div>
                     </div>
                 `
@@ -5436,7 +5634,7 @@
                     <div class="max-w-3xl mx-auto pt-12 md:pt-20 px-4 md:px-0">
                         <!-- Header Block -->
                         <div class="modal-stagger text-center mb-16" style="transition-delay: 0.1s">
-                            <div class="flex items-center justify-center gap-4 text-xs font-mono tracking-widest text-neutral-500 mb-8 uppercase">
+                            <div class="flex items-center justify-center gap-4 text-xs font-mono text-neutral-500 mb-8 uppercase" style="letter-spacing: 0.15em;">
                                 <span>${data.meta.category}</span>
                                 <span class="w-px h-3 bg-neutral-300"></span>
                                 <span>${data.meta.date}</span>
@@ -5444,7 +5642,7 @@
                                 <span>${data.meta.readTime} READ</span>
                             </div>
                             
-                            <h1 class="font-playfair italic text-5xl md:text-7xl font-bold mb-10 leading-[1.1] text-off-black">
+                            <h1 class="font-playfair italic text-5xl md:text-7xl font-bold mb-10 text-off-black" style="line-height: 1.1; letter-spacing: -0.02em;">
                                 ${data.title}
                             </h1>
                             
@@ -5456,15 +5654,15 @@
                         </div>
 
                         <!-- Body Content -->
-                        <div class="modal-stagger font-serif text-lg md:text-xl leading-loose text-neutral-800 space-y-8 drop-cap-wrapper" style="transition-delay: 0.2s">
+                        <div class="modal-stagger font-serif text-lg md:text-xl text-neutral-800 space-y-8 drop-cap-wrapper" style="transition-delay: 0.2s; line-height: 1.8;">
                             ${data.content}
                         </div>
 
                         <!-- Footer / Next Article -->
                         <div class="modal-stagger mt-24 pt-16 border-t border-neutral-200" style="transition-delay: 0.3s">
                             <div class="flex flex-col items-center text-center group cursor-pointer hover-target" onclick="openModal('${data.nextSlug}', 'writing')">
-                                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-4">Read Next</span>
-                                <h3 class="font-display text-3xl md:text-4xl font-medium text-off-black group-hover:opacity-70 transition-opacity duration-300">
+                                <span class="font-mono text-xs text-neutral-400 uppercase mb-4" style="letter-spacing: 0.15em;">Read Next</span>
+                                <h3 class="font-display text-3xl md:text-4xl font-medium text-off-black group-hover:opacity-70" style="letter-spacing: -0.015em; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
                                     ${writingData[data.nextSlug].title}
                                 </h3>
                                 <div class="mt-6 transform group-hover:translate-x-2 transition-transform duration-300">
@@ -5547,8 +5745,8 @@
 
                         <!-- Bottom Row -->
                         <div class="w-full">
-                            <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight leading-none uppercase">${data.title}</h2>
-                            <p class="font-mono text-sm text-neutral-400 uppercase tracking-widest mb-6 border-l border-neutral-500 pl-4">${data.subtitle}</p>
+                            <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-4 leading-none uppercase" style="letter-spacing: -0.02em;">${data.title}</h2>
+                            <p class="font-mono text-sm text-neutral-400 uppercase mb-6 border-l-2 border-neutral-500 pl-4" style="letter-spacing: 0.15em;">${data.subtitle}</p>
                             
                             <div class="flex items-center gap-4 border-t border-white/10 pt-6">
                                 <div class="flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
@@ -5575,7 +5773,8 @@
 
                             <!-- Bottom Row -->
                             <div class="w-full">
-                                <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-none uppercase">Austin<br/>Real Estate</h2>
+                                <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-4 leading-none uppercase" style="letter-spacing: -0.02em;">Austin<br/>Real Estate</h2>
+                                <p class="font-mono text-sm text-neutral-400 uppercase mb-6 border-l-2 border-neutral-500 pl-4" style="letter-spacing: 0.15em;">Interactive Real Estate Dashboard</p>
                                 
                                 <div class="flex items-center gap-4 border-t border-white/10 pt-6">
                                     <div class="flex gap-6 font-mono text-xs text-neutral-400 uppercase tracking-widest">
@@ -5602,7 +5801,7 @@
                         ${data.contract ? `
                         <div class="flex flex-wrap items-center gap-6 mb-8 pt-6 border-t border-white/5">
                             <div class="flex items-center gap-3">
-                                <span class="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Contract</span>
+                                <span class="text-[10px] font-mono text-neutral-500 uppercase" style="letter-spacing: 0.15em;">Contract</span>
                                 <div class="flex items-center gap-2 bg-off-white/5 px-3 py-1.5 rounded border border-white/10 group hover:border-white/30 transition-colors cursor-pointer" onclick="navigator.clipboard.writeText('${data.contract}'); this.querySelector('span').textContent = 'COPIED!'; setTimeout(() => this.querySelector('span').textContent = '${data.contract.slice(0,6)}...${data.contract.slice(-4)}', 2000);">
                                     <span class="font-mono text-xs text-neutral-300">${data.contract.slice(0,6)}...${data.contract.slice(-4)}</span>
                                     <i data-lucide="copy" class="w-3 h-3 text-neutral-500 group-hover:text-off-white transition-colors"></i>
@@ -5625,7 +5824,7 @@
 
                     </div>
                     <div class="modal-stagger" style="transition-delay: 0.2s">
-                        <p class="font-display text-xl md:text-2xl leading-relaxed text-off-white font-light border-l-2 border-off-white/30 pl-6 mb-12 drop-cap">
+                        <p class="font-display text-xl md:text-2xl text-off-white font-light border-l-2 border-off-white/30 pl-6 mb-12 drop-cap" style="line-height: 1.6; letter-spacing: -0.01em;">
                             ${data.description}
                         </p>
                     </div>
@@ -5795,12 +5994,12 @@
                     }
                 } catch (error) {
                     // Error state
-                    submitBtn.classList.add('bg-red-500', 'text-off-white');
+                    submitBtn.classList.add('bg-neutral-700', 'text-off-white');
                     submitBtn.textContent = '✗ ERROR - TRY AGAIN';
                     
                     setTimeout(() => {
                         submitBtn.disabled = false;
-                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-red-500');
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-neutral-700');
                         submitBtn.classList.add('bg-off-white');
                         submitBtn.textContent = originalText;
                     }, 3000);
@@ -5895,7 +6094,7 @@
                                         <div class="flex items-center justify-between px-8 py-6 border-b border-off-white/10 bg-[#0F0F0F]">
                                             <div class="flex items-center gap-4">
                                                 <div class="flex gap-2">
-                                                    <div class="w-3 h-3 rounded-full bg-neutral-800 group-hover:bg-red-500/30 transition-colors duration-500"></div>
+                                                    <div class="w-3 h-3 rounded-full bg-neutral-800 group-hover:bg-white/20 transition-colors duration-500"></div>
                                                     <div class="w-3 h-3 rounded-full bg-neutral-800 group-hover:bg-off-white/30 transition-colors duration-500" style="transition-delay: 50ms"></div>
                                                     <div class="w-3 h-3 rounded-full bg-neutral-800 group-hover:bg-off-white/30 transition-colors duration-500" style="transition-delay: 100ms"></div>
                                                 </div>
@@ -6125,7 +6324,7 @@
                                                 <!-- Browser Header -->
                                                 <div class="bg-[#0F0F0F] border-b border-off-white/10 px-4 py-3 flex items-center gap-3">
                                                     <div class="flex gap-2">
-                                                        <div class="w-3 h-3 rounded-full bg-red-500/30"></div>
+                                                        <div class="w-3 h-3 rounded-full bg-white/20"></div>
                                                         <div class="w-3 h-3 rounded-full bg-off-white/30"></div>
                                                         <div class="w-3 h-3 rounded-full bg-off-white/30"></div>
                                                     </div>
@@ -8959,6 +9158,316 @@
                     animationId = requestAnimationFrame(animate);
                 };
             }
+
+            // 7. Music / Double Bass (Sound Wave Visualization)
+            // Concept: Harmonic resonance and frequency visualization
+            const canvas7 = document.getElementById('canvas-music');
+            if (canvas7) {
+                const ctx = canvas7.getContext('2d');
+                let width, height;
+                let isVisible = false;
+                let animationId = null;
+                let time = 0;
+                
+                const parent = canvas7.parentElement;
+                const dpr = window.devicePixelRatio || 1;
+                
+                const resize = () => {
+                    width = parent.offsetWidth;
+                    height = parent.offsetHeight;
+                    
+                    canvas7.width = width * dpr;
+                    canvas7.height = height * dpr;
+                    
+                    ctx.scale(dpr, dpr);
+                };
+                resize();
+                window.addEventListener('resize', debounce(resize, 150));
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isVisible = entry.isIntersecting;
+                        if (isVisible && !animationId) {
+                            animate();
+                        } else if (!isVisible && animationId) {
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(canvas7);
+
+                const animate = () => {
+                    if (!isVisible) {
+                        animationId = null;
+                        return;
+                    }
+
+                    ctx.fillStyle = 'rgba(15, 15, 15, 0.15)';
+                    ctx.fillRect(0, 0, width, height);
+                    
+                    time += 0.015;
+                    
+                    // Draw multiple harmonic waves (like bass strings vibrating)
+                    const frequencies = [1, 1.5, 2, 2.5, 3]; // Harmonic series
+                    const amplitudes = [0.25, 0.15, 0.1, 0.07, 0.05];
+                    
+                    frequencies.forEach((freq, index) => {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 + index * 0.05})`;
+                        ctx.lineWidth = 2 - index * 0.2;
+                        
+                        const points = 200;
+                        for (let i = 0; i <= points; i++) {
+                            const x = (width / points) * i;
+                            const y = height / 2 + 
+                                     Math.sin((i / points) * Math.PI * 4 * freq + time) * 
+                                     height * amplitudes[index] +
+                                     Math.sin((i / points) * Math.PI * 2 * freq - time * 0.5) * 
+                                     height * amplitudes[index] * 0.5;
+                            
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.stroke();
+                    });
+                    
+                    // Add floating note particles
+                    const noteCount = 30;
+                    for (let i = 0; i < noteCount; i++) {
+                        const x = (width / noteCount) * i + Math.sin(time + i * 0.5) * 20;
+                        const y = height / 2 + Math.cos(time * 2 + i * 0.3) * height * 0.3;
+                        const alpha = Math.abs(Math.sin(time + i * 0.2)) * 0.3;
+                        
+                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    animationId = requestAnimationFrame(animate);
+                };
+            }
+        }
+
+        // --- 8. SPECIALTY CARD CANVAS BACKGROUNDS ---
+        function initSpecialtyCanvases() {
+            // Real Estate Canvas - Flowing map data points
+            const canvasRE = document.getElementById('canvas-specialty-re');
+            if (canvasRE) {
+                const ctx = canvasRE.getContext('2d');
+                let width, height;
+                let isVisible = false;
+                let animationId = null;
+                let points = [];
+                
+                const resize = () => {
+                    width = canvasRE.width = canvasRE.offsetWidth;
+                    height = canvasRE.height = canvasRE.offsetHeight;
+                    
+                    // Create grid of points
+                    points = [];
+                    const gridSize = 40;
+                    for (let i = 0; i < width / gridSize; i++) {
+                        for (let j = 0; j < height / gridSize; j++) {
+                            points.push({
+                                x: i * gridSize,
+                                y: j * gridSize,
+                                baseX: i * gridSize,
+                                baseY: j * gridSize,
+                                radius: 1 + Math.random() * 2
+                            });
+                        }
+                    }
+                };
+                resize();
+                window.addEventListener('resize', debounce(resize, 150));
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isVisible = entry.isIntersecting;
+                        if (isVisible && !animationId) animate();
+                        else if (!isVisible && animationId) {
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(canvasRE);
+                
+                let time = 0;
+                const animate = () => {
+                    if (!isVisible) {
+                        animationId = null;
+                        return;
+                    }
+                    
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.4)';
+                    ctx.fillRect(0, 0, width, height);
+                    
+                    time += 0.02;
+                    
+                    points.forEach(p => {
+                        const distortion = Math.sin(time + p.baseX * 0.01) * 15;
+                        p.x = p.baseX + distortion;
+                        p.y = p.baseY + Math.cos(time + p.baseY * 0.01) * 10;
+                        
+                        ctx.fillStyle = 'rgba(234, 234, 234, 0.6)';
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    
+                    animationId = requestAnimationFrame(animate);
+                };
+            }
+            
+            // Crypto Canvas - Network nodes
+            const canvasCrypto = document.getElementById('canvas-specialty-crypto');
+            if (canvasCrypto) {
+                const ctx = canvasCrypto.getContext('2d');
+                let width, height;
+                let isVisible = false;
+                let animationId = null;
+                let nodes = [];
+                
+                class Node {
+                    constructor() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.vx = (Math.random() - 0.5) * 0.5;
+                        this.vy = (Math.random() - 0.5) * 0.5;
+                        this.radius = 2 + Math.random() * 3;
+                    }
+                    
+                    update() {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        
+                        if (this.x < 0 || this.x > width) this.vx *= -1;
+                        if (this.y < 0 || this.y > height) this.vy *= -1;
+                    }
+                    
+                    draw() {
+                        ctx.fillStyle = 'rgba(234, 234, 234, 0.6)';
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                
+                const resize = () => {
+                    width = canvasCrypto.width = canvasCrypto.offsetWidth;
+                    height = canvasCrypto.height = canvasCrypto.offsetHeight;
+                    nodes = Array.from({ length: 20 }, () => new Node());
+                };
+                resize();
+                window.addEventListener('resize', debounce(resize, 150));
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isVisible = entry.isIntersecting;
+                        if (isVisible && !animationId) animate();
+                        else if (!isVisible && animationId) {
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(canvasCrypto);
+                
+                const animate = () => {
+                    if (!isVisible) {
+                        animationId = null;
+                        return;
+                    }
+                    
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.3)';
+                    ctx.fillRect(0, 0, width, height);
+                    
+                    // Draw connections
+                    ctx.strokeStyle = 'rgba(234, 234, 234, 0.1)';
+                    ctx.lineWidth = 1;
+                    nodes.forEach((node, i) => {
+                        nodes.slice(i + 1).forEach(other => {
+                            const dist = Math.hypot(node.x - other.x, node.y - other.y);
+                            if (dist < 150) {
+                                ctx.beginPath();
+                                ctx.moveTo(node.x, node.y);
+                                ctx.lineTo(other.x, other.y);
+                                ctx.stroke();
+                            }
+                        });
+                    });
+                    
+                    nodes.forEach(node => {
+                        node.update();
+                        node.draw();
+                    });
+                    
+                    animationId = requestAnimationFrame(animate);
+                };
+            }
+            
+            // Finance Canvas - Bar chart animation
+            const canvasFinance = document.getElementById('canvas-specialty-finance');
+            if (canvasFinance) {
+                const ctx = canvasFinance.getContext('2d');
+                let width, height;
+                let isVisible = false;
+                let animationId = null;
+                let bars = [];
+                
+                const resize = () => {
+                    width = canvasFinance.width = canvasFinance.offsetWidth;
+                    height = canvasFinance.height = canvasFinance.offsetHeight;
+                    
+                    bars = Array.from({ length: 15 }, (_, i) => ({
+                        x: (width / 15) * i,
+                        targetHeight: Math.random() * height * 0.6,
+                        currentHeight: 0,
+                        width: width / 15 - 4
+                    }));
+                };
+                resize();
+                window.addEventListener('resize', debounce(resize, 150));
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isVisible = entry.isIntersecting;
+                        if (isVisible && !animationId) animate();
+                        else if (!isVisible && animationId) {
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(canvasFinance);
+                
+                let time = 0;
+                const animate = () => {
+                    if (!isVisible) {
+                        animationId = null;
+                        return;
+                    }
+                    
+                    ctx.fillStyle = 'rgba(10, 10, 10, 0.2)';
+                    ctx.fillRect(0, 0, width, height);
+                    
+                    time += 0.01;
+                    
+                    bars.forEach((bar, i) => {
+                        // Animate height towards target with wave effect
+                        bar.targetHeight = (Math.sin(time + i * 0.3) * 0.5 + 0.5) * height * 0.5 + height * 0.1;
+                        bar.currentHeight += (bar.targetHeight - bar.currentHeight) * 0.05;
+                        
+                        ctx.fillStyle = 'rgba(234, 234, 234, 0.5)';
+                        ctx.fillRect(bar.x, height - bar.currentHeight, bar.width, bar.currentHeight);
+                    });
+                    
+                    animationId = requestAnimationFrame(animate);
+                };
+            }
         }
 
         // --- 11. LIVE TICKER ---
@@ -10185,7 +10694,7 @@
                         parks: { text: 'Parks', color: '#737373', icon: '●' },
                         str: { text: 'Rentals', color: '#525252', icon: '■' },
                         zoning: { text: 'Development', color: '#404040', icon: '▪' },
-                        bikes: { text: 'Bike Lanes', color: '#525252', icon: '—' }
+                        bikes: { text: 'Bike Lanes', color: '#525252', icon: '-' }
                     };
                     if(labels[key]) activeLayers.push(labels[key]);
                 }
@@ -10466,7 +10975,7 @@
                                 <div class="border-t border-white/10 pt-3">
                                     <div class="text-xs text-neutral-500 mb-2">MARKET ANALYSIS</div>
                                     <div class="text-sm text-neutral-400 leading-relaxed">
-                                        STR density reveals investment hotspots and tourism appeal. High concentrations indicate strong rental yields and property liquidity. Austin's 12,400+ active STR licenses signal robust alternative accommodation demand—critical data for multi-family and hospitality investment strategies.
+                                        STR density reveals investment hotspots and tourism appeal. High concentrations indicate strong rental yields and property liquidity. Austin's 12,400+ active STR licenses signal robust alternative accommodation demand: critical data for multi-family and hospitality investment strategies.
                                     </div>
                                 </div>
                             </div>
@@ -10549,7 +11058,7 @@
                                 <div class="border-t border-white/10 pt-3">
                                     <div class="text-xs text-neutral-500 mb-2">ZONING INTELLIGENCE</div>
                                     <div class="text-sm text-neutral-400 leading-relaxed">
-                                        Site plan activity reveals rezoning trends and development pipeline. Active cases signal neighborhood transformation and rezoning opportunities—essential intelligence for land acquisition and speculative development positioning.
+                                        Site plan activity reveals rezoning trends and development pipeline. Active cases signal neighborhood transformation and rezoning opportunities: essential intelligence for land acquisition and speculative development positioning.
                                     </div>
                                 </div>
                             </div>
@@ -10650,7 +11159,7 @@
                                 <div class="border-t border-white/10 pt-3">
                                     <div class="text-xs text-neutral-500 mb-2">INFRASTRUCTURE ANALYSIS</div>
                                     <div class="text-sm text-neutral-400 leading-relaxed">
-                                        Traffic incident density reveals infrastructure stress points and commute patterns. Areas with frequent congestion may signal development pressure or insufficient road capacity—both factors in real estate valuation models for commercial and residential acquisitions.
+                                        Traffic incident density reveals infrastructure stress points and commute patterns. Areas with frequent congestion may signal development pressure or insufficient road capacity: both factors in real estate valuation models for commercial and residential acquisitions.
                                     </div>
                                 </div>
                             </div>
@@ -11065,44 +11574,7 @@
         }
 
         // --- AUSTIN DASHBOARD LOGIC ---
-        window.initAustinDashboard = function() {
-            const slider = document.getElementById('rate-slider');
-            const display = document.getElementById('rate-display');
-            const power = document.getElementById('model-power');
-            const spread = document.getElementById('model-spread');
-            const refi = document.getElementById('model-refi');
-            
-            if (!slider) return;
-            
-            const updateModel = () => {
-                const rate = parseFloat(slider.value);
-                if (display) display.textContent = rate.toFixed(1) + '%';
-                
-                // Simple mock calculations
-                const monthlyPayment = 3500;
-                // PV calculation: PV = PMT * (1 - (1 + r)^-n) / r
-                // r = rate / 12 / 100
-                // n = 360
-                const r = rate / 12 / 100;
-                const n = 360;
-                const pv = monthlyPayment * (1 - Math.pow(1 + r, -n)) / r;
-                
-                if (power) power.textContent = '$' + Math.round(pv / 1000) + 'k';
-                
-                const treasuryYield = 4.2; // Mock 10Y yield
-                const spreadVal = (rate - treasuryYield).toFixed(1);
-                if (spread) spread.textContent = (spreadVal > 0 ? '+' : '') + spreadVal + '%';
-                
-                if (refi) {
-                    if (rate > 7.5) refi.textContent = 'High';
-                    else if (rate > 6.0) refi.textContent = 'Medium';
-                    else refi.textContent = 'Low';
-                }
-            };
-            
-            slider.addEventListener('input', updateModel);
-            updateModel(); // Initial call
-        };
+        // initAustinDashboard is defined earlier with full functionality including map initialization
 
         // Add Market Heatmap Layer
         function addHeatmapLayer() {
@@ -11451,12 +11923,84 @@
         // Initialize
         initAustinCanvas();
 
-        // --- SEARCH FUNCTIONALITY ---
+        // --- ENHANCED SEARCH FUNCTIONALITY ---
         const searchTrigger = document.getElementById('search-trigger');
         const searchOverlay = document.getElementById('search-overlay');
         const closeSearch = document.getElementById('close-search');
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
+        const searchEmpty = document.getElementById('search-empty');
+        const searchCount = document.getElementById('search-count');
+        const searchFilters = document.querySelectorAll('.search-filter');
+        
+        let currentFilter = 'all';
+        let allSearchableItems = [];
+
+        // Build comprehensive searchable index
+        function buildSearchIndex() {
+            const items = [];
+            
+            // Add all projects
+            Object.entries(projectData).forEach(([key, data]) => {
+                items.push({
+                    id: key,
+                    type: 'project',
+                    title: data.title,
+                    subtitle: data.subtitle,
+                    description: data.description,
+                    tags: data.tags || [],
+                    onClick: () => { toggleSearch(); openModal(key, 'project'); }
+                });
+            });
+            
+            // Add all writing
+            Object.entries(writingData).forEach(([key, data]) => {
+                items.push({
+                    id: key,
+                    type: 'writing',
+                    title: data.title,
+                    subtitle: data.meta.category,
+                    description: data.lede,
+                    tags: [data.meta.category, data.meta.date],
+                    onClick: () => { toggleSearch(); openModal(key, 'writing'); }
+                });
+            });
+            
+            // Add services
+            const services = [
+                {
+                    id: 'strategic-ops',
+                    type: 'service',
+                    title: 'Strategic Operations Consulting',
+                    subtitle: 'Process Optimization & ROI Analysis',
+                    description: 'Transform operational workflows with data-driven insights',
+                    tags: ['consulting', 'strategy', 'operations', 'analysis'],
+                    onClick: () => { toggleSearch(); openServiceModal('strategic-ops'); }
+                },
+                {
+                    id: 'website',
+                    type: 'service',
+                    title: 'Website & Portfolio Development',
+                    subtitle: 'Custom Web Experiences',
+                    description: 'Build stunning, high-performance websites with modern tech',
+                    tags: ['web development', 'react', 'next.js', 'design', 'full stack'],
+                    onClick: () => { toggleSearch(); openServiceModal('website'); }
+                },
+                {
+                    id: 'financial-analysis',
+                    type: 'service',
+                    title: 'Financial Analysis & Modeling',
+                    subtitle: 'DCF, Valuation & Research',
+                    description: 'Comprehensive financial models and equity research',
+                    tags: ['finance', 'valuation', 'dcf', 'modeling', 'research'],
+                    onClick: () => { toggleSearch(); document.getElementById('section-services').scrollIntoView({behavior: 'smooth'}); }
+                }
+            ];
+            
+            items.push(...services);
+            
+            return items;
+        }
 
         function toggleSearch() {
             const isOpen = !searchOverlay.classList.contains('opacity-0');
@@ -11464,12 +12008,107 @@
                 searchOverlay.classList.remove('opacity-0', 'pointer-events-none');
                 lockBodyScroll();
                 setTimeout(() => searchInput.focus(), 100);
+                // Show all results initially
+                performSearch('', currentFilter);
             } else {
                 searchOverlay.classList.add('opacity-0', 'pointer-events-none');
                 unlockBodyScroll();
                 searchInput.value = '';
                 searchResults.innerHTML = '';
             }
+        }
+
+        function performSearch(query, filter = 'all') {
+            const searchableItems = allSearchableItems.filter(item => {
+                if (filter !== 'all' && filter !== item.type && !(filter === 'services' && item.type === 'service')) {
+                    return false;
+                }
+                
+                if (query.length < 2) return true;
+                
+                const searchTerms = query.toLowerCase().split(' ');
+                const searchableText = [
+                    item.title,
+                    item.subtitle,
+                    item.description,
+                    ...item.tags
+                ].join(' ').toLowerCase();
+                
+                return searchTerms.every(term => searchableText.includes(term));
+            });
+
+            if (searchableItems.length === 0) {
+                searchResults.classList.add('hidden');
+                searchEmpty.classList.remove('hidden');
+                searchCount.textContent = '';
+                return;
+            }
+
+            searchResults.classList.remove('hidden');
+            searchEmpty.classList.add('hidden');
+            searchCount.textContent = `${searchableItems.length} result${searchableItems.length !== 1 ? 's' : ''}`;
+
+            searchResults.innerHTML = searchableItems.map(item => {
+                const typeColor = {
+                    'project': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+                    'writing': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+                    'service': 'bg-green-500/10 text-green-400 border-green-500/20'
+                }[item.type] || 'bg-neutral-500/10 text-neutral-400';
+
+                const typeLabel = {
+                    'project': 'PROJECT',
+                    'writing': 'ARTICLE',
+                    'service': 'SERVICE'
+                }[item.type] || 'ITEM';
+
+                return `
+                    <div class="group relative border border-off-white/10 bg-charcoal/50 hover:bg-charcoal hover:border-off-white/30 transition-all duration-500 cursor-pointer overflow-hidden" onclick='allSearchableItems.find(i => i.id === "${item.id}").onClick()'>
+                        <!-- Hover gradient effect -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-off-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative p-6">
+                            <div class="flex items-start justify-between mb-3">
+                                <span class="px-2 py-1 ${typeColor} text-[9px] font-mono uppercase tracking-wider border rounded">${typeLabel}</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-neutral-600 group-hover:text-off-white group-hover:translate-x-1 transition-all duration-300"></i>
+                            </div>
+                            
+                            <h4 class="font-display text-lg font-medium text-off-white mb-2 group-hover:text-white transition-colors leading-tight">${item.title}</h4>
+                            <p class="text-xs text-neutral-500 font-mono uppercase tracking-wider mb-3">${item.subtitle}</p>
+                            
+                            ${item.tags && item.tags.length > 0 ? `
+                                <div class="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-off-white/5">
+                                    ${item.tags.slice(0, 3).map(tag => `
+                                        <span class="px-2 py-0.5 bg-off-white/5 text-neutral-600 text-[10px] font-mono rounded">${tag}</span>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        // Initialize search
+        if (searchInput && searchResults) {
+            allSearchableItems = buildSearchIndex();
+            
+            searchInput.addEventListener('input', (e) => {
+                performSearch(e.target.value, currentFilter);
+            });
+            
+            // Filter buttons
+            searchFilters.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    searchFilters.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    performSearch(searchInput.value, currentFilter);
+                });
+            });
         }
 
         if (searchTrigger) {
@@ -11489,47 +12128,6 @@
                 toggleSearch();
             }
         });
-
-        // Search Input Logic
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                if (query.length < 2) {
-                    searchResults.innerHTML = '';
-                    return;
-                }
-
-                const results = Object.entries(projectData).filter(([key, data]) => {
-                    return data.title.toLowerCase().includes(query) ||
-                           data.subtitle.toLowerCase().includes(query) ||
-                           data.description.toLowerCase().includes(query) ||
-                           (data.tags && data.tags.some(tag => tag.toLowerCase().includes(query)));
-                });
-
-                if (results.length === 0) {
-                    searchResults.innerHTML = `
-                        <div class="text-center text-neutral-500 font-mono text-sm py-8">
-                            No results found for "${e.target.value}"
-                        </div>
-                    `;
-                    return;
-                }
-
-                searchResults.innerHTML = results.map(([key, data]) => `
-                    <div class="group flex items-center justify-between p-6 border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer" onclick="toggleSearch(); openModal('${key}')">
-                        <div>
-                            <h4 class="font-display text-xl text-off-white mb-1 group-hover:text-white transition-colors">${data.title}</h4>
-                            <p class="font-mono text-xs text-neutral-400">${data.subtitle}</p>
-                        </div>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-neutral-500 group-hover:text-white transition-colors"></i>
-                    </div>
-                `).join('');
-                
-                if (window.lucide) {
-                    lucide.createIcons();
-                }
-            });
-        }
 
         initOrderBook();
 

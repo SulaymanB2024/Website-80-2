@@ -10,7 +10,7 @@ const GECKO_ENDPOINTS = {
 const FALLBACK_PAIRS = {
     syrup: { tvSymbol: 'SYRUP', chainId: 'eth' },
     metadao: { tvSymbol: 'META', chainId: 'solana' },
-    myx: { tvSymbol: 'MYX', chainId: 'bsc' }
+    myx: { tvSymbol: 'MEXC:MYXUSDT', chainId: 'bsc' }
 };
 
 // Simple Cache to prevent lag/rate-limiting
