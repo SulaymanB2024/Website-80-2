@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Stream Audit - Austin Intelligence Map</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0A0A0A;
+            color: #EAEAEA;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #EAEAEA;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .test-section {
+            background: #1A1A1A;
+            border: 1px solid #333;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .test-title {
+            color: #FFF;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .test-result {
+            margin-left: 20px;
+            padding: 8px;
+            background: #0F0F0F;
+            border-left: 3px solid #666;
+        }
+        .success {
+            border-left-color: #4CAF50;
+            color: #4CAF50;
+        }
+        .error {
+            border-left-color: #F44336;
+            color: #F44336;
+        }
+        .warning {
+            border-left-color: #FF9800;
+            color: #FF9800;
+        }
+        .loading {
+            border-left-color: #2196F3;
+            color: #2196F3;
+        }
+        .details {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        button {
+            background: #2A2A2A;
+            color: #EAEAEA;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 10px 5px;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #333;
+        }
+        .summary {
+            background: #1A1A1A;
+            border: 2px solid #444;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .stat {
+            display: inline-block;
+            margin-right: 30px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Austin Intelligence Map - Data Stream Audit</h1>
+    
+    <div class="summary" id="summary">
+        <div class="stat">
+            <div style="color: #999;">Total Tests:</div>
+            <div class="stat-value" id="total">0</div>
+        </div>
+        <div class="stat">
+            <div style="color: #4CAF50;">Passed:</div>
+            <div class="stat-value" style="color: #4CAF50;" id="passed">0</div>
+        </div>
+        <div class="stat">
+            <div style="color: #F44336;">Failed:</div>
+            <div class="stat-value" style="color: #F44336;" id="failed">0</div>
+        </div>
+        <div class="stat">
+            <div style="color: #FF9800;">Warnings:</div>
+            <div class="stat-value" style="color: #FF9800;" id="warnings">0</div>
+        </div>
+    </div>
+    
+    <button onclick="runAllTests()">▶ Run All Tests</button>
+    <button onclick="clearResults()">Clear Results</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const API_KEYS = {
+            BEA: '2DFCC101-15AB-45D1-A413-BEFA1FC22A52',
+            BLS: 'cbf21a53cb724e84952d64ee2fe42804'
+        };
+        
+        const AUSTIN_MSA = {
+            code: '12420',
+            blsCode: '48124',
+            series: {
+                unemployment: 'LAUMT481242000000003',
+                employment: 'LAUMT481242000000005',
+                laborForce: 'LAUMT481242000000006'
+            }
+        };
+        
+        let stats = { total: 0, passed: 0, failed: 0, warnings: 0 };
+        
+        function updateStats() {
+            document.getElementById('total').textContent = stats.total;
+            document.getElementById('passed').textContent = stats.passed;
+            document.getElementById('failed').textContent = stats.failed;
+            document.getElementById('warnings').textContent = stats.warnings;
+        }
+        
+        function addResult(title, status, message, details = '') {
+            stats.total++;
+            if (status === 'success') stats.passed++;
+            else if (status === 'error') stats.failed++;
+            else if (status === 'warning') stats.warnings++;
+            
+            updateStats();
+            
+            const section = document.createElement('div');
+            section.className = 'test-section';
+            section.innerHTML = `
+                <div class="test-title">${title}</div>
+                <div class="test-result ${status}">
+                    ${message}
+                    ${details ? `<div class="details">${details}</div>` : ''}
+                </div>
+            `;
+            document.getElementById('results').appendChild(section);
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            stats = { total: 0, passed: 0, failed: 0, warnings: 0 };
+            updateStats();
+        }
+        
+        async function testAPI(name, url, validator) {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const result = validator(data);
+                if (result.success) {
+                    addResult(name, 'success', result.message, result.details);
+                } else {
+                    addResult(name, result.status || 'warning', result.message, result.details);
+                }
+            } catch (e) {
+                addResult(name, 'error', `Failed: ${e.message}`, url);
+            }
+        }
+        
+        async function runAllTests() {
+            clearResults();
+            addResult('Test Suite', 'loading', 'Starting comprehensive data stream audit...', new Date().toLocaleString());
+            
+            // 1. Construction Permits
+            await testAPI(
+                '1. Construction Permits',
+                'https://data.austintexas.gov/resource/3syk-w9eu.json?$limit=100',
+                (data) => {
+                    if (!Array.isArray(data) || data.length === 0) {
+                        return { success: false, status: 'error', message: 'No permit data returned' };
+                    }
+                    const sample = data[0];
+                    const hasFields = sample.permit_number && sample.issue_date;
+                    return {
+                        success: hasFields,
+                        message: hasFields ? `✓ ${data.length} permits loaded with complete fields` : 'Missing key fields',
+                        details: `Sample: ${sample.permit_number || 'N/A'} - ${sample.description?.substring(0, 50) || 'N/A'}`
+                    };
+                }
+            );
+            
+            // 2. Traffic Incidents
+            await testAPI(
+                '2. Traffic Incidents',
+                'https://data.austintexas.gov/resource/dx9v-zd7x.json?$limit=100&$where=status_report_date > "2024-01-01"',
+                (data) => ({
+                    success: Array.isArray(data),
+                    message: `✓ ${data.length} active traffic incidents`,
+                    details: data.length > 0 ? `Latest: ${data[0].issue_reported || 'Unknown'}` : 'No current incidents'
+                })
+            );
+            
+            // 3. Live Cameras
+            await testAPI(
+                '3. Live Traffic Cameras',
+                'https://data.austintexas.gov/resource/b4k4-adkb.json?$limit=50',
+                (data) => {
+                    const withImages = data.filter(c => c.camera_image_url);
+                    return {
+                        success: withImages.length > 0,
+                        message: `✓ ${data.length} cameras (${withImages.length} with live feeds)`,
+                        details: withImages.length > 0 ? `Sample: ${withImages[0].location || 'Unknown location'}` : 'No live feeds'
+                    };
+                }
+            );
+            
+            // 4. Schools
+            await testAPI(
+                '4. Schools (AISD)',
+                'https://data.austintexas.gov/resource/keqk-e8rp.json?$limit=100',
+                (data) => ({
+                    success: data.length > 0,
+                    message: `✓ ${data.length} schools loaded`,
+                    details: data[0] ? `Sample: ${data[0].school_name || 'N/A'}` : ''
+                })
+            );
+            
+            // 5. Parks
+            await testAPI(
+                '5. Parks & Recreation',
+                'https://data.austintexas.gov/resource/hkka-ahkr.json?$limit=100',
+                (data) => ({
+                    success: data.length > 0,
+                    message: `✓ ${data.length} parks loaded`,
+                    details: data[0] ? `Sample: ${data[0].park_name || 'N/A'} (${data[0].acres || 'N/A'} acres)` : ''
+                })
+            );
+            
+            // 6. Short-Term Rentals
+            await testAPI(
+                '6. Short-Term Rentals (STRs)',
+                'https://data.austintexas.gov/resource/2fah-4p7e.json?$limit=100',
+                (data) => {
+                    const active = data.filter(s => s.license_type);
+                    return {
+                        success: data.length > 0,
+                        message: `✓ ${data.length} STR licenses (${active.length} with type)`,
+                        details: active[0] ? `Sample: ${active[0].license_number || 'N/A'}` : ''
+                    };
+                }
+            );
+            
+            // 7. Bike Lanes
+            await testAPI(
+                '7. Bike Lanes',
+                'https://data.austintexas.gov/resource/6r8h-d6ht.json?$limit=100',
+                (data) => ({
+                    success: data.length > 0,
+                    message: `✓ ${data.length} bike lane segments`,
+                    details: data[0] ? `Sample: ${data[0].street_name || 'N/A'}` : ''
+                })
+            );
+            
+            // 8. Zoning
+            await testAPI(
+                '8. Active Zoning Cases',
+                'https://data.austintexas.gov/resource/mavg-96ck.json?$limit=100',
+                (data) => ({
+                    success: data.length > 0,
+                    message: `✓ ${data.length} zoning cases`,
+                    details: data[0] ? `Sample: ${data[0].case_number || 'N/A'}` : ''
+                })
+            );
+            
+            // 9. Crime Reports
+            await testAPI(
+                '9. Crime Reports',
+                'https://data.austintexas.gov/resource/fdj4-gpfu.json?$limit=100&$where=occurred_date > "2024-01-01"',
+                (data) => {
+                    const recent = data.filter(c => c.occurred_date);
+                    return {
+                        success: data.length > 0,
+                        message: `✓ ${data.length} recent crime reports`,
+                        details: recent[0] ? `Latest: ${recent[0].crime_type || 'Unknown'} (${recent[0].occurred_date?.split('T')[0] || 'N/A'})` : ''
+                    };
+                }
+            );
+            
+            // 10. Flood Zones
+            await testAPI(
+                '10. Flood Zones (GeoJSON)',
+                'https://data.austintexas.gov/resource/5pge-fxx9.geojson?$limit=10',
+                (data) => ({
+                    success: data.type === 'FeatureCollection',
+                    message: `✓ ${data.features?.length || 0} flood zone features`,
+                    details: data.features?.[0] ? `Type: ${data.features[0].geometry?.type || 'Unknown'}` : ''
+                })
+            );
+            
+            // 11. Code Violations
+            await testAPI(
+                '11. Code Violations',
+                'https://data.austintexas.gov/resource/4p54-9544.json?$limit=100',
+                (data) => {
+                    const active = data.filter(v => v.case_number);
+                    return {
+                        success: data.length > 0,
+                        message: `✓ ${data.length} code violations (${active.length} with case #)`,
+                        details: active[0] ? `Sample: ${active[0].case_number} - ${active[0].violation_description?.substring(0, 30) || 'N/A'}` : ''
+                    };
+                }
+            );
+            
+            // 12. 311 Service Requests
+            await testAPI(
+                '12. 311 Service Requests',
+                'https://data.austintexas.gov/resource/i26j-ai4z.json?$limit=100',
+                (data) => ({
+                    success: data.length > 0,
+                    message: `✓ ${data.length} 311 requests`,
+                    details: data[0] ? `Sample: ${data[0].service_request_description?.substring(0, 40) || 'N/A'}` : ''
+                })
+            );
+            
+            // 13. Police Stations
+            await testAPI(
+                '13. Police Stations',
+                'https://data.austintexas.gov/resource/jhds-9erp.json?$limit=50&department=POLICE',
+                (data) => ({
+                    success: data.length > 0,
+                    message: `✓ ${data.length} police stations`,
+                    details: data[0] ? `Sample: ${data[0].location_name || 'N/A'}` : ''
+                })
+            );
+            
+            // 14. Fire Stations
+            await testAPI(
+                '14. Fire Stations',
+                'https://data.austintexas.gov/resource/jhds-9erp.json?$limit=50&department=FIRE',
+                (data) => ({
+                    success: data.length > 0,
+                    message: `✓ ${data.length} fire stations`,
+                    details: data[0] ? `Sample: ${data[0].location_name || 'N/A'}` : ''
+                })
+            );
+            
+            // 15. Weather (Open-Meteo)
+            await testAPI(
+                '15. Weather (Open-Meteo)',
+                'https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph',
+                (data) => {
+                    const hasData = data.current?.temperature_2m !== undefined;
+                    return {
+                        success: hasData,
+                        message: hasData ? `✓ Live weather: ${Math.round(data.current.temperature_2m)}°F, ${data.current.relative_humidity_2m}% humidity` : 'No weather data',
+                        details: hasData ? `Wind: ${Math.round(data.current.wind_speed_10m)} mph` : ''
+                    };
+                }
+            );
+            
+            // 16. BLS - Unemployment
+            await testAPI(
+                '16a. BLS - Unemployment Rate',
+                `https://api.bls.gov/publicAPI/v2/timeseries/data/${AUSTIN_MSA.series.unemployment}?registrationkey=${API_KEYS.BLS}&startyear=2024&endyear=2024`,
+                (data) => {
+                    const success = data.status === 'REQUEST_SUCCEEDED';
+                    const latest = data.Results?.series?.[0]?.data?.[0];
+                    return {
+                        success: success,
+                        message: success ? `✓ Unemployment: ${latest.value}% (${latest.periodName} ${latest.year})` : 'BLS API failed',
+                        details: success ? `Response time: ${data.responseTime}ms` : data.message?.[0] || 'Unknown error'
+                    };
+                }
+            );
+            
+            // 17. BLS - Employment
+            await testAPI(
+                '16b. BLS - Employment Level',
+                `https://api.bls.gov/publicAPI/v2/timeseries/data/${AUSTIN_MSA.series.employment}?registrationkey=${API_KEYS.BLS}&startyear=2024&endyear=2024`,
+                (data) => {
+                    const success = data.status === 'REQUEST_SUCCEEDED';
+                    const latest = data.Results?.series?.[0]?.data?.[0];
+                    const empValue = latest ? (parseFloat(latest.value) / 1000).toFixed(2) : 'N/A';
+                    return {
+                        success: success,
+                        message: success ? `✓ Employment: ${empValue}M (${latest.periodName} ${latest.year})` : 'BLS API failed',
+                        details: success ? `Raw value: ${latest.value}` : ''
+                    };
+                }
+            );
+            
+            // 18. BLS - Labor Force
+            await testAPI(
+                '16c. BLS - Labor Force',
+                `https://api.bls.gov/publicAPI/v2/timeseries/data/${AUSTIN_MSA.series.laborForce}?registrationkey=${API_KEYS.BLS}&startyear=2024&endyear=2024`,
+                (data) => {
+                    const success = data.status === 'REQUEST_SUCCEEDED';
+                    const latest = data.Results?.series?.[0]?.data?.[0];
+                    const lfValue = latest ? (parseFloat(latest.value) / 1000).toFixed(2) : 'N/A';
+                    return {
+                        success: success,
+                        message: success ? `✓ Labor Force: ${lfValue}M (${latest.periodName} ${latest.year})` : 'BLS API failed',
+                        details: success ? `Raw value: ${latest.value}` : ''
+                    };
+                }
+            );
+            
+            // 19. BEA - GDP Data
+            await testAPI(
+                '17. BEA - Metro GDP',
+                `https://apps.bea.gov/api/data?UserID=${API_KEYS.BEA}&method=GetDataSetList&ResultFormat=JSON`,
+                (data) => {
+                    if (data.BEAAPI?.Error) {
+                        return {
+                            success: false,
+                            status: 'warning',
+                            message: `⚠ BEA API not yet activated: ${data.BEAAPI.Error.APIErrorDescription}`,
+                            details: 'Using fallback data ($169.8B GDP, $68.4K per capita income)'
+                        };
+                    }
+                    return {
+                        success: true,
+                        message: '✓ BEA API activated',
+                        details: `Available datasets: ${data.BEAAPI?.Results?.Dataset?.length || 0}`
+                    };
+                }
+            );
+            
+            addResult('Test Suite Complete', 'success', `Audit complete at ${new Date().toLocaleString()}`, `${stats.passed}/${stats.total} tests passed`);
+        }
+        
+        // Auto-run on load
+        window.onload = () => {
+            setTimeout(runAllTests, 500);
+        };
+    </script>
+</body>
+</html>
