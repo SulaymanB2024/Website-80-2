@@ -1401,10 +1401,26 @@
 
         /* Search Filter Buttons */
         .search-filter {
-            @apply px-4 py-2 text-xs font-mono uppercase tracking-wider border border-off-white/10 bg-transparent text-neutral-500 hover:text-off-white hover:border-off-white/30 transition-all duration-300 rounded;
+            padding: 0.5rem 1.25rem;
+            font-size: 10px;
+            font-family: ui-monospace, monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border: 1px solid rgba(234, 234, 234, 0.1);
+            background: rgba(234, 234, 234, 0.02);
+            color: rgb(82, 82, 82);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+        .search-filter:hover {
+            color: rgb(163, 163, 163);
+            border-color: rgba(234, 234, 234, 0.2);
+            background: rgba(234, 234, 234, 0.05);
         }
         .search-filter.active {
-            @apply bg-off-white text-black border-off-white;
+            background: rgba(234, 234, 234, 0.1);
+            color: rgb(234, 234, 234);
+            border-color: rgba(234, 234, 234, 0.3);
         }
 
     </style>
@@ -1436,44 +1452,38 @@
 
     <!-- MODAL CONTAINER -->
     <!-- Search Overlay -->
-    <div id="search-overlay" class="fixed inset-0 z-50 bg-black/98 backdrop-blur-2xl opacity-0 pointer-events-none transition-all duration-500 flex flex-col items-center justify-start" style="transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);">
-        <div class="w-full max-w-5xl px-6 mt-24">
-            <!-- Search Header -->
-            <div class="flex items-center justify-between mb-12">
-                <div>
-                    <div class="font-mono text-[10px] text-neutral-600 uppercase tracking-[0.3em] mb-3">Universal Search</div>
-                    <h2 class="font-display text-3xl font-medium text-off-white tracking-tight">Find Projects, Writing & More</h2>
-                </div>
-                <button id="close-search" class="text-neutral-500 hover:text-white transition-all duration-300 p-3 hover:rotate-90 hover:bg-white/5 rounded-full" style="transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+    <div id="search-overlay" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500" style="transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="h-full flex flex-col items-center justify-center px-4 md:px-6">
+            <div class="w-full max-w-4xl">
+                <!-- Close Button -->
+                <button id="close-search" class="absolute top-4 right-4 md:top-8 md:right-8 text-neutral-600 hover:text-off-white transition-all duration-300 p-2 hover:rotate-90 min-h-[44px] min-w-[44px] flex items-center justify-center" style="transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                    <i data-lucide="x" class="w-6 h-6 md:w-8 md:h-8"></i>
                 </button>
+                
+                <!-- Search Input -->
+                <div class="relative mb-8 md:mb-16">
+                    <input type="text" id="search-input" placeholder="Search projects, writing, skills..." 
+                        class="w-full bg-transparent border-b border-off-white/20 text-2xl md:text-4xl lg:text-6xl font-display text-off-white py-4 md:py-6 focus:outline-none focus:border-off-white/50 placeholder-neutral-800 transition-all duration-400 font-light tracking-tight" style="letter-spacing: -0.025em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+                    <div id="search-count" class="absolute right-0 bottom-1 md:bottom-2 font-mono text-[10px] md:text-xs text-neutral-700 uppercase tracking-wider"></div>
+                </div>
+                
+                <!-- Quick Filters -->
+                <div id="search-filters" class="flex gap-3 mb-12 justify-center">
+                    <button class="search-filter active" data-filter="all">All</button>
+                    <button class="search-filter" data-filter="projects">Projects</button>
+                    <button class="search-filter" data-filter="writing">Writing</button>
+                    <button class="search-filter" data-filter="services">Services</button>
+                </div>
             </div>
             
-            <!-- Search Input -->
-            <div class="relative mb-12">
-                <i data-lucide="search" class="w-5 h-5 absolute left-0 top-1/2 -translate-y-1/2 text-neutral-500"></i>
-                <input type="text" id="search-input" placeholder="Search by name, technology, or keyword..." 
-                    class="w-full bg-transparent border-b-2 border-white/20 text-xl font-display text-off-white py-4 pl-8 focus:outline-none focus:border-white placeholder-neutral-600 transition-all duration-400 font-light" style="letter-spacing: -0.01em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-                <div id="search-count" class="absolute right-0 top-1/2 -translate-y-1/2 font-mono text-xs text-neutral-600"></div>
-            </div>
-            
-            <!-- Quick Filters -->
-            <div id="search-filters" class="flex flex-wrap gap-2 mb-8">
-                <button class="search-filter active" data-filter="all">All</button>
-                <button class="search-filter" data-filter="projects">Projects</button>
-                <button class="search-filter" data-filter="writing">Writing</button>
-                <button class="search-filter" data-filter="services">Services</button>
-            </div>
-        </div>
-        
-        <!-- Results Container -->
-        <div class="w-full max-w-5xl px-6 flex-1 overflow-y-auto pb-20" style="scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;">
-            <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Results injected here -->
-            </div>
-            <div id="search-empty" class="hidden text-center py-20">
-                <i data-lucide="search-x" class="w-16 h-16 text-neutral-700 mx-auto mb-4"></i>
-                <p class="font-mono text-sm text-neutral-600">No results found</p>
+            <!-- Results Container -->
+            <div class="w-full max-w-6xl overflow-y-auto max-h-[50vh] px-6" style="scrollbar-width: thin; scrollbar-color: rgba(234,234,234,0.2) transparent;">
+                <div id="search-results" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <!-- Results injected here -->
+                </div>
+                <div id="search-empty" class="hidden text-center py-16">
+                    <div class="font-mono text-xs text-neutral-700 uppercase tracking-[0.3em]">No matches</div>
+                </div>
             </div>
         </div>
     </div>
@@ -1570,35 +1580,35 @@
         <div class="max-w-[1600px] w-full mx-auto z-10 relative pointer-events-none">
             <!-- Main Title -->
             <div class="pointer-events-auto relative select-none">
-                <h1 class="font-display text-[8vw] leading-[0.9] font-bold text-off-white reveal-text" style="transition-delay: 100ms; letter-spacing: -0.03em;">
+                <h1 class="font-display text-[12vw] sm:text-[10vw] md:text-[8vw] leading-[0.9] font-bold text-off-white reveal-text" style="transition-delay: 100ms; letter-spacing: -0.03em;">
                     <span class="scramble-hover" data-final="FINANCIAL ANALYST">FINANCIAL ANALYST</span><br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-off-white via-neutral-400 to-neutral-900 scramble-hover" data-final="& BUILDER">& BUILDER</span>
                 </h1>
             </div>
             
             <!-- Bio / Details -->
-            <div class="mt-20 max-w-6xl pointer-events-auto relative">
+            <div class="mt-12 md:mt-20 max-w-6xl pointer-events-auto relative">
                 <div class="max-w-[650px] relative z-10">
-                    <p class="font-sans text-xl md:text-2xl text-neutral-200 leading-[1.7] reveal-text mb-12" style="transition-delay: 500ms;">
+                    <p class="font-sans text-lg md:text-xl lg:text-2xl text-neutral-200 leading-[1.7] reveal-text mb-8 md:mb-12" style="transition-delay: 500ms;">
                         I turn complex markets into clear, actionable models and lead teams to deliver results: equities, crypto, and beyond.
                     </p>
                     
-                    <div class="reveal-text mb-8 flex flex-wrap gap-4" style="transition-delay: 600ms;">
-                        <a href="#section-work" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-off-white text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
+                    <div class="reveal-text mb-6 md:mb-8 flex flex-wrap gap-3 md:gap-4" style="transition-delay: 600ms;">
+                        <a href="#section-work" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 min-h-[44px] group text-off-white text-sm md:text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
                             <span class="magnetic-content inline-flex items-center gap-2">
-                                See Valuation Work <i data-lucide="arrow-down-right" class="w-5 h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
+                                See Valuation Work <i data-lucide="arrow-down-right" class="w-4 h-4 md:w-5 md:h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
                             </span>
                             <span class="magnetic-area"></span>
                         </a>
-                        <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-off-white text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
+                        <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 min-h-[44px] group text-off-white text-sm md:text-base font-medium rounded-sm backdrop-blur-sm" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, border-color, background-color, box-shadow;">
                             <span class="magnetic-content inline-flex items-center gap-2">
-                                Download Résumé <i data-lucide="download" class="w-5 h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
+                                Download Résumé <i data-lucide="download" class="w-4 h-4 md:w-5 md:h-5" style="transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;" class="group-hover:translate-x-1 group-hover:translate-y-1"></i>
                             </span>
                             <span class="magnetic-area"></span>
                         </a>
                     </div>
                     
-                    <div class="flex flex-wrap gap-6 font-mono text-[11px] text-neutral-300 uppercase tracking-wider reveal-text" style="transition-delay: 700ms;">
+                    <div class="flex flex-wrap gap-4 md:gap-6 font-mono text-[10px] md:text-[11px] text-neutral-300 uppercase tracking-wider reveal-text" style="transition-delay: 700ms;">
                         <span class="opacity-80">Austin, TX</span>
                         <span class="opacity-80">UT Austin '28</span>
                     </div>
@@ -1610,8 +1620,8 @@
     </section>
 
     <!-- Infinite Marquee -->
-    <div class="py-8 border-y border-off-white/15 bg-charcoal overflow-hidden flex relative z-20 pointer-events-none select-none">
-        <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;">
+    <div class="py-6 md:py-8 border-y border-off-white/15 bg-charcoal overflow-hidden flex relative z-20 pointer-events-none select-none">
+        <div class="animate-marquee whitespace-nowrap flex gap-8 md:gap-16 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;">
             <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
             <span>EQUITY RESEARCH</span> <span class="text-[#666666]">///</span>
             <span>DCF VALUATION</span> <span class="text-[#666666]">///</span>
@@ -1629,7 +1639,7 @@
             <span>API DESIGN</span> <span class="text-[#666666]">///</span>
             <span>FIGMA / UI/UX</span> <span class="text-[#666666]">///</span>
         </div>
-        <div class="animate-marquee whitespace-nowrap flex gap-16 text-4xl md:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;" aria-hidden="true">
+        <div class="animate-marquee whitespace-nowrap flex gap-8 md:gap-16 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-display font-bold text-[#A0A0A0]" style="letter-spacing: -0.02em;" aria-hidden="true">
             <span>FINANCIAL MODELING</span> <span class="text-[#666666]">///</span>
             <span>EQUITY RESEARCH</span> <span class="text-[#666666]">///</span>
             <span>DCF VALUATION</span> <span class="text-[#666666]">///</span>
@@ -1722,113 +1732,113 @@
     <!-- Selected Work Section -->
     <section id="section-work" class="py-40 px-6 md:px-12 relative" aria-labelledby="work-heading">
         <div class="max-w-[1600px] mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-32 border-b border-off-white/10 pb-8 reveal-text">
-                <h2 id="work-heading" class="font-display text-6xl md:text-8xl font-bold mix-blend-difference" style="letter-spacing: -0.025em;">SELECTED<br>WORKS</h2>
-                <div class="flex flex-col items-end mt-6 md:mt-0">
-                    <span class="font-mono text-xs text-neutral-400 mb-2 uppercase" style="letter-spacing: 0.15em;">Archive</span>
-                    <span class="font-mono text-xs text-off-white" style="letter-spacing: 0.15em;">(2023 - 2025)</span>
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 md:mb-32 border-b border-off-white/10 pb-6 md:pb-8 reveal-text">
+                <h2 id="work-heading" class="font-display text-5xl md:text-7xl lg:text-8xl font-bold mix-blend-difference" style="letter-spacing: -0.025em;">SELECTED<br>WORKS</h2>
+                <div class="flex flex-col items-end mt-4 md:mt-0">
+                    <span class="font-mono text-[10px] md:text-xs text-neutral-400 mb-2 uppercase" style="letter-spacing: 0.15em;">Archive</span>
+                    <span class="font-mono text-[10px] md:text-xs text-off-white" style="letter-spacing: 0.15em;">(2023 - 2025)</span>
                 </div>
             </div>
 
             <!-- Project 1: Crypto Research -->
-            <div class="group project-card tech-corner mb-40 w-full cursor-pointer reveal-text view-project-target" data-project="bittensor" onclick="openModal('bittensor', 'project')">
-                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
+            <div class="group project-card tech-corner mb-20 md:mb-40 w-full cursor-pointer reveal-text view-project-target" data-project="bittensor" onclick="openModal('bittensor', 'project')">
+                <div class="project-img-container relative w-full h-[50vh] md:h-[70vh] bg-charcoal mb-6 md:mb-8 overflow-hidden border border-off-white/10">
                     <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-bittensor" class="gen-canvas"></canvas>
                     </div>
                     <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-700 pointer-events-none"></div>
                 </div>
-                <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
-                    <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">CRYPTO RESEARCH</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Long/Short Theses / On-Chain Analysis / Market Structure</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 border-t border-off-white/20 pt-4 md:pt-6">
+                    <div class="flex-1">
+                        <h3 class="font-display text-2xl md:text-3xl lg:text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">CRYPTO RESEARCH</h3>
+                        <p class="font-sans text-sm md:text-base text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Long/Short Theses / On-Chain Analysis / Market Structure</p>
                     </div>
-                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">01</span>
+                    <span class="font-mono text-[10px] md:text-xs border border-off-white/20 px-2 md:px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors shrink-0">01</span>
                 </div>
             </div>
 
             <!-- Project 2: Web3 Payroll -->
-            <div class="group project-card tech-corner mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="payroll" onclick="openModal('payroll', 'project')">
-                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
+            <div class="group project-card tech-corner mb-20 md:mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="payroll" onclick="openModal('payroll', 'project')">
+                <div class="project-img-container relative w-full h-[50vh] md:h-[70vh] bg-charcoal mb-6 md:mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-payroll" class="gen-canvas"></canvas>
                     </div>
                 </div>
-                <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
-                    <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">TECHNICAL ARCHITECTURE</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Full-Stack Engineering / Web3 Systems / Cloud</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 border-t border-off-white/20 pt-4 md:pt-6">
+                    <div class="flex-1">
+                        <h3 class="font-display text-2xl md:text-3xl lg:text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">TECHNICAL ARCHITECTURE</h3>
+                        <p class="font-sans text-sm md:text-base text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Full-Stack Engineering / Web3 Systems / Cloud</p>
                     </div>
-                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">02</span>
+                    <span class="font-mono text-[10px] md:text-xs border border-off-white/20 px-2 md:px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors shrink-0">02</span>
                 </div>
             </div>
 
              <!-- Project 3: Point72 -->
-             <div class="group project-card tech-corner mb-40 w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72" onclick="openModal('point72', 'project')">
-                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
+             <div class="group project-card tech-corner mb-20 md:mb-40 w-full md:w-3/4 cursor-pointer reveal-text view-project-target" data-project="point72" onclick="openModal('point72', 'project')">
+                <div class="project-img-container relative w-full h-[50vh] md:h-[70vh] bg-charcoal mb-6 md:mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-point72" class="gen-canvas"></canvas>
                     </div>
                 </div>
-                <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
-                    <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">INSTITUTIONAL MODELING</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Equity Research / Valuation Models / Sector Analysis</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 border-t border-off-white/20 pt-4 md:pt-6">
+                    <div class="flex-1">
+                        <h3 class="font-display text-2xl md:text-3xl lg:text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">INSTITUTIONAL MODELING</h3>
+                        <p class="font-sans text-sm md:text-base text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Equity Research / Valuation Models / Sector Analysis</p>
                     </div>
-                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">03</span>
+                    <span class="font-mono text-[10px] md:text-xs border border-off-white/20 px-2 md:px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors shrink-0">03</span>
                 </div>
             </div>
 
             <!-- Project 4: Consulting (TaskFormer) -->
-            <div class="group project-card tech-corner w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="taskformer" onclick="openModal('taskformer', 'project')">
-                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
+            <div class="group project-card tech-corner mb-20 md:mb-40 w-full md:w-4/5 md:ml-auto cursor-pointer reveal-text view-project-target" data-project="taskformer" onclick="openModal('taskformer', 'project')">
+                <div class="project-img-container relative w-full h-[50vh] md:h-[70vh] bg-charcoal mb-6 md:mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-taskformer" class="gen-canvas"></canvas>
                     </div>
                 </div>
-                <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
-                    <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">STRATEGIC ADVISORY</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Corporate Strategy / Financial Engineering / Turnarounds</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 border-t border-off-white/20 pt-4 md:pt-6">
+                    <div class="flex-1">
+                        <h3 class="font-display text-2xl md:text-3xl lg:text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">STRATEGIC ADVISORY</h3>
+                        <p class="font-sans text-sm md:text-base text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Corporate Strategy / Financial Engineering / Turnarounds</p>
                     </div>
-                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">04</span>
+                    <span class="font-mono text-[10px] md:text-xs border border-off-white/20 px-2 md:px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors shrink-0">04</span>
                 </div>
             </div>
 
             <!-- Project 5: Austin Real Estate -->
-            <div class="group project-card tech-corner w-full md:w-4/5 mr-auto cursor-pointer reveal-text view-project-target mt-32" data-project="austin_re" onclick="openModal('austin_re', 'project')">
-                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
+            <div class="group project-card tech-corner w-full md:w-4/5 mr-auto cursor-pointer reveal-text view-project-target mt-16 md:mt-32 mb-20 md:mb-40" data-project="austin_re" onclick="openModal('austin_re', 'project')">
+                <div class="project-img-container relative w-full h-[50vh] md:h-[70vh] bg-charcoal mb-6 md:mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-austin" class="gen-canvas"></canvas>
                     </div>
                 </div>
-                <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
-                    <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">REAL ESTATE INTELLIGENCE</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Macro Trends / Geospatial Analytics / Alpha</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 border-t border-off-white/20 pt-4 md:pt-6">
+                    <div class="flex-1">
+                        <h3 class="font-display text-2xl md:text-3xl lg:text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">REAL ESTATE INTELLIGENCE</h3>
+                        <p class="font-sans text-sm md:text-base text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Macro Trends / Geospatial Analytics / Alpha</p>
                     </div>
-                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">05</span>
+                    <span class="font-mono text-[10px] md:text-xs border border-off-white/20 px-2 md:px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors shrink-0">05</span>
                 </div>
             </div>
 
             <!-- Project 6: Music / Double Bass -->
-            <div class="group project-card tech-corner w-full md:w-3/4 ml-auto cursor-pointer reveal-text view-project-target mt-32" data-project="music" onclick="openModal('music', 'project')">
-                <div class="project-img-container relative w-full h-[70vh] bg-charcoal mb-8 overflow-hidden border border-off-white/10">
+            <div class="group project-card tech-corner w-full md:w-3/4 ml-auto cursor-pointer reveal-text view-project-target mt-16 md:mt-32" data-project="music" onclick="openModal('music', 'project')">
+                <div class="project-img-container relative w-full h-[50vh] md:h-[70vh] bg-charcoal mb-6 md:mb-8 overflow-hidden border border-off-white/10">
                      <div class="project-img absolute inset-0 w-full h-full bg-[#0F0F0F]">
                         <canvas id="canvas-music" class="gen-canvas"></canvas>
                     </div>
                 </div>
-                <div class="flex justify-between items-start border-t border-off-white/20 pt-6">
-                    <div>
-                        <h3 class="font-display text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">PERFORMANCE / COMPOSITION</h3>
-                        <p class="font-sans text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Double Bass / Classical Training / Jazz Exploration</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 border-t border-off-white/20 pt-4 md:pt-6">
+                    <div class="flex-1">
+                        <h3 class="font-display text-2xl md:text-3xl lg:text-4xl font-medium mb-2 group-hover:translate-x-4 transition-transform duration-500">PERFORMANCE / COMPOSITION</h3>
+                        <p class="font-sans text-sm md:text-base text-neutral-400 group-hover:translate-x-4 transition-transform duration-500 delay-75">Double Bass / Classical Training / Jazz Exploration</p>
                     </div>
-                    <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">06</span>
+                    <span class="font-mono text-[10px] md:text-xs border border-off-white/20 px-2 md:px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors shrink-0">06</span>
                 </div>
             </div>
             
-            <div class="mt-32 text-center reveal-text">
-                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target inline-block font-display text-lg border border-off-white/20 px-10 py-5 hover:bg-off-white hover:text-black transition-colors duration-500">
+            <div class="mt-16 md:mt-32 text-center reveal-text">
+                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target inline-block font-display text-base md:text-lg border border-off-white/20 px-8 md:px-10 py-4 md:py-5 min-h-[44px] hover:bg-off-white hover:text-black transition-colors duration-500">
                     <span class="magnetic-content block tracking-widest uppercase">View Full Resume</span>
                     <span class="magnetic-area"></span>
                 </a>
@@ -2140,31 +2150,31 @@
         <div class="max-w-[1600px] mx-auto w-full h-full flex flex-col justify-center flex-grow relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center w-full">
                 <div class="w-full md:w-1/2 reveal-text">
-                    <div class="flex items-center gap-3 mb-12">
+                    <div class="flex items-center gap-3 mb-8 md:mb-12">
                         <span class="w-1.5 h-1.5 bg-off-white rounded-full animate-pulse"></span>
-                        <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Open for New Ventures</span>
+                        <span class="font-mono text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Open for New Ventures</span>
                     </div>
                     
-                    <div class="space-y-12">
-                        <p class="font-sans text-xl md:text-2xl text-neutral-500 max-w-md leading-relaxed">
+                    <div class="space-y-8 md:space-y-12">
+                        <p class="font-sans text-lg md:text-xl lg:text-2xl text-neutral-500 max-w-md leading-relaxed">
                             Have a project? Building something that requires precision? Let's discuss how strategic clarity can transform complexity into competitive advantage.
                         </p>
                         
-                        <h2 id="contact-heading" onclick="this.querySelector('a').click()" class="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter hover:text-neutral-300 transition-all duration-300 cursor-pointer hover-target magnetic-wrap group inline-block">
-                            <a href="mailto:sulayman.bowles@gmail.com" class="magnetic-content block underline decoration-off-white/20 decoration-1 underline-offset-8 hover:decoration-off-white/60 transition-all duration-300 relative z-10">
+                        <h2 id="contact-heading" onclick="this.querySelector('a').click()" class="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter hover:text-neutral-300 transition-all duration-300 cursor-pointer hover-target magnetic-wrap group inline-block">
+                            <a href="mailto:sulayman.bowles@gmail.com" class="magnetic-content block underline decoration-off-white/20 decoration-1 underline-offset-4 md:underline-offset-8 hover:decoration-off-white/60 transition-all duration-300 relative z-10">
                                 SULAYMAN.BOWLES<br>@GMAIL.COM
                             </a>
                             <span class="magnetic-area"></span>
                         </h2>
 
                         <!-- Calendly & Forms -->
-                        <div class="flex flex-wrap gap-6 mt-8">
+                        <div class="flex flex-wrap gap-4 md:gap-6 mt-6 md:mt-8">
                             <!-- Calendly -->
                             <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
                             <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-                            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sulayman-bowles/30min'});return false;" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-3 px-8 py-4 group text-off-white text-base font-medium rounded-sm backdrop-blur-sm">
+                            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sulayman-bowles/30min'});return false;" class="magnetic-wrap hover-target btn-tech inline-flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 min-h-[44px] group text-off-white text-sm md:text-base font-medium rounded-sm backdrop-blur-sm">
                                 <span class="magnetic-content inline-flex items-center gap-2">
-                                    Schedule Call <i data-lucide="calendar" class="w-5 h-5"></i>
+                                    Schedule Call <i data-lucide="calendar" class="w-4 h-4 md:w-5 md:h-5"></i>
                                 </span>
                                 <span class="magnetic-area"></span>
                             </a>
@@ -2174,13 +2184,13 @@
             </div>
         </div>
 
-        <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-end md:items-center border-t border-off-white/10 pt-10 mt-20 reveal-text relative z-10" role="contentinfo">
-            <div class="flex gap-8 mb-8 md:mb-0">
-                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Visit LinkedIn profile">LinkedIn</a>
-                <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Visit GitHub profile">GitHub</a>
-                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-xs tracking-widest pb-1" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Download resume">Resume</a>
+        <footer class="max-w-[1600px] mx-auto w-full flex flex-col md:flex-row justify-between items-start md:items-center border-t border-off-white/10 pt-8 md:pt-10 mt-12 md:mt-20 reveal-text relative z-10" role="contentinfo">
+            <div class="flex flex-wrap gap-6 md:gap-8 mb-6 md:mb-0">
+                <a href="https://www.linkedin.com/in/sulayman-bowles" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-[10px] md:text-xs tracking-widest pb-1 min-h-[44px] flex items-center" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Visit LinkedIn profile">LinkedIn</a>
+                <a href="https://github.com/sulaymanb2024" target="_blank" rel="noopener noreferrer" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-[10px] md:text-xs tracking-widest pb-1 min-h-[44px] flex items-center" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Visit GitHub profile">GitHub</a>
+                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="hover-target hover-underline text-neutral-400 hover:text-off-white transition-colors uppercase text-[10px] md:text-xs tracking-widest pb-1 min-h-[44px] flex items-center" style="letter-spacing: 0.15em; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Download resume">Resume</a>
             </div>
-            <div class="text-neutral-400 text-xs font-mono flex flex-col md:flex-row gap-4 md:gap-6 text-right md:text-left uppercase items-center">
+            <div class="text-neutral-400 text-[10px] md:text-xs font-mono flex flex-col md:flex-row gap-3 md:gap-6 text-left md:text-left uppercase items-start md:items-center">
                 <div id="live-ticker" class="contents"></div>
                 <time id="clock" class="tabular-nums">00:00:00 CST</time>
                 <span class="hidden md:inline">&copy; <span id="year"></span> S. BOWLES</span>
@@ -9250,226 +9260,6 @@
             }
         }
 
-        // --- 8. SPECIALTY CARD CANVAS BACKGROUNDS ---
-        function initSpecialtyCanvases() {
-            // Real Estate Canvas - Flowing map data points
-            const canvasRE = document.getElementById('canvas-specialty-re');
-            if (canvasRE) {
-                const ctx = canvasRE.getContext('2d');
-                let width, height;
-                let isVisible = false;
-                let animationId = null;
-                let points = [];
-                
-                const resize = () => {
-                    width = canvasRE.width = canvasRE.offsetWidth;
-                    height = canvasRE.height = canvasRE.offsetHeight;
-                    
-                    // Create grid of points
-                    points = [];
-                    const gridSize = 40;
-                    for (let i = 0; i < width / gridSize; i++) {
-                        for (let j = 0; j < height / gridSize; j++) {
-                            points.push({
-                                x: i * gridSize,
-                                y: j * gridSize,
-                                baseX: i * gridSize,
-                                baseY: j * gridSize,
-                                radius: 1 + Math.random() * 2
-                            });
-                        }
-                    }
-                };
-                resize();
-                window.addEventListener('resize', debounce(resize, 150));
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        isVisible = entry.isIntersecting;
-                        if (isVisible && !animationId) animate();
-                        else if (!isVisible && animationId) {
-                            cancelAnimationFrame(animationId);
-                            animationId = null;
-                        }
-                    });
-                }, { threshold: 0.1 });
-                observer.observe(canvasRE);
-                
-                let time = 0;
-                const animate = () => {
-                    if (!isVisible) {
-                        animationId = null;
-                        return;
-                    }
-                    
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.4)';
-                    ctx.fillRect(0, 0, width, height);
-                    
-                    time += 0.02;
-                    
-                    points.forEach(p => {
-                        const distortion = Math.sin(time + p.baseX * 0.01) * 15;
-                        p.x = p.baseX + distortion;
-                        p.y = p.baseY + Math.cos(time + p.baseY * 0.01) * 10;
-                        
-                        ctx.fillStyle = 'rgba(234, 234, 234, 0.6)';
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                        ctx.fill();
-                    });
-                    
-                    animationId = requestAnimationFrame(animate);
-                };
-            }
-            
-            // Crypto Canvas - Network nodes
-            const canvasCrypto = document.getElementById('canvas-specialty-crypto');
-            if (canvasCrypto) {
-                const ctx = canvasCrypto.getContext('2d');
-                let width, height;
-                let isVisible = false;
-                let animationId = null;
-                let nodes = [];
-                
-                class Node {
-                    constructor() {
-                        this.x = Math.random() * width;
-                        this.y = Math.random() * height;
-                        this.vx = (Math.random() - 0.5) * 0.5;
-                        this.vy = (Math.random() - 0.5) * 0.5;
-                        this.radius = 2 + Math.random() * 3;
-                    }
-                    
-                    update() {
-                        this.x += this.vx;
-                        this.y += this.vy;
-                        
-                        if (this.x < 0 || this.x > width) this.vx *= -1;
-                        if (this.y < 0 || this.y > height) this.vy *= -1;
-                    }
-                    
-                    draw() {
-                        ctx.fillStyle = 'rgba(234, 234, 234, 0.6)';
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
-                
-                const resize = () => {
-                    width = canvasCrypto.width = canvasCrypto.offsetWidth;
-                    height = canvasCrypto.height = canvasCrypto.offsetHeight;
-                    nodes = Array.from({ length: 20 }, () => new Node());
-                };
-                resize();
-                window.addEventListener('resize', debounce(resize, 150));
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        isVisible = entry.isIntersecting;
-                        if (isVisible && !animationId) animate();
-                        else if (!isVisible && animationId) {
-                            cancelAnimationFrame(animationId);
-                            animationId = null;
-                        }
-                    });
-                }, { threshold: 0.1 });
-                observer.observe(canvasCrypto);
-                
-                const animate = () => {
-                    if (!isVisible) {
-                        animationId = null;
-                        return;
-                    }
-                    
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.3)';
-                    ctx.fillRect(0, 0, width, height);
-                    
-                    // Draw connections
-                    ctx.strokeStyle = 'rgba(234, 234, 234, 0.1)';
-                    ctx.lineWidth = 1;
-                    nodes.forEach((node, i) => {
-                        nodes.slice(i + 1).forEach(other => {
-                            const dist = Math.hypot(node.x - other.x, node.y - other.y);
-                            if (dist < 150) {
-                                ctx.beginPath();
-                                ctx.moveTo(node.x, node.y);
-                                ctx.lineTo(other.x, other.y);
-                                ctx.stroke();
-                            }
-                        });
-                    });
-                    
-                    nodes.forEach(node => {
-                        node.update();
-                        node.draw();
-                    });
-                    
-                    animationId = requestAnimationFrame(animate);
-                };
-            }
-            
-            // Finance Canvas - Bar chart animation
-            const canvasFinance = document.getElementById('canvas-specialty-finance');
-            if (canvasFinance) {
-                const ctx = canvasFinance.getContext('2d');
-                let width, height;
-                let isVisible = false;
-                let animationId = null;
-                let bars = [];
-                
-                const resize = () => {
-                    width = canvasFinance.width = canvasFinance.offsetWidth;
-                    height = canvasFinance.height = canvasFinance.offsetHeight;
-                    
-                    bars = Array.from({ length: 15 }, (_, i) => ({
-                        x: (width / 15) * i,
-                        targetHeight: Math.random() * height * 0.6,
-                        currentHeight: 0,
-                        width: width / 15 - 4
-                    }));
-                };
-                resize();
-                window.addEventListener('resize', debounce(resize, 150));
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        isVisible = entry.isIntersecting;
-                        if (isVisible && !animationId) animate();
-                        else if (!isVisible && animationId) {
-                            cancelAnimationFrame(animationId);
-                            animationId = null;
-                        }
-                    });
-                }, { threshold: 0.1 });
-                observer.observe(canvasFinance);
-                
-                let time = 0;
-                const animate = () => {
-                    if (!isVisible) {
-                        animationId = null;
-                        return;
-                    }
-                    
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.2)';
-                    ctx.fillRect(0, 0, width, height);
-                    
-                    time += 0.01;
-                    
-                    bars.forEach((bar, i) => {
-                        // Animate height towards target with wave effect
-                        bar.targetHeight = (Math.sin(time + i * 0.3) * 0.5 + 0.5) * height * 0.5 + height * 0.1;
-                        bar.currentHeight += (bar.targetHeight - bar.currentHeight) * 0.05;
-                        
-                        ctx.fillStyle = 'rgba(234, 234, 234, 0.5)';
-                        ctx.fillRect(bar.x, height - bar.currentHeight, bar.width, bar.currentHeight);
-                    });
-                    
-                    animationId = requestAnimationFrame(animate);
-                };
-            }
-        }
-
         // --- 11. LIVE TICKER ---
         function initLiveTicker() {
             const ticker = document.getElementById('live-ticker');
@@ -12049,39 +11839,22 @@
             searchCount.textContent = `${searchableItems.length} result${searchableItems.length !== 1 ? 's' : ''}`;
 
             searchResults.innerHTML = searchableItems.map(item => {
-                const typeColor = {
-                    'project': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-                    'writing': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-                    'service': 'bg-green-500/10 text-green-400 border-green-500/20'
-                }[item.type] || 'bg-neutral-500/10 text-neutral-400';
-
                 const typeLabel = {
-                    'project': 'PROJECT',
-                    'writing': 'ARTICLE',
-                    'service': 'SERVICE'
+                    'project': 'PROJ',
+                    'writing': 'WRIT',
+                    'service': 'SERV'
                 }[item.type] || 'ITEM';
 
                 return `
-                    <div class="group relative border border-off-white/10 bg-charcoal/50 hover:bg-charcoal hover:border-off-white/30 transition-all duration-500 cursor-pointer overflow-hidden" onclick='allSearchableItems.find(i => i.id === "${item.id}").onClick()'>
-                        <!-- Hover gradient effect -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-off-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        
-                        <div class="relative p-6">
-                            <div class="flex items-start justify-between mb-3">
-                                <span class="px-2 py-1 ${typeColor} text-[9px] font-mono uppercase tracking-wider border rounded">${typeLabel}</span>
-                                <i data-lucide="arrow-right" class="w-4 h-4 text-neutral-600 group-hover:text-off-white group-hover:translate-x-1 transition-all duration-300"></i>
+                    <div class="group relative border border-off-white/10 bg-charcoal/30 hover:bg-charcoal hover:border-off-white/30 transition-all duration-500 cursor-pointer" onclick='allSearchableItems.find(i => i.id === "${item.id}").onClick()'>
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-[9px] font-mono text-neutral-700 uppercase tracking-[0.2em]">${typeLabel}</span>
+                                <i data-lucide="arrow-up-right" class="w-3 h-3 text-neutral-700 group-hover:text-off-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300"></i>
                             </div>
                             
-                            <h4 class="font-display text-lg font-medium text-off-white mb-2 group-hover:text-white transition-colors leading-tight">${item.title}</h4>
-                            <p class="text-xs text-neutral-500 font-mono uppercase tracking-wider mb-3">${item.subtitle}</p>
-                            
-                            ${item.tags && item.tags.length > 0 ? `
-                                <div class="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-off-white/5">
-                                    ${item.tags.slice(0, 3).map(tag => `
-                                        <span class="px-2 py-0.5 bg-off-white/5 text-neutral-600 text-[10px] font-mono rounded">${tag}</span>
-                                    `).join('')}
-                                </div>
-                            ` : ''}
+                            <h4 class="font-display text-base font-medium text-off-white mb-1 group-hover:text-white transition-colors leading-tight tracking-tight">${item.title}</h4>
+                            <p class="text-[11px] text-neutral-600 leading-relaxed">${item.subtitle}</p>
                         </div>
                     </div>
                 `;
