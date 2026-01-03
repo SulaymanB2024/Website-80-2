@@ -97,7 +97,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     
     <!-- Chart.js for data visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     
     <!-- Favicon - Multiple formats for better compatibility -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -284,8 +284,8 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- TradingView Widget Script -->
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <!-- TradingView Widget Script - Deferred for performance -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js" defer></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -311,13 +311,23 @@
                         'light-gray': '#A0A0A0',
                     },
                     animation: {
-                        'marquee': 'marquee 40s linear infinite', /* Slowed down */
+                        'marquee': 'marquee 40s linear infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     },
                     keyframes: {
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
                             '100%': { transform: 'translateX(-100%)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -543,8 +553,16 @@
             background-color: #0F0F0F;
             transition: background-color 0.3s ease;
         }
+        .modal-content.paper-mode #close-modal {
+            background-color: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .modal-content.paper-mode #close-modal:hover {
+            background-color: rgba(0,0,0,0.1);
+            border-color: rgba(0,0,0,0.2);
+        }
         .modal-content.paper-mode #close-modal i {
-            color: #0F0F0F;
+            color: #0F0F0F !important;
         }
         .modal-content.paper-mode .drop-cap::first-letter {
             color: #0F0F0F;
@@ -552,6 +570,18 @@
         .modal-content.paper-mode .pull-quote {
             border-left-color: #0F0F0F;
             color: #2A2A2A;
+        }
+        
+        /* Paper Mode Scrollbar */
+        .modal-content.paper-mode::-webkit-scrollbar-track {
+            background: #EAEAEA;
+        }
+        .modal-content.paper-mode::-webkit-scrollbar-thumb {
+            background: #CCCCCC;
+            border-radius: 2px;
+        }
+        .modal-content.paper-mode::-webkit-scrollbar-thumb:hover {
+            background: #999999;
         }
 
         /* --- INTERACTIVE TERMS (FOOTNOTES) --- */
@@ -671,17 +701,6 @@
         
         .design-content.show-animate {
             animation: fadeInDesign 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes fadeInDesign {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .design-tab.active {
@@ -1503,6 +1522,60 @@
             filter: blur(0);
             transform: translateX(10px) scale(1.01);
         }
+
+        /* --- BLOCKCHAIN TIMELINE STYLES --- */
+        .blockchain-block {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .blockchain-block.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .block-node {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 0 0 rgba(234, 234, 234, 0);
+        }
+        .blockchain-block:hover .block-node {
+            background: #EAEAEA;
+            color: #030303;
+            box-shadow: 0 0 30px 5px rgba(234, 234, 234, 0.3);
+            transform: scale(1.1) translateX(-50%) !important;
+        }
+        .blockchain-block:hover .block-node .block-hash {
+            animation: hashFlicker 0.3s ease-in-out;
+        }
+        @keyframes hashFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .block-content {
+            transform: translateY(0);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .blockchain-block:hover .block-content {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .blockchain-pulse {
+            animation: blockchainPulse 2s ease-in-out infinite;
+        }
+        @keyframes blockchainPulse {
+            0%, 100% { 
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(234, 234, 234, 0.4);
+            }
+            50% { 
+                transform: translateX(-50%) scale(1.2);
+                box-shadow: 0 0 20px 10px rgba(234, 234, 234, 0);
+            }
+        }
+        /* Chain connection animation */
+        @keyframes chainFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
         
         /* --- MAGNETIC CURSOR TWEAK --- */
         .magnetic-wrap {
@@ -1897,6 +1970,11 @@
                     <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-off-white group-hover:w-full transition-all duration-300"></span>
                     <span class="magnetic-area"></span>
                 </a>
+                <a href="#section-journey" class="hover-target magnetic-wrap group relative py-2">
+                    <span class="magnetic-content block group-hover:text-off-white transition-all duration-300">Journey</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-off-white group-hover:w-full transition-all duration-300"></span>
+                    <span class="magnetic-area"></span>
+                </a>
                 <a href="#section-writing" class="hover-target magnetic-wrap group relative py-2">
                     <span class="magnetic-content block group-hover:text-off-white transition-all duration-300">Writing</span>
                     <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-off-white group-hover:w-full transition-all duration-300"></span>
@@ -1929,9 +2007,9 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-off-black z-30 transform translate-x-full flex flex-col justify-center items-center space-y-10" style="transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; backface-visibility: hidden;" role="dialog" aria-modal="true" aria-label="Navigation menu">
-        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">FINANCE</a>
-        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">CONSULTING</a>
+        <a href="#section-services" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">SERVICES</a>
         <a href="#section-work" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">WORK</a>
+        <a href="#section-journey" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">JOURNEY</a>
         <a href="#section-writing" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">WRITING</a>
         <a href="#section-contact" class="font-display text-5xl hover:text-gray-500 mobile-link" style="letter-spacing: -0.02em; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">CONTACT</a>
         <button id="close-menu-btn" class="absolute top-8 right-8 p-4 hover:rotate-90 transition-transform duration-300" aria-label="Close navigation menu">
@@ -2043,8 +2121,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-text">
                 
                 <!-- Service 1: Financial Consulting -->
-                <div class="group service-card tech-corner cursor-pointer border border-off-white/15 bg-charcoal hover:border-off-white/30 transition-all duration-500 overflow-hidden" data-service="financial">
-                    <div class="service-img-container relative w-full h-[50vh] bg-[#0F0F0F] overflow-hidden">
+                <div class="group service-card tech-corner cursor-pointer border border-off-white/15 bg-charcoal hover:border-off-white/30 transition-all duration-500 overflow-hidden" data-service="financial" role="button" tabindex="0" aria-label="Learn more about Financial Consulting services">
+                    <div class="service-img-container relative w-full h-[50vh] bg-[#0F0F0F] overflow-hidden" aria-hidden="true">
                         <canvas id="canvas-financial" class="gen-canvas"></canvas>
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-700"></div>
                     </div>
@@ -2054,23 +2132,23 @@
                                 <h3 class="font-display text-3xl md:text-4xl font-medium mb-2 group-hover:translate-x-2 transition-transform duration-500">FINANCIAL CONSULTING</h3>
                                 <p class="font-sans text-neutral-400 text-sm group-hover:translate-x-2 transition-transform duration-500 delay-75">Strategic Analysis / Modeling / Decision Architecture</p>
                             </div>
-                            <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors">01</span>
+                            <span class="font-mono text-xs border border-off-white/20 px-3 py-1 rounded-full group-hover:bg-off-white group-hover:text-black transition-colors" aria-hidden="true">01</span>
                         </div>
                         <p class="font-sans text-neutral-300 text-sm leading-relaxed mb-6">
                             Transform organizational complexity into executable clarity. From DCF models to strategic scenario planning-I diagnose friction points, quantify uncertainty, and architect decision frameworks that drive measurable ROI.
                         </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest">DCF Models</span>
-                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest">Valuation</span>
-                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest">Risk Analysis</span>
-                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest">Strategy</span>
+                        <div class="flex flex-wrap gap-2" role="list" aria-label="Skills">
+                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest" role="listitem">DCF Models</span>
+                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest" role="listitem">Valuation</span>
+                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest" role="listitem">Risk Analysis</span>
+                            <span class="px-2 py-1 bg-off-white/10 text-[10px] font-mono uppercase text-neutral-300 tracking-widest" role="listitem">Strategy</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Service 2: Website Design -->
-                <div class="group service-card tech-corner cursor-pointer border border-off-white/15 bg-charcoal hover:border-off-white/30 transition-all duration-500 overflow-hidden" data-service="website">
-                    <div class="service-img-container relative w-full h-[50vh] bg-[#0F0F0F] overflow-hidden">
+                <div class="group service-card tech-corner cursor-pointer border border-off-white/15 bg-charcoal hover:border-off-white/30 transition-all duration-500 overflow-hidden" data-service="website" role="button" tabindex="0" aria-label="Learn more about Website Design services">
+                    <div class="service-img-container relative w-full h-[50vh] bg-[#0F0F0F] overflow-hidden" aria-hidden="true">
                         <canvas id="canvas-website" class="gen-canvas"></canvas>
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-700"></div>
                     </div>
@@ -2206,12 +2284,6 @@
                 </div>
             </div>
             
-            <div class="mt-16 md:mt-32 text-center reveal-text">
-                <a href="Sulayman_Bowles_Resume_2025.pdf" target="_blank" class="magnetic-wrap hover-target inline-block font-display text-base md:text-lg border border-off-white/20 px-8 md:px-10 py-4 md:py-5 min-h-[44px] hover:bg-off-white hover:text-black transition-colors duration-500">
-                    <span class="magnetic-content block tracking-widest uppercase">View Full Resume</span>
-                    <span class="magnetic-area"></span>
-                </a>
-            </div>
         </div>
     </section>
 
@@ -2578,6 +2650,224 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- Blockchain Timeline Section -->
+    <section id="section-journey" class="py-32 md:py-40 px-6 md:px-12 bg-[#020202] relative overflow-hidden border-t border-off-white/10" aria-labelledby="journey-heading">
+        <!-- Animated Background Grid -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.02]" style="background-image: linear-gradient(#EAEAEA 1px, transparent 1px), linear-gradient(90deg, #EAEAEA 1px, transparent 1px); background-size: 60px 60px;"></div>
+        
+        <div class="max-w-[1600px] mx-auto relative z-10">
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-24 border-b border-off-white/10 pb-8 reveal-text">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-2 h-2 bg-off-white rounded-full animate-pulse"></div>
+                        <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.3em]">Immutable Record</span>
+                    </div>
+                    <h2 id="journey-heading" class="font-display text-5xl md:text-7xl font-bold text-off-white" style="letter-spacing: -0.025em;">EXPERIENCE<br><span class="text-neutral-600">CHAIN</span></h2>
+                </div>
+                <div class="flex flex-col items-end mt-6 md:mt-0">
+                    <span class="font-mono text-xs text-neutral-500 mb-2 uppercase tracking-widest">Genesis Block</span>
+                    <span class="font-mono text-xs text-off-white tracking-widest">2022 → PRESENT</span>
+                </div>
+            </div>
+
+            <!-- Blockchain Timeline -->
+            <div id="blockchain-timeline" class="relative">
+                <!-- Animated Chain Line -->
+                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-off-white/50 via-off-white/20 to-transparent transform md:-translate-x-1/2">
+                    <div class="blockchain-pulse absolute top-0 left-1/2 w-3 h-3 bg-off-white rounded-full transform -translate-x-1/2 animate-pulse shadow-lg shadow-white/30"></div>
+                </div>
+
+                <!-- Block 0: Genesis -->
+                <div class="blockchain-block relative flex flex-col md:flex-row items-start gap-8 mb-16 pl-20 md:pl-0 reveal-text" data-block="0">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                        <div class="block-content bg-charcoal border border-off-white/10 p-8 hover:border-off-white/30 transition-all duration-500 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-off-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4 md:justify-end">
+                                    <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">BLOCK #0</span>
+                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                </div>
+                                <h3 class="font-display text-2xl md:text-3xl font-medium text-off-white mb-3">Genesis Block</h3>
+                                <p class="font-mono text-xs text-neutral-600 mb-4">hash: 0x000...genesis</p>
+                                <p class="font-sans text-neutral-400 leading-relaxed">Started at UT Austin. First exposure to financial markets through Bloomberg Terminal. Built first Python scripts for data analysis.</p>
+                                <div class="flex flex-wrap gap-2 mt-6 md:justify-end">
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">PYTHON</span>
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">EXCEL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 top-0 transform md:-translate-x-1/2 z-20 order-1 md:order-2">
+                        <div class="block-node w-8 h-8 md:w-12 md:h-12 bg-off-black border-2 border-off-white flex items-center justify-center font-mono text-xs text-off-white group-hover:bg-off-white group-hover:text-off-black transition-all duration-300">
+                            <span class="block-hash">0</span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3">
+                        <div class="font-mono text-sm text-neutral-600 md:mt-4">
+                            <div>timestamp: 2022-08</div>
+                            <div>nonce: 42</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 1: Point72 Academy -->
+                <div class="blockchain-block relative flex flex-col md:flex-row items-start gap-8 mb-16 pl-20 md:pl-0 reveal-text" data-block="1">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-3">
+                        <div class="font-mono text-sm text-neutral-600 md:mt-4 md:text-left">
+                            <div>timestamp: 2024-01</div>
+                            <div>nonce: 1337</div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 top-0 transform md:-translate-x-1/2 z-20 order-1 md:order-2">
+                        <div class="block-node w-8 h-8 md:w-12 md:h-12 bg-off-black border-2 border-off-white flex items-center justify-center font-mono text-xs text-off-white">
+                            <span class="block-hash">1</span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3 md:order-1">
+                        <div class="block-content bg-charcoal border border-off-white/10 p-8 hover:border-off-white/30 transition-all duration-500 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-off-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">BLOCK #1</span>
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                </div>
+                                <h3 class="font-display text-2xl md:text-3xl font-medium text-off-white mb-3">Point72 Academy</h3>
+                                <p class="font-mono text-xs text-neutral-600 mb-4">hash: 0x7f3...a1b2</p>
+                                <p class="font-sans text-neutral-400 leading-relaxed">Selected for Point72's Academy program. Built institutional-grade DCF models. Pitched long/short equity ideas to portfolio managers.</p>
+                                <div class="flex flex-wrap gap-2 mt-6">
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">DCF</span>
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">VALUATION</span>
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">PITCHING</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 2: DeFi Research -->
+                <div class="blockchain-block relative flex flex-col md:flex-row items-start gap-8 mb-16 pl-20 md:pl-0 reveal-text" data-block="2">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                        <div class="block-content bg-charcoal border border-off-white/10 p-8 hover:border-off-white/30 transition-all duration-500 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-off-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4 md:justify-end">
+                                    <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">BLOCK #2</span>
+                                    <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                </div>
+                                <h3 class="font-display text-2xl md:text-3xl font-medium text-off-white mb-3">DeFi Deep Dive</h3>
+                                <p class="font-mono text-xs text-neutral-600 mb-4">hash: 0x9c4...d3e5</p>
+                                <p class="font-sans text-neutral-400 leading-relaxed">Published research on DeFi protocols. Built on-chain analytics dashboards. Developed long/short crypto theses with quantified risk frameworks.</p>
+                                <div class="flex flex-wrap gap-2 mt-6 md:justify-end">
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">SOLIDITY</span>
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">ON-CHAIN</span>
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">TOKENOMICS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 top-0 transform md:-translate-x-1/2 z-20 order-1 md:order-2">
+                        <div class="block-node w-8 h-8 md:w-12 md:h-12 bg-off-black border-2 border-off-white flex items-center justify-center font-mono text-xs text-off-white">
+                            <span class="block-hash">2</span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3">
+                        <div class="font-mono text-sm text-neutral-600 md:mt-4">
+                            <div>timestamp: 2024-06</div>
+                            <div>nonce: 2048</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 3: Full-Stack Systems -->
+                <div class="blockchain-block relative flex flex-col md:flex-row items-start gap-8 mb-16 pl-20 md:pl-0 reveal-text" data-block="3">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-3">
+                        <div class="font-mono text-sm text-neutral-600 md:mt-4 md:text-left">
+                            <div>timestamp: 2024-09</div>
+                            <div>nonce: 4096</div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 top-0 transform md:-translate-x-1/2 z-20 order-1 md:order-2">
+                        <div class="block-node w-8 h-8 md:w-12 md:h-12 bg-off-black border-2 border-off-white flex items-center justify-center font-mono text-xs text-off-white">
+                            <span class="block-hash">3</span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3 md:order-1">
+                        <div class="block-content bg-charcoal border border-off-white/10 p-8 hover:border-off-white/30 transition-all duration-500 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-off-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">BLOCK #3</span>
+                                    <span class="w-2 h-2 bg-cyan-500 rounded-full"></span>
+                                </div>
+                                <h3 class="font-display text-2xl md:text-3xl font-medium text-off-white mb-3">Technical Architecture</h3>
+                                <p class="font-mono text-xs text-neutral-600 mb-4">hash: 0xb2f...8a7c</p>
+                                <p class="font-sans text-neutral-400 leading-relaxed">Built production-grade web applications. Implemented Web3 payroll systems with smart contracts. Designed real-time data pipelines.</p>
+                                <div class="flex flex-wrap gap-2 mt-6">
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">REACT</span>
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">NODE.JS</span>
+                                    <span class="px-3 py-1 bg-off-white/5 text-[10px] font-mono text-neutral-400 border border-off-white/10">AWS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 4: Current - Pending -->
+                <div class="blockchain-block relative flex flex-col md:flex-row items-start gap-8 pl-20 md:pl-0 reveal-text" data-block="4">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                        <div class="block-content bg-charcoal border border-dashed border-off-white/30 p-8 group relative overflow-hidden animate-pulse-slow">
+                            <div class="absolute inset-0 bg-gradient-to-br from-off-white/5 to-transparent opacity-50"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4 md:justify-end">
+                                    <span class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">BLOCK #4</span>
+                                    <span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
+                                </div>
+                                <h3 class="font-display text-2xl md:text-3xl font-medium text-off-white mb-3">Pending...</h3>
+                                <p class="font-mono text-xs text-neutral-600 mb-4">hash: 0x???...pending</p>
+                                <p class="font-sans text-neutral-400 leading-relaxed">Mining next block. Open to opportunities in quantitative finance, fintech engineering, or strategic advisory roles.</p>
+                                <div class="flex flex-wrap gap-2 mt-6 md:justify-end">
+                                    <span class="px-3 py-1 bg-yellow-500/10 text-[10px] font-mono text-yellow-400 border border-yellow-500/30">AWAITING TX</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 top-0 transform md:-translate-x-1/2 z-20 order-1 md:order-2">
+                        <div class="block-node w-8 h-8 md:w-12 md:h-12 bg-off-black border-2 border-dashed border-yellow-500 flex items-center justify-center font-mono text-xs text-yellow-500 animate-pulse">
+                            <span class="block-hash">?</span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3">
+                        <div class="font-mono text-sm text-neutral-600 md:mt-4">
+                            <div>timestamp: awaiting...</div>
+                            <div class="text-yellow-500">mempool: 1 tx pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chain Stats -->
+            <div class="mt-20 pt-12 border-t border-off-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 reveal-text">
+                <div class="text-center">
+                    <div class="font-display text-4xl md:text-5xl font-bold text-off-white mb-2">4</div>
+                    <div class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Blocks Mined</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-display text-4xl md:text-5xl font-bold text-off-white mb-2">3+</div>
+                    <div class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Years Building</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-display text-4xl md:text-5xl font-bold text-off-white mb-2">∞</div>
+                    <div class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Curiosity</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-display text-4xl md:text-5xl font-bold text-yellow-500 mb-2 animate-pulse">1</div>
+                    <div class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">Pending TX</div>
+                </div>
             </div>
         </div>
     </section>
@@ -4310,62 +4600,62 @@
                 tags: ["Equity Research", "DCF Modeling", "Sector Analysis", "Valuation"],
                 description: "Building institutional-grade financial models to uncover divergence from consensus. Deep-dive analysis across consumer, fintech, automotive, and energy storage sectors, each backed by rigorous DCF modeling and thesis-driven valuation frameworks.",
                 details: `
-                    <div id="portfolio-dashboard">
+                    <div id="portfolio-dashboard" class="max-w-[1400px] mx-auto pt-8">
                         <!-- Hero Statement -->
-                        <div class="mb-12 pb-6 border-b border-off-white/10">
-                            <p class="font-display text-xl md:text-2xl leading-relaxed text-neutral-300">
+                        <div class="mb-16 pb-8 border-b border-off-white/10">
+                            <p class="font-display text-2xl md:text-3xl leading-relaxed text-neutral-300 max-w-4xl">
                                 Four companies. Four narratives. Each backed by rigorous DCF modeling, competitive positioning analysis, and thesis-driven valuation frameworks that reveal where consensus gets it wrong.
                             </p>
                         </div>
                         
                         <!-- Methodology Section -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="p-8 border border-off-white/10 bg-charcoal">
-                                <div class="mb-4">
-                                    <span class="font-mono text-xs text-neutral-500">[01]</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                            <div class="p-10 border border-off-white/10 bg-charcoal hover:border-off-white/30 transition-colors duration-500 group">
+                                <div class="mb-6">
+                                    <span class="font-mono text-xs text-neutral-500 group-hover:text-off-white transition-colors duration-300">[01]</span>
                                 </div>
-                                <h4 class="text-lg md:text-xl font-display font-medium mb-4">The Approach</h4>
-                                <p class="text-sm text-neutral-300 leading-relaxed">
+                                <h4 class="text-xl md:text-2xl font-display font-medium mb-4 text-off-white">The Approach</h4>
+                                <p class="text-base text-neutral-400 leading-relaxed group-hover:text-neutral-300 transition-colors duration-300">
                                     Each analysis follows the same systematic framework: Industry structure assessment → Competitive moat analysis → Financial modeling (DCF, Comps, Precedent Transactions) → Sensitivity analysis → Investment recommendation.
                                 </p>
                             </div>
-                            <div class="p-8 border border-off-white/10 bg-charcoal">
-                                <div class="mb-4">
-                                    <span class="font-mono text-xs text-neutral-500">[02]</span>
+                            <div class="p-10 border border-off-white/10 bg-charcoal hover:border-off-white/30 transition-colors duration-500 group">
+                                <div class="mb-6">
+                                    <span class="font-mono text-xs text-neutral-500 group-hover:text-off-white transition-colors duration-300">[02]</span>
                                 </div>
-                                <h4 class="text-lg md:text-xl font-display font-medium mb-4">The Philosophy</h4>
-                                <p class="text-sm text-neutral-300 leading-relaxed">
+                                <h4 class="text-xl md:text-2xl font-display font-medium mb-4 text-off-white">The Philosophy</h4>
+                                <p class="text-base text-neutral-400 leading-relaxed group-hover:text-neutral-300 transition-colors duration-300">
                                     Markets price in consensus. Alpha comes from divergence: finding mispriced narratives, overlooked inflection points, and structural advantages the Street hasn't modeled.
                                 </p>
                             </div>
                         </div>
                         
                         <!-- Portfolio Summary Stats -->
-                        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-off-white/10">
-                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
-                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Coverage</div>
-                                <div class="text-4xl font-display font-bold mb-1">4</div>
+                        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-off-white/10 border border-off-white/10">
+                            <div class="p-8 bg-charcoal hover:bg-[#151515] transition-all duration-300 group">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-4 group-hover:text-neutral-500 transition-colors">Coverage</div>
+                                <div class="text-5xl font-display font-medium mb-2 text-off-white">4</div>
                                 <div class="text-xs text-neutral-500">Names</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
-                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Long</div>
-                                <div class="text-4xl font-display font-bold mb-1">1</div>
+                            <div class="p-8 bg-charcoal hover:bg-[#151515] transition-all duration-300 group">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-4 group-hover:text-neutral-500 transition-colors">Long</div>
+                                <div class="text-5xl font-display font-medium mb-2 text-off-white">1</div>
                                 <div class="text-xs text-neutral-500">RIVN</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
-                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Short</div>
-                                <div class="text-4xl font-display font-bold mb-1">3</div>
+                            <div class="p-8 bg-charcoal hover:bg-[#151515] transition-all duration-300 group">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-4 group-hover:text-neutral-500 transition-colors">Short</div>
+                                <div class="text-5xl font-display font-medium mb-2 text-off-white">3</div>
                                 <div class="text-xs text-neutral-500">SG, SEZL, KULR</div>
                             </div>
-                            <div class="p-6 bg-charcoal hover:bg-[#0F0F0F] transition-all">
-                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-3">Sectors</div>
-                                <div class="text-4xl font-display font-bold mb-1">4</div>
+                            <div class="p-8 bg-charcoal hover:bg-[#151515] transition-all duration-300 group">
+                                <div class="text-[10px] font-mono text-neutral-600 uppercase tracking-widest mb-4 group-hover:text-neutral-500 transition-colors">Sectors</div>
+                                <div class="text-5xl font-display font-medium mb-2 text-off-white">4</div>
                                 <div class="text-xs text-neutral-500">Diversified</div>
                             </div>
                         </div>
                     
                         <!-- Portfolio Overview Chart -->
-                        <div class="mt-12 p-8 border border-off-white/10 bg-[#0F0F0F]">
+                        <div class="mt-16 p-10 border border-off-white/10 bg-[#0F0F0F]">
                             <div class="flex justify-between items-center mb-8">
                                 <h4 class="text-xs font-mono text-neutral-400 uppercase tracking-widest">Risk-Reward Matrix</h4>
                                 <span class="text-xs font-mono text-neutral-600">CONVICTION VS. RETURN POTENTIAL</span>
@@ -5921,7 +6211,6 @@
         async function openModal(id, type = 'project') {
             let data;
             const content = modal.querySelector('.modal-content');
-            const closeBtnIcon = document.querySelector('#close-modal i');
             
             // Add glassmorphism to modal background
             modal.classList.add('backdrop-blur-md', 'bg-black/80');
@@ -5934,12 +6223,6 @@
             // Reset classes
             content.classList.remove('paper-mode');
             
-            // Reset close button default state
-            if (closeBtnIcon) {
-                closeBtnIcon.classList.remove('text-off-black', 'group-hover:text-neutral-600');
-                closeBtnIcon.classList.add('text-neutral-500', 'group-hover:text-off-white');
-            }
-            
             if (type === 'writing') {
                 data = writingData[id];
                 if (!data) return;
@@ -5947,16 +6230,11 @@
                 // Enable Paper Mode (Light Theme)
                 content.classList.add('paper-mode');
                 
-                // Update close button for light mode
-                if (closeBtnIcon) {
-                    closeBtnIcon.classList.remove('text-neutral-500', 'group-hover:text-off-white');
-                    closeBtnIcon.classList.add('text-off-black', 'group-hover:text-neutral-600');
-                }
-
                 // Show loading state
                 modalBody.innerHTML = `
-                    <div class="flex items-center justify-center h-96">
-                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-900"></div>
+                    <div class="flex flex-col items-center justify-center h-96 space-y-4">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-neutral-900"></div>
+                        <div class="font-mono text-xs text-neutral-500 uppercase tracking-widest">Loading Article...</div>
                     </div>
                 `;
                 
@@ -5968,7 +6246,7 @@
                         data.content = await response.text();
                     } catch (e) {
                         console.error('Failed to load content:', e);
-                        data.content = '<p class="text-center text-red-600 my-12">Failed to load article content. Please try again.</p>';
+                        data.content = '<p class="text-center text-red-600 my-12 font-mono text-sm">Failed to load article content. Please try again.</p>';
                     }
                 }
                 
@@ -5985,13 +6263,13 @@
                                 <span>${data.meta.readTime || '5 MIN'} READ</span>
                             </div>
                             
-                            <h1 class="font-playfair italic text-5xl md:text-7xl font-bold mb-10 text-off-black" style="line-height: 1.1; letter-spacing: -0.02em;">
+                            <h1 class="font-playfair italic text-5xl md:text-7xl font-bold mb-10 text-[#0F0F0F]" style="line-height: 1.1; letter-spacing: -0.02em;">
                                 ${data.title}
                             </h1>
                             
-                            <div class="w-12 h-1 bg-off-black mx-auto mb-10 opacity-20"></div>
+                            <div class="w-12 h-1 bg-[#0F0F0F] mx-auto mb-10 opacity-20"></div>
                             
-                            <p class="font-serif text-xl md:text-2xl text-neutral-600 max-w-2xl mx-auto leading-relaxed italic">
+                            <p class="font-serif text-xl md:text-2xl text-neutral-700 max-w-2xl mx-auto leading-relaxed italic">
                                 ${data.lede}
                             </p>
                         </div>
@@ -6005,11 +6283,11 @@
                         <div class="modal-stagger mt-24 pt-16 border-t border-neutral-200" style="transition-delay: 0.3s">
                             <div class="flex flex-col items-center text-center group cursor-pointer hover-target" onclick="openModal('${data.nextSlug}', 'writing')">
                                 <span class="font-mono text-xs text-neutral-400 uppercase mb-4" style="letter-spacing: 0.15em;">Read Next</span>
-                                <h3 class="font-display text-3xl md:text-4xl font-medium text-off-black group-hover:opacity-70" style="letter-spacing: -0.015em; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <h3 class="font-display text-3xl md:text-4xl font-medium text-[#0F0F0F] group-hover:opacity-70" style="letter-spacing: -0.015em; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
                                     ${writingData[data.nextSlug].title}
                                 </h3>
                                 <div class="mt-6 transform group-hover:translate-x-2 transition-transform duration-300">
-                                    <i data-lucide="arrow-right" class="w-6 h-6 text-off-black"></i>
+                                    <i data-lucide="arrow-right" class="w-6 h-6 text-[#0F0F0F]"></i>
                                 </div>
                             </div>
                         </div>
@@ -6533,33 +6811,33 @@
 
                                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-off-white/5 mb-6 group-hover:text-off-white/10 transition-colors duration-700">01</div>
-                                        <h3 class="font-display text-2xl mb-4 leading-tight">Diagnosis<br/>& Framing</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                        <div class="text-6xl font-display font-medium text-off-white/10 mb-6 group-hover:text-off-white/20 transition-colors duration-700">01</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight text-off-white group-hover:text-white transition-colors">Diagnosis<br/>& Framing</h3>
+                                        <p class="font-sans text-neutral-400 leading-relaxed text-base">
                                             Deconstruct complex challenges into solvable components. We identify the core strategic levers that drive outsized value.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-off-white/5 mb-6 group-hover:text-off-white/10 transition-colors duration-700">02</div>
-                                        <h3 class="font-display text-2xl mb-4 leading-tight">Rigorous<br/>Analysis</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                        <div class="text-6xl font-display font-medium text-off-white/10 mb-6 group-hover:text-off-white/20 transition-colors duration-700">02</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight text-off-white group-hover:text-white transition-colors">Rigorous<br/>Analysis</h3>
+                                        <p class="font-sans text-neutral-400 leading-relaxed text-base">
                                             Data-driven validation of strategic hypotheses. We build institutional-grade models to stress-test scenarios and quantify risk.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-off-white/5 mb-6 group-hover:text-off-white/10 transition-colors duration-700">03</div>
-                                        <h3 class="font-display text-2xl mb-4 leading-tight">Strategic<br/>Direction</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                        <div class="text-6xl font-display font-medium text-off-white/10 mb-6 group-hover:text-off-white/20 transition-colors duration-700">03</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight text-off-white group-hover:text-white transition-colors">Strategic<br/>Direction</h3>
+                                        <p class="font-sans text-neutral-400 leading-relaxed text-base">
                                             Synthesize insights into a clear, actionable roadmap. We prioritize initiatives based on ROI and operational feasibility.
                                         </p>
                                     </div>
 
                                     <div class="group">
-                                        <div class="text-8xl font-display font-medium text-off-white/5 mb-6 group-hover:text-off-white/10 transition-colors duration-700">04</div>
-                                        <h3 class="font-display text-2xl mb-4 leading-tight">Execution<br/>& Impact</h3>
-                                        <p class="font-sans text-neutral-500 leading-[1.8] text-sm">
+                                        <div class="text-6xl font-display font-medium text-off-white/10 mb-6 group-hover:text-off-white/20 transition-colors duration-700">04</div>
+                                        <h3 class="font-display text-2xl mb-4 leading-tight text-off-white group-hover:text-white transition-colors">Execution<br/>& Impact</h3>
+                                        <p class="font-sans text-neutral-400 leading-relaxed text-base">
                                             Partner with leadership to drive change. We establish governance structures and KPIs to ensure sustained performance improvement.
                                         </p>
                                     </div>
@@ -8501,30 +8779,6 @@
         });
 
         closeModal.addEventListener('click', closeModalFunc);
-        
-        // Helper functions for body scroll lock
-        function lockBodyScroll() {
-            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = scrollbarWidth + 'px';
-        }
-        
-        function unlockBodyScroll() {
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-        }
-        
-        // Prevent body scroll when modal is open
-        function lockBodyScroll() {
-            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-            document.body.style.overflow = 'hidden';
-            document.body.style.paddingRight = scrollbarWidth + 'px';
-        }
-        
-        function unlockBodyScroll() {
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-        }
         
         // Close on backdrop click
         modal.addEventListener('click', (e) => {
@@ -12023,15 +12277,8 @@
                 const absorptionColor = absorptionRate < 4 ? 'text-red-400' : absorptionRate > 6 ? 'text-green-400' : 'text-yellow-400';
                 document.getElementById('live-absorption-status').innerHTML = `<span class="${absorptionColor}">${absorptionStatus}</span>`;
                 
-                console.log('Property market data updated:', {
-                    listings: activeListings,
-                    dom: dom,
-                    sold: soldProperties,
-                    absorption: absorptionRate
-                });
-                
             } catch(e) {
-                console.error('Failed to fetch property market data:', e);
+                // Silently handle property market data fetch errors
             }
         }
 
@@ -12460,6 +12707,15 @@
                     description: 'Comprehensive financial models and equity research',
                     tags: ['finance', 'valuation', 'dcf', 'modeling', 'research'],
                     onClick: () => { toggleSearch(); document.getElementById('section-services').scrollIntoView({behavior: 'smooth'}); }
+                },
+                {
+                    id: 'experience-chain',
+                    type: 'service',
+                    title: 'Experience Chain',
+                    subtitle: 'Career Journey Timeline',
+                    description: 'Blockchain-style visualization of professional experience and milestones',
+                    tags: ['career', 'journey', 'experience', 'timeline', 'blockchain'],
+                    onClick: () => { toggleSearch(); document.getElementById('section-journey').scrollIntoView({behavior: 'smooth'}); }
                 }
             ];
             
@@ -12771,6 +13027,39 @@
             initBalanceCanvas();
         }
 
+        // --- BLOCKCHAIN TIMELINE ANIMATION ---
+        function initBlockchainTimeline() {
+            const blocks = document.querySelectorAll('.blockchain-block');
+            
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const blockObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Stagger the animation based on block number
+                        const blockNum = parseInt(entry.target.dataset.block) || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, blockNum * 150);
+                    }
+                });
+            }, observerOptions);
+            
+            blocks.forEach(block => {
+                blockObserver.observe(block);
+            });
+        }
+        
+        // Initialize blockchain timeline
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initBlockchainTimeline);
+        } else {
+            initBlockchainTimeline();
+        }
+
     </script>
     <!-- Chart Warehouse (Hidden) -->
     <div id="chart-warehouse" style="position: absolute; top: -9999px; left: -9999px; width: 100%; height: 500px; visibility: hidden; overflow: hidden;">
@@ -12783,7 +13072,7 @@
     <!-- Brightness Control -->
     <script src="brightness-control.js"></script>
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <!-- Vercel Analytics -->
     <script>

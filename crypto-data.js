@@ -280,19 +280,20 @@ function initTradingViewWidget(containerId, symbol) {
     container.appendChild(widgetDiv);
 
     if (typeof TradingView !== 'undefined') {
+        const isLight = document.body.classList.contains('light-mode');
         new TradingView.widget({
             "autosize": true,
             "symbol": symbol,
             "interval": "D",
             "timezone": "Etc/UTC",
-            "theme": "dark",
+            "theme": isLight ? "light" : "dark",
             "style": "1",
             "locale": "en",
             "enable_publishing": false,
             "allow_symbol_change": false,
             "container_id": widgetId,
             "hide_side_toolbar": false,
-            "toolbar_bg": "#0F0F0F"
+            "toolbar_bg": isLight ? "#FFFFFF" : "#0F0F0F"
         });
     } else {
         logToTerminal('TradingView library not loaded', 'error');
@@ -395,6 +396,22 @@ async function initProjectDetail(id) {
 // Expose init functions
 window.initCryptoDashboard = initCryptoDashboard;
 window.initProjectDetail = initProjectDetail;
+
+// Reload TradingView Widgets (for theme toggle)
+window.reloadTradingViewWidgets = function() {
+    const projects = ['syrup', 'myx']; // metadao uses iframe/GeckoTerminal which handles its own theme or is fixed
+    projects.forEach(id => {
+        const containerId = `tv-chart-${id}`;
+        const container = document.getElementById(containerId);
+        // Check if container exists and is visible (part of active modal)
+        if (container && container.offsetParent !== null) {
+             if (FALLBACK_PAIRS[id]) {
+                // Re-initialize with current theme
+                initTradingViewWidget(containerId, FALLBACK_PAIRS[id].tvSymbol);
+            }
+        }
+    });
+};
 
 // Don't auto-initialize - let the main page control initialization
 // The modal will call initCryptoDashboard when needed

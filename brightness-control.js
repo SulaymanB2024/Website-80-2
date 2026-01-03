@@ -2,8 +2,7 @@
  * Display Settings Control
  * 
  * Features:
- * 1. Brightness Control (Dark Overlay)
- * 2. Light/Dark Mode Toggle
+ * 1. Light/Dark Mode Toggle
  */
 
 (function() {
@@ -1301,142 +1300,9 @@
             background-color: rgba(0, 0, 0, 0.05) !important;
         }
 
-        #display-control-panel.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
 
-        /* Range Slider Styling */
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .control-label {
-            display: flex;
-            justify-content: space-between;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-size: 9px;
-            color: #666666;
-            font-weight: 500;
-        }
-        
-        body.light-mode .control-label {
-            color: #666666;
-        }
-
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            background: #EAEAEA;
-            cursor: pointer;
-            margin-top: -5px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 2px;
-            cursor: pointer;
-            background: #2A2A2A;
-            border-radius: 0;
-        }
-        
-        body.light-mode input[type=range]::-webkit-slider-runnable-track {
-            background: #D4D4D4;
-        }
-        
-        body.light-mode input[type=range]::-webkit-slider-thumb {
-            background: #030303;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-
-        input[type=range]:focus {
-            outline: none;
-        }
-
-        /* Toggle Switch */
-        .toggle-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .theme-toggle-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #EAEAEA;
-            padding: 10px 16px;
-            border-radius: 0;
-            cursor: pointer;
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            justify-content: center;
-            font-weight: 500;
-        }
-
-        .theme-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .theme-toggle-btn.active {
-            background: #EAEAEA;
-            color: #030303;
-            border-color: #EAEAEA;
-        }
-        
-        body.light-mode .theme-toggle-btn {
-            border-color: rgba(0, 0, 0, 0.15);
-            color: #030303;
-        }
-        
-        body.light-mode .theme-toggle-btn:hover {
-            background: rgba(0, 0, 0, 0.05);
-            border-color: rgba(0, 0, 0, 0.3);
-        }
-        
-        body.light-mode .theme-toggle-btn.active {
-            background: #030303;
-            color: #EAEAEA;
-            border-color: #030303;
-        }
-
-        /* Brightness Overlay */
-        #brightness-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: black;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 2147483646; /* Just below panel */
-            transition: opacity 0.1s linear;
-        }
-        
-        /* Toggle Button (Redesigned - Minimal) */
-        #settings-toggle-btn {
+        /* Theme Toggle Button */
+        #theme-toggle-btn {
             position: fixed;
             bottom: 24px;
             right: 24px;
@@ -1457,29 +1323,29 @@
             font-family: 'Space Mono', monospace;
         }
         
-        #settings-toggle-btn:hover {
+        #theme-toggle-btn:hover {
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
         }
         
-        #settings-toggle-btn svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        #theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        #settings-toggle-btn:hover svg {
-            transform: rotate(90deg);
+        #theme-toggle-btn:hover svg {
+            transform: rotate(15deg);
         }
         
         /* Light mode button styling */
-        body.light-mode #settings-toggle-btn {
+        body.light-mode #theme-toggle-btn {
             border-color: rgba(0, 0, 0, 0.1);
             color: #030303;
         }
         
-        body.light-mode #settings-toggle-btn:hover {
+        body.light-mode #theme-toggle-btn:hover {
             background: rgba(0, 0, 0, 0.05);
             border-color: rgba(0, 0, 0, 0.3);
         }
@@ -1488,53 +1354,20 @@
 
     // --- 2. Create Elements ---
 
-    // Overlay
-    const overlay = document.createElement('div');
-    overlay.id = 'brightness-overlay';
-    document.body.appendChild(overlay);
-
-    // Mini Toggle Button (Redesigned)
+    // Theme Toggle Button
     const toggleBtn = document.createElement('button');
-    toggleBtn.id = 'settings-toggle-btn';
-    toggleBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`;
-    toggleBtn.title = "Display Settings";
-    toggleBtn.setAttribute('aria-label', 'Open display settings');
+    toggleBtn.id = 'theme-toggle-btn';
+    toggleBtn.title = 'Toggle Theme';
+    toggleBtn.setAttribute('aria-label', 'Toggle light/dark theme');
     document.body.appendChild(toggleBtn);
 
-    // Control Panel
-    const panel = document.createElement('div');
-    panel.id = 'display-control-panel';
-    panel.innerHTML = `
-        <div class="control-group">
-            <div class="control-label">
-                <span>Brightness</span>
-                <span id="brightness-val-text">100%</span>
-            </div>
-            <input type="range" id="brightness-slider" min="20" max="100" value="100">
-        </div>
-        
-        <div class="control-group" style="margin-top: 8px;">
-            <div class="control-label">
-                <span>Theme</span>
-            </div>
-            <button id="theme-toggle" class="theme-toggle-btn">
-                <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
-                <span id="theme-text">Dark Mode</span>
-            </button>
-        </div>
-    `;
-    document.body.appendChild(panel);
-
     // --- 3. Logic ---
-
-    const slider = document.getElementById('brightness-slider');
-    const valText = document.getElementById('brightness-val-text');
-    const themeBtn = document.getElementById('theme-toggle');
-    const themeText = document.getElementById('theme-text');
-    const moonIcon = document.getElementById('moon-icon');
     
+    // Icons
+    const moonIcon = `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' d='M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z' /></svg>`;
+    const sunIcon = `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' d='M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z' /></svg>`;
+
     // State
-    let isPanelOpen = false;
     let isLightMode = false;
 
     // Detect system preference on load
@@ -1545,79 +1378,42 @@
         return false;
     }
 
-    // Initialize theme based on system preference
-    const systemPrefersDark = !detectSystemTheme();
-    isLightMode = !systemPrefersDark;
-    
-    if (isLightMode) {
-        document.body.classList.add('light-mode');
-        themeText.textContent = "Light Mode";
-        themeBtn.classList.add('active');
-        moonIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />`;
+    // Initialize theme based on system preference or existing class
+    if (document.body.classList.contains('light-mode') || document.documentElement.classList.contains('light-mode-early')) {
+        isLightMode = true;
+    } else {
+        isLightMode = detectSystemTheme();
     }
+    
+    function updateThemeUI() {
+        if (isLightMode) {
+            document.body.classList.add('light-mode');
+            toggleBtn.innerHTML = sunIcon;
+            // Update meta theme color
+            const metaThemeColor = document.getElementById('theme-color-meta');
+            if (metaThemeColor) metaThemeColor.setAttribute('content', '#EAEAEA');
+        } else {
+            document.body.classList.remove('light-mode');
+            toggleBtn.innerHTML = moonIcon;
+            // Update meta theme color
+            const metaThemeColor = document.getElementById('theme-color-meta');
+            if (metaThemeColor) metaThemeColor.setAttribute('content', '#030303');
+        }
+    }
+
+    // Initial UI update
+    updateThemeUI();
 
     // Listen for system theme changes
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
-            const newColorScheme = e.matches ? "light" : "dark";
-            if (newColorScheme === "light" && !isLightMode) {
-                themeBtn.click();
-            } else if (newColorScheme === "dark" && isLightMode) {
-                themeBtn.click();
-            }
+            isLightMode = e.matches;
+            updateThemeUI();
+            triggerThemeUpdates();
         });
     }
 
-    // Toggle Panel Visibility
-    toggleBtn.addEventListener('click', () => {
-        isPanelOpen = !isPanelOpen;
-        if (isPanelOpen) {
-            panel.classList.add('visible');
-            toggleBtn.style.opacity = '0';
-            toggleBtn.style.pointerEvents = 'none';
-        }
-    });
-
-    // Close panel when clicking outside
-    document.addEventListener('click', (e) => {
-        if (isPanelOpen && !panel.contains(e.target) && !toggleBtn.contains(e.target)) {
-            isPanelOpen = false;
-            panel.classList.remove('visible');
-            toggleBtn.style.opacity = '1';
-            toggleBtn.style.pointerEvents = 'auto';
-        }
-    });
-
-    // Brightness Logic
-    function updateBrightness(val) {
-        const opacity = 1 - (val / 100);
-        // Cap max opacity at 0.9
-        overlay.style.opacity = Math.min(0.9, opacity);
-        valText.textContent = `${val}%`;
-    }
-
-    slider.addEventListener('input', (e) => {
-        updateBrightness(e.target.value);
-    });
-
-    // Theme Logic
-    themeBtn.addEventListener('click', () => {
-        isLightMode = !isLightMode;
-        
-        if (isLightMode) {
-            document.body.classList.add('light-mode');
-            themeText.textContent = "Light Mode";
-            themeBtn.classList.add('active');
-            // Change icon to Sun
-            moonIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />`;
-        } else {
-            document.body.classList.remove('light-mode');
-            themeText.textContent = "Dark Mode";
-            themeBtn.classList.remove('active');
-            // Change icon to Moon
-            moonIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />`;
-        }
-
+    function triggerThemeUpdates() {
         // Reload TradingView Widgets if function exists
         if (typeof window.reloadTradingViewWidgets === 'function') {
             window.reloadTradingViewWidgets();
@@ -1637,6 +1433,13 @@
         if (typeof window.updateChartsTheme === 'function') {
             window.updateChartsTheme();
         }
+    }
+
+    // Toggle Logic
+    toggleBtn.addEventListener('click', () => {
+        isLightMode = !isLightMode;
+        updateThemeUI();
+        triggerThemeUpdates();
     });
 
 })();
