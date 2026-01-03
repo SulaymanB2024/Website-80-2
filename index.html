@@ -23,30 +23,34 @@
     <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     
-    <!-- Favicon -->
+    <!-- Favicon - Multiple formats for better compatibility -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sulaymanbowles.com/">
-    <meta property="og:site_name" content="Sulayman Bowles Portfolio">
-    <meta property="og:title" content="SULAYMAN BOWLES | Digital Alchemy">
-    <meta property="og:description" content="Finance. Code. Entropy. A system of evidence.">
+    <meta property="og:site_name" content="Sulayman Bowles">
+    <meta property="og:title" content="Sulayman Bowles | Financial Analyst & Developer">
+    <meta property="og:description" content="UT Austin student and equity research analyst specializing in financial modeling, AI development, and interactive web experiences. Explore projects in DeFi, real estate intelligence, and algorithmic trading.">
     <meta property="og:image" content="https://sulaymanbowles.com/og-image.png">
+    <meta property="og:image:secure_url" content="https://sulaymanbowles.com/og-image.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Sulayman Bowles - Digital Portfolio">
+    <meta property="og:image:alt" content="Sulayman Bowles - Finance, Code, and Digital Innovation">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sulaymanbowles.com/">
-    <meta property="twitter:title" content="SULAYMAN BOWLES | Digital Alchemy">
-    <meta property="twitter:description" content="Finance. Code. Entropy. A system of evidence.">
-    <meta property="twitter:image" content="https://sulaymanbowles.com/og-image.png">
-    <meta property="twitter:image:alt" content="Sulayman Bowles - Digital Portfolio">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://sulaymanbowles.com/">
+    <meta name="twitter:title" content="Sulayman Bowles | Financial Analyst & Developer">
+    <meta name="twitter:description" content="UT Austin student and equity research analyst specializing in financial modeling, AI development, and interactive web experiences.">
+    <meta name="twitter:image" content="https://sulaymanbowles.com/og-image.png">
+    <meta name="twitter:image:alt" content="Sulayman Bowles Portfolio">
     <meta name="twitter:creator" content="@sulaymanbowles">
     <meta name="twitter:site" content="@sulaymanbowles">
 
@@ -55,11 +59,18 @@
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": "https://sulaymanbowles.com/#person",
       "name": "Sulayman Bowles",
+      "givenName": "Sulayman",
+      "familyName": "Bowles",
       "url": "https://sulaymanbowles.com",
       "image": "https://sulaymanbowles.com/og-image.png",
-      "jobTitle": "Financial Analyst & Software Developer",
-      "description": "Co-Founder, Analyst, and Digital Alchemist specializing in financial analysis, equity research, and software development.",
+      "jobTitle": ["Financial Analyst", "Software Developer", "AI Developer"],
+      "description": "UT Austin student and equity research analyst specializing in financial modeling, AI agent development, and interactive web experiences. Former Point72 intern with expertise in DeFi, real estate intelligence, and algorithmic trading.",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Independent"
+      },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Austin",
@@ -69,27 +80,115 @@
       "alumniOf": [
         {
           "@type": "Organization",
-          "name": "Point72"
+          "name": "Point72",
+          "sameAs": "https://www.point72.com"
+        },
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Texas at Austin",
+          "sameAs": "https://www.utexas.edu"
         }
       ],
-      "knowsAbout": ["Financial Analysis", "Equity Research", "Software Development", "Blockchain", "AI", "Web3", "Valuation Models"]
+      "knowsAbout": [
+        "Financial Analysis",
+        "Equity Research",
+        "Software Development",
+        "Blockchain",
+        "Artificial Intelligence",
+        "Web3",
+        "Valuation Models",
+        "DeFi",
+        "Real Estate Analytics",
+        "Algorithmic Trading",
+        "Financial Modeling",
+        "Python",
+        "JavaScript",
+        "React",
+        "Data Visualization"
+      ],
+      "sameAs": [
+        "https://github.com/sulaymanbowles",
+        "https://linkedin.com/in/sulaymanbowles",
+        "https://twitter.com/sulaymanbowles"
+      ]
     }
     </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "https://sulaymanbowles.com/#website",
       "name": "Sulayman Bowles Portfolio",
+      "alternateName": "Sulayman Bowles | Financial Analyst & Developer",
       "url": "https://sulaymanbowles.com",
-      "description": "Digital portfolio showcasing financial analysis, software development projects, and research work.",
-      "author": {
+      "description": "Professional portfolio showcasing financial analysis, software development projects, AI agents, DeFi research, and interactive data visualizations. UT Austin student with Point72 experience.",
+      "inLanguage": "en-US",
+      "publisher": {
         "@type": "Person",
+        "@id": "https://sulaymanbowles.com/#person",
         "name": "Sulayman Bowles"
+      },
+      "author": {
+        "@id": "https://sulaymanbowles.com/#person"
       },
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://sulaymanbowles.com/#work?q={search_term_string}",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://sulaymanbowles.com/#work?q={search_term_string}"
+        },
         "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sulaymanbowles.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://sulaymanbowles.com/#services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Projects",
+          "item": "https://sulaymanbowles.com/#work"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Writing",
+          "item": "https://sulaymanbowles.com/#writing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Contact",
+          "item": "https://sulaymanbowles.com/#contact"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@id": "https://sulaymanbowles.com/#person"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "@id": "https://sulaymanbowles.com/#breadcrumb"
       }
     }
     </script>
@@ -98,6 +197,8 @@
     <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://assets.calendly.com">
+    <link rel="preconnect" href="https://formspree.io">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://unpkg.com">
@@ -208,6 +309,19 @@
                 min-height: 44px;
                 min-width: 44px;
             }
+            /* Improve mobile scrolling performance */
+            * {
+                -webkit-tap-highlight-color: transparent;
+            }
+            /* Reduce will-change on mobile for better performance */
+            [style*="will-change"] {
+                will-change: auto !important;
+            }
+            /* Disable expensive transforms on mobile */
+            .hero-gradient-overlay,
+            #canvas-container::before {
+                display: none !important;
+            }
         }
         
         /* Improve form field error states */
@@ -231,6 +345,7 @@
         /* --- GLOBAL REFINEMENTS --- */
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 100px; /* Offset for fixed navigation */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
@@ -1104,7 +1219,38 @@
             z-index: 2;
         }
         @media (max-width: 768px) {
-            #canvas-container { width: 100%; opacity: 0.5; z-index: 0; }
+            #canvas-container { 
+                width: 100%; 
+                opacity: 0.3; 
+                z-index: 0;
+                pointer-events: none;
+            }
+            /* Disable expensive animations on mobile */
+            .cursor-dot,
+            .cursor-outline,
+            .noise-overlay {
+                display: none !important;
+            }
+            /* Reduce motion for performance */
+            .reveal-text,
+            .modal-stagger {
+                animation-duration: 0.3s !important;
+            }
+            /* Simplify hover effects */
+            .magnetic-wrap .magnetic-content,
+            .grid-spotlight-tile::before,
+            .grid-spotlight-tile::after {
+                transform: none !important;
+                opacity: 0 !important;
+            }
+            /* Optimize modal transitions */
+            .modal-backdrop {
+                backdrop-filter: blur(5px) !important;
+                -webkit-backdrop-filter: blur(5px) !important;
+            }
+            body.modal-open #app-container {
+                filter: brightness(0.5) blur(2px) !important;
+            }
         }
 
         .writing-item { 
@@ -1614,7 +1760,7 @@
                     </div>
                 </div>
                 <!-- Gradient overlay behind copy block -->
-                <div class="absolute top-0 left-0 w-[120%] h-full pointer-events-none z-0" style="background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.15) 50%, transparent 100%);"></div>
+                <div class="hero-gradient-overlay absolute top-0 left-0 w-[120%] h-full pointer-events-none z-0" style="background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.15) 50%, transparent 100%);"></div>
             </div>
         </div>
     </section>
@@ -2427,7 +2573,14 @@
             widgetDiv.appendChild(script);
         };
 
+        window.reloadTradingViewWidgets = function() {
+            if (window.currentSymbol) {
+                window.initTradingViewWidgets(window.currentSymbol);
+            }
+        };
+
         window.initTradingViewWidgets = function(symbol) {
+            const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
             // Small delay to ensure DOM is ready
             setTimeout(function() {
                 // Overview Tab - Symbol Overview (Main Chart)
@@ -2437,7 +2590,7 @@
                     "width": "100%",
                     "height": "100%",
                     "locale": "en",
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "autosize": true,
                     "showVolume": true,
                     "showMA": false,
@@ -2462,7 +2615,7 @@
                     "symbol": symbol,
                     "width": "100%",
                     "locale": "en",
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "isTransparent": true
                 }, 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js');
 
@@ -2471,7 +2624,7 @@
                     "symbol": symbol,
                     "width": "100%",
                     "height": "100%",
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "isTransparent": true,
                     "locale": "en"
                 }, 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js');
@@ -2479,7 +2632,7 @@
                 // Financials Tab
                 window.createWidget('tv-financials', {
                     "symbol": symbol,
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "isTransparent": true,
                     "largeChartUrl": "",
                     "displayMode": "regular",
@@ -2498,7 +2651,7 @@
                     "showIntervalTabs": true,
                     "displayMode": "single",
                     "locale": "en",
-                    "colorTheme": "dark"
+                    "colorTheme": theme
                 }, 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js');
 
                 // Mini Chart / Advanced Chart
@@ -2508,7 +2661,7 @@
                     "height": "100%",
                     "locale": "en",
                     "dateRange": "12M",
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "isTransparent": true,
                     "autosize": true,
                     "largeChartUrl": ""
@@ -2518,7 +2671,7 @@
                 window.createWidget('tv-news', {
                     "feedMode": "symbol",
                     "symbol": symbol,
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "isTransparent": true,
                     "displayMode": "regular",
                     "width": "100%",
@@ -2528,7 +2681,7 @@
 
                 // Economic Calendar
                 window.createWidget('tv-calendar', {
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "isTransparent": true,
                     "width": "100%",
                     "height": "100%",
@@ -2544,14 +2697,14 @@
                     "defaultScreen": "general",
                     "market": "america",
                     "showToolbar": true,
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "locale": "en",
                     "isTransparent": true
                 }, 'https://s3.tradingview.com/external-embedding/embed-widget-screener.js');
                 
                 // Market Overview
                 window.createWidget('tv-market', {
-                    "colorTheme": "dark",
+                    "colorTheme": theme,
                     "dateRange": "12M",
                     "showChart": true,
                     "locale": "en",
@@ -5395,6 +5548,8 @@
                         return;
                     }
 
+                    const isLight = document.body.classList.contains('light-mode');
+
                     ctx.clearRect(0, 0, width, height);
                     
                     if (isHovered) {
@@ -5419,7 +5574,7 @@
                             p.y += (ty - p.y) * 0.08;
                         }
                         
-                        ctx.fillStyle = isHovered ? '#EAEAEA' : '#A0A0A0';
+                        ctx.fillStyle = isHovered ? (isLight ? '#333' : '#EAEAEA') : (isLight ? '#666' : '#A0A0A0');
                         ctx.globalAlpha = isHovered ? 0.9 : 0.6;
                         ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
                         
@@ -5432,7 +5587,7 @@
                             const connectDist = isHovered ? 50 : 70;
 
                             if (dist < connectDist) {
-                                ctx.strokeStyle = isHovered ? 'rgba(255, 255, 255, 0.2)' : 'rgba(136, 136, 136, 0.15)';
+                                ctx.strokeStyle = isHovered ? (isLight ? 'rgba(0,0,0,0.2)' : 'rgba(255, 255, 255, 0.2)') : (isLight ? 'rgba(0,0,0,0.15)' : 'rgba(136, 136, 136, 0.15)');
                                 ctx.lineWidth = 0.5;
                                 ctx.beginPath();
                                 ctx.moveTo(p.x, p.y);
@@ -5443,7 +5598,7 @@
                     });
                     
                     if (isHovered) {
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                        ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255, 255, 255, 0.1)';
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.arc(width/2, height/2, height * 0.3, 0, Math.PI*2);
@@ -5451,7 +5606,7 @@
                         
                         ctx.beginPath();
                         ctx.arc(width/2, height/2, height * 0.2, 0, Math.PI*2);
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                        ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255, 255, 255, 0.05)';
                         ctx.stroke();
                     }
 
@@ -5496,7 +5651,9 @@
                     return;
                 }
 
-                ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                const isLight = document.body.classList.contains('light-mode');
+
+                ctx.fillStyle = isLight ? 'rgba(240, 240, 240, 0.1)' : 'rgba(10, 10, 10, 0.1)';
                 ctx.fillRect(0, 0, width, height);
                 
                 ctx.font = '10px monospace';
@@ -5514,7 +5671,7 @@
                         char.y += col.speed;
                         char.opacity -= 0.01;
                         
-                        ctx.fillStyle = `rgba(0, 255, 100, ${char.opacity})`;
+                        ctx.fillStyle = isLight ? `rgba(0, 100, 50, ${char.opacity})` : `rgba(0, 255, 100, ${char.opacity})`;
                         ctx.fillText(char.val, col.x, char.y);
                     });
                     
@@ -5560,10 +5717,12 @@
                     return;
                 }
 
+                const isLight = document.body.classList.contains('light-mode');
+
                 ctx.clearRect(0, 0, width, height);
                 
                 // Draw connections
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)';
                 ctx.lineWidth = 1;
                 
                 for(let i=0; i<nodes.length; i++) {
@@ -5582,7 +5741,7 @@
                 }
                 
                 // Draw nodes
-                ctx.fillStyle = '#fff';
+                ctx.fillStyle = isLight ? '#333' : '#fff';
                 nodes.forEach(node => {
                     node.x += node.vx;
                     node.y += node.vy;
@@ -8312,6 +8471,7 @@
                 window.addEventListener('resize', debounce(resize, 150));
 
                 const animate = () => {
+                    const isLight = document.body.classList.contains('light-mode');
                     ctx.clearRect(0, 0, width, height);
                     
                     // Churn: Spawn new nodes
@@ -8330,7 +8490,7 @@
                                 ctx.beginPath();
                                 ctx.moveTo(mouseX, mouseY);
                                 ctx.lineTo(node.x, node.y);
-                                ctx.strokeStyle = '#EAEAEA';
+                                ctx.strokeStyle = isLight ? '#333' : '#EAEAEA';
                                 ctx.globalAlpha = (1 - dist/200) * 0.4;
                                 ctx.stroke();
                             }
@@ -8384,7 +8544,7 @@
                         const drawY = node.y;
 
                         // Draw Node
-                        ctx.fillStyle = isHovered ? '#EAEAEA' : '#AAAAAA'; 
+                        ctx.fillStyle = isHovered ? (isLight ? '#333' : '#EAEAEA') : (isLight ? '#666' : '#AAAAAA'); 
                         ctx.globalAlpha = node.opacity;
                         ctx.beginPath();
                         ctx.arc(drawX, drawY, isHovered ? 2 : 2.5, 0, Math.PI * 2);
@@ -8405,7 +8565,7 @@
                                 ctx.moveTo(drawX, drawY);
                                 ctx.lineTo(other.x, other.y);
                                 
-                                ctx.strokeStyle = isHovered ? '#EAEAEA' : '#666666';
+                                ctx.strokeStyle = isHovered ? (isLight ? '#333' : '#EAEAEA') : (isLight ? '#999' : '#666666');
                                 ctx.globalAlpha = (1 - dist/maxDist) * Math.min(node.opacity, other.opacity) * (isHovered ? 0.5 : 0.4);
                                 ctx.stroke();
 
@@ -8419,7 +8579,7 @@
                                     const px = node.x + (other.x - node.x) * offset;
                                     const py = node.y + (other.y - node.y) * offset;
                                     
-                                    ctx.fillStyle = '#EAEAEA';
+                                    ctx.fillStyle = isLight ? '#333' : '#EAEAEA';
                                     ctx.globalAlpha = Math.min(node.opacity, other.opacity);
                                     ctx.fillRect(px - 1.5, py - 1.5, 3, 3);
                                 }
@@ -8478,14 +8638,15 @@
                 observer.observe(canvas2);
 
                 const animate = () => {
-                    ctx.fillStyle = 'rgba(3, 3, 3, 0.1)'; // Trail effect (Consistent with bg)
+                    const isLight = document.body.classList.contains('light-mode');
+                    ctx.fillStyle = isLight ? 'rgba(234, 234, 234, 0.2)' : 'rgba(3, 3, 3, 0.1)'; // Trail effect
                     ctx.fillRect(0, 0, width, height);
                     
                     ctx.font = '10px monospace';
 
                     drops.forEach(drop => {
                         // Brighter on hover
-                        ctx.fillStyle = isHovered ? '#EAEAEA' : '#666666';
+                        ctx.fillStyle = isHovered ? (isLight ? '#000' : '#EAEAEA') : (isLight ? '#666' : '#666666');
                         ctx.fillText(drop.chars[Math.floor(Math.random()*drop.chars.length)], drop.x, drop.y);
                         
                         // Speed up slightly on hover
@@ -8571,6 +8732,7 @@
                     });
 
                     // Redraw
+                    const isLight = document.body.classList.contains('light-mode');
                     ctx.clearRect(0, 0, width, height);
                     
                     ctx.save();
@@ -8587,8 +8749,11 @@
                         // Recalculate X to keep them moving
                         const drawX = width - ((candles.length - i) * 12);
                         
-                        ctx.strokeStyle = c.close > c.open ? '#444' : '#222';
-                        ctx.fillStyle = c.close > c.open ? '#444' : '#222';
+                        const upColor = isLight ? '#525252' : '#444';
+                        const downColor = isLight ? '#A3A3A3' : '#222';
+
+                        ctx.strokeStyle = c.close > c.open ? upColor : downColor;
+                        ctx.fillStyle = c.close > c.open ? upColor : downColor;
                         
                         // Wick
                         ctx.beginPath();
@@ -8659,6 +8824,7 @@
                 window.addEventListener('resize', debounce(resize, 150));
 
                 const animate = () => {
+                    const isLight = document.body.classList.contains('light-mode');
                     ctx.clearRect(0, 0, width, height);
                     
                     if (isHovered) {
@@ -8690,7 +8856,7 @@
                         }
                         
                         // Draw Particle (Square for "Task/Block")
-                        ctx.fillStyle = isHovered ? '#EAEAEA' : '#A0A0A0';
+                        ctx.fillStyle = isHovered ? (isLight ? '#333' : '#EAEAEA') : (isLight ? '#666' : '#A0A0A0');
                         ctx.globalAlpha = isHovered ? 0.9 : 0.6;
                         ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
                         
@@ -8705,7 +8871,7 @@
                             const connectDist = isHovered ? 50 : 70;
 
                             if (dist < connectDist) {
-                                ctx.strokeStyle = isHovered ? 'rgba(255, 255, 255, 0.2)' : 'rgba(136, 136, 136, 0.15)';
+                                ctx.strokeStyle = isHovered ? (isLight ? 'rgba(0,0,0,0.2)' : 'rgba(255, 255, 255, 0.2)') : (isLight ? 'rgba(0,0,0,0.15)' : 'rgba(136, 136, 136, 0.15)');
                                 ctx.lineWidth = 0.5;
                                 ctx.beginPath();
                                 ctx.moveTo(p.x, p.y);
@@ -8717,7 +8883,7 @@
                     
                     // Draw "The Plan" (Target Geometry Ghost)
                     if (isHovered) {
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                        ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255, 255, 255, 0.1)';
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.arc(width/2, height/2, height * 0.3, 0, Math.PI*2);
@@ -8726,7 +8892,7 @@
                         // Inner ring
                         ctx.beginPath();
                         ctx.arc(width/2, height/2, height * 0.2, 0, Math.PI*2);
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                        ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255, 255, 255, 0.05)';
                         ctx.stroke();
                     }
 
@@ -8740,7 +8906,7 @@
             // the shifting terrain of market volatility (Implied Volatility Surface).
             const canvas5 = document.getElementById('canvas-financial');
             if (canvas5) {
-                const ctx = canvas5.getContext('2d', { alpha: false });
+                const ctx = canvas5.getContext('2d');
                 let width, height;
                 let isVisible = false;
                 let animationId = null;
@@ -8795,7 +8961,8 @@
 
                 const resize = () => {
                     const parent = canvas5.parentElement;
-                    const dpr = window.devicePixelRatio || 1;
+                    const isMobile = window.innerWidth < 768;
+                    const dpr = isMobile ? 1 : (window.devicePixelRatio || 1);
                     
                     width = parent.offsetWidth;
                     height = parent.offsetHeight;
@@ -8806,8 +8973,8 @@
                     ctx.scale(dpr, dpr);
                     
                     if (width < 768) {
-                        cols = 16;
-                        rows = 16;
+                        cols = 12; // Reduced from 16 for better mobile performance
+                        rows = 12;
                     } else {
                         cols = 24;
                         rows = 24;
@@ -8857,6 +9024,8 @@
                         animationId = null;
                         return;
                     }
+
+                    const isLight = document.body.classList.contains('light-mode');
 
                     ctx.clearRect(0, 0, width, height);
                     
@@ -8926,7 +9095,8 @@
                         }
                         // Use the alpha of the middle point for the line stroke
                         const midIdx = r * (cols+1) + Math.floor(cols/2);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${projected[midIdx].alpha * 0.3})`;
+                        const baseColor = isLight ? '0, 0, 0' : '255, 255, 255';
+                        ctx.strokeStyle = `rgba(${baseColor}, ${projected[midIdx].alpha * 0.3})`;
                         ctx.stroke();
                     }
                     
@@ -8941,7 +9111,8 @@
                             else ctx.lineTo(p.x, p.y);
                         }
                         const midIdx = Math.floor(rows/2) * (cols+1) + c;
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${projected[midIdx].alpha * 0.3})`;
+                        const baseColor = isLight ? '0, 0, 0' : '255, 255, 255';
+                        ctx.strokeStyle = `rgba(${baseColor}, ${projected[midIdx].alpha * 0.3})`;
                         ctx.stroke();
                     }
                     
@@ -8950,7 +9121,8 @@
                     for(let i=0; i<projected.length; i+=2) {
                         const p = projected[i];
                         if(p.alpha > 0.2) { // Only visible ones
-                            ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * 0.4})`;
+                            const baseColor = isLight ? '0, 0, 0' : '255, 255, 255';
+                            ctx.fillStyle = `rgba(${baseColor}, ${p.alpha * 0.4})`;
                             ctx.fillRect(p.x - 0.5, p.y - 0.5, 1, 1);
                         }
                     }
@@ -8970,9 +9142,10 @@
                             else ctx.lineTo(p.x, p.y);
                         }
                         ctx.lineWidth = 1.5;
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+                        const scanColor = isLight ? '0, 0, 0' : '255, 255, 255';
+                        ctx.strokeStyle = `rgba(${scanColor}, 0.9)`;
                         ctx.shadowBlur = 4;
-                        ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+                        ctx.shadowColor = `rgba(${scanColor}, 0.5)`;
                         ctx.stroke();
                         ctx.shadowBlur = 0; // Reset
                     }
@@ -8985,7 +9158,7 @@
             // Concept: "Emergent Structure". Chaos theory creating form.
             const canvas6 = document.getElementById('canvas-website');
             if (canvas6) {
-                const ctx = canvas6.getContext('2d', { alpha: false });
+                const ctx = canvas6.getContext('2d');
                 let width, height;
                 let isVisible = false;
                 let animationId = null;
@@ -9092,7 +9265,9 @@
                         // Depth fade
                         alpha *= depthScale; 
                         
-                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                        const isLight = document.body.classList.contains('light-mode');
+                        const baseColor = isLight ? '0, 0, 0' : '255, 255, 255';
+                        ctx.fillStyle = `rgba(${baseColor}, ${alpha})`;
                         ctx.fillRect(screenX, screenY, size, size);
                     }
                 }
@@ -9213,7 +9388,8 @@
                         return;
                     }
 
-                    ctx.fillStyle = 'rgba(15, 15, 15, 0.15)';
+                    const isLight = document.body.classList.contains('light-mode');
+                    ctx.fillStyle = isLight ? 'rgba(240, 240, 240, 0.15)' : 'rgba(15, 15, 15, 0.15)';
                     ctx.fillRect(0, 0, width, height);
                     
                     time += 0.015;
@@ -9224,7 +9400,8 @@
                     
                     frequencies.forEach((freq, index) => {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 + index * 0.05})`;
+                        const baseColor = isLight ? '0, 0, 0' : '255, 255, 255';
+                        ctx.strokeStyle = `rgba(${baseColor}, ${0.15 + index * 0.05})`;
                         ctx.lineWidth = 2 - index * 0.2;
                         
                         const points = 200;
@@ -9249,7 +9426,8 @@
                         const y = height / 2 + Math.cos(time * 2 + i * 0.3) * height * 0.3;
                         const alpha = Math.abs(Math.sin(time + i * 0.2)) * 0.3;
                         
-                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                        const baseColor = isLight ? '0, 0, 0' : '255, 255, 255';
+                        ctx.fillStyle = `rgba(${baseColor}, ${alpha})`;
                         ctx.beginPath();
                         ctx.arc(x, y, 2, 0, Math.PI * 2);
                         ctx.fill();
@@ -9481,9 +9659,34 @@
         closeBtnMenu.addEventListener('click', toggleMenu);
         document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', toggleMenu));
 
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Search: Cmd/Ctrl + K
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleSearch();
+            }
+            // Escape: Close search or mobile menu
+            if (e.key === 'Escape') {
+                const searchOverlay = document.getElementById('search-overlay');
+                if (searchOverlay && !searchOverlay.classList.contains('opacity-0')) {
+                    toggleSearch();
+                } else if (!mobileMenu.classList.contains('translate-x-full')) {
+                    toggleMenu();
+                }
+            }
+        });
+
         // --- 9. THREE.JS GLOBE ---
         function initGlobe() {
             const container = document.getElementById('canvas-container');
+            const isMobile = window.innerWidth < 768;
+            
+            // Skip globe on very small screens for performance
+            if (isMobile && window.innerWidth < 480) {
+                container.style.opacity = '0';
+                return;
+            }
             let isVisible = false;
             let animationId = null;
             
@@ -9534,12 +9737,20 @@
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
             const particlesMaterial = new THREE.PointsMaterial({
                 size: 0.02,
-                color: 0xffffff,
+                color: document.body.classList.contains('light-mode') ? 0x111111 : 0xffffff,
                 transparent: true,
                 opacity: 0.6
             });
             const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
             group.add(particlesMesh);
+
+            // Theme Change Listener for Globe
+            window.updateGlobeTheme = function() {
+                const isLight = document.body.classList.contains('light-mode');
+                particlesMaterial.color.setHex(isLight ? 0x111111 : 0xffffff);
+                // Keep inner sphere dark as requested ("I really like the globe being dark")
+                // innerMaterial.color.setHex(isLight ? 0xEEEEEE : 0x030303); 
+            };
 
             let mouseX = 0;
             let mouseY = 0;
@@ -9657,6 +9868,7 @@
                     return;
                 }
                 
+                const isLight = document.body.classList.contains('light-mode');
                 ctx.clearRect(0, 0, width, height);
                 
                 // Decay mouse speed
@@ -9664,9 +9876,9 @@
                 
                 // Draw multiple waves
                 const waves = [
-                    { amplitude: 30, frequency: 0.002, speed: 0.02, color: 'rgba(255, 255, 255, 0.1)' },
-                    { amplitude: 50, frequency: 0.003, speed: 0.015, color: 'rgba(255, 255, 255, 0.2)' },
-                    { amplitude: 20, frequency: 0.005, speed: 0.03, color: 'rgba(255, 255, 255, 0.15)' }
+                    { amplitude: 30, frequency: 0.002, speed: 0.02, color: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)' },
+                    { amplitude: 50, frequency: 0.003, speed: 0.015, color: isLight ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)' },
+                    { amplitude: 20, frequency: 0.005, speed: 0.03, color: isLight ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)' }
                 ];
 
                 waves.forEach((wave, index) => {
@@ -9936,6 +10148,11 @@
                 
                 ctx.clearRect(0, 0, width, height);
                 
+                const isLight = document.body.classList.contains('light-mode');
+                const strokeBase = isLight ? '3, 3, 3' : '234, 234, 234';
+                const textBase = isLight ? '#030303' : '#EAEAEA';
+                const subTextBase = isLight ? '#404040' : '#666';
+                
                 // Compact Layout Settings
                 const levels = 20; 
                 const paddingY = height * 0.2; 
@@ -9956,7 +10173,7 @@
                     const w = Math.min((b.q / currentMaxVol) * maxBarWidth, maxBarWidth);
                     
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(234, 234, 234, ${0.1 + Math.min(b.q/currentMaxVol, 0.6)})`;
+                    ctx.strokeStyle = `rgba(${strokeBase}, ${0.1 + Math.min(b.q/currentMaxVol, 0.6)})`;
                     ctx.lineWidth = barHeight * 0.6; 
                     ctx.moveTo(midX - 4, y);
                     ctx.lineTo(midX - 4 - w, y);
@@ -9969,7 +10186,7 @@
                     const w = Math.min((a.q / currentMaxVol) * maxBarWidth, maxBarWidth);
                     
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(234, 234, 234, ${0.1 + Math.min(a.q/currentMaxVol, 0.6)})`;
+                    ctx.strokeStyle = `rgba(${strokeBase}, ${0.1 + Math.min(a.q/currentMaxVol, 0.6)})`;
                     ctx.lineWidth = barHeight * 0.6;
                     ctx.setLineDash([2, 2]); 
                     ctx.moveTo(midX + 4, y);
@@ -9984,19 +10201,19 @@
                     
                     // Center Line
                     ctx.beginPath();
-                    ctx.strokeStyle = 'rgba(234, 234, 234, 0.3)';
+                    ctx.strokeStyle = `rgba(${strokeBase}, 0.3)`;
                     ctx.lineWidth = 1;
                     ctx.moveTo(midX, paddingY);
                     ctx.lineTo(midX, height - paddingY);
                     ctx.stroke();
 
                     // Text Info
-                    ctx.fillStyle = '#EAEAEA';
+                    ctx.fillStyle = textBase;
                     ctx.font = '10px Space Mono';
                     ctx.textAlign = 'left';
                     ctx.fillText(`BTC-USD: $${lastPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, midX + 10, centerY);
                     
-                    ctx.fillStyle = '#666';
+                    ctx.fillStyle = subTextBase;
                     ctx.font = '8px Space Mono';
                     ctx.fillText('SRC: BITSTAMP', midX + 10, centerY + 12);
                 }
@@ -10113,6 +10330,7 @@
             if(!canvas) return;
 
             const ctx = canvas.getContext('2d');
+            const isLight = document.body.classList.contains('light-mode');
             
             // Historical Austin median home price data (quarterly)
             const labels = [
@@ -10133,22 +10351,22 @@
                 550000  // Q1 2025
             ];
 
-            new Chart(ctx, {
+            window.priceChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
                         label: 'Median Home Price',
                         data: data,
-                        borderColor: '#EAEAEA',
-                        backgroundColor: 'rgba(234, 234, 234, 0.1)',
+                        borderColor: isLight ? '#000000' : '#EAEAEA',
+                        backgroundColor: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(234, 234, 234, 0.1)',
                         borderWidth: 2,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 3,
                         pointHoverRadius: 6,
-                        pointBackgroundColor: '#EAEAEA',
-                        pointBorderColor: '#030303',
+                        pointBackgroundColor: isLight ? '#000000' : '#EAEAEA',
+                        pointBorderColor: isLight ? '#FFFFFF' : '#030303',
                         pointBorderWidth: 2
                     }]
                 },
@@ -10160,10 +10378,10 @@
                             display: false
                         },
                         tooltip: {
-                            backgroundColor: '#0A0A0A',
-                            titleColor: '#EAEAEA',
-                            bodyColor: '#A3A3A3',
-                            borderColor: '#2A2A2A',
+                            backgroundColor: isLight ? '#FFFFFF' : '#0A0A0A',
+                            titleColor: isLight ? '#000000' : '#EAEAEA',
+                            bodyColor: isLight ? '#404040' : '#A3A3A3',
+                            borderColor: isLight ? '#E5E5E5' : '#2A2A2A',
                             borderWidth: 1,
                             padding: 12,
                             displayColors: false,
@@ -10177,11 +10395,11 @@
                     scales: {
                         x: {
                             grid: {
-                                color: '#1A1A1A',
+                                color: isLight ? '#E5E5E5' : '#1A1A1A',
                                 drawBorder: false
                             },
                             ticks: {
-                                color: '#666666',
+                                color: isLight ? '#404040' : '#666666',
                                 font: {
                                     family: "'Space Mono', monospace",
                                     size: 10
@@ -10192,11 +10410,11 @@
                         },
                         y: {
                             grid: {
-                                color: '#1A1A1A',
+                                color: isLight ? '#E5E5E5' : '#1A1A1A',
                                 drawBorder: false
                             },
                             ticks: {
-                                color: '#666666',
+                                color: isLight ? '#404040' : '#666666',
                                 font: {
                                     family: "'Space Mono', monospace",
                                     size: 10
@@ -10221,24 +10439,25 @@
             if(!canvas) return;
 
             const ctx = canvas.getContext('2d');
+            const isLight = document.body.classList.contains('light-mode');
             
             // Monthly permit valuations data for 2024
             const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const data = [245, 280, 320, 295, 310, 285, 275, 290, 305, 340, 315, 295]; // in millions
 
-            new Chart(ctx, {
+            window.valuationChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
                         label: 'Total Valuation ($M)',
                         data: data,
-                        backgroundColor: 'rgba(163, 163, 163, 0.8)',
-                        borderColor: '#A3A3A3',
+                        backgroundColor: isLight ? 'rgba(64, 64, 64, 0.8)' : 'rgba(163, 163, 163, 0.8)',
+                        borderColor: isLight ? '#404040' : '#A3A3A3',
                         borderWidth: 1,
                         borderRadius: 2,
-                        hoverBackgroundColor: 'rgba(234, 234, 234, 0.9)',
-                        hoverBorderColor: '#EAEAEA'
+                        hoverBackgroundColor: isLight ? 'rgba(0, 0, 0, 0.9)' : 'rgba(234, 234, 234, 0.9)',
+                        hoverBorderColor: isLight ? '#000000' : '#EAEAEA'
                     }]
                 },
                 options: {
@@ -10249,10 +10468,10 @@
                             display: false
                         },
                         tooltip: {
-                            backgroundColor: '#0A0A0A',
-                            titleColor: '#EAEAEA',
-                            bodyColor: '#A3A3A3',
-                            borderColor: '#2A2A2A',
+                            backgroundColor: isLight ? '#FFFFFF' : '#0A0A0A',
+                            titleColor: isLight ? '#000000' : '#EAEAEA',
+                            bodyColor: isLight ? '#404040' : '#A3A3A3',
+                            borderColor: isLight ? '#E5E5E5' : '#2A2A2A',
                             borderWidth: 1,
                             padding: 12,
                             displayColors: false,
@@ -10270,7 +10489,7 @@
                                 drawBorder: false
                             },
                             ticks: {
-                                color: '#666666',
+                                color: isLight ? '#404040' : '#666666',
                                 font: {
                                     family: "'Space Mono', monospace",
                                     size: 11
@@ -10279,11 +10498,11 @@
                         },
                         y: {
                             grid: {
-                                color: '#1A1A1A',
+                                color: isLight ? '#E5E5E5' : '#1A1A1A',
                                 drawBorder: false
                             },
                             ticks: {
-                                color: '#666666',
+                                color: isLight ? '#404040' : '#666666',
                                 font: {
                                     family: "'Space Mono', monospace",
                                     size: 10
@@ -10297,6 +10516,53 @@
                 }
             });
         }
+
+        window.updateChartsTheme = function() {
+            const isLight = document.body.classList.contains('light-mode');
+            const gridColor = isLight ? '#E5E5E5' : '#1A1A1A';
+            const tickColor = isLight ? '#404040' : '#666666';
+            const tooltipBg = isLight ? '#FFFFFF' : '#0A0A0A';
+            const tooltipTitle = isLight ? '#000000' : '#EAEAEA';
+            const tooltipBody = isLight ? '#404040' : '#A3A3A3';
+            const tooltipBorder = isLight ? '#E5E5E5' : '#2A2A2A';
+
+            if (window.priceChart) {
+                window.priceChart.data.datasets[0].borderColor = isLight ? '#000000' : '#EAEAEA';
+                window.priceChart.data.datasets[0].backgroundColor = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(234, 234, 234, 0.1)';
+                window.priceChart.data.datasets[0].pointBackgroundColor = isLight ? '#000000' : '#EAEAEA';
+                window.priceChart.data.datasets[0].pointBorderColor = isLight ? '#FFFFFF' : '#030303';
+                
+                window.priceChart.options.scales.x.grid.color = gridColor;
+                window.priceChart.options.scales.y.grid.color = gridColor;
+                window.priceChart.options.scales.x.ticks.color = tickColor;
+                window.priceChart.options.scales.y.ticks.color = tickColor;
+                
+                window.priceChart.options.plugins.tooltip.backgroundColor = tooltipBg;
+                window.priceChart.options.plugins.tooltip.titleColor = tooltipTitle;
+                window.priceChart.options.plugins.tooltip.bodyColor = tooltipBody;
+                window.priceChart.options.plugins.tooltip.borderColor = tooltipBorder;
+                
+                window.priceChart.update();
+            }
+
+            if (window.valuationChart) {
+                window.valuationChart.data.datasets[0].backgroundColor = isLight ? 'rgba(64, 64, 64, 0.8)' : 'rgba(163, 163, 163, 0.8)';
+                window.valuationChart.data.datasets[0].borderColor = isLight ? '#404040' : '#A3A3A3';
+                window.valuationChart.data.datasets[0].hoverBackgroundColor = isLight ? 'rgba(0, 0, 0, 0.9)' : 'rgba(234, 234, 234, 0.9)';
+                window.valuationChart.data.datasets[0].hoverBorderColor = isLight ? '#000000' : '#EAEAEA';
+                
+                window.valuationChart.options.scales.y.grid.color = gridColor;
+                window.valuationChart.options.scales.x.ticks.color = tickColor;
+                window.valuationChart.options.scales.y.ticks.color = tickColor;
+                
+                window.valuationChart.options.plugins.tooltip.backgroundColor = tooltipBg;
+                window.valuationChart.options.plugins.tooltip.titleColor = tooltipTitle;
+                window.valuationChart.options.plugins.tooltip.bodyColor = tooltipBody;
+                window.valuationChart.options.plugins.tooltip.borderColor = tooltipBorder;
+                
+                window.valuationChart.update();
+            }
+        };
 
         let map;
         let layers = {
@@ -10515,8 +10781,9 @@
                 attributionControl: false
             }).setView([30.2672, -97.7431], 12);
 
-            // Initial Base Layer (Dark)
-            setBaseLayer('dark');
+            // Initial Base Layer
+            const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+            setBaseLayer(theme);
 
             // Fetch Data Layers
             Promise.all([
@@ -10572,6 +10839,14 @@
                     maxZoom: 19
                 });
                 isSatellite = true;
+            } else if (type === 'light') {
+                // Positron (Light)
+                baseLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                    subdomains: 'abcd',
+                    maxZoom: 19
+                });
+                isSatellite = false;
             } else {
                 // Dark Matter
                 baseLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -10586,10 +10861,50 @@
             baseLayer.bringToBack();
         }
 
+        window.updateMapTheme = function() {
+            if (isSatellite) return; // Don't override satellite view
+            const isLight = document.body.classList.contains('light-mode');
+            const theme = isLight ? 'light' : 'dark';
+            setBaseLayer(theme);
+
+            // Update Layer Styles
+            if (layers.cameras) {
+                layers.cameras.eachLayer(l => {
+                    l.setStyle({
+                        fillColor: isLight ? '#404040' : '#666666',
+                        color: isLight ? '#000000' : '#EAEAEA'
+                    });
+                });
+            }
+            if (layers.schools) {
+                layers.schools.eachLayer(l => {
+                    l.setStyle({
+                        fillColor: isLight ? '#737373' : '#A3A3A3',
+                        color: isLight ? '#000000' : '#EAEAEA'
+                    });
+                });
+            }
+            if (layers.traffic) {
+                layers.traffic.eachLayer(l => {
+                    l.setStyle({
+                        color: isLight ? '#000000' : '#EAEAEA'
+                    });
+                });
+            }
+            if (layers.bikes) {
+                layers.bikes.eachLayer(l => {
+                    l.setStyle({
+                        color: isLight ? '#171717' : '#525252'
+                    });
+                });
+            }
+        };
+
         window.toggleBaseLayer = function() {
             const btn = document.getElementById('btn-satellite');
             if(isSatellite) {
-                setBaseLayer('dark');
+                const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+                setBaseLayer(theme);
                 btn.classList.remove('bg-white/10', 'text-white');
                 btn.classList.add('text-neutral-400');
             } else {
@@ -11579,7 +11894,9 @@
                 draw(ctx) {
                     // Fade out based on age
                     const alpha = Math.min(1, (this.life - this.age) / 50) * 0.3;
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                    const isLight = document.body.classList.contains('light-mode');
+                    const color = isLight ? '0, 0, 0' : '255, 255, 255';
+                    ctx.strokeStyle = `rgba(${color}, ${alpha})`;
                     ctx.lineWidth = 1;
                     ctx.beginPath();
                     ctx.moveTo(this.prevX, this.prevY);
@@ -11606,7 +11923,8 @@
                 }
 
                 // Trail effect
-                ctx.fillStyle = 'rgba(15, 15, 15, 0.1)';
+                const isLight = document.body.classList.contains('light-mode');
+                ctx.fillStyle = isLight ? 'rgba(234, 234, 234, 0.1)' : 'rgba(15, 15, 15, 0.1)';
                 ctx.fillRect(0, 0, width, height);
                 
                 particles.forEach(p => {
@@ -11686,7 +12004,8 @@
                     const opacity = p.baseOpacity + Math.sin(p.phase) * 0.05;
                     
                     if(opacity > 0) {
-                        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                        const isLight = document.body.classList.contains('light-mode');
+                        ctx.fillStyle = isLight ? `rgba(0, 0, 0, ${opacity})` : `rgba(255, 255, 255, ${opacity})`;
                         ctx.beginPath();
                         ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
                         ctx.fill();
@@ -11969,6 +12288,9 @@
                 }
 
                 draw() {
+                    const isLight = document.body.classList.contains('light-mode');
+                    const strokeColor = isLight ? '3, 3, 3' : '255, 255, 255';
+                    
                     // Draw trail
                     if (this.trail.length > 1) {
                         ctx.beginPath();
@@ -11976,7 +12298,7 @@
                         
                         for (let i = 1; i < this.trail.length; i++) {
                             const alpha = (i / this.trail.length) * 0.5;
-                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                            ctx.strokeStyle = `rgba(${strokeColor}, ${alpha})`;
                             ctx.lineWidth = 1;
                             ctx.lineTo(this.trail[i].x, this.trail[i].y);
                         }
@@ -11987,8 +12309,8 @@
                     const pos = this.trail[this.trail.length - 1];
                     if (pos) {
                         const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 4);
-                        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-                        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.3)');
+                        gradient.addColorStop(0, `rgba(${strokeColor}, 1)`);
+                        gradient.addColorStop(1, `rgba(${strokeColor}, 0.3)`);
                         
                         ctx.fillStyle = gradient;
                         ctx.beginPath();
@@ -12001,6 +12323,9 @@
                     // Draw connections between nearby orbitals
                     if (this.trail.length === 0 || other.trail.length === 0) return;
                     
+                    const isLight = document.body.classList.contains('light-mode');
+                    const strokeColor = isLight ? '3, 3, 3' : '255, 255, 255';
+
                     const myPos = this.trail[this.trail.length - 1];
                     const otherPos = other.trail[other.trail.length - 1];
                     
@@ -12010,7 +12335,7 @@
                     
                     if (dist < 100) {
                         const alpha = (1 - dist / 100) * 0.15;
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.strokeStyle = `rgba(${strokeColor}, ${alpha})`;
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(myPos.x, myPos.y);
@@ -12036,8 +12361,10 @@
 
             function animate() {
                 if (isVisible) {
+                    const isLight = document.body.classList.contains('light-mode');
+                    
                     // Fade out effect for trails
-                    ctx.fillStyle = 'rgba(2, 2, 2, 0.08)';
+                    ctx.fillStyle = isLight ? 'rgba(234, 234, 234, 0.08)' : 'rgba(2, 2, 2, 0.08)';
                     ctx.fillRect(0, 0, width, height);
                     
                     time += 0.008;
@@ -12096,6 +12423,8 @@
     </div>
 
     <script src="crypto-data.js?v=2.3"></script>
+    <!-- Brightness Control -->
+    <script src="brightness-control.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
