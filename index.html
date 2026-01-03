@@ -2013,13 +2013,13 @@
     </div>
 
     <!-- Project Modal -->
-    <div id="project-modal" class="modal-backdrop">
+    <div id="project-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
         <div class="modal-content p-8 md:p-12 relative">
             <!-- Reading Progress Bar -->
-            <div id="reading-progress" class="absolute top-0 left-0 h-1 bg-off-white w-0 z-50" style="transition: width 0.1s ease-out; will-change: width;"></div>
+            <div id="reading-progress" class="absolute top-0 left-0 h-1 bg-off-white w-0 z-50" style="transition: width 0.1s ease-out; will-change: width;" aria-hidden="true"></div>
             
-            <button id="close-modal" class="sticky top-6 float-right mr-6 z-50 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 hover:bg-white/10 hover:border-white/20 group hover:rotate-90 hover:scale-110 active:scale-95" style="will-change: transform; margin-bottom: -44px; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Close modal">
-                <i data-lucide="x" class="w-6 h-6 text-neutral-400 group-hover:text-off-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);"></i>
+            <button id="close-modal" class="sticky top-6 float-right mr-6 z-50 p-3 min-w-[44px] min-h-[44px] rounded-full bg-black/20 backdrop-blur-md border border-white/5 hover:bg-white/10 hover:border-white/20 group hover:rotate-90 hover:scale-110 active:scale-95" style="will-change: transform; margin-bottom: -44px; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);" aria-label="Close modal">
+                <i data-lucide="x" class="w-6 h-6 text-neutral-400 group-hover:text-off-white" style="transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);" aria-hidden="true"></i>
             </button>
             
             <!-- Content Injection Area -->
@@ -2574,7 +2574,7 @@
     <!-- Philosophy Section -->
     <section id="philosophy" class="py-20 md:py-32 px-6 md:px-12 bg-[#030303] relative overflow-hidden border-t border-off-white/10">
         <!-- Oscilloscope Canvas - Enhanced Visibility -->
-        <canvas id="oscilloscope" class="absolute inset-0 w-full h-full opacity-35 pointer-events-none" style="filter: blur(0.5px); transition: opacity 0.6s ease-out;"></canvas>
+        <canvas id="oscilloscope" class="absolute inset-0 w-full h-full opacity-35 pointer-events-none" style="filter: blur(0.5px); transition: opacity 0.6s ease-out;" aria-hidden="true"></canvas>
 
         <div class="max-w-[1600px] mx-auto relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
@@ -2683,7 +2683,7 @@
                 
                 <!-- Left: The Generative Art (Balance) -->
                 <div class="relative w-full h-[40vh] md:h-[60vh] border border-off-white/10 bg-[#020202] overflow-hidden reveal-text order-2 md:order-1">
-                    <canvas id="balance-canvas" class="absolute inset-0 w-full h-full"></canvas>
+                    <canvas id="balance-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
                     <div class="absolute bottom-6 left-6 font-mono text-xs text-neutral-500 z-10 pointer-events-none">
                         <span class="block">FIG. 01 / ORBITAL RESONANCE</span>
                         <span class="block text-neutral-700">φ = 1.618 // n = 7</span>
@@ -2737,7 +2737,7 @@
     <!-- Contact Section -->
     <section id="section-contact" class="py-16 md:py-20 px-4 sm:px-6 md:px-12 min-h-screen flex flex-col justify-between bg-[#030303] text-off-white border-t border-off-white/10 relative overflow-hidden" aria-labelledby="contact-heading">
         <!-- Shadow Order Book Visual -->
-        <div id="order-book-visual" class="absolute top-0 right-0 w-[40%] h-full pointer-events-none z-0 mix-blend-plus-lighter opacity-30 mask-gradient-left hidden md:block">
+        <div id="order-book-visual" class="absolute top-0 right-0 w-[40%] h-full pointer-events-none z-0 mix-blend-plus-lighter opacity-30 mask-gradient-left hidden md:block" aria-hidden="true">
             <canvas id="ob-canvas" class="w-full h-full"></canvas>
         </div>
 
@@ -6126,9 +6126,9 @@
                                 <span>${data.meta.readTime || '5 MIN'} READ</span>
                             </div>
                             
-                            <h1 class="font-playfair italic text-5xl md:text-7xl font-bold mb-10 text-[#0F0F0F]" style="line-height: 1.1; letter-spacing: -0.02em;">
+                            <h2 class="font-playfair italic text-5xl md:text-7xl font-bold mb-10 text-[#0F0F0F]" style="line-height: 1.1; letter-spacing: -0.02em;">
                                 ${data.title}
-                            </h1>
+                            </h2>
                             
                             <div class="w-12 h-1 bg-[#0F0F0F] mx-auto mb-10 opacity-20"></div>
                             
@@ -6189,28 +6189,28 @@
 
                 if(id === 'austin_re') {
                     coverBg = `
-                        <div class="absolute inset-0 bg-[#050505]">
+                        <div class="absolute inset-0 bg-[#050505]" aria-hidden="true">
                             <canvas id="canvas-modal-austin" class="w-full h-full opacity-40"></canvas>
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
                         </div>
                     `;
                 } else if (id === 'taskformer') {
                     coverBg = `
-                        <div class="absolute inset-0 bg-[#0F0F0F]">
+                        <div class="absolute inset-0 bg-[#0F0F0F]" aria-hidden="true">
                             <canvas id="canvas-modal-taskformer" class="w-full h-full opacity-50"></canvas>
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
                         </div>
                     `;
                 } else if (id === 'point72') {
                     coverBg = `
-                        <div class="absolute inset-0 bg-[#0F0F0F]">
+                        <div class="absolute inset-0 bg-[#0F0F0F]" aria-hidden="true">
                             <canvas id="canvas-modal-point72" class="w-full h-full opacity-40"></canvas>
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
                         </div>
                     `;
                 } else if (id === 'payroll') {
                     coverBg = `
-                        <div class="absolute inset-0 bg-[#0F0F0F]">
+                        <div class="absolute inset-0 bg-[#0F0F0F]" aria-hidden="true">
                             <canvas id="canvas-modal-payroll" class="w-full h-full opacity-50"></canvas>
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent"></div>
                         </div>
@@ -6354,9 +6354,17 @@
             }
 
             modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('modal-open');
             lockBodyScroll();
             lucide.createIcons();
+            
+            // Focus trap - focus close button and set up trap
+            setTimeout(() => {
+                const closeBtn = modal.querySelector('#close-modal');
+                if (closeBtn) closeBtn.focus();
+                trapFocus(modal);
+            }, 100);
         }
         
         // Helper functions for body scroll lock
@@ -6370,12 +6378,55 @@
             document.body.style.overflow = '';
             document.body.style.paddingRight = '';
         }
+        
+        // Focus trap for modal accessibility
+        let previouslyFocused = null;
+        function trapFocus(element) {
+            previouslyFocused = document.activeElement;
+            const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+            const focusableElements = element.querySelectorAll(focusableSelectors);
+            const firstFocusable = focusableElements[0];
+            const lastFocusable = focusableElements[focusableElements.length - 1];
+            
+            function handleTabKey(e) {
+                if (e.key !== 'Tab') return;
+                
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusable) {
+                        e.preventDefault();
+                        lastFocusable.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusable) {
+                        e.preventDefault();
+                        firstFocusable.focus();
+                    }
+                }
+            }
+            
+            element._focusTrapHandler = handleTabKey;
+            element.addEventListener('keydown', handleTabKey);
+        }
+        
+        function releaseFocusTrap(element) {
+            if (element._focusTrapHandler) {
+                element.removeEventListener('keydown', element._focusTrapHandler);
+                delete element._focusTrapHandler;
+            }
+            if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+                previouslyFocused.focus();
+            }
+        }
 
         function closeModalFunc() {
             modal.classList.remove('active');
             modal.classList.remove('backdrop-blur-md', 'bg-black/80'); // Clean up glass effect
+            modal.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('modal-open');
             progressBar.style.width = '0%';
+            
+            // Release focus trap and restore focus
+            releaseFocusTrap(modal);
             
             // Clear all active intervals to prevent memory leaks
             if (analysisTimerInterval) {
@@ -6546,9 +6597,9 @@
                                     <div class="w-2 h-2 bg-off-white/40 rounded-full animate-pulse"></div>
                                     <div class="font-mono text-xs text-neutral-600 uppercase tracking-[0.5em]">Strategic Consulting</div>
                                 </div>
-                                <h1 class="font-display text-8xl md:text-9xl font-medium mb-10 tracking-tight leading-[0.85]">
+                                <h2 class="font-display text-8xl md:text-9xl font-medium mb-10 tracking-tight leading-[0.85]">
                                     <span class="typing-text" id="main-title">CONSULTING</span>
-                                </h1>
+                                </h2>
                                 <p class="font-sans text-2xl text-neutral-400 leading-[1.6] max-w-4xl opacity-0 transition-all duration-500 transform translate-y-4" id="financial-subtitle-text">
                                     Delivering institutional-grade analysis and strategic clarity to drive enterprise value.
                                 </p>
@@ -6785,9 +6836,9 @@
                                     <div class="w-2 h-2 bg-off-white/40 rounded-full animate-pulse"></div>
                                     <div class="font-mono text-xs text-neutral-600 uppercase tracking-[0.5em]">Live Design System</div>
                                 </div>
-                                <h1 class="font-display text-8xl md:text-9xl font-medium mb-10 tracking-tight leading-[0.85]">
+                                <h2 class="font-display text-8xl md:text-9xl font-medium mb-10 tracking-tight leading-[0.85]">
                                     <span class="typing-text" id="website-main-title">${data.title}</span>
-                                </h1>
+                                </h2>
                                 <p class="font-sans text-2xl text-neutral-400 leading-[1.6] max-w-4xl opacity-0 transition-all duration-500 transform translate-y-4" id="website-subtitle-text">
                                     ${data.subtitle}
                                 </p>
@@ -8785,61 +8836,30 @@
             // Create tile animation
             createLoaderTiles();
             
-            // Phase 1: Assets (0-30%)
+            // Phase 1: Assets (0-30%) - Minimal delay
             activateLoaderStep('assets');
-            updateLoaderProgress(10, 'Loading Assets');
-            await new Promise(r => setTimeout(r, 400));
-            updateLoaderProgress(30, 'Assets Loaded');
+            updateLoaderProgress(30, 'Loading');
             completeLoaderStep('assets');
             
             // Phase 2: Data Fetch (30-70%)
             activateLoaderStep('data');
-            updateLoaderProgress(40, 'Fetching Data');
+            updateLoaderProgress(50, 'Initializing');
             const preloadResults = await preloadSiteData();
-            updateLoaderProgress(70, 'Data Loaded');
+            updateLoaderProgress(70, 'Data Ready');
             completeLoaderStep('data');
             
             // Phase 3: Render (70-100%)
             activateLoaderStep('render');
-            updateLoaderProgress(80, 'Preparing UI');
-            await new Promise(r => setTimeout(r, 300));
+            updateLoaderProgress(90, 'Rendering');
             
             // Apply preloaded data
             applyPreloadedData();
             
-            updateLoaderProgress(95, 'Almost Ready');
-            await new Promise(r => setTimeout(r, 200));
-            
-            // Scramble text effect
-            const scrambleEls = document.querySelectorAll('.scramble-text');
-            try {
-                scrambleEls.forEach(el => {
-                    const finalText = el.dataset.final;
-                    // On mobile, skip animation and show final text directly for reliability
-                    if (window.innerWidth < 768) {
-                        el.textContent = finalText;
-                        return;
-                    }
-                    if (typeof TextScramble !== 'undefined') {
-                        const fx = new TextScramble(el);
-                        fx.setText(finalText);
-                    } else {
-                        el.textContent = finalText;
-                    }
-                });
-            } catch (e) {
-                console.warn('TextScramble init error:', e);
-                // Fallback: set text directly
-                scrambleEls.forEach(el => {
-                    el.textContent = el.dataset.final || el.textContent;
-                });
-            }
-            
             updateLoaderProgress(100, 'Ready');
             completeLoaderStep('render');
             
-            // Final delay before hiding
-            await new Promise(r => setTimeout(r, 400));
+            // Minimal delay for smooth transition
+            await new Promise(r => setTimeout(r, 100));
             
             loader.classList.add('loader-hidden');
             
@@ -10141,14 +10161,32 @@
                 e.preventDefault();
                 toggleSearch();
             }
-            // Escape: Close search or mobile menu
+            // Escape: Close modal, search, or mobile menu (in priority order)
             if (e.key === 'Escape') {
+                // First check if project modal is open
+                const projectModal = document.getElementById('project-modal');
+                if (projectModal && projectModal.classList.contains('active')) {
+                    closeModalFunc();
+                    return;
+                }
+                // Then check search overlay
                 const searchOverlay = document.getElementById('search-overlay');
                 if (searchOverlay && !searchOverlay.classList.contains('opacity-0')) {
                     toggleSearch();
-                } else if (!mobileMenu.classList.contains('translate-x-full')) {
+                    return;
+                }
+                // Finally check mobile menu
+                if (!mobileMenu.classList.contains('translate-x-full')) {
                     toggleMenu();
                 }
+            }
+        });
+        
+        // Click outside modal to close
+        document.getElementById('project-modal').addEventListener('click', (e) => {
+            // Only close if clicking on the backdrop itself, not the content
+            if (e.target.classList.contains('modal-backdrop')) {
+                closeModalFunc();
             }
         });
 
