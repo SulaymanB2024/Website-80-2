@@ -94,6 +94,95 @@
             border-color: rgba(0, 0, 0, 0.1) !important;
         }
         
+        /* Modal Backdrop - Light Mode */
+        body.light-mode .modal-backdrop {
+            background: rgba(234, 234, 234, 0.95) !important;
+        }
+        
+        body.light-mode .modal-backdrop.active {
+            backdrop-filter: blur(12px) !important;
+        }
+        
+        /* Modal Content - Comprehensive Light Mode */
+        body.light-mode .modal-content {
+            background-color: #FFFFFF !important;
+            border-color: rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0,0,0,0.05) !important;
+        }
+        
+        /* Modal Close Button */
+        body.light-mode #close-modal {
+            background: rgba(255, 255, 255, 0.7) !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body.light-mode #close-modal:hover {
+            background: rgba(0, 0, 0, 0.05) !important;
+            border-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        body.light-mode #close-modal i {
+            color: #666666 !important;
+        }
+        
+        body.light-mode #close-modal:hover i {
+            color: #030303 !important;
+        }
+        
+        /* Reading Progress Bar */
+        body.light-mode #reading-progress {
+            background: #030303 !important;
+        }
+        
+        /* Modal Cover Sections */
+        body.light-mode .modal-content .min-h-\\[50vh\\],
+        body.light-mode .modal-content .min-h-\\[60vh\\],
+        body.light-mode .modal-content .min-h-\\[70vh\\] {
+            background-color: #F5F5F5 !important;
+        }
+        
+        /* Modal Section Borders */
+        body.light-mode .modal-content .border-off-white\\/10,
+        body.light-mode .modal-content .border-white\\/10,
+        body.light-mode .modal-content .border-off-white\\/20,
+        body.light-mode .modal-content .border-white\\/20 {
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        
+        /* Modal Tab Navigation */
+        body.light-mode .tab-nav {
+            border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body.light-mode .tab-btn {
+            color: #666666 !important;
+        }
+        
+        body.light-mode .tab-btn:hover {
+            color: #030303 !important;
+        }
+        
+        body.light-mode .tab-btn.active {
+            color: #030303 !important;
+            border-bottom-color: #030303 !important;
+        }
+        
+        /* Modal Metric Blocks */
+        body.light-mode .modal-content .metric-block {
+            background: rgba(0, 0, 0, 0.02) !important;
+            border-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        
+        body.light-mode .modal-content .metric-block:hover {
+            background: rgba(0, 0, 0, 0.04) !important;
+        }
+        
+        /* Modal Tags and Pills */
+        body.light-mode .modal-content [class*="bg-off-white\\/10"],
+        body.light-mode .modal-content [class*="bg-white\\/10"] {
+            background-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        
         /* Card Image Containers */
         body.light-mode .service-img-container,
         body.light-mode .project-img-container,
@@ -128,8 +217,42 @@
             background: rgba(234, 234, 234, 0.8) !important;
             border-bottom-color: rgba(0, 0, 0, 0.05) !important;
         }
+        
+        /* Mobile Menu */
+        body.light-mode #mobile-menu {
+            background-color: #EAEAEA !important;
+        }
+        
+        body.light-mode #mobile-menu a {
+            color: #030303 !important;
+        }
+        
+        body.light-mode #mobile-menu a:hover {
+            color: #666666 !important;
+        }
+        
+        body.light-mode #close-menu-btn i {
+            color: #030303 !important;
+        }
+        
+        body.light-mode .glass-nav .text-off-white,
+        body.light-mode .glass-nav a {
+            color: #030303 !important;
+        }
+        
+        body.light-mode .glass-nav a:hover {
+            color: #000000 !important;
+        }
 
         /* --- TEXT COLOR OVERRIDES --- */
+        
+        /* Placeholder text colors in light mode */
+        body.light-mode .placeholder-neutral-800::placeholder,
+        body.light-mode .placeholder-neutral-700::placeholder,
+        body.light-mode .placeholder-neutral-600::placeholder {
+            color: #999999 !important;
+            opacity: 1 !important;
+        }
         
         /* 1. White/Light -> Black/Dark */
         body.light-mode .text-white,
@@ -203,7 +326,7 @@
             color: #030303 !important;
         }
 
-        /* Borders */
+        /* Borders & Section Dividers - Make visible in light mode */
         body.light-mode .border-off-white\\/10,
         body.light-mode .border-off-white\\/15,
         body.light-mode .border-off-white\\/20,
@@ -211,6 +334,10 @@
         body.light-mode .border-white\\/5,
         body.light-mode .border-white\\/20 {
             border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body.light-mode .border-off-white\\/30 {
+            border-color: rgba(0, 0, 0, 0.15) !important;
         }
 
         body.light-mode .border-mid-gray {
@@ -231,6 +358,38 @@
             border-color: #030303 !important;
         }
 
+        /* Search Overlay Light Mode Styles */
+        body.light-mode #search-overlay {
+            background-color: rgba(255, 255, 255, 0.98) !important;
+        }
+        
+        body.light-mode #search-input {
+            color: #030303 !important;
+            border-bottom-color: rgba(0, 0, 0, 0.2) !important;
+            background: transparent !important;
+        }
+        
+        body.light-mode #search-input::placeholder {
+            color: #666666 !important;
+            opacity: 0.6 !important;
+        }
+        
+        body.light-mode #search-input:focus {
+            border-bottom-color: rgba(0, 0, 0, 0.5) !important;
+        }
+        
+        body.light-mode #search-count {
+            color: #666666 !important;
+        }
+        
+        body.light-mode #close-search {
+            color: #666666 !important;
+        }
+        
+        body.light-mode #close-search:hover {
+            color: #030303 !important;
+        }
+        
         body.light-mode .search-filter {
             background: rgba(0, 0, 0, 0.05) !important;
             color: #404040 !important;
@@ -240,6 +399,30 @@
             background: rgba(0, 0, 0, 0.1) !important;
             color: #000 !important;
             border-color: rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        body.light-mode #search-results .text-neutral-700,
+        body.light-mode #search-results .text-neutral-600 {
+            color: #666666 !important;
+        }
+        
+        body.light-mode #search-empty {
+            color: #666666 !important;
+        }
+        
+        body.light-mode #search-results .service-card,
+        body.light-mode #search-results .project-card,
+        body.light-mode #search-results .stock-card {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body.light-mode #search-results .service-card:hover,
+        body.light-mode #search-results .project-card:hover,
+        body.light-mode #search-results .stock-card:hover {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(0, 0, 0, 0.2) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
         }
 
         /* Stock Cards / Crypto Cards */
@@ -269,9 +452,23 @@
             background-color: #F5F5F5 !important;
             border-color: rgba(0, 0, 0, 0.1) !important;
         }
+        
+        body.light-mode .bg-off-black,
+        body.light-mode .bg-charcoal {
+            background-color: #F5F5F5 !important;
+        }
+        
+        body.light-mode .text-light-gray {
+            color: #666666 !important;
+        }
+        
+        body.light-mode .bg-neutral-900\\/30,
+        body.light-mode .bg-neutral-900\\/20 {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
 
         body.light-mode .text-dim-gray {
-            color: #666666 !important;
+            color: #999999 !important;
         }
 
         /* Modal Canvas Backgrounds */
@@ -330,32 +527,81 @@
             background: transparent !important; /* Remove gradient text background */
             -webkit-text-fill-color: initial !important;
         }
+        
+        /* Hero gradient text fallback for light mode */
+        body.light-mode #hero h1 .text-transparent {
+            color: #FFFFFF !important;
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+        }
 
-        /* 3. Bio Text & Details - Solid Black */
+        /* 3. Bio Text & Details - Solid Black with High Contrast */
         body.light-mode #hero p,
         body.light-mode #hero .text-neutral-200,
         body.light-mode #hero .text-neutral-300 {
-            color: #000000 !important;
+            color: #030303 !important;
             opacity: 1 !important;
             text-shadow: none !important;
-            mix-blend-mode: normal !important; /* Reset just in case */
+            mix-blend-mode: normal !important;
+            -webkit-text-fill-color: #030303 !important;
+            background: transparent !important;
+        }
+        
+        /* Specifically target the bio paragraph */
+        body.light-mode #hero p.text-neutral-200 {
+            color: #030303 !important;
+            -webkit-text-fill-color: #030303 !important;
+        }
+        
+        /* Hero location tags */
+        body.light-mode #hero .font-mono.text-neutral-300,
+        body.light-mode #hero span.opacity-80 {
+            color: #525252 !important;
+            opacity: 1 !important;
         }
 
-        /* 4. Buttons */
+        /* 4. Buttons - Enhanced styling */
         body.light-mode #hero .btn-tech {
-            color: #000000 !important;
-            border-color: rgba(0,0,0,0.3) !important;
-            background: rgba(255,255,255,0.5) !important;
+            color: #030303 !important;
+            border-color: rgba(0,0,0,0.25) !important;
+            background: rgba(255,255,255,0.7) !important;
+            backdrop-filter: blur(8px) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
         }
         body.light-mode #hero .btn-tech:hover {
-            background: #000000 !important;
+            background: #030303 !important;
             color: #FFFFFF !important;
-            border-color: #000000 !important;
+            border-color: #030303 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+        }
+        body.light-mode #hero .btn-tech i {
+            color: inherit !important;
         }
         
         /* 5. Ensure hero container background is correct */
         body.light-mode #hero {
             background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(234,234,234,1) 100%) !important;
+        }
+        
+        /* 6. Hero section border in light mode */
+        body.light-mode #hero {
+            border-bottom-color: rgba(0,0,0,0.08) !important;
+        }
+        
+        /* 7. Marquee section light mode fixes */
+        body.light-mode [class*="animate-marquee"] {
+            color: #525252 !important;
+        }
+        body.light-mode [class*="animate-marquee"] span {
+            color: inherit !important;
+        }
+        body.light-mode [class*="animate-marquee"] .text-\[\#666666\] {
+            color: #A3A3A3 !important;
+        }
+        body.light-mode .border-y.border-off-white\\/15 {
+            border-color: rgba(0,0,0,0.08) !important;
+            background-color: #F9F9F9 !important;
         }
 
         /* Orderbook Visual Fix */
@@ -387,7 +633,7 @@
 
         /* Map Side Panel Fix */
         body.light-mode #map-info-panel {
-            background-color: rgba(234, 234, 234, 0.98) !important;
+            background-color: rgba(255, 255, 255, 0.98) !important;
             border-left-color: rgba(0, 0, 0, 0.1) !important;
             color: #030303 !important;
         }
@@ -400,7 +646,10 @@
         body.light-mode #map-info-panel .text-neutral-300,
         body.light-mode #map-info-panel .text-neutral-400,
         body.light-mode #map-info-panel .text-neutral-500 {
-            color: #404040 !important;
+            color: #666666 !important;
+        }
+        body.light-mode #map-info-panel .text-neutral-600 {
+            color: #999999 !important;
         }
         body.light-mode #map-info-panel .border-white\/10,
         body.light-mode #map-info-panel .border-white\/5 {
@@ -413,8 +662,70 @@
             background-color: #F5F5F5 !important;
             border-color: rgba(0, 0, 0, 0.1) !important;
         }
+        
+        /* Map Layer Controls - All HUD Elements */
+        body.light-mode .bg-\[\#030303\]\/95 {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        body.light-mode #map-container .bg-\[\#030303\]\/95,
+        body.light-mode #map-legend,
+        body.light-mode .map-layer-btn {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body.light-mode .map-layer-btn {
+            color: #666666 !important;
+        }
+        
+        body.light-mode .map-layer-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+            color: #030303 !important;
+        }
+        
+        body.light-mode .map-layer-btn.active {
+            background-color: rgba(0, 0, 0, 0.1) !important;
+            color: #030303 !important;
+        }
+        
+        /* Map Container Background */
+        body.light-mode #map-container {
+            background-color: #F5F5F5 !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body.light-mode .bg-\[\#0A0A0A\] {
+            background-color: #F5F5F5 !important;
+        }
+        
+        /* Map Loading Overlay */
+        body.light-mode #map-loading {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            color: #030303 !important;
+        }
+        
+        body.light-mode #map-loading .text-off-white {
+            color: #030303 !important;
+        }
+        
+        body.light-mode #map-loading .text-neutral-500 {
+            color: #666666 !important;
+        }
+        
+        body.light-mode #map-loading .border-off-white\/30 {
+            border-color: rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        body.light-mode #map-loading .border-t-off-white {
+            border-top-color: #030303 !important;
+        }
 
-        /* Leaflet Popups Light Mode */
+        /* Leaflet Map Light Mode */
+        body.light-mode .leaflet-container {
+            background-color: #EAEAEA !important;
+        }
+        
         body.light-mode .leaflet-popup-content-wrapper,
         body.light-mode .leaflet-popup-tip {
             background: #FFFFFF !important;
@@ -427,6 +738,12 @@
         }
         body.light-mode .leaflet-container a.leaflet-popup-close-button:hover {
             color: #000000 !important;
+        }
+        
+        /* Map loading overlay in light mode */
+        body.light-mode #map-loading {
+            background-color: rgba(234, 234, 234, 0.95) !important;
+            color: #030303 !important;
         }
 
         /* Widget Headers */
@@ -541,6 +858,143 @@
             }
         }
 
+        /* Additional Light Mode Comprehensive Fixes */
+        
+        /* All icon colors */
+        body.light-mode i[data-lucide],
+        body.light-mode svg {
+            color: inherit;
+        }
+        
+        /* Neutral text colors comprehensive override */
+        body.light-mode .text-neutral-600,
+        body.light-mode .text-neutral-700 {
+            color: #666666 !important;
+        }
+        
+        body.light-mode .text-neutral-800 {
+            color: #404040 !important;
+        }
+        
+        /* Hover states for close buttons and interactive icons */
+        body.light-mode button:hover i[data-lucide],
+        body.light-mode button:hover svg {
+            color: #030303 !important;
+        }
+        
+        /* All background containers with opacity */
+        body.light-mode .bg-black\\/50 {
+            background-color: rgba(255, 255, 255, 0.5) !important;
+        }
+        
+        body.light-mode .bg-black\\/60 {
+            background-color: rgba(255, 255, 255, 0.6) !important;
+        }
+        
+        body.light-mode .bg-black\\/70 {
+            background-color: rgba(255, 255, 255, 0.7) !important;
+        }
+        
+        body.light-mode .bg-black\\/90 {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        /* Backdrop blur elements */
+        body.light-mode .backdrop-blur-md,
+        body.light-mode .backdrop-blur-sm,
+        body.light-mode .backdrop-blur-lg,
+        body.light-mode .backdrop-blur-xl {
+            background-color: rgba(255, 255, 255, 0.8) !important;
+        }
+        
+        /* Market feed and ticker elements */
+        body.light-mode .animate-marquee,
+        body.light-mode [class*="marquee"] {
+            color: #666666 !important;
+        }
+        
+        /* Code/monospace text */
+        body.light-mode .font-mono {
+            color: inherit;
+        }
+        
+        body.light-mode code,
+        body.light-mode pre {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+            color: #030303 !important;
+        }
+        
+        /* All inputs, textareas, selects */
+        body.light-mode input:not([type="range"]),
+        body.light-mode textarea,
+        body.light-mode select {
+            color: #030303 !important;
+            background-color: rgba(255, 255, 255, 0.5) !important;
+            border-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        body.light-mode input:focus:not([type="range"]),
+        body.light-mode textarea:focus,
+        body.light-mode select:focus {
+            border-color: rgba(0, 0, 0, 0.4) !important;
+            outline-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        /* Placeholder text for all inputs */
+        body.light-mode input::placeholder,
+        body.light-mode textarea::placeholder {
+            color: #999999 !important;
+        }
+        
+        /* All button text and states */
+        body.light-mode button {
+            color: inherit;
+        }
+        
+        /* Focus rings and outlines */
+        body.light-mode *:focus-visible {
+            outline-color: rgba(0, 0, 0, 0.5) !important;
+        }
+        
+        /* Ensure all white/off-white text becomes dark */
+        body.light-mode [class*="text-white"],
+        body.light-mode [class*="text-off-white"] {
+            color: #030303 !important;
+        }
+        
+        /* Tooltips */
+        body.light-mode .term-tooltip {
+            background: #FFFFFF !important;
+            color: #030303 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1) !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+        }
+        
+        body.light-mode .term-tooltip::after {
+            border-color: #FFFFFF transparent transparent transparent !important;
+        }
+        
+        /* Interactive terms */
+        body.light-mode .interactive-term {
+            color: inherit;
+            border-bottom-color: rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        /* Rating badges and tags */
+        body.light-mode .rating-badge {
+            background: transparent !important;
+            border-color: rgba(0, 0, 0, 0.3) !important;
+            color: #030303 !important;
+        }
+        
+        body.light-mode .rating-badge.sell {
+            border-color: rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        body.light-mode .rating-badge.buy {
+            border-color: rgba(0, 0, 0, 0.3) !important;
+        }
+
         /* Control Panel Styling (Redesigned) */
         #display-control-panel {
             position: fixed;
@@ -588,16 +1042,212 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
             border: 1px solid rgba(0, 0, 0, 0.1) !important;
         }
+        
+        /* Modal Content - All Text Colors */
+        body.light-mode .modal-content .text-off-white,
+        body.light-mode .modal-content .text-white {
+            color: #030303 !important;
+        }
+        
+        body.light-mode .modal-content .text-neutral-300 {
+            color: #666666 !important;
+        }
+        
+        body.light-mode .modal-content .text-neutral-400 {
+            color: #666666 !important;
+        }
+        
+        body.light-mode .modal-content .text-neutral-500 {
+            color: #999999 !important;
+        }
+        
+        body.light-mode .modal-content .text-neutral-600 {
+            color: #999999 !important;
+        }
+        
+        body.light-mode .modal-content .text-neutral-700 {
+            color: #CCCCCC !important;
+        }
+        
+        body.light-mode .modal-content .text-neutral-800 {
+            color: #666666 !important;
+        }
+        
+        body.light-mode .modal-content .text-off-black {
+            color: #030303 !important;
+        }
+        
+        /* Modal Backgrounds */
+        body.light-mode .modal-content .bg-\[\#0F0F0F\],
+        body.light-mode .modal-content .bg-\[\#0A0A0A\],
+        body.light-mode .modal-content .bg-\[\#030303\],
+        body.light-mode .modal-content .bg-\[\#050505\] {
+            background-color: #F5F5F5 !important;
+        }
+        
+        body.light-mode .modal-content .bg-off-white\/10 {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        body.light-mode .modal-content .bg-off-white\/5 {
+            background-color: rgba(0, 0, 0, 0.03) !important;
+        }
+        
+        body.light-mode .modal-content .bg-off-white\/15 {
+            background-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        
+        /* Modal Borders */
+        body.light-mode .modal-content .border-off-white\/10,
+        body.light-mode .modal-content .border-white\/10 {
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body.light-mode .modal-content .border-off-white\/20,
+        body.light-mode .modal-content .border-white\/20 {
+            border-color: rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        body.light-mode .modal-content .border-off-white\/30 {
+            border-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        body.light-mode .modal-content .border-white\/5 {
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        
+        body.light-mode .modal-content .border-neutral-200 {
+            border-color: rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        body.light-mode .modal-content .border-neutral-300 {
+            border-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        /* Modal Dividers */
+        body.light-mode .modal-content .w-px {
+            background-color: rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        body.light-mode .modal-content .bg-neutral-300 {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        body.light-mode .modal-content .bg-off-black {
+            background-color: #030303 !important;
+        }
+        
+        body.light-mode .modal-content .h-1.bg-off-black {
+            background-color: #030303 !important;
+            opacity: 0.2 !important;
+        }
+        
+        /* Modal Buttons & Interactive */
+        body.light-mode .modal-content button {
+            color: inherit;
+        }
+        
+        /* Links within modals */
+        body.light-mode .modal-content a {
+            color: inherit;
+        }
+        
+        body.light-mode .modal-content a:hover {
+            color: #030303 !important;
+        }
+        
+        /* Icons within modals */
+        body.light-mode .modal-content i[data-lucide] {
+            color: inherit;
+        }
+        
+        body.light-mode .modal-content .text-neutral-400 i[data-lucide] {
+            color: #999999 !important;
+        }
+        
+        body.light-mode .modal-content .text-neutral-500 i[data-lucide] {
+            color: #999999 !important;
+        }
+        
+        body.light-mode .modal-content .statement-tab {
+            background-color: transparent !important;
+            border-color: rgba(0, 0, 0, 0.15) !important;
+            color: #666666 !important;
+        }
+        
+        body.light-mode .modal-content .statement-tab.active {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+            border-color: rgba(0, 0, 0, 0.2) !important;
+            color: #030303 !important;
+        }
+        
+        body.light-mode .modal-content .statement-tab:hover {
+            background-color: rgba(0, 0, 0, 0.03) !important;
+            border-color: rgba(0, 0, 0, 0.18) !important;
+        }
+        
+        /* Spreadsheet/Terminal Elements */
+        body.light-mode .modal-content #spreadsheet-container {
+            background-color: #FAFAFA !important;
+        }
+        
+        body.light-mode .modal-content .bg-neutral-800 {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        body.light-mode .modal-content .bg-neutral-700 {
+            background-color: rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        /* Metric Bars */
+        body.light-mode .modal-content .bg-gradient-to-r {
+            background-image: linear-gradient(to right, #030303, #666666) !important;
+        }
+        
+        /* Drop Cap & Special Typography */
+        body.light-mode .modal-content .drop-cap::first-letter {
+            color: #030303 !important;
+        }
+        
+        body.light-mode .modal-content .pull-quote {
+            border-left-color: rgba(0, 0, 0, 0.2) !important;
+            color: #030303 !important;
+        }
+        
+        /* Ensure opacity classes don't hide text */
+        body.light-mode .modal-content .opacity-20 {
+            opacity: 0.3 !important;
+        }
+        
+        body.light-mode .modal-content .opacity-30 {
+            opacity: 0.4 !important;
+        }
+        
+        body.light-mode .modal-content .opacity-40 {
+            opacity: 0.5 !important;
+        }
+        
+        body.light-mode .modal-content .opacity-50 {
+            opacity: 0.6 !important;
+        }
+        
+        /* Reading Progress Bar */
+        body.light-mode #reading-progress {
+            background-color: #030303 !important;
+        }
 
         body.light-mode #close-modal {
             background-color: rgba(255, 255, 255, 0.9) !important;
             border-color: rgba(0, 0, 0, 0.1) !important;
         }
         body.light-mode #close-modal i {
-            color: #030303 !important;
+            color: #666666 !important;
         }
         body.light-mode #close-modal:hover {
             background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+        body.light-mode #close-modal:hover i {
+            color: #030303 !important;
         }
 
         /* Modal Canvas Backgrounds - Reduce opacity in light mode */

@@ -1,0 +1,27 @@
+
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        Duration is a first-order approximation. <span class="interactive-term" data-term="Convexity">Convexity<span class="term-tooltip">The second derivative of bond price with respect to yield, measuring the curvature of the price-yield relationship.</span></span> is where mortals become gods or corpses. In March 2022, as the Fed pivoted hawkish and 10-year yields spiked 80bps in three weeks, agency MBS portfolios experienced what traders euphemistically call "extension risk." What they actually experienced was financial obliteration.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Negative convexity is a short volatility position you didn't know you owned."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The mathematics are elegant but brutal. For a standard fixed-rate bond, convexity is positive: price increases accelerate as yields fall, and price decreases decelerate as yields rise. You win bigger than you lose. But <span class="interactive-term" data-term="MBS Negative Convexity">mortgage-backed securities<span class="term-tooltip">Agency MBS exhibit negative convexity due to embedded prepayment options held by homeowners.</span></span> embed a prepayment option that homeowners own. When rates fall, refinancing accelerates-your bond gets called away at par just as prices should soar. When rates rise, prepayments stop-you're stuck with a 30-year duration instrument in a rising rate regime.
+                        <span class="sparkline" data-values="100,102,105,104,108,106,103,98,92,85,78"></span>
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Duration Extension Cascade</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Effective duration for a 30-year 3% MBS coupon sat at ~4.2 years in January 2022 when the 10-year was 1.50%. By June, with the 10-year at 3.00%, that same security's duration had extended to ~7.8 years. The convexity adjustment term in the Taylor series expansion: ΔP ≈ -D × Δy + ½C × (Δy)². For MBS, C &lt; 0. The portfolio hemorrhaged value not just from rising rates, but from the accelerating pace of losses as duration stretched like taffy.
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Dealers attempted to <span class="interactive-term" data-term="Gamma Hedging">gamma hedge<span class="term-tooltip">Dynamically adjusting delta hedge positions to remain neutral to second-order price movements.</span></span> by selling duration into the selloff-exacerbating the rate spike in a doom loop. The TBA market saw bid-ask spreads blow out to 8/32nds on peak volatility days. Convexity hedging flows became the dominant price action driver, overwhelming fundamental supply-demand dynamics.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Quantitative Postmortem</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The failure wasn't in the models-OAS frameworks accurately priced the prepayment risk. The failure was in <span class="interactive-term" data-term="Basis Risk">basis risk<span class="term-tooltip">The risk that hedging instruments don't move perfectly in correlation with the underlying exposure.</span></span> management and liquidity assumptions. Funds hedged with Treasury futures, assuming a stable 90% hedge ratio. When MBS-Treasury spreads widened 45bps in two weeks, the hedge ratio collapsed to 0.65. The "basis" was supposed to be stable. It wasn't.
+                        <span class="sparkline" data-values="90,89,88,85,80,72,65,68,70,75,78"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The lesson: Duration measures local sensitivity. Convexity measures how that sensitivity itself changes. In leveraged portfolios with negative convexity, small rate moves trigger large hedge adjustments, which in illiquid markets become self-fulfilling prophecies. The second derivative killed more P&L than the first.
+                    </p>
+                

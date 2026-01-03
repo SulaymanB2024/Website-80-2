@@ -14,8 +14,84 @@
     <link rel="canonical" href="https://sulayman-bowles.dev/">
     
     <!-- Theme Color -->
-    <meta name="theme-color" content="#030303">
+    <meta name="theme-color" content="#030303" id="theme-color-meta">
     <meta name="msapplication-TileColor" content="#030303">
+    
+    <!-- Early Theme Detection - Prevents Flash -->
+    <script>
+        (function() {
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (prefersLight && !prefersDark) {
+                document.documentElement.classList.add('light-mode-early');
+                document.getElementById('theme-color-meta').setAttribute('content', '#EAEAEA');
+            }
+        })();
+    </script>
+    <style>
+        /* Critical loader styles - prevent FOUC */
+        html.light-mode-early #loader,
+        body.light-mode #loader {
+            background: #EAEAEA !important;
+        }
+        html.light-mode-early #loader .loader-name,
+        body.light-mode #loader .loader-name {
+            color: #525252 !important;
+        }
+        html.light-mode-early #loader .loader-title,
+        body.light-mode #loader .loader-title {
+            color: #030303 !important;
+        }
+        html.light-mode-early #loader .loader-bar-bg,
+        body.light-mode #loader .loader-bar-bg {
+            background: #D4D4D4 !important;
+        }
+        html.light-mode-early #loader .loader-bar-fill,
+        body.light-mode #loader .loader-bar-fill {
+            background: #030303 !important;
+        }
+        html.light-mode-early #loader .loader-status,
+        body.light-mode #loader .loader-status {
+            color: #737373 !important;
+        }
+        html.light-mode-early #loader .loader-dots span,
+        body.light-mode #loader .loader-dots span {
+            background: #030303 !important;
+        }
+        html.light-mode-early #loader .loader-grid,
+        body.light-mode #loader .loader-grid {
+            color: rgba(0,0,0,0.1) !important;
+        }
+        html.light-mode-early #loader .loader-ring,
+        body.light-mode #loader .loader-ring {
+            color: #030303 !important;
+        }
+        html.light-mode-early #loader .loader-initials,
+        body.light-mode #loader .loader-initials {
+            color: #030303 !important;
+        }
+        html.light-mode-early #loader .loader-tile,
+        body.light-mode #loader .loader-tile {
+            background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.06) 100%) !important;
+            border-color: rgba(0,0,0,0.08) !important;
+        }
+        html.light-mode-early #loader .loader-steps,
+        body.light-mode #loader .loader-steps {
+            color: #737373 !important;
+        }
+        html.light-mode-early #loader .loader-percent,
+        body.light-mode #loader .loader-percent {
+            color: #525252 !important;
+        }
+        html.light-mode-early #loader .loader-bar-glow,
+        body.light-mode #loader .loader-bar-glow {
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.3), transparent) !important;
+        }
+        html.light-mode-early #loader [class*="border-white"],
+        body.light-mode #loader [class*="border-white"] {
+            border-color: rgba(0,0,0,0.1) !important;
+        }
+    </style>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -1183,12 +1259,107 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1),
-                        opacity 0.3s ease-out;
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1),
+                        opacity 0.5s ease-out;
         }
+        
         .loader-hidden { 
             transform: translateY(-100%); 
             opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Loader Tiles Animation */
+        .loader-tiles-container {
+            perspective: 1000px;
+        }
+        .loader-tile {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            opacity: 0;
+            transform: translateY(100vh) rotateX(45deg) rotateZ(0deg);
+            animation: tileFloat 3s ease-out forwards;
+        }
+        @keyframes tileFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotateX(45deg) rotateZ(0deg) scale(0.5);
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotateX(-45deg) rotateZ(180deg) scale(1.2);
+            }
+        }
+        
+        /* Shimmer Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(400%); }
+        }
+        
+        /* Loader Ring Animation */
+        .loader-ring {
+            color: #EAEAEA;
+            transform: rotate(-90deg);
+        }
+        .loader-ring-progress {
+            animation: loader-ring-fill 2.5s ease-out forwards;
+        }
+        @keyframes loader-ring-fill {
+            0% { stroke-dashoffset: 283; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .loader-initials {
+            color: #EAEAEA;
+        }
+        .loader-logo {
+            animation: loader-pulse 2s ease-in-out infinite;
+        }
+        @keyframes loader-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(0.98); }
+        }
+        
+        /* Loader Steps */
+        .loader-step {
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+        .loader-step.active {
+            opacity: 1;
+            color: #EAEAEA;
+        }
+        .loader-step.complete .loader-step-icon::after {
+            content: '✓';
+            font-size: 8px;
+        }
+        .loader-step.complete {
+            opacity: 0.6;
+            color: #22c55e;
+        }
+        
+        /* Light mode loader styles */
+        body.light-mode .loader-ring {
+            color: #030303;
+        }
+        body.light-mode .loader-initials {
+            color: #030303;
+        }
+        body.light-mode .loader-tile {
+            background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.06) 100%);
+            border-color: rgba(0,0,0,0.05);
+        }
+        body.light-mode .loader-step.complete {
+            color: #16a34a;
         }
         
         /* Canvas */
@@ -1345,15 +1516,7 @@
         }
 
         /* --- HERO LOADER REFINEMENT --- */
-        #loader {
-            /* ... existing styles ... */
-            background: #030303; /* Ensure deep black */
-        }
-        .loader-hidden {
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
-        }
+        /* Loader styles are consolidated above */
         
         /* --- TYPOGRAPHY & READING --- */
         .drop-cap::first-letter {
@@ -1587,13 +1750,73 @@
 
     <!-- Loading Screen -->
     <div id="loader">
-        <div class="flex flex-col items-center gap-6">
-            <div class="font-mono text-[10px] text-neutral-400 tracking-[0.6em] uppercase" style="letter-spacing: 0.6em;">Sulayman Bowles</div>
-            <div class="font-display text-5xl font-bold scramble-text" data-final="OBLIVION" style="letter-spacing: -0.025em;">INIT</div>
-            <div class="w-32 h-[1px] bg-neutral-800 mt-6 relative overflow-hidden">
-                <div class="absolute inset-0 bg-off-white w-full -translate-x-full animate-[marquee_1.5s_ease-in-out_forwards]"></div>
+        <!-- Tile Arc Animation Container -->
+        <div class="loader-tiles-container absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="loader-tiles" id="loader-tiles"></div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex flex-col items-center gap-8 z-10 relative">
+            <!-- Logo Mark -->
+            <div class="loader-logo relative">
+                <svg class="loader-ring" width="100" height="100" viewBox="0 0 100 100">
+                    <circle class="loader-ring-bg" cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1" opacity="0.1"/>
+                    <circle class="loader-ring-track" cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1" opacity="0.05"/>
+                    <circle class="loader-ring-progress" cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="loader-initials font-display text-3xl font-bold tracking-tight">SB</span>
+                </div>
+            </div>
+            
+            <!-- Name -->
+            <div class="loader-name font-mono text-[10px] text-neutral-500 tracking-[0.5em] uppercase">Sulayman Bowles</div>
+            
+            <!-- Title with scramble effect -->
+            <div class="loader-title font-display text-4xl md:text-6xl font-bold scramble-text text-off-white" data-final="PORTFOLIO" style="letter-spacing: -0.025em;">LOADING</div>
+            
+            <!-- Progress Bar -->
+            <div class="w-64 flex flex-col items-center gap-4">
+                <div class="loader-bar-bg w-full h-[3px] bg-neutral-800/50 relative overflow-hidden rounded-full">
+                    <div class="loader-bar-fill absolute inset-y-0 left-0 bg-off-white rounded-full" id="loader-progress" style="width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                    <div class="loader-bar-glow absolute inset-y-0 left-0 bg-gradient-to-r from-transparent via-white/50 to-transparent w-20 animate-shimmer" style="animation: shimmer 1.5s infinite;"></div>
+                </div>
+                <div class="flex items-center justify-between w-full">
+                    <div class="loader-dots flex gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-off-white rounded-full animate-pulse" style="animation-delay: 0ms;"></span>
+                        <span class="w-1.5 h-1.5 bg-off-white rounded-full animate-pulse" style="animation-delay: 150ms;"></span>
+                        <span class="w-1.5 h-1.5 bg-off-white rounded-full animate-pulse" style="animation-delay: 300ms;"></span>
+                    </div>
+                    <span class="loader-status font-mono text-[10px] text-neutral-500 uppercase tracking-widest" id="loader-status">Initializing</span>
+                    <span class="loader-percent font-mono text-[10px] text-neutral-600" id="loader-percent">0%</span>
+                </div>
+            </div>
+            
+            <!-- Loading Steps -->
+            <div class="loader-steps mt-4 flex flex-col gap-2 font-mono text-[9px] text-neutral-700 uppercase tracking-wider">
+                <div class="loader-step flex items-center gap-2" data-step="assets">
+                    <span class="loader-step-icon w-3 h-3 border border-current rounded-sm flex items-center justify-center"></span>
+                    <span>Loading Assets</span>
+                </div>
+                <div class="loader-step flex items-center gap-2" data-step="data">
+                    <span class="loader-step-icon w-3 h-3 border border-current rounded-sm flex items-center justify-center"></span>
+                    <span>Fetching Live Data</span>
+                </div>
+                <div class="loader-step flex items-center gap-2" data-step="render">
+                    <span class="loader-step-icon w-3 h-3 border border-current rounded-sm flex items-center justify-center"></span>
+                    <span>Preparing Interface</span>
+                </div>
             </div>
         </div>
+        
+        <!-- Ambient Grid Pattern -->
+        <div class="loader-grid absolute inset-0 opacity-[0.02] pointer-events-none" style="background-image: linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px); background-size: 50px 50px; color: rgba(255,255,255,0.1);"></div>
+        
+        <!-- Corner Accents -->
+        <div class="absolute top-8 left-8 w-16 h-16 border-l border-t border-white/10"></div>
+        <div class="absolute top-8 right-8 w-16 h-16 border-r border-t border-white/10"></div>
+        <div class="absolute bottom-8 left-8 w-16 h-16 border-l border-b border-white/10"></div>
+        <div class="absolute bottom-8 right-8 w-16 h-16 border-r border-b border-white/10"></div>
     </div>
 
     <!-- MODAL CONTAINER -->
@@ -2012,6 +2235,66 @@
 
             <div class="space-y-8 writing-list" id="writing-grid">
                 
+                <!-- Live Dashboard Article (NEW) -->
+                <div data-category="engineering" data-writing="live_dashboard" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="activity" class="writing-arrow w-6 h-6 text-red-600 animate-pulse"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">The Pulse of the Machine: Real-Time Market Signals</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">ENGINEERING · LIVE DATA</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">A live, interactive dashboard visualizing real-time correlations between crypto assets, network congestion, and physical world data. Powered by WebSockets and public APIs.</p>
+                </div>
+
+                <!-- System Diagnostics Article (NEW) -->
+                <div data-category="engineering" data-writing="sys_diagnostics" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="cpu" class="writing-arrow w-6 h-6 text-blue-600"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">System Diagnostics: Browser Telemetry</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">ENGINEERING · LOCAL</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Introspection of the client environment. Analyzing browser capabilities, network conditions, and hardware concurrency using the Navigator and Performance APIs.</p>
+                </div>
+
+                <!-- Real Estate Article 1: Inventory vs Sales Analysis -->
+                <div data-category="finance" data-writing="re_inventory" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">The Inventory Paradox: Why "Low" Doesn't Mean "Tight"</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE · REAL ESTATE</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Inventory is still 15% below 2019, but sales collapsed 23%. This divergence creates negotiating power even in "low inventory" markets. A data-driven decomposition of supply vs. demand dynamics across 92 metros using Zillow's comprehensive market data.</p>
+                </div>
+
+                <!-- Real Estate Article 2: Affordability Analysis -->
+                <div data-category="finance" data-writing="re_affordability" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">The Buy-Rent Wedge: When Math Screams "Rent"</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE · REAL ESTATE</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Income needed to buy is 79% above 2019, while rents are up 37%. In some metros, the buy-income hurdle is 2x the rent-income hurdle. Why rents act as the market's pressure-release valve and which metros face the highest affordability risk.</p>
+                </div>
+
+                <!-- Real Estate Article 3: Market Segmentation -->
+                <div data-category="finance" data-writing="re_forecast" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                             <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
+                             <h3 class="font-display text-3xl md:text-5xl font-medium group-hover:text-neutral-800" style="letter-spacing: -0.015em;">Four Market Regimes: A Clustering-Based 2026 Forecast</h3>
+                        </div>
+                        <span class="font-mono text-xs text-neutral-400">FINANCE · REAL ESTATE</span>
+                    </div>
+                    <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Using unsupervised learning on six key variables, we identify four distinct market regimes that explain forecast divergence. From "structural squeeze" markets expecting 2.5% growth to "supply catch-up" markets facing headwinds—a data-driven roadmap for 2026.</p>
+                </div>
+                
                 <!-- Consulting: Wind Down -->
                 <div data-category="consulting" data-writing="legacy" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
@@ -2084,8 +2367,8 @@
                     <p class="mt-4 font-sans text-neutral-600 max-w-2xl pl-0 md:pl-10">Designing resilient financial systems on public blockchains. Exploring the intersection of zero-knowledge proofs and regulatory compliance in DeFi.</p>
                 </div>
 
-                 <!-- Finance: Variance -->
-                <div data-category="finance" data-writing="variance" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <!-- Finance: Variance -->
+                <div data-category="finance" data-writing="variance" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -2097,7 +2380,7 @@
                 </div>
 
                 <!-- Finance: Bootstrapping (NEW) -->
-                <div data-category="finance" data-writing="bootstrap" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <div data-category="finance" data-writing="bootstrap" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -2109,7 +2392,7 @@
                 </div>
 
                 <!-- Finance: Credit (NEW) -->
-                <div data-category="finance" data-writing="credit" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <div data-category="finance" data-writing="credit" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -2121,7 +2404,7 @@
                 </div>
 
                 <!-- Finance: Leverage (NEW) -->
-                <div data-category="finance" data-writing="leverage" class="writing-item hidden block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
+                <div data-category="finance" data-writing="leverage" class="writing-item block border-b border-neutral-300 pb-8 reveal-text group cursor-none hover-target cursor-pointer" tabindex="0" role="button">
                     <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
                         <div class="flex items-center gap-4">
                              <i data-lucide="arrow-right" class="writing-arrow w-6 h-6 text-neutral-800"></i>
@@ -2137,9 +2420,9 @@
     </section>
 
     <!-- Philosophy Section -->
-    <section id="philosophy" class="py-40 px-6 md:px-12 bg-[#030303] relative overflow-hidden border-t border-off-white/10">
-        <!-- Oscilloscope Canvas -->
-        <canvas id="oscilloscope" class="absolute inset-0 w-full h-full opacity-20 pointer-events-none"></canvas>
+    <section id="philosophy" class="py-32 px-6 md:px-12 bg-[#030303] relative overflow-hidden border-t border-off-white/10">
+        <!-- Oscilloscope Canvas - Enhanced Visibility -->
+        <canvas id="oscilloscope" class="absolute inset-0 w-full h-full opacity-35 pointer-events-none" style="filter: blur(0.5px); transition: opacity 0.6s ease-out;"></canvas>
 
         <div class="max-w-[1600px] mx-auto relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
@@ -2162,54 +2445,70 @@
                 </div>
 
                 <!-- Right: The Alchemist's Stack (Technical Manifest) -->
-                <div class="reveal-text md:pt-20">
-                    <div class="font-mono text-sm text-neutral-400 border-l border-off-white/20 pl-8 space-y-12">
+                <div class="reveal-text md:pt-16">
+                    <div class="font-mono text-sm text-neutral-400 border-l border-off-white/20 pl-8 space-y-10">
                         
                         <!-- Stack Item 1 -->
                         <div class="group">
-                            <h4 class="text-off-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-opacity">[ LANGUAGES ]</h4>
+                            <h4 class="text-off-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-all duration-500">[ TECHNICAL ]</h4>
                             <ul class="space-y-2">
-                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="LOGIC" data-wave="sine">
-                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white">></span>Python</span>
-                                    <span class="text-neutral-600 font-mono text-xs">/// Data Science</span>
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="CODE" data-wave="sine">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>Full-Stack Development</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Web & APIs</span>
                                 </li>
-                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="TRUST" data-wave="square">
-                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white">></span>Solidity</span>
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="CHAIN" data-wave="square">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>Blockchain Engineering</span>
                                     <span class="text-neutral-600 font-mono text-xs">/// Smart Contracts</span>
                                 </li>
-                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="SCALE" data-wave="sine">
-                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white">></span>TypeScript</span>
-                                    <span class="text-neutral-600 font-mono text-xs">/// Full Stack</span>
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="DATA" data-wave="noise">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>Data Science & ML</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Analytics</span>
                                 </li>
                             </ul>
                         </div>
 
                         <!-- Stack Item 2 -->
                         <div class="group">
-                            <h4 class="text-off-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-opacity">[ DISCIPLINES ]</h4>
+                            <h4 class="text-off-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-all duration-500">[ FINANCIAL ]</h4>
                             <ul class="space-y-2">
-                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="VALUE" data-wave="jagged">
-                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white">></span>Financial Modeling</span>
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="DCF" data-wave="sine">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>Equity Research</span>
                                     <span class="text-neutral-600 font-mono text-xs">/// Valuation</span>
                                 </li>
-                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="NASH" data-wave="jagged">
-                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white">></span>Game Theory</span>
-                                    <span class="text-neutral-600 font-mono text-xs">/// Strategy</span>
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="MODELS" data-wave="jagged">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>Financial Modeling</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Excel & VBA</span>
                                 </li>
-                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-300 cursor-crosshair hover:pl-4" data-bg-text="FLOW" data-wave="sine">
-                                    <span class="text-neutral-300 transition-colors duration-300 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white">></span>System Architecture</span>
-                                    <span class="text-neutral-600 font-mono text-xs">/// Design</span>
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="DEFI" data-wave="square">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>DeFi & Tokenomics</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Crypto Markets</span>
                                 </li>
                             </ul>
                         </div>
 
                         <!-- Stack Item 3 -->
                         <div class="group">
-                            <h4 class="text-off-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-opacity">[ CORE ]</h4>
+                            <h4 class="text-off-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-all duration-500">[ STRATEGIC ]</h4>
+                            <ul class="space-y-2">
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="SYSTEMS" data-wave="jagged">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>System Architecture</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Design & Scale</span>
+                                </li>
+                                <li class="philosophy-item flex justify-between items-center border-b border-off-white/10 pb-2 hover:border-off-white/40 transition-all duration-500 cursor-crosshair hover:pl-4" data-bg-text="STRATEGY" data-wave="sine">
+                                    <span class="text-neutral-300 transition-colors duration-500 group-hover/item:text-off-white"><span class="opacity-0 group-hover/item:opacity-100 mr-2 text-off-white transition-opacity duration-300">></span>Product Strategy</span>
+                                    <span class="text-neutral-600 font-mono text-xs">/// Market Fit</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Stack Item 4 -->
+                        <div class="group">
+                            <h4 class="text-off-white mb-4 tracking-widest uppercase text-xs opacity-50 group-hover:opacity-100 transition-all duration-500">[ CORE ]</h4>
                             <div class="flex flex-wrap gap-3">
-                                <span class="philosophy-item px-3 py-1 border border-off-white/20 text-xs text-neutral-300 hover:bg-off-white hover:text-black transition-colors cursor-crosshair" data-bg-text="CHAOS" data-wave="noise">ENTROPY</span>
-                                <span class="philosophy-item px-3 py-1 border border-off-white/20 text-xs text-neutral-300 hover:bg-off-white hover:text-black transition-colors cursor-crosshair" data-bg-text="ALPHA" data-wave="jagged">CONVEXITY</span>
-                                <span class="philosophy-item px-3 py-1 border border-off-white/20 text-xs text-neutral-300 hover:bg-off-white hover:text-black transition-colors cursor-crosshair" data-bg-text="VERITAS" data-wave="sine">TRUTH</span>
+                                <span class="philosophy-item px-3 py-1 border border-off-white/20 text-xs text-neutral-300 hover:bg-off-white hover:text-black transition-all duration-400 cursor-crosshair" data-bg-text="NASH" data-wave="square">GAME THEORY</span>
+                                <span class="philosophy-item px-3 py-1 border border-off-white/20 text-xs text-neutral-300 hover:bg-off-white hover:text-black transition-all duration-400 cursor-crosshair" data-bg-text="ALPHA" data-wave="jagged">CONVEXITY</span>
+                                <span class="philosophy-item px-3 py-1 border border-off-white/20 text-xs text-neutral-300 hover:bg-off-white hover:text-black transition-all duration-400 cursor-crosshair" data-bg-text="AGENTS" data-wave="noise">AI AGENTS</span>
+                                <span class="philosophy-item px-3 py-1 border border-off-white/20 text-xs text-neutral-300 hover:bg-off-white hover:text-black transition-all duration-400 cursor-crosshair" data-bg-text="RISK" data-wave="sine">RISK MGMT</span>
                             </div>
                         </div>
 
@@ -5019,344 +5318,94 @@
         };
 
         const writingData = {
+            live_dashboard: {
+                meta: { date: "LIVE", category: "ENGINEERING" },
+                title: "The Pulse of the Machine",
+                lede: "A real-time window into the global financial computer. Visualizing the heartbeat of crypto networks, physical world data, and market sentiment through live API streams.",
+                nextSlug: "sys_diagnostics"
+            },
+            sys_diagnostics: {
+                meta: { date: "LOCAL", category: "ENGINEERING" },
+                title: "System Diagnostics: Browser Telemetry",
+                lede: "Introspection of the client environment. Analyzing browser capabilities, network conditions, and hardware concurrency using the Navigator and Performance APIs.",
+                nextSlug: "legacy"
+            },
             legacy: {
                 meta: { date: "DEC 2024", category: "CONSULTING" },
                 title: "Legacy Systems & The Art of the Exit",
                 lede: "Navigating the technical and operational complexities of winding down a mid-sized logistics firm. How we managed 15TB of legacy database archives, ensured regulatory compliance, and executed a graceful systematic shutdown.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        There is no glory in a shutdown. It is the hospice care of the corporate world. Yet, the technical challenges of winding down a 20-year-old logistics firm with 15TB of data and 40 interconnected subsystems rival those of any greenfield launch. The goal is not growth; it is <span class="interactive-term" data-term="Data Archival">immutable finality<span class="term-tooltip">The process of preserving data in a state that cannot be modified, ensuring historical accuracy for regulatory and legal purposes.</span></span>.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Code is liability. Data is risk. The only secure system is one that is turned off."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        We faced a sprawling monolith of Oracle databases, SOAP APIs, and undocumented cron jobs. The first step was <span class="interactive-term" data-term="Dependency Mapping">dependency mapping<span class="term-tooltip">Visualizing and documenting the relationships between software components to understand the impact of removing or modifying them.</span></span>. We used static analysis tools to trace data flows, discovering that the payroll system depended on a legacy inventory view that hadn't been updated in three years. Turning off one server could trigger a cascade of failures in compliance reporting.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Archival Strategy</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Regulatory requirements demanded 7 years of data retention. Keeping the Oracle instances running was cost-prohibitive ($15k/month). We devised a <span class="interactive-term" data-term="Cold Storage">cold storage migration<span class="term-tooltip">Moving inactive data to low-cost storage tiers (like AWS Glacier) where retrieval is slow but retention is cheap.</span></span> plan. We exported all relational data to Apache Parquet files, preserving schema and types, and stored them in AWS S3 Glacier Deep Archive. Cost dropped to $40/month.
-                        <span class="sparkline" data-values="15000,15000,12000,8000,4000,1000,500,100,40,40,40"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        For the application logic, we containerized the core business rules into a lightweight Docker image, stripped of all UI and external integrations. This "black box" could be spun up on-demand if an auditor needed to re-run a specific calculation from 2018. It was a digital time capsule.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Human Element</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The hardest part wasn't technical. It was managing the morale of a team coding their own obsolescence. We implemented "retention bonuses" tied to successful decommissioning milestones. We framed the project not as a death, but as a "successful exit" – a final, professional execution of duty. In the end, the servers went dark, the S3 buckets were locked, and the keys were handed over. Silence is the sound of a job well done.
-                    </p>
-                `,
                 nextSlug: "web3_migration"
             },
             web3_migration: {
                 meta: { date: "NOV 2024", category: "CONSULTING" },
                 title: "Bridging the Gap: Web2 to Web3",
                 lede: "A case study on helping a traditional fintech client integrate on-chain settlement layers. Overcoming custody challenges, smart contract auditing, and the cultural shift from centralized databases to distributed ledgers.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        The client was a mid-sized neobank processing $500M in monthly volume. They wanted "crypto exposure." They didn't understand that they were asking to replace their database with a global, adversarial state machine. Integrating <span class="interactive-term" data-term="Web3 Settlement">on-chain settlement<span class="term-tooltip">Finalizing financial transactions on a blockchain, providing transparency and immutability but requiring strict key management.</span></span> into a Web2 stack is not an API integration; it's a paradigm shift.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"In Web2, you trust the admin. In Web3, you trust the math. The admin is usually easier to sue."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The immediate hurdle was <span class="interactive-term" data-term="Custody">custody<span class="term-tooltip">The safeguarding of private keys that control digital assets. Self-custody means you hold the keys; third-party custody means a provider holds them.</span></span>. The client wanted to hold user funds. We explained that "holding funds" meant managing private keys in a Hardware Security Module (HSM) with multi-party computation (MPC) signing. One leaked key, and the bank is insolvent. We architected a hybrid solution: a qualified custodian for the bulk of assets, and a hot wallet for daily liquidity, rebalanced automatically via smart contracts.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Reconciliation Nightmare</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Blockchains don't close at 5 PM. They don't have weekends. The client's legacy ledger expected a daily "end of day" batch process. We built a real-time <span class="interactive-term" data-term="Indexer">indexer<span class="term-tooltip">Software that reads blockchain data, parses it, and stores it in a queryable database (like SQL) for applications to use.</span></span> that listened to chain events and updated the internal SQL ledger. The challenge was handling "reorgs" – when the blockchain rewrites the last few blocks. Our system had to be able to "rewind" the SQL state to match the chain truth.
-                        <span class="sparkline" data-values="0,10,25,40,35,50,65,60,80,90,100"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        We also implemented a "gas station" network to abstract transaction fees from users. The bank paid the ETH; the user just saw a "Processing..." spinner. It was a seamless UX wrapper around a chaotic decentralized core.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Cultural Divergence</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The biggest friction was cultural. Compliance officers wanted to "reverse" suspicious transactions. We had to explain immutability. Developers wanted to "hotfix" bugs. We had to explain smart contract audits and timelocks. Bridging Web2 and Web3 isn't just code; it's education. It's teaching a centralized organization how to survive in a decentralized world.
-                    </p>
-                `,
                 nextSlug: "automating_alpha"
             },
             automating_alpha: {
                 meta: { date: "OCT 2024", category: "ENGINEERING" },
                 title: "Automating Alpha",
                 lede: "Building autonomous research agents that parse 10-Ks and earnings call transcripts. Using LLMs to extract structured sentiment data and detect divergence from consensus estimates.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        Alpha is information asymmetry. In the age of high-frequency trading, speed is commoditized. The new frontier is <span class="interactive-term" data-term="Unstructured Data">unstructured data<span class="term-tooltip">Information that doesn't fit into a pre-defined data model, like text, audio, and video. 80% of enterprise data is unstructured.</span></span>. 10-Ks, earnings calls, expert network transcripts – these contain the signal, buried in noise. We built a fleet of autonomous agents to mine it.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"The market reacts to the headline. The alpha is in the footnotes."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The pipeline starts with ingestion. We scrape EDGAR for filings and use speech-to-text for earnings calls. The raw text is chunked and fed into a vector database (Pinecone) for semantic search. But the real magic happens in the <span class="interactive-term" data-term="LLM Analysis">LLM layer<span class="term-tooltip">Using Large Language Models (like GPT-4) to reason about text, extract facts, and perform sentiment analysis.</span></span>. We don't just ask "is this positive?" We ask specific, structured questions: "What is the guidance for Q4?" "Is the CEO hedging on supply chain issues?" "Compare the tone of the CFO's answer to the analyst's question."
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Sentiment Divergence</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        We built a "Divergence Score." We compare the LLM's extracted sentiment of the management team against the consensus analyst ratings. When management sounds cautious but analysts are bullish, that's a short signal. When management is confident but the stock is beaten down, that's a long.
-                        <span class="sparkline" data-values="50,52,48,45,60,75,80,70,65,55,50"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The system flagged a divergence in a major retailer's Q3 call. The CEO mentioned "inventory headwinds" 12 times, up from 2 in Q2. Analysts ignored it, focusing on top-line growth. The stock dropped 15% two weeks later when they revised guidance. The agent saw the smoke before the fire.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Hallucination Risk</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        LLMs hallucinate. In finance, a hallucinated number is a P&L disaster. We implemented a "Citation Verification" step. The agent must provide the exact sentence from the source text that supports its conclusion. If it can't cite it, the insight is discarded. We also use an ensemble of models – if GPT-4, Claude, and Llama 3 disagree, a human analyst is alerted. Automation is leverage, not autopilot.
-                    </p>
-                `,
                 nextSlug: "fintech_future"
             },
             fintech_future: {
                 meta: { date: "SEP 2024", category: "ENGINEERING" },
                 title: "The Future of Fintech",
                 lede: "Designing resilient financial systems on public blockchains. Exploring the intersection of zero-knowledge proofs and regulatory compliance in DeFi.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        DeFi (Decentralized Finance) promised a revolution: open, permissionless, transparent markets. It delivered a casino. But beneath the speculation, the infrastructure of the future is being laid. The convergence of <span class="interactive-term" data-term="ZK Proofs">Zero-Knowledge Proofs<span class="term-tooltip">Cryptographic methods that allow one party to prove to another that a statement is true without revealing any information beyond the validity of the statement itself.</span></span> and institutional compliance is where the real disruption lies.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Privacy is not secrecy. Privacy is the right to selectively reveal."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The problem with public blockchains is that they are *too* public. A hedge fund cannot trade on Uniswap if every competitor can see their position size and entry price. This is where ZK-rollups come in. They allow for computation to happen off-chain (privately) while posting a cryptographic proof of validity on-chain. You get the security of Ethereum with the privacy of a dark pool.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Compliance by Design</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Regulators demand KYC/AML. DeFi demands permissionlessness. These seem incompatible. They aren't. We are prototyping <span class="interactive-term" data-term="Verifiable Credentials">verifiable credentials<span class="term-tooltip">Digital credentials that are cryptographically signed by an issuer (like a government or bank) and can be presented by a holder to a verifier without revealing the underlying data.</span></span>. A user proves they are "Accredited" or "Not Sanctioned" using a ZK proof generated from their passport data, without revealing their identity to the protocol. The smart contract checks the proof, not the passport.
-                        <span class="sparkline" data-values="10,15,25,40,60,55,70,85,90,95,100"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        This "Compliance Layer" sits on top of the permissionless base layer. It allows institutions to participate in DeFi liquidity pools without violating their mandates. It is the bridge that brings the $100T of traditional assets on-chain.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Resilience Engineering</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Smart contracts are immutable. Bugs are forever. We are adopting formal verification methods – mathematically proving that the code behaves as intended – for core protocol logic. We are also designing "circuit breakers" that pause trading if volatility or drawdown metrics exceed safety thresholds. The future of fintech isn't just about moving money faster; it's about moving it safer, with mathematical guarantees that no central bank can offer.
-                    </p>
-                `,
                 nextSlug: "convexity"
             },
             convexity: {
                 meta: { date: "DEC 2025", category: "FIXED INCOME" },
                 title: "The Convexity Trap",
                 lede: "Why negative convexity in MBS portfolios destroyed hedge funds in 2022. A technical autopsy of duration extension and gamma hedging failures.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        Duration is a first-order approximation. <span class="interactive-term" data-term="Convexity">Convexity<span class="term-tooltip">The second derivative of bond price with respect to yield, measuring the curvature of the price-yield relationship.</span></span> is where mortals become gods or corpses. In March 2022, as the Fed pivoted hawkish and 10-year yields spiked 80bps in three weeks, agency MBS portfolios experienced what traders euphemistically call "extension risk." What they actually experienced was financial obliteration.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Negative convexity is a short volatility position you didn't know you owned."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The mathematics are elegant but brutal. For a standard fixed-rate bond, convexity is positive: price increases accelerate as yields fall, and price decreases decelerate as yields rise. You win bigger than you lose. But <span class="interactive-term" data-term="MBS Negative Convexity">mortgage-backed securities<span class="term-tooltip">Agency MBS exhibit negative convexity due to embedded prepayment options held by homeowners.</span></span> embed a prepayment option that homeowners own. When rates fall, refinancing accelerates-your bond gets called away at par just as prices should soar. When rates rise, prepayments stop-you're stuck with a 30-year duration instrument in a rising rate regime.
-                        <span class="sparkline" data-values="100,102,105,104,108,106,103,98,92,85,78"></span>
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Duration Extension Cascade</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Effective duration for a 30-year 3% MBS coupon sat at ~4.2 years in January 2022 when the 10-year was 1.50%. By June, with the 10-year at 3.00%, that same security's duration had extended to ~7.8 years. The convexity adjustment term in the Taylor series expansion: ΔP ≈ -D × Δy + ½C × (Δy)². For MBS, C &lt; 0. The portfolio hemorrhaged value not just from rising rates, but from the accelerating pace of losses as duration stretched like taffy.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Dealers attempted to <span class="interactive-term" data-term="Gamma Hedging">gamma hedge<span class="term-tooltip">Dynamically adjusting delta hedge positions to remain neutral to second-order price movements.</span></span> by selling duration into the selloff-exacerbating the rate spike in a doom loop. The TBA market saw bid-ask spreads blow out to 8/32nds on peak volatility days. Convexity hedging flows became the dominant price action driver, overwhelming fundamental supply-demand dynamics.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Quantitative Postmortem</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The failure wasn't in the models-OAS frameworks accurately priced the prepayment risk. The failure was in <span class="interactive-term" data-term="Basis Risk">basis risk<span class="term-tooltip">The risk that hedging instruments don't move perfectly in correlation with the underlying exposure.</span></span> management and liquidity assumptions. Funds hedged with Treasury futures, assuming a stable 90% hedge ratio. When MBS-Treasury spreads widened 45bps in two weeks, the hedge ratio collapsed to 0.65. The "basis" was supposed to be stable. It wasn't.
-                        <span class="sparkline" data-values="90,89,88,85,80,72,65,68,70,75,78"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The lesson: Duration measures local sensitivity. Convexity measures how that sensitivity itself changes. In leveraged portfolios with negative convexity, small rate moves trigger large hedge adjustments, which in illiquid markets become self-fulfilling prophecies. The second derivative killed more P&L than the first.
-                    </p>
-                `,
                 nextSlug: "terminal"
             },
             terminal: {
                 meta: { date: "NOV 2025", category: "VALUATION" },
                 title: "Terminal Value Deconstructed",
                 lede: "The 80% problem in DCF models. Why perpetuity growth assumptions mask value creation and how to build defensible exit multiples.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        In most discounted cash flow models, 70-85% of enterprise value lives in the <span class="interactive-term" data-term="Terminal Value">terminal value<span class="term-tooltip">The present value of all future cash flows beyond the explicit forecast period, typically calculated using a perpetuity growth method or exit multiple.</span></span> calculation. This is not a feature. This is an admission that we're guessing. And yet, analysts treat the perpetuity growth rate with the reverence of a physical constant. g = 2.5%. Always. Forever. Because GDP.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"A DCF is a philosophy disguised as mathematics."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The Gordon Growth Model assumes perpetual constant growth: TV = FCFₙ₊₁ / (WACC - g). Elegant. Convenient. Catastrophically sensitive. A 50bps swing in g or WACC moves valuation by 30-40%. This isn't precision-it's astrology with Greek letters. The model forces infinite compounding at a rate that, if sustained, would make any firm larger than global GDP within a century. We know this is absurd. We plug in the number anyway.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Exit Multiple Alternative</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Exit multiples ground terminal value in empirical reality: TV = EBITDAₙ × EV/EBITDA. The multiple reflects <span class="interactive-term" data-term="Comparable Transactions">comp set analysis<span class="term-tooltip">Valuation methodology using multiples from comparable company transactions or trading values.</span></span>-what buyers actually paid for similar assets. But here's the trap: you're anchoring to current multiples, which embed current growth expectations, which may be wildly optimistic or pessimistic. You've just made the model circular.
-                        <span class="sparkline" data-values="12,13,14,15,14,13,11,9,10,11,12"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The intellectually honest approach: decompose the multiple into its fundamental drivers. The implied exit multiple is: (1 - g/ROIC) × (1 + g) / (WACC - g), where ROIC is the perpetual return on incremental invested capital. If ROIC &gt; WACC, the firm creates value through reinvestment. If ROIC &lt; WACC, growth destroys value-the firm should distribute cash, not reinvest it.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Fade Rate Framework</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        No competitive advantage lasts forever. Instead of assuming constant growth, model a <span class="interactive-term" data-term="Fade Rate">fade rate<span class="term-tooltip">The rate at which a company's excess returns decay toward its cost of capital over time, reflecting competitive pressure.</span></span>: high initial growth decaying toward the risk-free rate over 20-40 years. This reflects economic reality-mean reversion, technological obsolescence, competitive entry. The formula: gₜ = (gᵢₙᵢₜᵢₐₗ - r_f) × e^(-λt) + r_f, where λ is the decay constant calibrated to industry half-life.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The fade rate transforms terminal value from a binary guess into a probabilistic decay function. It forces explicit assumptions about durability of competitive moats. And it produces valuations that aren't 80% dependent on what happens after year 10. The math is harder. The intellectual honesty is worth it.
-                        <span class="sparkline" data-values="15,14,13,11,9,7,5,4,3,2.5,2.5"></span>
-                    </p>
-                `,
                 nextSlug: "variance"
             },
             variance: {
                 meta: { date: "OCT 2025", category: "DERIVATIVES" },
                 title: "Variance Risk Premium Extraction",
                 lede: "Decomposing realized vs. implied volatility spreads. Statistical arbitrage strategies in VIX futures term structure and variance swap mechanics.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        The market systematically overprices volatility. This isn't a behavioral quirk-it's a structural risk premium. Investors pay to hedge tail risk. Sellers collect that premium. The <span class="interactive-term" data-term="Variance Risk Premium">variance risk premium<span class="term-tooltip">The difference between implied variance (from option prices) and subsequently realized variance, representing compensation for bearing volatility risk.</span></span> (VRP) is the spread between implied variance and realized variance, annualized at ~3-5 volatility points on the S&P 500. Over two decades, selling this premium has generated Sharpe ratios exceeding 1.0-if you survive the crashes.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Variance swaps are the purest expression of volatility. No delta. No gamma leak. Just convexity."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        A <span class="interactive-term" data-term="Variance Swap">variance swap<span class="term-tooltip">An OTC derivative that allows direct speculation or hedging of realized variance over a period, with payoff = Notional × (Realized Variance - Strike Variance).</span></span> pays the difference between realized variance and a fixed strike: Payoff = N × (σ²_realized - σ²_strike). No path dependence. No rebalancing. Pure variance exposure. The fair strike is calculated from the full strip of option prices across the smile using the model-free replication formula: σ²_IV = (2/T) ∫ [Q(K)/K²] dK, where Q(K) is the price of an OTM option at strike K.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">VIX Futures Term Structure Dynamics</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The VIX futures curve is typically in <span class="interactive-term" data-term="Contango">contango<span class="term-tooltip">A market condition where futures prices are higher than spot prices, often due to storage costs or negative convenience yield.</span></span>-front-month trades 10-15% below the 3-month contract. This reflects the VRP: implied vol embedded in futures exceeds expected realized vol. But the curve isn't static. In normal regimes, it slopes upward at ~0.5 VIX points per month. During spikes (VIX &gt; 30), it inverts into backwardation as front-month fear dominates distant expectations.
-                        <span class="sparkline" data-values="15,16,17,18,19,20,21,22,35,30,25"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The classic VRP trade: sell front-month VIX futures, roll monthly, collect the contango decay. The XIV ETN executed this mechanically until February 2018, when the VIX spiked 116% intraday and the product terminated. The strategy works 95% of the time. The other 5% bankrupts you. This is the essence of <span class="interactive-term" data-term="Taleb's Ludic Fallacy">crisis alpha asymmetry<span class="term-tooltip">Strategies that collect small, frequent gains but suffer catastrophic losses during tail events due to negative skewness.</span></span>: positive carry, negative skew.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Empirical Term Structure Models</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        To extract VRP systematically, model the term structure as a mean-reverting process: dVIXₜ = κ(θ - VIXₜ)dt + σ√VIXₜ dWₜ. Calibrate κ (mean reversion speed) and θ (long-run mean) from historical data. The model implies that when VIX &gt; θ + 2σ, the curve should flatten-sell front and buy back end. When VIX &lt; θ - σ, steepen-short back end, long front.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Empirical calibration on 2010-2024 data: κ ≈ 0.8 (mean reversion half-life ~0.9 years), θ ≈ 18.5, σ_vol-of-vol ≈ 0.65. Backtest shows roll-yield strategies capturing 70% of theoretical VRP, net of transaction costs and slippage. The key: dynamic position sizing inversely proportional to VIX level. Never naked short volatility. Use variance swaps or calendar spreads to isolate term structure exposure from outright level.
-                        <span class="sparkline" data-values="5,4,5,6,5,7,6,8,15,10,6"></span>
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Volatility of Volatility Problem</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        VRP extraction isn't free money. The risk is vol-of-vol (vvix): when volatility itself becomes volatile, your P&L distribution gets fat tails. VVIX &gt; 120 signals regime change-VRP inverts, and sellers get annihilated. The solution: trade variance dispersion instead of outright variance. Sell index variance, buy single-stock variance. Capture the spread while hedging systemic jumps. Correlation drops during crises-dispersion widens, offsetting index variance losses.
-                    </p>
-                `,
                 nextSlug: "bootstrap"
             },
             bootstrap: {
                 meta: { date: "SEP 2025", category: "FIXED INCOME" },
                 title: "Bootstrapping the Yield Curve",
                 lede: "From SOFR swaps to zero-coupon rates. The mechanics of curve construction, interpolation methods, and cross-currency basis adjustments.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        Every derivative pricing model requires a discount curve. Build it wrong, and every valuation downstream is contaminated. The <span class="interactive-term" data-term="Bootstrapping">bootstrapping algorithm<span class="term-tooltip">An iterative method to extract zero-coupon rates from observed market prices of coupon-bearing bonds or swaps.</span></span> converts messy market quotes-SOFR swaps, Treasury bonds, Eurodollar futures-into a smooth zero-coupon yield curve. The process is both mechanical and surgical. One wrong assumption about day-count conventions or compounding frequency, and your 10-year swap rate is mispriced by 3 basis points. In a $500M notional swap, that's $1.5M of P&L error.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"The curve is not given. The curve is constructed."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Post-LIBOR transition, <span class="interactive-term" data-term="SOFR">SOFR<span class="term-tooltip">Secured Overnight Financing Rate: the risk-free rate based on Treasury repo transactions, replacing LIBOR as the USD benchmark.</span></span> is the foundation. Start with overnight SOFR (currently ~4.35%). For terms beyond O/N, use SOFR futures to build the 3M-2Y segment. Each futures price implies a forward rate: F = 100 - Price. Convert to continuous compounding: r_continuous = ln(1 + r_simple × Δt) / Δt, where Δt is the accrual fraction (ACT/360 for USD swaps).
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Swap Curve Stripping Process</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        For maturities beyond 2 years, SOFR swaps provide the data. A 5-year swap at 4.25% fixed means the present value of fixed flows equals the present value of floating flows: Σ [C × DF(tᵢ)] = Σ [Fwd(tᵢ₋₁, tᵢ) × DF(tᵢ)], where C is the fixed coupon, DF(t) is the discount factor at time t, and Fwd is the forward SOFR rate.
-                        <span class="sparkline" data-values="4.0,4.1,4.15,4.2,4.25,4.3,4.35,4.4,4.5,4.6,4.7"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Bootstrap iteratively: solve for DF(t₁) using the 1Y swap, then DF(t₂) using the 2Y swap and the already-known DF(t₁), and so on. At each tenor, invert the discount factor to get the zero rate: z(t) = -ln[DF(t)] / t. The result is a discrete set of zero rates at swap maturity points: 1Y, 2Y, 3Y, ..., 30Y.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Interpolation: The Hidden Degrees of Freedom</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Market quotes are sparse. You have zeros at 2Y, 3Y, 5Y, 7Y, 10Y. But you need a rate for 4.25Y to price a bespoke swaption. Interpolation fills the gaps. Linear interpolation of zero rates is crude and creates artificial discontinuities in forward rates. <span class="interactive-term" data-term="Cubic Spline">Cubic splines<span class="term-tooltip">A piecewise polynomial interpolation method ensuring smooth first and second derivatives across the curve.</span></span> are smoother but can generate economically implausible forward rate oscillations.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Best practice: interpolate on the <span class="interactive-term" data-term="Log-Discount Factor">log-discount factor<span class="term-tooltip">Interpolating ln[DF(t)] ensures positivity of discount factors and smooth instantaneous forward rates.</span></span> using monotone-preserving cubic splines (e.g., Hyman's filter). This guarantees forward rates remain positive and smooth. For ultra-long tenors (&gt;30Y), extrapolate using the Smith-Wilson method, which asymptotically converges to an ultimate forward rate (typically UFR = 3.8% for USD, per EIOPA guidelines adapted to US regulatory context).
-                        <span class="sparkline" data-values="0.98,0.95,0.91,0.86,0.80,0.74,0.67,0.60,0.52,0.45,0.38"></span>
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Cross-Currency Basis: The Arbitrage That Shouldn't Exist</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Covered interest parity says: F/S = (1 + r_d) / (1 + r_f), where F is the forward FX rate, S is spot, r_d is domestic rate, r_f is foreign rate. In theory, no arbitrage. In practice, <span class="interactive-term" data-term="CCS Basis">cross-currency swap basis<span class="term-tooltip">The spread added to one leg of a cross-currency swap to equalize present values, reflecting funding costs and credit risk asymmetries.</span></span> can be -50 bps (EUR) or +30 bps (JPY) vs. USD. Post-2008, funding constraints and regulatory capital charges broke CIP.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        When building a USD curve from EUR swaps (or vice versa), adjust for the basis: r_USD_implied = r_EUR + basis + FX_forward_adjustment. The 5Y EUR/USD basis widened to -60 bps during COVID. Ignoring it would misprice cross-currency swaps by millions. The basis isn't noise-it's structural, driven by dollar shortage in offshore funding markets and balance sheet costs for dealers.
-                    </p>
-                `,
                 nextSlug: "credit"
             },
             credit: {
                 meta: { date: "AUG 2025", category: "CREDIT" },
                 title: "Credit Spread Decomposition",
                 lede: "Separating default probability from recovery rates in corporate bonds. Structural models vs. reduced-form approaches in distressed debt.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        A corporate bond yield is composed of two pieces: the risk-free rate and the <span class="interactive-term" data-term="Credit Spread">credit spread<span class="term-tooltip">The additional yield above the risk-free rate that compensates investors for default risk and illiquidity.</span></span>. The spread itself decomposes into default probability, expected loss given default, and a liquidity premium. Most analysts stop at the first layer. That's where the money is lost. Because spreads compress and widen not just on changing default risk, but on shifts in recovery assumptions and market microstructure.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Default is a binary event. Recovery is a negotiation."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The fundamental credit equation: Spread = PD × LGD + Liquidity Premium, where PD is probability of default and <span class="interactive-term" data-term="LGD">LGD<span class="term-tooltip">Loss Given Default: the percentage of exposure lost when a borrower defaults, equal to 1 minus the recovery rate.</span></span> is loss given default (1 - Recovery Rate). For a BB-rated 5-year bond with 350bps spread, assume PD = 4.5% (annualized), Recovery = 40%. Expected loss = 4.5% × 60% = 2.7% annually ≈ 270bps. The remaining 80bps is compensation for liquidity and systematic credit risk. That excess spread is tradable alpha.
-                        <span class="sparkline" data-values="100,98,95,92,88,82,75,68,58,50,45"></span>
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Merton's Structural Model</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        <span class="interactive-term" data-term="Merton Model">Merton's framework<span class="term-tooltip">A structural credit model treating equity as a call option on firm assets, with default occurring when asset value falls below debt obligations.</span></span> treats equity as a call option on the firm's assets with strike equal to debt face value. Default occurs when asset value V_T &lt; D at maturity T. The equity value: E = V₀ N(d₁) - D e^(-rT) N(d₂), where d₁ = [ln(V₀/D) + (r + σ²/2)T] / (σ√T), and N(·) is the cumulative normal distribution.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The model implies a distance-to-default: DD = [ln(V₀/D) + (μ - σ²/2)T] / (σ√T). The probability of default: PD = N(-DD). For a firm with market cap $5B, debt $8B, asset volatility 35%, and 5-year horizon: V₀ ≈ $13B, DD ≈ 1.1σ, PD ≈ 13.6%. The corresponding credit spread via risk-neutral pricing is: s = -ln[1 - PD × LGD] / T ≈ 340bps for LGD = 60%.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Reduced-Form Models: Intensity-Based Approach</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Structural models struggle with sudden defaults (Lehman had positive equity value 48 hours before bankruptcy). <span class="interactive-term" data-term="Reduced-Form Models">Reduced-form models<span class="term-tooltip">Credit models that treat default as a random jump process with exogenous hazard rate, without modeling firm capital structure.</span></span> treat default as a Poisson jump with hazard rate λ(t). The survival probability: S(T) = exp[-∫₀ᵀ λ(t)dt]. For constant λ, this simplifies to S(T) = e^(-λT).
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The credit spread in a reduced-form model: s = λ × LGD. Calibrate λ from CDS spreads: if 5Y CDS trades at 280bps and recovery is 40%, then λ ≈ 280bps / 60% = 4.67% annualized. The advantage: no need to estimate unobservable asset volatility. The disadvantage: λ is a black box-it doesn't explain *why* default risk changes, only that it has.
-                        <span class="sparkline" data-values="2.5,2.8,3.2,3.8,4.5,5.2,6.0,7.5,9.0,8.5,7.0"></span>
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Recovery Rate Dynamics in Distressed Debt</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Recovery rates are not constant. They're correlated with default rates-during recessions, both PD and LGD rise simultaneously. Moody's data (1982-2022): median recovery on senior unsecured bonds is 38%, but the distribution is bimodal-recoveries cluster near 10% (liquidation) or 65% (restructuring). In distressed cycles (2008, 2020), average recovery dropped to 28% as bankruptcy courts were overwhelmed and asset sales occurred in depressed markets.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Trading strategy: in early-stage distress, buy senior secured (recovery ~70%) and short CDS (recovery ~40%). The basis captures recovery mispricing. In late-stage distress, avoid the capital structure entirely-recovery convergence crushes the trade. The edge is in timing the transition from going-concern to gone-concern. Structural models tell you when equity is worthless. Reduced-form models tell you when the market believes it.
-                    </p>
-                `,
                 nextSlug: "leverage"
             },
             leverage: {
                 meta: { date: "JUL 2025", category: "LBO / PE" },
                 title: "The Leverage Ratchet",
                 lede: "LBO modeling beyond the template. Optimal capital structure, covenant design, and the hidden costs of financial engineering in leveraged buyouts.",
-                content: `
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
-                        Private equity returns are manufactured through three levers: operational improvement, multiple arbitrage, and leverage. The first is hard. The second is cyclical. The third is mechanical-and the most misunderstood. <span class="interactive-term" data-term="LBO">Leveraged buyout<span class="term-tooltip">Acquisition of a company using significant amounts of borrowed money, with the target's cash flows servicing the debt.</span></span> modeling reduces to a question: How much debt can this cash flow sustain? Get it wrong on the high side, and you're in bankruptcy. Get it wrong on the low side, and you leave 500bps of IRR on the table.
-                    </p>
-                    <div class="my-12 border-l-4 border-black pl-6 py-2">
-                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Leverage is a call option on upside and a put option on downside. The strike is the debt face value."</p>
-                    </div>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The traditional metric is <span class="interactive-term" data-term="Debt-to-EBITDA">Debt / EBITDA<span class="term-tooltip">Leverage ratio measuring total debt relative to earnings before interest, taxes, depreciation, and amortization.</span></span>. Sponsors target 5.0-6.5x for middle-market buyouts. But EBITDA is a fiction-it's not cash. EBITDA - Capex - Working Capital = Unlevered Free Cash Flow. That's what services debt. In capital-intensive businesses, EBITDA overstates cash generation by 30-40%. In SaaS or asset-light models, the spread is narrower. The correct question: Debt / (EBITDA - Capex - ΔWC). This ratio should not exceed 4.5x for stable cash flows, 3.5x for cyclical.
-                        <span class="sparkline" data-values="6.5,6.2,5.8,5.3,4.9,4.5,4.0,3.6,3.2,2.8,2.3"></span>
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Capital Structure Optimization</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The debt stack is a maturity and seniority ladder: Revolver (L + 250bps), Term Loan B (L + 450bps), Second Lien (L + 750bps), Mezzanine (12-14% PIK toggle). Each tranche has different covenants, amortization schedules, and call protection. The optimization problem: minimize WACC subject to maintaining liquidity and covenant cushion. The revolver stays undrawn (it's insurance, not funding). Term Loan B is the workhorse-7-year maturity, 1% annual amortization, EBITDA-based covenants with 25% cushion.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The <span class="interactive-term" data-term="Blended Cost of Debt">blended cost of debt<span class="term-tooltip">Weighted average interest rate across all debt tranches, adjusted for fees, OID, and PIK accretion.</span></span> includes fees and OID (original issue discount). A Term Loan at L + 450bps with 2% OID and 50bps annual fee has an all-in cost of ~9.3% at current SOFR. Mezzanine at 12% PIK accretes-no cash interest for 3 years, then compounds. The effective cost is 12%, but the cash burden is deferred. This is how sponsors juice Year 1-3 IRR while creating a maturity wall problem in Year 6-7.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Covenant Engineering and Strategic Default</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Covenants are trip-wires. <span class="interactive-term" data-term="Leverage Covenant">Leverage covenant<span class="term-tooltip">A debt agreement clause requiring the borrower to maintain Debt/EBITDA below a specified threshold, tested quarterly.</span></span>: Total Debt / EBITDA &lt; 6.0x, stepping down to 5.0x by Year 4. <span class="interactive-term" data-term="FCCR">Fixed Charge Coverage<span class="term-tooltip">Ratio of EBITDA minus Capex to Interest + Required Debt Amortization, measuring ability to service fixed obligations.</span></span>: (EBITDA - Capex) / (Interest + Amort) &gt; 1.1x. Miss either, and you're in technical default. The lenders can accelerate, forcing refinancing at punitive rates-or they renegotiate for equity warrants and fee strips.
-                        <span class="sparkline" data-values="1.5,1.4,1.3,1.2,1.1,1.0,0.95,1.1,1.3,1.5,1.7"></span>
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        Savvy sponsors build in EBITDA addbacks: pro forma cost synergies, run-rate revenue from bolt-ons, non-recurring expenses. These are permitted adjustments under credit agreements. A $50M EBITDA business can report $65M "Adjusted EBITDA" by adding back $10M in "one-time" restructuring costs and $5M in "normalized" revenue. Lenders accept this because the alternative is losing the deal to a more aggressive lender. The game is: maximize addbacks without triggering fraud.
-                    </p>
-                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The IRR Mirage and Hidden Costs</h3>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        The headline IRR is a lie. LBO models show 25% IRR on 6.0x leverage. Strip out the leverage, and the equity return is 12%. The delta is financial engineering, not value creation. The formula: Levered Return = Unlevered Return + (Unlevered Return - Cost of Debt) × (Debt / Equity). When r_unlevered = 12% and r_debt = 8%, each 1x of leverage adds ~160bps to IRR. At 6x leverage and 40% equity check, you're adding 960bps. That's the ratchet.
-                    </p>
-                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
-                        But leverage is symmetric. A 10% EBITDA miss in Year 2 triggers covenant breach, forces equity cure ($20M cash injection at 0% IRR), and resets the return profile. The hidden costs: management time spent on lender reporting, restricted ability to pursue growth Capex, and forced asset sales to delever during downturns. The model assumes smooth cash flows. Reality is lumpy. The difference between projected and actual is where sponsors earn their carry-or lose their shirts.
-                        <span class="sparkline" data-values="25,24,22,18,15,10,5,-2,8,15,22"></span>
-                    </p>
-                `,
+                nextSlug: "legacy"
+            },
+            re_inventory: {
+                meta: { date: "JAN 2026", category: "REAL ESTATE" },
+                title: "The Inventory Paradox: Why \"Low\" Doesn't Mean \"Tight\"",
+                lede: "Inventory is still 15% below 2019, but sales collapsed 23%. This divergence creates negotiating power even in \"low inventory\" markets. A data-driven decomposition of supply vs. demand dynamics across 92 metros using Zillow's comprehensive market data.",
+                nextSlug: "re_affordability"
+            },
+            re_affordability: {
+                meta: { date: "JAN 2026", category: "REAL ESTATE" },
+                title: "The Buy-Rent Wedge: When Math Screams \"Rent\"",
+                lede: "Income needed to buy is 79% above 2019, while rents are up 37%. In some metros, the buy-income hurdle is 2x the rent-income hurdle. Why rents act as the market's pressure-release valve and which metros face the highest affordability risk.",
+                nextSlug: "re_forecast"
+            },
+            re_forecast: {
+                meta: { date: "JAN 2026", category: "REAL ESTATE" },
+                title: "Four Market Regimes: A Clustering-Based 2026 Forecast",
+                lede: "Using unsupervised learning on six key variables, we identify four distinct market regimes that explain forecast divergence. From \"structural squeeze\" markets expecting 2.5% growth to \"supply catch-up\" markets facing headwinds—a data-driven roadmap for 2026.",
                 nextSlug: "legacy"
             }
         };
@@ -5446,6 +5495,112 @@
         // Initial fetch and interval (every 60s)
         fetchLiveData();
         setInterval(fetchLiveData, 60000);
+
+        // --- LIVE DASHBOARD CONTROLLER ---
+        async function initLiveDashboard() {
+            const root = document.getElementById('live-dashboard-root');
+            if (!root) return;
+
+            const updateDash = async () => {
+                if (!document.getElementById('live-dashboard-root')) return; // Stop if modal closed
+
+                // 1. Crypto
+                try {
+                    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
+                    const data = await res.json();
+                    
+                    if (data.bitcoin) {
+                        const btc = data.bitcoin.usd;
+                        const btcEl = document.getElementById('dash-btc-price');
+                        if (btcEl) btcEl.textContent = '$' + btc.toLocaleString();
+                        
+                        if (data.ethereum) {
+                            const eth = data.ethereum.usd;
+                            const ethEl = document.getElementById('dash-eth-price');
+                            if (ethEl) ethEl.textContent = '$' + eth.toLocaleString();
+                            
+                            const ratio = (eth / btc).toFixed(5);
+                            const ratioEl = document.getElementById('dash-ratio');
+                            if (ratioEl) ratioEl.textContent = ratio;
+                        }
+                    }
+                } catch (e) { console.warn('Dash crypto error', e); }
+
+                // 2. Network
+                try {
+                    const height = await fetch('https://mempool.space/api/blocks/tip/height').then(r => r.text());
+                    const blockEl = document.getElementById('dash-block');
+                    if (blockEl) blockEl.textContent = parseInt(height).toLocaleString();
+                    
+                    const fees = await fetch('https://mempool.space/api/v1/fees/recommended').then(r => r.json());
+                    if (fees.fastestFee) {
+                        const feeEl = document.getElementById('dash-fee');
+                        if (feeEl) feeEl.textContent = fees.fastestFee + ' sat/vB';
+                    }
+                } catch (e) { console.warn('Dash network error', e); }
+
+                // 3. Physical
+                try {
+                    const weather = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m&temperature_unit=fahrenheit').then(r => r.json());
+                    if (weather.current) {
+                        const weatherEl = document.getElementById('dash-weather');
+                        if (weatherEl) weatherEl.textContent = Math.round(weather.current.temperature_2m) + '°F';
+                    }
+                } catch (e) { console.warn('Dash weather error', e); }
+                
+                // 4. Ping
+                try {
+                    const start = performance.now();
+                    await fetch('https://api.coingecko.com/api/v3/ping');
+                    const end = performance.now();
+                    const pingEl = document.getElementById('dash-ping');
+                    if (pingEl) pingEl.textContent = Math.round(end - start) + 'ms';
+                } catch (e) {}
+            };
+
+            // Initial update
+            updateDash();
+            
+            // Poll every 5s while open
+            const interval = setInterval(() => {
+                if (!document.getElementById('live-dashboard-root')) {
+                    clearInterval(interval);
+                    return;
+                }
+                updateDash();
+            }, 5000);
+        }
+
+        // --- SYSTEM DIAGNOSTICS CONTROLLER ---
+        function initSysDiagnostics() {
+            const root = document.getElementById('sys-diag-root');
+            if (!root) return;
+
+            // Hardware
+            document.getElementById('sys-cores').textContent = navigator.hardwareConcurrency || 'N/A';
+            document.getElementById('sys-memory').textContent = (navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'N/A');
+            document.getElementById('sys-platform').textContent = navigator.platform || 'N/A';
+
+            // Network
+            const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            if (conn) {
+                document.getElementById('sys-net-type').textContent = conn.effectiveType || 'N/A';
+                document.getElementById('sys-net-down').textContent = (conn.downlink ? conn.downlink + ' Mbps' : 'N/A');
+                document.getElementById('sys-net-rtt').textContent = (conn.rtt ? conn.rtt + ' ms' : 'N/A');
+            } else {
+                document.getElementById('sys-net-type').textContent = 'Unsupported';
+            }
+
+            // Screen
+            document.getElementById('sys-res').textContent = `${window.screen.width}x${window.screen.height}`;
+            document.getElementById('sys-dpr').textContent = window.devicePixelRatio.toFixed(2);
+            document.getElementById('sys-color').textContent = window.screen.colorDepth + '-bit';
+
+            // Time
+            document.getElementById('sys-tz').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const offset = -new Date().getTimezoneOffset() / 60;
+            document.getElementById('sys-offset').textContent = `UTC${offset >= 0 ? '+' : ''}${offset}`;
+        }
 
         // --- 3. TEXT SCRAMBLE EFFECT ---
         class TextScramble {
@@ -5763,7 +5918,7 @@
 
         // Note: initCryptoDashboard is defined in crypto-data.js
 
-        function openModal(id, type = 'project') {
+        async function openModal(id, type = 'project') {
             let data;
             const content = modal.querySelector('.modal-content');
             const closeBtnIcon = document.querySelector('#close-modal i');
@@ -5797,6 +5952,25 @@
                     closeBtnIcon.classList.remove('text-neutral-500', 'group-hover:text-off-white');
                     closeBtnIcon.classList.add('text-off-black', 'group-hover:text-neutral-600');
                 }
+
+                // Show loading state
+                modalBody.innerHTML = `
+                    <div class="flex items-center justify-center h-96">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-900"></div>
+                    </div>
+                `;
+                
+                // Lazy load content if not present
+                if (!data.content) {
+                    try {
+                        const response = await fetch(`content/${id}.html`);
+                        if (!response.ok) throw new Error('Content not found');
+                        data.content = await response.text();
+                    } catch (e) {
+                        console.error('Failed to load content:', e);
+                        data.content = '<p class="text-center text-red-600 my-12">Failed to load article content. Please try again.</p>';
+                    }
+                }
                 
                 // Editorial Layout - Light Mode
                 modalBody.innerHTML = `
@@ -5808,7 +5982,7 @@
                                 <span class="w-px h-3 bg-neutral-300"></span>
                                 <span>${data.meta.date}</span>
                                 <span class="w-px h-3 bg-neutral-300"></span>
-                                <span>${data.meta.readTime} READ</span>
+                                <span>${data.meta.readTime || '5 MIN'} READ</span>
                             </div>
                             
                             <h1 class="font-playfair italic text-5xl md:text-7xl font-bold mb-10 text-off-black" style="line-height: 1.1; letter-spacing: -0.02em;">
@@ -5848,6 +6022,14 @@
                         el.outerHTML = generateSparkline(el.dataset.values);
                     }
                 });
+
+                // Initialize Live Dashboard if applicable
+                if (id === 'live_dashboard' && typeof initLiveDashboard === 'function') {
+                    setTimeout(initLiveDashboard, 100);
+                }
+                if (id === 'sys_diagnostics' && typeof initSysDiagnostics === 'function') {
+                    setTimeout(initSysDiagnostics, 100);
+                }
 
             } else {
                 // Standard Project Layout
@@ -8359,12 +8541,160 @@
 
 
         // --- 5. LOAD SEQUENCE ---
-        function removeLoader() {
+        
+        // Create tile arc animation
+        function createLoaderTiles() {
+            const container = document.getElementById('loader-tiles');
+            if (!container) return;
+            
+            const tileCount = 20;
+            const isLight = document.documentElement.classList.contains('light-mode-early') || document.body.classList.contains('light-mode');
+            
+            for (let i = 0; i < tileCount; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'loader-tile';
+                
+                // Create arc pattern - tiles follow a curved path
+                const progress = i / tileCount;
+                const arcX = Math.sin(progress * Math.PI) * 40 + 50; // Arc across screen
+                const startDelay = i * 120; // Stagger
+                
+                tile.style.left = `${arcX}%`;
+                tile.style.animationDelay = `${startDelay}ms`;
+                tile.style.animationDuration = `${2500 + Math.random() * 500}ms`;
+                tile.style.width = `${40 + Math.random() * 40}px`;
+                tile.style.height = `${40 + Math.random() * 40}px`;
+                
+                container.appendChild(tile);
+            }
+        }
+        
+        // Update loader progress
+        function updateLoaderProgress(percent, status) {
+            const progressBar = document.getElementById('loader-progress');
+            const statusText = document.getElementById('loader-status');
+            const percentText = document.getElementById('loader-percent');
+            
+            if (progressBar) progressBar.style.width = `${percent}%`;
+            if (statusText) statusText.textContent = status;
+            if (percentText) percentText.textContent = `${Math.round(percent)}%`;
+        }
+        
+        // Mark loader step as complete
+        function completeLoaderStep(stepName) {
+            const step = document.querySelector(`.loader-step[data-step="${stepName}"]`);
+            if (step) {
+                step.classList.remove('active');
+                step.classList.add('complete');
+            }
+        }
+        
+        // Set loader step as active
+        function activateLoaderStep(stepName) {
+            const step = document.querySelector(`.loader-step[data-step="${stepName}"]`);
+            if (step) {
+                step.classList.add('active');
+            }
+        }
+        
+        // Preload all dynamic data during loading
+        async function preloadSiteData() {
+            const results = { weather: false, crypto: false, block: false };
+            
+            try {
+                // Weather data
+                const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.2672&longitude=-97.7431&current=temperature_2m&temperature_unit=fahrenheit');
+                const weatherData = await weatherRes.json();
+                if (weatherData.current?.temperature_2m) {
+                    window.preloadedWeather = Math.round(weatherData.current.temperature_2m);
+                    results.weather = true;
+                }
+            } catch (e) { console.warn('Weather preload failed:', e); }
+            
+            try {
+                // Crypto data
+                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
+                const cryptoData = await cryptoRes.json();
+                if (cryptoData.bitcoin?.usd) {
+                    window.preloadedBTC = Math.floor(cryptoData.bitcoin.usd);
+                    window.preloadedETH = Math.floor(cryptoData.ethereum?.usd || 0);
+                    results.crypto = true;
+                }
+            } catch (e) { console.warn('Crypto preload failed:', e); }
+            
+            try {
+                // Block height
+                const blockRes = await fetch('https://mempool.space/api/blocks/tip/height');
+                const blockHeight = await blockRes.text();
+                if (blockHeight) {
+                    window.preloadedBlock = parseInt(blockHeight);
+                    results.block = true;
+                }
+            } catch (e) { console.warn('Block preload failed:', e); }
+            
+            return results;
+        }
+        
+        // Apply preloaded data to DOM
+        function applyPreloadedData() {
+            if (window.preloadedWeather) {
+                const el = document.getElementById('weather-val');
+                if (el) el.textContent = window.preloadedWeather + '°F';
+            }
+            if (window.preloadedBTC) {
+                const el = document.getElementById('btc-val');
+                if (el) el.textContent = '$' + window.preloadedBTC.toLocaleString();
+            }
+            if (window.preloadedETH) {
+                const el = document.getElementById('eth-val');
+                if (el) el.textContent = '$' + window.preloadedETH.toLocaleString();
+            }
+            if (window.preloadedBlock) {
+                const el = document.getElementById('block-val');
+                if (el) el.textContent = window.preloadedBlock.toLocaleString();
+            }
+        }
+        
+        async function removeLoader() {
             const loader = document.getElementById('loader');
             if (!loader || loader.classList.contains('loader-hidden')) return;
             
-            const scrambleEls = document.querySelectorAll('.scramble-text');
+            // Sync light mode class from early detection
+            if (document.documentElement.classList.contains('light-mode-early')) {
+                document.body.classList.add('light-mode');
+                document.documentElement.classList.remove('light-mode-early');
+            }
             
+            // Create tile animation
+            createLoaderTiles();
+            
+            // Phase 1: Assets (0-30%)
+            activateLoaderStep('assets');
+            updateLoaderProgress(10, 'Loading Assets');
+            await new Promise(r => setTimeout(r, 400));
+            updateLoaderProgress(30, 'Assets Loaded');
+            completeLoaderStep('assets');
+            
+            // Phase 2: Data Fetch (30-70%)
+            activateLoaderStep('data');
+            updateLoaderProgress(40, 'Fetching Data');
+            const preloadResults = await preloadSiteData();
+            updateLoaderProgress(70, 'Data Loaded');
+            completeLoaderStep('data');
+            
+            // Phase 3: Render (70-100%)
+            activateLoaderStep('render');
+            updateLoaderProgress(80, 'Preparing UI');
+            await new Promise(r => setTimeout(r, 300));
+            
+            // Apply preloaded data
+            applyPreloadedData();
+            
+            updateLoaderProgress(95, 'Almost Ready');
+            await new Promise(r => setTimeout(r, 200));
+            
+            // Scramble text effect
+            const scrambleEls = document.querySelectorAll('.scramble-text');
             try {
                 scrambleEls.forEach(el => {
                     if (typeof TextScramble !== 'undefined') {
@@ -8375,28 +8705,32 @@
             } catch (e) {
                 console.warn('TextScramble init error:', e);
             }
-
+            
+            updateLoaderProgress(100, 'Ready');
+            completeLoaderStep('render');
+            
+            // Final delay before hiding
+            await new Promise(r => setTimeout(r, 400));
+            
+            loader.classList.add('loader-hidden');
+            
+            // Safely initialize systems after loader hides
             setTimeout(() => {
-                loader.classList.add('loader-hidden');
-                
-                // Safely initialize systems
                 try { if (typeof initScrollReveal === 'function') initScrollReveal(); } catch(e) { console.warn('ScrollReveal error:', e); }
                 try { if (typeof initGenerativeCovers === 'function') initGenerativeCovers(); } catch(e) { console.warn('GenerativeCovers error:', e); }
                 try { if (typeof initLiveTicker === 'function') initLiveTicker(); } catch(e) { console.warn('LiveTicker error:', e); }
                 
-                setTimeout(() => {
-                    document.querySelectorAll('.scramble-hover').forEach(el => {
-                        try {
-                            if (typeof TextScramble !== 'undefined') {
-                                const fx = new TextScramble(el);
-                                fx.setText(el.dataset.final);
-                                el.addEventListener('mouseenter', () => fx.setText(el.dataset.final));
-                            }
-                        } catch(e) {}
-                    });
-                }, 400);
-
-            }, 800);
+                // Init scramble hover effects
+                document.querySelectorAll('.scramble-hover').forEach(el => {
+                    try {
+                        if (typeof TextScramble !== 'undefined') {
+                            const fx = new TextScramble(el);
+                            fx.setText(el.dataset.final);
+                            el.addEventListener('mouseenter', () => fx.setText(el.dataset.final));
+                        }
+                    } catch(e) {}
+                });
+            }, 600);
         }
 
         window.addEventListener('load', removeLoader);
@@ -9874,49 +10208,72 @@
                 // Decay mouse speed
                 mouseSpeed *= 0.95;
                 
-                // Draw multiple waves
+                // Draw multiple waves with enhanced visibility - sleeker and smaller
                 const waves = [
-                    { amplitude: 30, frequency: 0.002, speed: 0.02, color: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)' },
-                    { amplitude: 50, frequency: 0.003, speed: 0.015, color: isLight ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)' },
-                    { amplitude: 20, frequency: 0.005, speed: 0.03, color: isLight ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)' }
+                    { amplitude: 50, frequency: 0.002, speed: 0.02, color: isLight ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.25)', lineWidth: 1.8 },
+                    { amplitude: 75, frequency: 0.003, speed: 0.015, color: isLight ? 'rgba(0, 0, 0, 0.35)' : 'rgba(255, 255, 255, 0.4)', lineWidth: 2.2 },
+                    { amplitude: 38, frequency: 0.005, speed: 0.03, color: isLight ? 'rgba(0, 0, 0, 0.25)' : 'rgba(255, 255, 255, 0.3)', lineWidth: 1.8 },
+                    { amplitude: 62, frequency: 0.0018, speed: 0.025, color: isLight ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.2)', lineWidth: 1.4 }
                 ];
 
                 waves.forEach((wave, index) => {
                     ctx.beginPath();
                     ctx.strokeStyle = wave.color;
-                    ctx.lineWidth = 1.5;
+                    ctx.lineWidth = wave.lineWidth;
+                    
+                    // Add glow effect for more prominent appearance
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = isLight ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.4)';
 
                     for (let x = 0; x < width; x++) {
                         let y = height / 2;
                         let waveY = 0;
 
-                        // Mode Logic
+                        // Mode Logic with enhanced variations
                         if (currentWaveMode === 'sine') {
                             waveY = Math.sin(x * wave.frequency + time * (index + 1) * 0.5);
+                            // Add harmonics for richer sine waves
+                            waveY += Math.sin(x * wave.frequency * 2 + time * (index + 1) * 0.3) * 0.3;
                         } else if (currentWaveMode === 'square') {
                             waveY = Math.sign(Math.sin(x * wave.frequency * 2 + time * (index + 1)));
+                            // Add some smoothing
+                            waveY *= (0.7 + Math.abs(Math.sin(x * wave.frequency + time)) * 0.3);
                         } else if (currentWaveMode === 'jagged') {
-                            // Triangle/Sawtooth approximation
-                            waveY = Math.asin(Math.sin(x * wave.frequency * 3 + time * (index + 1)));
+                            // Enhanced triangle/sawtooth
+                            const phase = (x * wave.frequency * 3 + time * (index + 1)) % (Math.PI * 2);
+                            waveY = Math.asin(Math.sin(phase)) / (Math.PI / 2);
+                            // Add sharpness
+                            waveY = waveY > 0 ? Math.pow(waveY, 0.7) : -Math.pow(Math.abs(waveY), 0.7);
                         } else if (currentWaveMode === 'noise') {
+                            // Controlled noise with some continuity
                             waveY = (Math.random() - 0.5) * 2;
+                            // Add slight smoothing
+                            if (x > 0) {
+                                const prevY = (y - height/2) / wave.amplitude;
+                                waveY = waveY * 0.7 + prevY * 0.3;
+                            }
                         }
 
                         y += wave.amplitude * waveY;
                         
-                        // Mouse interaction (Spike)
+                        // Enhanced mouse interaction (Spike)
                         const dist = Math.abs(x - mouseX);
-                        const influence = Math.max(0, 1 - dist / 200); // 200px radius
+                        const influence = Math.max(0, 1 - dist / 250); // Larger influence radius
                         
                         if (influence > 0) {
-                            // Add noise/spike based on mouse speed
-                            y += Math.sin(x * 0.1 + time * 5) * mouseSpeed * influence * 0.5;
+                            // Add noise/spike based on mouse speed with more dramatic effect
+                            y += Math.sin(x * 0.1 + time * 5) * mouseSpeed * influence * 0.8;
+                            // Add distortion
+                            y += Math.cos(x * 0.05 + time * 3) * mouseSpeed * influence * 0.4;
                         }
 
                         if (x === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
                     ctx.stroke();
+                    
+                    // Reset shadow for next wave
+                    ctx.shadowBlur = 0;
                 });
                 
                 time += 0.02;

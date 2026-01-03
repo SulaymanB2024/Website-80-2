@@ -1,0 +1,23 @@
+
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        Alpha is information asymmetry. In the age of high-frequency trading, speed is commoditized. The new frontier is <span class="interactive-term" data-term="Unstructured Data">unstructured data<span class="term-tooltip">Information that doesn't fit into a pre-defined data model, like text, audio, and video. 80% of enterprise data is unstructured.</span></span>. 10-Ks, earnings calls, expert network transcripts – these contain the signal, buried in noise. We built a fleet of autonomous agents to mine it.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"The market reacts to the headline. The alpha is in the footnotes."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The pipeline starts with ingestion. We scrape EDGAR for filings and use speech-to-text for earnings calls. The raw text is chunked and fed into a vector database (Pinecone) for semantic search. But the real magic happens in the <span class="interactive-term" data-term="LLM Analysis">LLM layer<span class="term-tooltip">Using Large Language Models (like GPT-4) to reason about text, extract facts, and perform sentiment analysis.</span></span>. We don't just ask "is this positive?" We ask specific, structured questions: "What is the guidance for Q4?" "Is the CEO hedging on supply chain issues?" "Compare the tone of the CFO's answer to the analyst's question."
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Sentiment Divergence</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        We built a "Divergence Score." We compare the LLM's extracted sentiment of the management team against the consensus analyst ratings. When management sounds cautious but analysts are bullish, that's a short signal. When management is confident but the stock is beaten down, that's a long.
+                        <span class="sparkline" data-values="50,52,48,45,60,75,80,70,65,55,50"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The system flagged a divergence in a major retailer's Q3 call. The CEO mentioned "inventory headwinds" 12 times, up from 2 in Q2. Analysts ignored it, focusing on top-line growth. The stock dropped 15% two weeks later when they revised guidance. The agent saw the smoke before the fire.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Hallucination Risk</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        LLMs hallucinate. In finance, a hallucinated number is a P&L disaster. We implemented a "Citation Verification" step. The agent must provide the exact sentence from the source text that supports its conclusion. If it can't cite it, the insight is discarded. We also use an ensemble of models – if GPT-4, Claude, and Llama 3 disagree, a human analyst is alerted. Automation is leverage, not autopilot.
+                    </p>
+                

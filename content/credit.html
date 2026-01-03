@@ -1,0 +1,34 @@
+
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        A corporate bond yield is composed of two pieces: the risk-free rate and the <span class="interactive-term" data-term="Credit Spread">credit spread<span class="term-tooltip">The additional yield above the risk-free rate that compensates investors for default risk and illiquidity.</span></span>. The spread itself decomposes into default probability, expected loss given default, and a liquidity premium. Most analysts stop at the first layer. That's where the money is lost. Because spreads compress and widen not just on changing default risk, but on shifts in recovery assumptions and market microstructure.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"Default is a binary event. Recovery is a negotiation."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The fundamental credit equation: Spread = PD × LGD + Liquidity Premium, where PD is probability of default and <span class="interactive-term" data-term="LGD">LGD<span class="term-tooltip">Loss Given Default: the percentage of exposure lost when a borrower defaults, equal to 1 minus the recovery rate.</span></span> is loss given default (1 - Recovery Rate). For a BB-rated 5-year bond with 350bps spread, assume PD = 4.5% (annualized), Recovery = 40%. Expected loss = 4.5% × 60% = 2.7% annually ≈ 270bps. The remaining 80bps is compensation for liquidity and systematic credit risk. That excess spread is tradable alpha.
+                        <span class="sparkline" data-values="100,98,95,92,88,82,75,68,58,50,45"></span>
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Merton's Structural Model</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        <span class="interactive-term" data-term="Merton Model">Merton's framework<span class="term-tooltip">A structural credit model treating equity as a call option on firm assets, with default occurring when asset value falls below debt obligations.</span></span> treats equity as a call option on the firm's assets with strike equal to debt face value. Default occurs when asset value V_T &lt; D at maturity T. The equity value: E = V₀ N(d₁) - D e^(-rT) N(d₂), where d₁ = [ln(V₀/D) + (r + σ²/2)T] / (σ√T), and N(·) is the cumulative normal distribution.
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The model implies a distance-to-default: DD = [ln(V₀/D) + (μ - σ²/2)T] / (σ√T). The probability of default: PD = N(-DD). For a firm with market cap $5B, debt $8B, asset volatility 35%, and 5-year horizon: V₀ ≈ $13B, DD ≈ 1.1σ, PD ≈ 13.6%. The corresponding credit spread via risk-neutral pricing is: s = -ln[1 - PD × LGD] / T ≈ 340bps for LGD = 60%.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Reduced-Form Models: Intensity-Based Approach</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Structural models struggle with sudden defaults (Lehman had positive equity value 48 hours before bankruptcy). <span class="interactive-term" data-term="Reduced-Form Models">Reduced-form models<span class="term-tooltip">Credit models that treat default as a random jump process with exogenous hazard rate, without modeling firm capital structure.</span></span> treat default as a Poisson jump with hazard rate λ(t). The survival probability: S(T) = exp[-∫₀ᵀ λ(t)dt]. For constant λ, this simplifies to S(T) = e^(-λT).
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        The credit spread in a reduced-form model: s = λ × LGD. Calibrate λ from CDS spreads: if 5Y CDS trades at 280bps and recovery is 40%, then λ ≈ 280bps / 60% = 4.67% annualized. The advantage: no need to estimate unobservable asset volatility. The disadvantage: λ is a black box-it doesn't explain *why* default risk changes, only that it has.
+                        <span class="sparkline" data-values="2.5,2.8,3.2,3.8,4.5,5.2,6.0,7.5,9.0,8.5,7.0"></span>
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Recovery Rate Dynamics in Distressed Debt</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Recovery rates are not constant. They're correlated with default rates-during recessions, both PD and LGD rise simultaneously. Moody's data (1982-2022): median recovery on senior unsecured bonds is 38%, but the distribution is bimodal-recoveries cluster near 10% (liquidation) or 65% (restructuring). In distressed cycles (2008, 2020), average recovery dropped to 28% as bankruptcy courts were overwhelmed and asset sales occurred in depressed markets.
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Trading strategy: in early-stage distress, buy senior secured (recovery ~70%) and short CDS (recovery ~40%). The basis captures recovery mispricing. In late-stage distress, avoid the capital structure entirely-recovery convergence crushes the trade. The edge is in timing the transition from going-concern to gone-concern. Structural models tell you when equity is worthless. Reduced-form models tell you when the market believes it.
+                    </p>
+                

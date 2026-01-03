@@ -1,0 +1,34 @@
+
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        Every derivative pricing model requires a discount curve. Build it wrong, and every valuation downstream is contaminated. The <span class="interactive-term" data-term="Bootstrapping">bootstrapping algorithm<span class="term-tooltip">An iterative method to extract zero-coupon rates from observed market prices of coupon-bearing bonds or swaps.</span></span> converts messy market quotes-SOFR swaps, Treasury bonds, Eurodollar futures-into a smooth zero-coupon yield curve. The process is both mechanical and surgical. One wrong assumption about day-count conventions or compounding frequency, and your 10-year swap rate is mispriced by 3 basis points. In a $500M notional swap, that's $1.5M of P&L error.
+                    </p>
+                    <div class="my-12 border-l-4 border-black pl-6 py-2">
+                        <p class="font-playfair italic text-3xl md:text-4xl leading-tight">"The curve is not given. The curve is constructed."</p>
+                    </div>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Post-LIBOR transition, <span class="interactive-term" data-term="SOFR">SOFR<span class="term-tooltip">Secured Overnight Financing Rate: the risk-free rate based on Treasury repo transactions, replacing LIBOR as the USD benchmark.</span></span> is the foundation. Start with overnight SOFR (currently ~4.35%). For terms beyond O/N, use SOFR futures to build the 3M-2Y segment. Each futures price implies a forward rate: F = 100 - Price. Convert to continuous compounding: r_continuous = ln(1 + r_simple × Δt) / Δt, where Δt is the accrual fraction (ACT/360 for USD swaps).
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">The Swap Curve Stripping Process</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        For maturities beyond 2 years, SOFR swaps provide the data. A 5-year swap at 4.25% fixed means the present value of fixed flows equals the present value of floating flows: Σ [C × DF(tᵢ)] = Σ [Fwd(tᵢ₋₁, tᵢ) × DF(tᵢ)], where C is the fixed coupon, DF(t) is the discount factor at time t, and Fwd is the forward SOFR rate.
+                        <span class="sparkline" data-values="4.0,4.1,4.15,4.2,4.25,4.3,4.35,4.4,4.5,4.6,4.7"></span>
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Bootstrap iteratively: solve for DF(t₁) using the 1Y swap, then DF(t₂) using the 2Y swap and the already-known DF(t₁), and so on. At each tenor, invert the discount factor to get the zero rate: z(t) = -ln[DF(t)] / t. The result is a discrete set of zero rates at swap maturity points: 1Y, 2Y, 3Y, ..., 30Y.
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Interpolation: The Hidden Degrees of Freedom</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Market quotes are sparse. You have zeros at 2Y, 3Y, 5Y, 7Y, 10Y. But you need a rate for 4.25Y to price a bespoke swaption. Interpolation fills the gaps. Linear interpolation of zero rates is crude and creates artificial discontinuities in forward rates. <span class="interactive-term" data-term="Cubic Spline">Cubic splines<span class="term-tooltip">A piecewise polynomial interpolation method ensuring smooth first and second derivatives across the curve.</span></span> are smoother but can generate economically implausible forward rate oscillations.
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Best practice: interpolate on the <span class="interactive-term" data-term="Log-Discount Factor">log-discount factor<span class="term-tooltip">Interpolating ln[DF(t)] ensures positivity of discount factors and smooth instantaneous forward rates.</span></span> using monotone-preserving cubic splines (e.g., Hyman's filter). This guarantees forward rates remain positive and smooth. For ultra-long tenors (&gt;30Y), extrapolate using the Smith-Wilson method, which asymptotically converges to an ultimate forward rate (typically UFR = 3.8% for USD, per EIOPA guidelines adapted to US regulatory context).
+                        <span class="sparkline" data-values="0.98,0.95,0.91,0.86,0.80,0.74,0.67,0.60,0.52,0.45,0.38"></span>
+                    </p>
+                    <h3 class="font-display text-2xl font-bold mt-12 mb-4">Cross-Currency Basis: The Arbitrage That Shouldn't Exist</h3>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        Covered interest parity says: F/S = (1 + r_d) / (1 + r_f), where F is the forward FX rate, S is spot, r_d is domestic rate, r_f is foreign rate. In theory, no arbitrage. In practice, <span class="interactive-term" data-term="CCS Basis">cross-currency swap basis<span class="term-tooltip">The spread added to one leg of a cross-currency swap to equalize present values, reflecting funding costs and credit risk asymmetries.</span></span> can be -50 bps (EUR) or +30 bps (JPY) vs. USD. Post-2008, funding constraints and regulatory capital charges broke CIP.
+                    </p>
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6">
+                        When building a USD curve from EUR swaps (or vice versa), adjust for the basis: r_USD_implied = r_EUR + basis + FX_forward_adjustment. The 5Y EUR/USD basis widened to -60 bps during COVID. Ignoring it would misprice cross-currency swaps by millions. The basis isn't noise-it's structural, driven by dollar shortage in offshore funding markets and balance sheet costs for dealers.
+                    </p>
+                

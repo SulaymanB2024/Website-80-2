@@ -1,0 +1,79 @@
+
+                    <p class="font-serif text-lg md:text-xl leading-relaxed mb-6 drop-cap">
+                        The browser is more than a document viewer; it is a complex operating environment. This tool inspects your local runtime configuration, revealing the hardware and network constraints under which this application is executing.
+                    </p>
+
+                    <div id="sys-diag-root" class="my-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Hardware -->
+                        <div class="bg-neutral-100 border border-neutral-200 p-6 rounded-sm">
+                            <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4">Hardware Concurrency</h4>
+                            <div class="space-y-3 font-mono text-sm">
+                                <div class="flex justify-between border-b border-neutral-200 pb-2">
+                                    <span class="text-neutral-600">Logical Cores</span>
+                                    <span id="sys-cores" class="font-bold">...</span>
+                                </div>
+                                <div class="flex justify-between border-b border-neutral-200 pb-2">
+                                    <span class="text-neutral-600">Memory (Approx)</span>
+                                    <span id="sys-memory" class="font-bold">...</span>
+                                </div>
+                                <div class="flex justify-between pt-1">
+                                    <span class="text-neutral-600">Platform</span>
+                                    <span id="sys-platform" class="font-bold">...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Network -->
+                        <div class="bg-neutral-100 border border-neutral-200 p-6 rounded-sm">
+                            <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4">Network Status</h4>
+                            <div class="space-y-3 font-mono text-sm">
+                                <div class="flex justify-between border-b border-neutral-200 pb-2">
+                                    <span class="text-neutral-600">Effective Type</span>
+                                    <span id="sys-net-type" class="font-bold">...</span>
+                                </div>
+                                <div class="flex justify-between border-b border-neutral-200 pb-2">
+                                    <span class="text-neutral-600">Downlink</span>
+                                    <span id="sys-net-down" class="font-bold">...</span>
+                                </div>
+                                <div class="flex justify-between pt-1">
+                                    <span class="text-neutral-600">RTT (Est.)</span>
+                                    <span id="sys-net-rtt" class="font-bold">...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Screen -->
+                        <div class="bg-neutral-100 border border-neutral-200 p-6 rounded-sm">
+                            <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4">Display</h4>
+                            <div class="space-y-3 font-mono text-sm">
+                                <div class="flex justify-between border-b border-neutral-200 pb-2">
+                                    <span class="text-neutral-600">Resolution</span>
+                                    <span id="sys-res" class="font-bold">...</span>
+                                </div>
+                                <div class="flex justify-between border-b border-neutral-200 pb-2">
+                                    <span class="text-neutral-600">Pixel Ratio</span>
+                                    <span id="sys-dpr" class="font-bold">...</span>
+                                </div>
+                                <div class="flex justify-between pt-1">
+                                    <span class="text-neutral-600">Color Depth</span>
+                                    <span id="sys-color" class="font-bold">...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Time -->
+                        <div class="bg-neutral-100 border border-neutral-200 p-6 rounded-sm">
+                            <h4 class="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4">Temporal</h4>
+                            <div class="space-y-3 font-mono text-sm">
+                                <div class="flex justify-between border-b border-neutral-200 pb-2">
+                                    <span class="text-neutral-600">Timezone</span>
+                                    <span id="sys-tz" class="font-bold">...</span>
+                                </div>
+                                <div class="flex justify-between pt-1">
+                                    <span class="text-neutral-600">UTC Offset</span>
+                                    <span id="sys-offset" class="font-bold">...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
