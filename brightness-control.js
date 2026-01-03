@@ -1310,23 +1310,40 @@
             width: 44px;
             height: 44px;
             border-radius: 0;
-            background: transparent;
-            backdrop-filter: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(3, 3, 3, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #EAEAEA;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             font-family: 'Space Mono', monospace;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        /* Mobile positioning - move up to avoid overlap with scroll */
+        @media (max-width: 768px) {
+            #theme-toggle-btn {
+                bottom: 20px;
+                right: 16px;
+                width: 48px;
+                height: 48px;
+            }
         }
         
         #theme-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
+        }
+        
+        #theme-toggle-btn:active {
+            transform: scale(0.95);
         }
         
         #theme-toggle-btn svg {
@@ -1335,18 +1352,27 @@
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
+        @media (max-width: 768px) {
+            #theme-toggle-btn svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+        
         #theme-toggle-btn:hover svg {
             transform: rotate(15deg);
         }
         
         /* Light mode button styling */
         body.light-mode #theme-toggle-btn {
-            border-color: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.15);
             color: #030303;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         body.light-mode #theme-toggle-btn:hover {
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 1);
             border-color: rgba(0, 0, 0, 0.3);
         }
     `;
